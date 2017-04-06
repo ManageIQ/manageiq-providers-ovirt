@@ -1,0 +1,11 @@
+---
+:ems:
+  :ems_ovirt:
+    :event_handling:
+      :event_groups:
+:http_proxy:
+  :ovirt:
+    :host:
+    :password:
+    :port:
+    :user:
