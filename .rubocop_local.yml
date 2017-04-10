@@ -1,2 +1,3 @@
 GlobalVars:
   AllowedVariables:
+    - $rhevm_log
