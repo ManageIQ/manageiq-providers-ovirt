@@ -234,7 +234,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   end
 
   def highest_allowed_api_version
-    return 3 unless use_ovirt_sdk?
+    return '3' unless use_ovirt_sdk?
     highest_supported_api_version
   end
 
