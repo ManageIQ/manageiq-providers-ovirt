@@ -78,7 +78,11 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParser
   end
 
   def self.parse_target_name(message, event_type)
-    if %w(NETWORK_ADD_VM_INTERFACE NETWORK_INTERFACE_PLUGGED_INTO_VM).include?(event_type)
+    case event_type
+    when "NETWORK_ADD_VM_INTERFACE"
+      # sample message: "Interface nic1 (VirtIO) was added to VM v5. (User: admin@internal-authz)"
+      message.split(/\s/)[7][0...-1]
+    when "NETWORK_INTERFACE_PLUGGED_INTO_VM"
       # sample message: "Network Interface nic1 (VirtIO) was plugged to VM v5. (User: admin@internal)"
       message.split(/\s/)[8][0...-1]
     else

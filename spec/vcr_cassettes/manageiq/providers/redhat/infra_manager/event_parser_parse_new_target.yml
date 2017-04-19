@@ -1,0 +1,106 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://admin%40internal:engine@192.168.1.105:8443/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.1 (linux-gnu x86_64) ruby/2.3.0p0
+      Version:
+      - '3'
+      Prefer:
+      - persistent-auth
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - JSESSIONID=FYKiooyXKvLtLYB16GZ7L1oB3tpmdUtPzb4BIBgk.f24; path=/ovirt-engine/api;
+        HttpOnly
+      Content-Type:
+      - application/xml
+      Content-Length:
+      - '3079'
+      Correlation-Id:
+      - b5346841-91e7-48a3-a2f3-1e60e693704b
+      Date:
+      - Wed, 19 Apr 2017 13:17:45 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <cluster href="/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a" id="00000002-0002-0002-0002-00000000017a">
+            <actions>
+                <link href="/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a/resetemulatedmachine" rel="resetemulatedmachine"/>
+            </actions>
+            <name>Default</name>
+            <description>The default server cluster</description>
+            <link href="/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a/networkfilters" rel="networkfilters"/>
+            <link href="/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a/networks" rel="networks"/>
+            <link href="/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a/cpuprofiles" rel="cpuprofiles"/>
+            <link href="/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a/affinitygroups" rel="affinitygroups"/>
+            <link href="/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a/glusterhooks" rel="glusterhooks"/>
+            <link href="/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a/glustervolumes" rel="glustervolumes"/>
+            <cpu id="Intel SandyBridge Family">
+                <architecture>x86_64</architecture>
+            </cpu>
+            <data_center href="/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311" id="00000001-0001-0001-0001-000000000311"/>
+            <memory_policy>
+                <overcommit percent="100"/>
+                <transparent_hugepages>
+                    <enabled>true</enabled>
+                </transparent_hugepages>
+            </memory_policy>
+            <scheduling_policy href="/ovirt-engine/api/schedulingpolicies/b4ed2332-a7ac-4d5f-9596-99a439cb2812" id="b4ed2332-a7ac-4d5f-9596-99a439cb2812">
+                <policy>none</policy>
+                <thresholds high="80" duration="2"/>
+            </scheduling_policy>
+            <version major="4" minor="2"/>
+            <error_handling>
+                <on_error>migrate</on_error>
+            </error_handling>
+            <virt_service>true</virt_service>
+            <gluster_service>false</gluster_service>
+            <threads_as_cores>false</threads_as_cores>
+            <tunnel_migration>false</tunnel_migration>
+            <trusted_service>false</trusted_service>
+            <ha_reservation>false</ha_reservation>
+            <optional_reason>false</optional_reason>
+            <maintenance_reason_required>false</maintenance_reason_required>
+            <ballooning_enabled>false</ballooning_enabled>
+            <ksm>
+                <enabled>true</enabled>
+                <merge_across_nodes>true</merge_across_nodes>
+            </ksm>
+            <required_rng_sources>
+                <source>urandom</source>
+            </required_rng_sources>
+            <fencing_policy>
+                <enabled>true</enabled>
+                <skip_if_sd_active>
+                    <enabled>false</enabled>
+                </skip_if_sd_active>
+                <skip_if_connectivity_broken>
+                    <enabled>false</enabled>
+                    <threshold>50</threshold>
+                </skip_if_connectivity_broken>
+            </fencing_policy>
+            <migration>
+                <auto_converge>inherit</auto_converge>
+                <compressed>inherit</compressed>
+            </migration>
+        </cluster>
+    http_version: 
+  recorded_at: Wed, 19 Apr 2017 13:17:45 GMT
+recorded_with: VCR 3.0.3
