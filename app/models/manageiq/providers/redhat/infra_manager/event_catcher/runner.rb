@@ -1,7 +1,8 @@
+require 'manageiq/providers/ovirt/legacy/event_monitor'
+
 class ManageIQ::Providers::Redhat::InfraManager::EventCatcher::Runner < ManageIQ::Providers::BaseManager::EventCatcher::Runner
   def event_monitor_handle
-    require 'ovirt_provider/events/ovirt_event_monitor'
-    @event_monitor_handle ||= OvirtEventMonitor.new(event_monitor_options)
+    @event_monitor_handle ||= ManageIQ::Providers::Ovirt::Legacy::EventMonitor.new(event_monitor_options)
   end
 
   def event_monitor_options

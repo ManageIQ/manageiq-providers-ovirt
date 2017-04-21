@@ -305,7 +305,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     # Connect to the engine using version 3 of the API and the `ovirt` gem.
     def raw_connect_v3(options = {})
       require 'ovirt'
-      require 'ovirt_provider/inventory/ovirt_inventory'
+      require 'manageiq/providers/ovirt/legacy/inventory'
       Ovirt.logger = $rhevm_log
 
       params = {
@@ -321,7 +321,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       read_timeout, open_timeout = ems_timeouts(:ems_redhat, options[:service])
       params[:timeout]      = read_timeout if read_timeout
       params[:open_timeout] = open_timeout if open_timeout
-      const = options[:service] == "Inventory" ? OvirtInventory : Ovirt.const_get(options[:service])
+      const = options[:service] == "Inventory" ? ManageIQ::Providers::Ovirt::Legacy::Inventory : Ovirt.const_get(options[:service])
       conn = const.new(params)
       OvirtConnectionDecorator.new(conn)
     end
