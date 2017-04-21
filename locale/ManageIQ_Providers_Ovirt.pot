@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the ManageIQ_Providers_Ovirt package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ManageIQ_Providers_Ovirt 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-21 10:14+0200\n"
+"PO-Revision-Date: 2017-04-21 10:14+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:40
+msgid "Cannot import archived VMs"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:42
+msgid "Cannot import to a RHEV provider of version < 4.0"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager.rb:133
+msgid "Data Store does not exist, unable to add disk"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm_or_template_shared/scanning.rb:50
+msgid "Perform SmartState Analysis on this VM"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:21
+msgid "Removing all snapshots is currently not supported"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:40
+msgid "Requested VM snapshot not found, unable to RevertTo snapshot"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:32
+msgid "Requested VM snapshot not found, unable to remove snapshot"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:70
+msgid "Revert is allowed only when vm is down. Current state is %{state}"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:60
+msgid "Revert is not allowed for a snapshot that is the active one"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:44
+msgid "Source provider must be of type Vmware"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/guest.rb:7
+msgid "The VM is not powered on"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:21
+msgid "The provider does not support reconfigure disks"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:19
+msgid "The virtual machine is not associated with a provider"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/api_integration.rb:268
+msgid "This feature is not supported by the api version of the provider"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm_or_template_shared/scanning.rb:42
+msgid ""
+"VMs must be scanned from an EVM server whose host is attached to the same\n"
+"  storage as the VM unless overridden via SmartProxy affinity.\n"
+"  Please verify that:\n"
+"  1) Direct LUNs are attached to ManageIQ appliance\n"
+"  2) Management Relationship is set for the ManageIQ appliance"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/template.rb:8
+msgid "not connected to ems"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:17
+msgid "storage is missing"
+msgstr ""
