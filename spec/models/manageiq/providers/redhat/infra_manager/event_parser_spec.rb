@@ -7,7 +7,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
       @ems = FactoryGirl.create(:ems_redhat, :zone => zone, :hostname => ip_address, :ipaddress => ip_address,
                                 :port => 8443)
       @ems.update_authentication(:default => {:userid => "admin@internal", :password => "engine"})
-
+      @ems.default_endpoint.verify_ssl = OpenSSL::SSL::VERIFY_NONE
       allow(@ems).to receive(:supported_api_versions).and_return([3])
       allow(@ems).to receive(:resolve_ip_address).with(ip_address).and_return(ip_address)
     end
@@ -42,6 +42,88 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
           :full_data  => event,
           :ems_id     => @ems.id,
         )
+      end
+    end
+
+    it "should parse new target" do
+      event = {:id          => "661",
+               :href        => "/ovirt-engine/api/events/661",
+               :cluster     => {:id   => "00000002-0002-0002-0002-00000000017a",
+                                :href => "/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a"},
+               :data_center => {:id   => "00000001-0001-0001-0001-000000000311",
+                                :href => "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311"},
+               :template    => {:id   => "6160a62c-a43f-4ffc-896b-93d98f55e9ef",
+                                :href => "/ovirt-engine/api/templates/6160a62c-a43f-4ffc-896b-93d98f55e9ef"},
+               :user        => {:id   => "58d90d4c-00cb-00bf-03bd-000000000320",
+                                :href => "/ovirt-engine/api/users/58d90d4c-00cb-00bf-03bd-000000000320"},
+               :vm          => {:id   => "22f18a6b-fc44-43ae-976f-993ad5f1d648",
+                                :href => "/ovirt-engine/api/vms/22f18a6b-fc44-43ae-976f-993ad5f1d648"},
+               :description => "Network Interface nic1 (VirtIO) was plugged to VM test2. (User: admin@internal-authz)",
+               :severity    => "normal",
+               :code        => 1012,
+               :time        => "2017-04-19 12:55:38 +0200",
+               :name        => "NETWORK_INTERFACE_PLUGGED_INTO_VM"}
+
+      event2 = {:id          => "662",
+                :href        => "/ovirt-engine/api/events/662",
+                :cluster     => {:id   => "00000002-0002-0002-0002-00000000017a",
+                                 :href => "/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a"},
+                :data_center => {:id   => "00000001-0001-0001-0001-000000000311",
+                                 :href => "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311"},
+                :template    => {:id   => "6160a62c-a43f-4ffc-896b-93d98f55e9ef",
+                                 :href => "/ovirt-engine/api/templates/6160a62c-a43f-4ffc-896b-93d98f55e9ef"},
+                :user        => {:id   => "58d90d4c-00cb-00bf-03bd-000000000320",
+                                 :href => "/ovirt-engine/api/users/58d90d4c-00cb-00bf-03bd-000000000320"},
+                :vm          => {:id   => "22f18a6b-fc44-43ae-976f-993ad5f1d648",
+                                 :href => "/ovirt-engine/api/vms/22f18a6b-fc44-43ae-976f-993ad5f1d648"},
+                :description => "Interface nic1 (VirtIO) was added to VM test2. (User: admin@internal-authz)",
+                :severity    => "normal",
+                :code        => 932,
+                :time        => "2017-04-19 12:55:38 +0200",
+                :name        => "NETWORK_ADD_VM_INTERFACE"}
+
+      event3 = {:id          => "668",
+                :href        => "/ovirt-engine/api/events/668",
+                :cluster     => {:id   => "00000002-0002-0002-0002-00000000017a",
+                                 :href => "/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a"},
+                :data_center => {:id   => "00000001-0001-0001-0001-000000000311",
+                                 :href => "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311"},
+                :template    => {:id   => "6160a62c-a43f-4ffc-896b-93d98f55e9ef",
+                                 :href => "/ovirt-engine/api/templates/6160a62c-a43f-4ffc-896b-93d98f55e9ef"},
+                :user        => {:id   => "58d90d4c-00cb-00bf-03bd-000000000320",
+                                 :href => "/ovirt-engine/api/users/58d90d4c-00cb-00bf-03bd-000000000320"},
+                :vm          => {:id   => "22f18a6b-fc44-43ae-976f-993ad5f1d648",
+                                 :href => "/ovirt-engine/api/vms/22f18a6b-fc44-43ae-976f-993ad5f1d648"},
+                :description => "VM test2 creation has been completed.",
+                :severity    => "normal",
+                :code        => 53,
+                :time        => "2017-04-19 12:55:52 +0200",
+                :name        => "USER_ADD_VM_FINISHED_SUCCESS"}
+
+      [event, event2, event3].each do |ev|
+        VCR.use_cassette("#{described_class.name.underscore}_parse new target", :allow_unused_http_interactions => true, :allow_playback_repeats => true, :record => :new_episodes) do
+          parsed = ManageIQ::Providers::Redhat::InfraManager::EventParser.parse_new_target(ev, ev[:description], @ems, ev[:name])
+
+          expect(parsed).to have_attributes(
+            :ems_id         => @ems.id,
+            :vm             => {:type        => "ManageIQ::Providers::Redhat::InfraManager::Vm",
+                                :ems_ref     => "/api/vms/22f18a6b-fc44-43ae-976f-993ad5f1d648",
+                                :ems_ref_obj => "/api/vms/22f18a6b-fc44-43ae-976f-993ad5f1d648",
+                                :uid_ems     => "22f18a6b-fc44-43ae-976f-993ad5f1d648",
+                                :vendor      => "redhat",
+                                :name        => "test2",
+                                :location    => "22f18a6b-fc44-43ae-976f-993ad5f1d648.ovf",
+                                :template    => false},
+            :cluster        => {:ems_ref     => "/api/clusters/00000002-0002-0002-0002-00000000017a",
+                                :ems_ref_obj => "/api/clusters/00000002-0002-0002-0002-00000000017a",
+                                :uid_ems     => "00000002-0002-0002-0002-00000000017a",
+                                :name        => "Default"},
+            :resource_pools => {:name       => "Default for Cluster Default",
+                                :uid_ems    => "00000002-0002-0002-0002-00000000017a_respool",
+                                :is_default => true},
+            :folders        => {:ems_ref => "/api/datacenters/00000001-0001-0001-0001-000000000311"}
+          )
+        end
       end
     end
   end
