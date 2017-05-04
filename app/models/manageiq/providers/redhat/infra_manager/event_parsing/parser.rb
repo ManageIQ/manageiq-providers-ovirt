@@ -62,9 +62,9 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing
 
     def self.parse_new_target(full_data, message, ems, event_type)
       cluster = parse_new_cluster(ems, full_data[:cluster])
-      rp      = parse_new_rp(cluster[:uid_ems], cluster[:name])
+      rp      = parse_new_rp(cluster)
       dc      = parse_new_dc(full_data[:data_center])
-      vm      = parse_new_vm(full_data[:vm], message, event_type, ems)
+      vm      = parse_new_vm(ems, full_data[:vm], cluster, message, event_type)
 
       target_hash = {
         :vms            => [vm],
@@ -77,9 +77,14 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing
     end
 
     def self.parse_new_vm(vm, message, event_type, ems)
-      ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm[:href])
+      ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm_data[:href])
       parser = ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::ParserBuilder.new(ems).build
-      parser.create_vm_hash(ems_ref.include?('/templates/'), ems_ref, vm[:id], parse_target_name(message, event_type))
+
+      vm_hash = parser.create_vm_hash(ems_ref.include?('/templates/'), ems_ref, vm_data[:id], parse_target_name(message, event_type))
+      vm_hash[:ems_cluster] = cluster
+      cluster[:ems_children][:resource_pools].first[:ems_children][:vms] << vm_hash
+
+      vm_hash
     end
 
     def self.parse_target_name(message, event_type)
@@ -104,16 +109,22 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing
         :ems_ref     => cluster_ref,
         :ems_ref_obj => cluster_ref,
         :uid_ems     => cluster_data[:id],
-        :name        => cluster_name
+        :name        => cluster_name,
+        :ems_children => {:resource_pools => []}
       }
     end
 
-    def self.parse_new_rp(cluster_id, cluster_name)
-      {
-        :name       => "Default for Cluster #{cluster_name}",
-        :uid_ems    => "#{cluster_id}_respool",
-        :is_default => true,
+    def self.parse_new_rp(cluster)
+      rp_hash = {
+        :name         => "Default for Cluster #{cluster[:name]}",
+        :uid_ems      => "#{cluster[:uid_ems]}_respool",
+        :is_default   => true,
+        :ems_children => {:vms => []}
       }
+
+      cluster[:ems_children][:resource_pools] << rp_hash
+
+      rp_hash
     end
 
     def self.parse_new_dc(dc)

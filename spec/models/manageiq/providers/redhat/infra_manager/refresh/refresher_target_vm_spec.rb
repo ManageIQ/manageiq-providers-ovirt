@@ -95,7 +95,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
         EmsRefresh.refresh_new_target(@ems, target_hash, target_klass, target_find)
       end
 
+      expect(new_vm.uid_ems).to eq(add_vm_event[:vm][:id])
+
       expect(new_vm.ems_cluster).not_to be_nil
+      expect(new_vm.ems_cluster.uid_ems).to eq(add_vm_event[:cluster][:id])
     end
   end
 
