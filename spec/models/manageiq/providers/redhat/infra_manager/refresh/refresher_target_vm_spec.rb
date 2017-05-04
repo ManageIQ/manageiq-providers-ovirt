@@ -81,7 +81,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     end
 
     it "should refresh new vm" do
-      allow(@ems.ovirt_services).to receive(:cluster_name_href).and_return(@cluster.name)
+      allow(@ems.ovirt_services).to receive(:cluster_name_href).with(@cluster.ems_ref).and_return(@cluster.name)
       allow(@ems.refresher).to      receive(:refresh)
 
       description = add_vm_event[:description]
@@ -95,10 +95,19 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
         EmsRefresh.refresh_new_target(@ems, target_hash, target_klass, target_find)
       end
 
+      # Check the new vm's uid matches the event
       expect(new_vm.uid_ems).to eq(add_vm_event[:vm][:id])
 
-      expect(new_vm.ems_cluster).not_to be_nil
+      # Check that the new vm is linked up to a cluster
+      expect(new_vm.ems_cluster).not_to     be_nil
       expect(new_vm.ems_cluster.uid_ems).to eq(add_vm_event[:cluster][:id])
+
+      # Check that the vm and cluster are linked to a datacenter
+      expect(new_vm.parent_datacenter).not_to             be_nil
+      expect(new_vm.ems_cluster.parent_datacenter).not_to be_nil
+
+      expect(new_vm.parent_datacenter.uid_ems).to             eq(add_vm_event[:data_center][:id])
+      expect(new_vm.ems_cluster.parent_datacenter.uid_ems).to eq(add_vm_event[:data_center][:id])
     end
   end
 
