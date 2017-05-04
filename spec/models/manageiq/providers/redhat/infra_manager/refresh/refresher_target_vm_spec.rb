@@ -1,6 +1,37 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   context 'targeted refresh of a Vm' do
     let(:ip_address) { '192.168.1.31' }
+    let(:add_vm_event) do
+      {
+        :id          => "668",
+        :href        => "/ovirt-engine/api/events/668",
+        :cluster     => {
+          :id   => "00000002-0002-0002-0002-0000000001e9",
+          :href => "/api/clusters/00000002-0002-0002-0002-0000000001e9"
+        },
+        :data_center => {
+          :id   => "00000001-0001-0001-0001-000000000311",
+          :href => "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311"
+        },
+        :template    => {
+          :id   => "6160a62c-a43f-4ffc-896b-93d98f55e9ef",
+          :href => "/ovirt-engine/api/templates/6160a62c-a43f-4ffc-896b-93d98f55e9ef"
+        },
+        :user        => {
+          :id   => "58d90d4c-00cb-00bf-03bd-000000000320",
+          :href => "/ovirt-engine/api/users/58d90d4c-00cb-00bf-03bd-000000000320"
+        },
+        :vm          => {
+          :id   => "22f18a6b-fc44-43ae-976f-993ad5f1d648",
+          :href => "/ovirt-engine/api/vms/22f18a6b-fc44-43ae-976f-993ad5f1d648"
+        },
+        :description => "VM test2 creation has been completed.",
+        :severity    => "normal",
+        :code        => 53,
+        :time        => "2017-04-19 12:55:52 +0200",
+        :name        => "USER_ADD_VM_FINISHED_SUCCESS"
+      }
+    end
 
     before(:each) do
       _, _, zone = EvmSpecHelper.create_guid_miq_server_zone
@@ -50,25 +81,21 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     end
 
     it "should refresh new vm" do
-      vm = FactoryGirl.create(:vm_redhat,
-                              :ext_management_system => @ems,
-                              :uid_ems               => "4f6dd4c3-5241-494f-8afc-f1c67254bf77",
-                              :ems_cluster           => @cluster,
-                              :ems_ref               => "/api/vms/4f6dd4c3-5241-494f-8afc-f1c67254bf77")
+      allow(@ems.ovirt_services).to receive(:cluster_name_href).and_return(@cluster.name)
+      allow(@ems.refresher).to      receive(:refresh)
 
-      VCR.use_cassette("#{described_class.name.underscore}_target_new_vm") do
-        EmsRefresh.refresh(vm)
+      description = add_vm_event[:description]
+      name        = add_vm_event[:name]
+
+      ep_class = ManageIQ::Providers::Redhat::InfraManager::EventParser
+
+      target_hash, target_klass, target_find = ep_class.parse_new_target(add_vm_event, description, @ems, name)
+
+      new_vm = VCR.use_cassette("#{described_class.name.underscore}_target_new_vm") do
+        EmsRefresh.refresh_new_target(@ems, target_hash, target_klass, target_find)
       end
 
-      assert_table_counts
-
-      storage = Storage.find_by(:ems_ref => "/api/storagedomains/ee745353-c069-4de8-8d76-ec2e155e2ca0")
-      assert_vm(vm, storage)
-
-      hardware = Hardware.find_by(:vm_or_template_id => vm.id)
-      assert_vm_rels(vm, hardware, storage)
-      assert_cluster(vm)
-      assert_storage(storage, vm)
+      expect(new_vm.ems_cluster).not_to be_nil
     end
   end
 
