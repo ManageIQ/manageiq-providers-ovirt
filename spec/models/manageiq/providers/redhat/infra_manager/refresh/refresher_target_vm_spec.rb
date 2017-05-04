@@ -91,7 +91,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
       target_hash, target_klass, target_find = ep_class.parse_new_target(add_vm_event, description, @ems, name)
 
-      new_vm = VCR.use_cassette("#{described_class.name.underscore}_target_new_vm") do
+      new_vm = VCR.use_cassette("#{described_class.name.underscore}_target_new_vm", :allow_unused_http_interactions => true) do
         EmsRefresh.refresh_new_target(@ems, target_hash, target_klass, target_find)
       end
 
