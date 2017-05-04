@@ -101,26 +101,42 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
                 :name        => "USER_ADD_VM_FINISHED_SUCCESS"}
       [event, event2, event3].each do |ev|
         VCR.use_cassette("#{described_class.name.underscore}_parse_new_target") do
-          parsed = ManageIQ::Providers::Redhat::InfraManager::EventParser.parse_new_target(ev, ev[:description], @ems, ev[:name])
+          parsed, = ManageIQ::Providers::Redhat::InfraManager::EventParser.parse_new_target(ev, ev[:description], @ems, ev[:name])
 
-          expect(parsed).to have_attributes(
-            :ems_id         => @ems.id,
-            :vm             => {:type        => "ManageIQ::Providers::Redhat::InfraManager::Vm",
-                                :ems_ref     => "/api/vms/22f18a6b-fc44-43ae-976f-993ad5f1d648",
-                                :ems_ref_obj => "/api/vms/22f18a6b-fc44-43ae-976f-993ad5f1d648",
-                                :uid_ems     => "22f18a6b-fc44-43ae-976f-993ad5f1d648",
-                                :vendor      => "redhat",
-                                :name        => "test2",
-                                :location    => "22f18a6b-fc44-43ae-976f-993ad5f1d648.ovf",
-                                :template    => false},
-            :cluster        => {:ems_ref     => "/api/clusters/00000002-0002-0002-0002-00000000017a",
-                                :ems_ref_obj => "/api/clusters/00000002-0002-0002-0002-00000000017a",
-                                :uid_ems     => "00000002-0002-0002-0002-00000000017a",
-                                :name        => "Default"},
-            :resource_pools => {:name       => "Default for Cluster Default",
-                                :uid_ems    => "00000002-0002-0002-0002-00000000017a_respool",
-                                :is_default => true},
-            :folders        => {:ems_ref => "/api/datacenters/00000001-0001-0001-0001-000000000311"}
+          expect(parsed.keys).to include(:vms, :clusters, :folders, :resource_pools)
+
+          expect(parsed[:vms].count).to eq(1)
+          expect(parsed[:vms].first).to have_attributes(
+            :type        => "ManageIQ::Providers::Redhat::InfraManager::Vm",
+            :ems_ref     => "/api/vms/22f18a6b-fc44-43ae-976f-993ad5f1d648",
+            :ems_ref_obj => "/api/vms/22f18a6b-fc44-43ae-976f-993ad5f1d648",
+            :uid_ems     => "22f18a6b-fc44-43ae-976f-993ad5f1d648",
+            :vendor      => "redhat",
+            :name        => "test2",
+            :location    => "22f18a6b-fc44-43ae-976f-993ad5f1d648.ovf",
+            :template    => false
+          )
+
+          expect(parsed[:clusters].count).to eq(1)
+          expect(parsed[:clusters].first).to have_attributes(
+            :ems_ref     => "/api/clusters/00000002-0002-0002-0002-00000000017a",
+            :ems_ref_obj => "/api/clusters/00000002-0002-0002-0002-00000000017a",
+            :uid_ems     => "00000002-0002-0002-0002-00000000017a",
+            :name        => "Default"
+          )
+
+          expect(parsed[:resource_pools].count).to eq(1)
+          expect(parsed[:resource_pools].first).to have_attributes(
+            :name       => "Default for Cluster Default",
+            :uid_ems    => "00000002-0002-0002-0002-00000000017a_respool",
+            :is_default => true
+          )
+
+          expect(parsed[:folders].count).to eq(3)
+          expect(parsed[:folders].detect { |f| f[:type] == 'Datacenter' }).to have_attributes(
+            :ems_ref     => "/api/datacenters/00000001-0001-0001-0001-000000000311",
+            :ems_ref_obj => "/api/datacenters/00000001-0001-0001-0001-000000000311",
+            :uid_ems     => "00000001-0001-0001-0001-000000000311"
           )
         end
       end
