@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://admin%40internal:engine@192.168.1.105:8443/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a
+    uri: https://192.168.1.105:8443/ovirt-engine/api/clusters/00000002-0002-0002-0002-00000000017a
     body:
       encoding: US-ASCII
       string: ''
@@ -17,6 +17,7 @@ http_interactions:
       - '3'
       Prefer:
       - persistent-auth
+      Authorization: Basic <%= Base64.encode64("admin%40internal:engine").chomp %>
   response:
     status:
       code: 200

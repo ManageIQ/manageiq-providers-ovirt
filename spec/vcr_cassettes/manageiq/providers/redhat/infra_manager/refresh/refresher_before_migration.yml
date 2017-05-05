@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://admin%40internal:password@10.35.161.51/ovirt-engine/api
+    uri: https://10.35.161.51/ovirt-engine/api
     body:
       encoding: US-ASCII
       string: ''
@@ -17,6 +17,8 @@ http_interactions:
       - '3'
       Prefer:
       - persistent-auth
+      Authorization: Basic <%= Base64.encode64("admin%40internal:password").chomp
+        %>
   response:
     status:
       code: 200
@@ -34,32 +36,37 @@ http_interactions:
       - JSESSIONID=PjLhwAkmc850YyVOZjPCA9Kk; Path=/api; Secure; HttpOnly
       Link:
       - "<https://10.35.161.51/ovirt-engine/api/capabilities>; rel=capabilities,<https://10.35.161.51/ovirt-engine/api/clusters>;
-        rel=clusters,<https://10.35.161.51/ovirt-engine/api/clusters?search={query}>; rel=clusters/search,<https://10.35.161.51/ovirt-engine/api/datacenters>;
-        rel=datacenters,<https://10.35.161.51/ovirt-engine/api/datacenters?search={query}>; rel=datacenters/search,<https://10.35.161.51/ovirt-engine/api/events>;
-        rel=events,<https://10.35.161.51/ovirt-engine/api/events;from={event_id}?search={query}>;
+        rel=clusters,<https://10.35.161.51/ovirt-engine/api/clusters?search={query}>;
+        rel=clusters/search,<https://10.35.161.51/ovirt-engine/api/datacenters>; rel=datacenters,<https://10.35.161.51/ovirt-engine/api/datacenters?search={query}>;
+        rel=datacenters/search,<https://10.35.161.51/ovirt-engine/api/events>; rel=events,<https://10.35.161.51/ovirt-engine/api/events;from={event_id}?search={query}>;
         rel=events/search,<https://10.35.161.51/ovirt-engine/api/hosts>; rel=hosts,<https://10.35.161.51/ovirt-engine/api/hosts?search={query}>;
         rel=hosts/search,<https://10.35.161.51/ovirt-engine/api/networks>; rel=networks,<https://10.35.161.51/ovirt-engine/api/networks?search={query}>;
         rel=networks/search,<https://10.35.161.51/ovirt-engine/api/roles>; rel=roles,<https://10.35.161.51/ovirt-engine/api/storagedomains>;
         rel=storagedomains,<https://10.35.161.51/ovirt-engine/api/storagedomains?search={query}>;
         rel=storagedomains/search,<https://10.35.161.51/ovirt-engine/api/tags>; rel=tags,<https://10.35.161.51/ovirt-engine/api/bookmarks>;
         rel=bookmarks,<https://10.35.161.51/ovirt-engine/api/icons>; rel=icons,<https://10.35.161.51/ovirt-engine/api/templates>;
-        rel=templates,<https://10.35.161.51/ovirt-engine/api/templates?search={query}>; rel=templates/search,<https://10.35.161.51/ovirt-engine/api/instancetypes>;
+        rel=templates,<https://10.35.161.51/ovirt-engine/api/templates?search={query}>;
+        rel=templates/search,<https://10.35.161.51/ovirt-engine/api/instancetypes>;
         rel=instancetypes,<https://10.35.161.51/ovirt-engine/api/instancetypes?search={query}>;
         rel=instancetypes/search,<https://10.35.161.51/ovirt-engine/api/users>; rel=users,<https://10.35.161.51/ovirt-engine/api/users?search={query}>;
         rel=users/search,<https://10.35.161.51/ovirt-engine/api/groups>; rel=groups,<https://10.35.161.51/ovirt-engine/api/groups?search={query}>;
         rel=groups/search,<https://10.35.161.51/ovirt-engine/api/domains>; rel=domains,<https://10.35.161.51/ovirt-engine/api/vmpools>;
-        rel=vmpools,<https://10.35.161.51/ovirt-engine/api/vmpools?search={query}>; rel=vmpools/search,<https://10.35.161.51/ovirt-engine/api/vms>;
-        rel=vms,<https://10.35.161.51/ovirt-engine/api/vms?search={query}>; rel=vms/search,<https://10.35.161.51/ovirt-engine/api/disks>;
-        rel=disks,<https://10.35.161.51/ovirt-engine/api/disks?search={query}>; rel=disks/search,<https://10.35.161.51/ovirt-engine/api/jobs>;
-        rel=jobs,<https://10.35.161.51/ovirt-engine/api/storageconnections>; rel=storageconnections,<https://10.35.161.51/ovirt-engine/api/vnicprofiles>;
+        rel=vmpools,<https://10.35.161.51/ovirt-engine/api/vmpools?search={query}>;
+        rel=vmpools/search,<https://10.35.161.51/ovirt-engine/api/vms>; rel=vms,<https://10.35.161.51/ovirt-engine/api/vms?search={query}>;
+        rel=vms/search,<https://10.35.161.51/ovirt-engine/api/disks>; rel=disks,<https://10.35.161.51/ovirt-engine/api/disks?search={query}>;
+        rel=disks/search,<https://10.35.161.51/ovirt-engine/api/jobs>; rel=jobs,<https://10.35.161.51/ovirt-engine/api/storageconnections>;
+        rel=storageconnections,<https://10.35.161.51/ovirt-engine/api/vnicprofiles>;
         rel=vnicprofiles,<https://10.35.161.51/ovirt-engine/api/diskprofiles>; rel=diskprofiles,<https://10.35.161.51/ovirt-engine/api/cpuprofiles>;
-        rel=cpuprofiles,<https://10.35.161.51/ovirt-engine/api/schedulingpolicyunits>; rel=schedulingpolicyunits,<https://10.35.161.51/ovirt-engine/api/schedulingpolicies>;
-        rel=schedulingpolicies,<https://10.35.161.51/ovirt-engine/api/permissions>; rel=permissions,<https://10.35.161.51/ovirt-engine/api/macpools>;
-        rel=macpools,<https://10.35.161.51/ovirt-engine/api/operatingsystems>; rel=operatingsystems,<https://10.35.161.51/ovirt-engine/api/externalhostproviders>;
+        rel=cpuprofiles,<https://10.35.161.51/ovirt-engine/api/schedulingpolicyunits>;
+        rel=schedulingpolicyunits,<https://10.35.161.51/ovirt-engine/api/schedulingpolicies>;
+        rel=schedulingpolicies,<https://10.35.161.51/ovirt-engine/api/permissions>;
+        rel=permissions,<https://10.35.161.51/ovirt-engine/api/macpools>; rel=macpools,<https://10.35.161.51/ovirt-engine/api/operatingsystems>;
+        rel=operatingsystems,<https://10.35.161.51/ovirt-engine/api/externalhostproviders>;
         rel=externalhostproviders,<https://10.35.161.51/ovirt-engine/api/openstackimageproviders>;
         rel=openstackimageproviders,<https://10.35.161.51/ovirt-engine/api/openstackvolumeproviders>;
         rel=openstackvolumeproviders,<https://10.35.161.51/ovirt-engine/api/openstacknetworkproviders>;
-        rel=openstacknetworkproviders,<https://10.35.161.51/ovirt-engine/api/katelloerrata>; rel=katelloerrata"
+        rel=openstacknetworkproviders,<https://10.35.161.51/ovirt-engine/api/katelloerrata>;
+        rel=katelloerrata"
       Jsessionid:
       - PjLhwAkmc850YyVOZjPCA9Kk
       Content-Type:
@@ -2010,32 +2017,37 @@ http_interactions:
       - Thu, 01 Jan 1970 02:00:00 IST
       Link:
       - "<https://10.35.161.51/ovirt-engine/api/capabilities>; rel=capabilities,<https://10.35.161.51/ovirt-engine/api/clusters>;
-        rel=clusters,<https://10.35.161.51/ovirt-engine/api/clusters?search={query}>; rel=clusters/search,<https://10.35.161.51/ovirt-engine/api/datacenters>;
-        rel=datacenters,<https://10.35.161.51/ovirt-engine/api/datacenters?search={query}>; rel=datacenters/search,<https://10.35.161.51/ovirt-engine/api/events>;
-        rel=events,<https://10.35.161.51/ovirt-engine/api/events;from={event_id}?search={query}>;
+        rel=clusters,<https://10.35.161.51/ovirt-engine/api/clusters?search={query}>;
+        rel=clusters/search,<https://10.35.161.51/ovirt-engine/api/datacenters>; rel=datacenters,<https://10.35.161.51/ovirt-engine/api/datacenters?search={query}>;
+        rel=datacenters/search,<https://10.35.161.51/ovirt-engine/api/events>; rel=events,<https://10.35.161.51/ovirt-engine/api/events;from={event_id}?search={query}>;
         rel=events/search,<https://10.35.161.51/ovirt-engine/api/hosts>; rel=hosts,<https://10.35.161.51/ovirt-engine/api/hosts?search={query}>;
         rel=hosts/search,<https://10.35.161.51/ovirt-engine/api/networks>; rel=networks,<https://10.35.161.51/ovirt-engine/api/networks?search={query}>;
         rel=networks/search,<https://10.35.161.51/ovirt-engine/api/roles>; rel=roles,<https://10.35.161.51/ovirt-engine/api/storagedomains>;
         rel=storagedomains,<https://10.35.161.51/ovirt-engine/api/storagedomains?search={query}>;
         rel=storagedomains/search,<https://10.35.161.51/ovirt-engine/api/tags>; rel=tags,<https://10.35.161.51/ovirt-engine/api/bookmarks>;
         rel=bookmarks,<https://10.35.161.51/ovirt-engine/api/icons>; rel=icons,<https://10.35.161.51/ovirt-engine/api/templates>;
-        rel=templates,<https://10.35.161.51/ovirt-engine/api/templates?search={query}>; rel=templates/search,<https://10.35.161.51/ovirt-engine/api/instancetypes>;
+        rel=templates,<https://10.35.161.51/ovirt-engine/api/templates?search={query}>;
+        rel=templates/search,<https://10.35.161.51/ovirt-engine/api/instancetypes>;
         rel=instancetypes,<https://10.35.161.51/ovirt-engine/api/instancetypes?search={query}>;
         rel=instancetypes/search,<https://10.35.161.51/ovirt-engine/api/users>; rel=users,<https://10.35.161.51/ovirt-engine/api/users?search={query}>;
         rel=users/search,<https://10.35.161.51/ovirt-engine/api/groups>; rel=groups,<https://10.35.161.51/ovirt-engine/api/groups?search={query}>;
         rel=groups/search,<https://10.35.161.51/ovirt-engine/api/domains>; rel=domains,<https://10.35.161.51/ovirt-engine/api/vmpools>;
-        rel=vmpools,<https://10.35.161.51/ovirt-engine/api/vmpools?search={query}>; rel=vmpools/search,<https://10.35.161.51/ovirt-engine/api/vms>;
-        rel=vms,<https://10.35.161.51/ovirt-engine/api/vms?search={query}>; rel=vms/search,<https://10.35.161.51/ovirt-engine/api/disks>;
-        rel=disks,<https://10.35.161.51/ovirt-engine/api/disks?search={query}>; rel=disks/search,<https://10.35.161.51/ovirt-engine/api/jobs>;
-        rel=jobs,<https://10.35.161.51/ovirt-engine/api/storageconnections>; rel=storageconnections,<https://10.35.161.51/ovirt-engine/api/vnicprofiles>;
+        rel=vmpools,<https://10.35.161.51/ovirt-engine/api/vmpools?search={query}>;
+        rel=vmpools/search,<https://10.35.161.51/ovirt-engine/api/vms>; rel=vms,<https://10.35.161.51/ovirt-engine/api/vms?search={query}>;
+        rel=vms/search,<https://10.35.161.51/ovirt-engine/api/disks>; rel=disks,<https://10.35.161.51/ovirt-engine/api/disks?search={query}>;
+        rel=disks/search,<https://10.35.161.51/ovirt-engine/api/jobs>; rel=jobs,<https://10.35.161.51/ovirt-engine/api/storageconnections>;
+        rel=storageconnections,<https://10.35.161.51/ovirt-engine/api/vnicprofiles>;
         rel=vnicprofiles,<https://10.35.161.51/ovirt-engine/api/diskprofiles>; rel=diskprofiles,<https://10.35.161.51/ovirt-engine/api/cpuprofiles>;
-        rel=cpuprofiles,<https://10.35.161.51/ovirt-engine/api/schedulingpolicyunits>; rel=schedulingpolicyunits,<https://10.35.161.51/ovirt-engine/api/schedulingpolicies>;
-        rel=schedulingpolicies,<https://10.35.161.51/ovirt-engine/api/permissions>; rel=permissions,<https://10.35.161.51/ovirt-engine/api/macpools>;
-        rel=macpools,<https://10.35.161.51/ovirt-engine/api/operatingsystems>; rel=operatingsystems,<https://10.35.161.51/ovirt-engine/api/externalhostproviders>;
+        rel=cpuprofiles,<https://10.35.161.51/ovirt-engine/api/schedulingpolicyunits>;
+        rel=schedulingpolicyunits,<https://10.35.161.51/ovirt-engine/api/schedulingpolicies>;
+        rel=schedulingpolicies,<https://10.35.161.51/ovirt-engine/api/permissions>;
+        rel=permissions,<https://10.35.161.51/ovirt-engine/api/macpools>; rel=macpools,<https://10.35.161.51/ovirt-engine/api/operatingsystems>;
+        rel=operatingsystems,<https://10.35.161.51/ovirt-engine/api/externalhostproviders>;
         rel=externalhostproviders,<https://10.35.161.51/ovirt-engine/api/openstackimageproviders>;
         rel=openstackimageproviders,<https://10.35.161.51/ovirt-engine/api/openstackvolumeproviders>;
         rel=openstackvolumeproviders,<https://10.35.161.51/ovirt-engine/api/openstacknetworkproviders>;
-        rel=openstacknetworkproviders,<https://10.35.161.51/ovirt-engine/api/katelloerrata>; rel=katelloerrata"
+        rel=openstacknetworkproviders,<https://10.35.161.51/ovirt-engine/api/katelloerrata>;
+        rel=katelloerrata"
       Jsessionid:
       - PjLhwAkmc850YyVOZjPCA9Kk
       Content-Type:

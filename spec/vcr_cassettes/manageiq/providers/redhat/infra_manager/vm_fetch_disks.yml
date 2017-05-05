@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://admin%40internal:engine@192.168.1.31:8443/ovirt-engine/api/storagedomains/ee745353-c069-4de8-8d76-ec2e155e2ca0/disks/da123bb9-095a-4933-95f2-8032dfa332e1
+    uri: https://192.168.1.31:8443/ovirt-engine/api/storagedomains/ee745353-c069-4de8-8d76-ec2e155e2ca0/disks/da123bb9-095a-4933-95f2-8032dfa332e1
     body:
       encoding: US-ASCII
       string: ''
@@ -17,6 +17,7 @@ http_interactions:
       - '3'
       Prefer:
       - persistent-auth
+      Authorization: Basic <%= Base64.encode64("admin%40internal:engine").chomp %>
   response:
     status:
       code: 200
@@ -25,7 +26,8 @@ http_interactions:
       Connection:
       - keep-alive
       Set-Cookie:
-      - JSESSIONID=VlxUPb99qJPwMA_BW1X6Rib8vi8ceeu2JQIpa_3V.f18; path=/ovirt-engine/api; HttpOnly
+      - JSESSIONID=VlxUPb99qJPwMA_BW1X6Rib8vi8ceeu2JQIpa_3V.f18; path=/ovirt-engine/api;
+        HttpOnly
       Content-Type:
       - application/xml
       Content-Length:
@@ -69,6 +71,6 @@ http_interactions:
             <disk_profile href="/ovirt-engine/api/diskprofiles/5e1859c2-9c6b-48f7-af3c-eb7ea49d86c5" id="5e1859c2-9c6b-48f7-af3c-eb7ea49d86c5"/>
             <storage_type>image</storage_type>
         </disk>
-    http_version:
+    http_version: 
   recorded_at: Thu, 01 Dec 2016 12:28:30 GMT
 recorded_with: VCR 3.0.3
