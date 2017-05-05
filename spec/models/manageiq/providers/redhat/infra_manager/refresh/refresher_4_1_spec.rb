@@ -332,7 +332,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :total_size  => nil,
       :filename    => nil
     )
-    snapshot_parent = ManageIQ::Providers::Redhat::InfraManager::Snapshot.find_by(:name => "vm1_snap")
+    snapshot_parent = ::Snapshot.find_by(:name => "vm1_snap")
     expect(snapshot.parent).to eq(snapshot_parent)
 
     expect(v.hardware).to have_attributes(
