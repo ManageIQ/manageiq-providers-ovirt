@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://admin%40internal:engine@192.168.1.31:8443/ovirt-engine/api
+    uri: https://192.168.1.31:8443/ovirt-engine/api
     body:
       encoding: US-ASCII
       string: ''
@@ -17,6 +17,7 @@ http_interactions:
       - '3'
       Prefer:
       - persistent-auth
+      Authorization: Basic <%= Base64.encode64("admin%40internal:engine").chomp %>
   response:
     status:
       code: 200
@@ -34,28 +35,36 @@ http_interactions:
       - mwYV3UE_RAAqoOx7HlfOE7hlM5EH_cIfuOhEqiZf
       Link:
       - "<https://192.168.1.31:8443/ovirt-engine/api/capabilities>; rel=capabilities,<https://192.168.1.31:8443/ovirt-engine/api/clusters>;
-        rel=clusters,<https://192.168.1.31:8443/ovirt-engine/api/clusters?search={query}>; rel=clusters/search,<https://192.168.1.31:8443/ovirt-engine/api/datacenters>;
+        rel=clusters,<https://192.168.1.31:8443/ovirt-engine/api/clusters?search={query}>;
+        rel=clusters/search,<https://192.168.1.31:8443/ovirt-engine/api/datacenters>;
         rel=datacenters,<https://192.168.1.31:8443/ovirt-engine/api/datacenters?search={query}>;
-        rel=datacenters/search,<https://192.168.1.31:8443/ovirt-engine/api/events>; rel=events,<https://192.168.1.31:8443/ovirt-engine/api/events;from={event_id}?search={query}>;
+        rel=datacenters/search,<https://192.168.1.31:8443/ovirt-engine/api/events>;
+        rel=events,<https://192.168.1.31:8443/ovirt-engine/api/events;from={event_id}?search={query}>;
         rel=events/search,<https://192.168.1.31:8443/ovirt-engine/api/hosts>; rel=hosts,<https://192.168.1.31:8443/ovirt-engine/api/hosts?search={query}>;
         rel=hosts/search,<https://192.168.1.31:8443/ovirt-engine/api/networks>; rel=networks,<https://192.168.1.31:8443/ovirt-engine/api/networks?search={query}>;
         rel=networks/search,<https://192.168.1.31:8443/ovirt-engine/api/roles>; rel=roles,<https://192.168.1.31:8443/ovirt-engine/api/storagedomains>;
         rel=storagedomains,<https://192.168.1.31:8443/ovirt-engine/api/storagedomains?search={query}>;
-        rel=storagedomains/search,<https://192.168.1.31:8443/ovirt-engine/api/tags>; rel=tags,<https://192.168.1.31:8443/ovirt-engine/api/bookmarks>;
-        rel=bookmarks,<https://192.168.1.31:8443/ovirt-engine/api/icons>; rel=icons,<https://192.168.1.31:8443/ovirt-engine/api/templates>;
-        rel=templates,<https://192.168.1.31:8443/ovirt-engine/api/templates?search={query}>; rel=templates/search,<https://192.168.1.31:8443/ovirt-engine/api/instancetypes>;
+        rel=storagedomains/search,<https://192.168.1.31:8443/ovirt-engine/api/tags>;
+        rel=tags,<https://192.168.1.31:8443/ovirt-engine/api/bookmarks>; rel=bookmarks,<https://192.168.1.31:8443/ovirt-engine/api/icons>;
+        rel=icons,<https://192.168.1.31:8443/ovirt-engine/api/templates>; rel=templates,<https://192.168.1.31:8443/ovirt-engine/api/templates?search={query}>;
+        rel=templates/search,<https://192.168.1.31:8443/ovirt-engine/api/instancetypes>;
         rel=instancetypes,<https://192.168.1.31:8443/ovirt-engine/api/instancetypes?search={query}>;
-        rel=instancetypes/search,<https://192.168.1.31:8443/ovirt-engine/api/users>; rel=users,<https://192.168.1.31:8443/ovirt-engine/api/users?search={query}>;
+        rel=instancetypes/search,<https://192.168.1.31:8443/ovirt-engine/api/users>;
+        rel=users,<https://192.168.1.31:8443/ovirt-engine/api/users?search={query}>;
         rel=users/search,<https://192.168.1.31:8443/ovirt-engine/api/groups>; rel=groups,<https://192.168.1.31:8443/ovirt-engine/api/groups?search={query}>;
         rel=groups/search,<https://192.168.1.31:8443/ovirt-engine/api/domains>; rel=domains,<https://192.168.1.31:8443/ovirt-engine/api/vmpools>;
-        rel=vmpools,<https://192.168.1.31:8443/ovirt-engine/api/vmpools?search={query}>; rel=vmpools/search,<https://192.168.1.31:8443/ovirt-engine/api/vms>;
-        rel=vms,<https://192.168.1.31:8443/ovirt-engine/api/vms?search={query}>; rel=vms/search,<https://192.168.1.31:8443/ovirt-engine/api/disks>;
-        rel=disks,<https://192.168.1.31:8443/ovirt-engine/api/disks?search={query}>; rel=disks/search,<https://192.168.1.31:8443/ovirt-engine/api/jobs>;
-        rel=jobs,<https://192.168.1.31:8443/ovirt-engine/api/storageconnections>; rel=storageconnections,<https://192.168.1.31:8443/ovirt-engine/api/vnicprofiles>;
-        rel=vnicprofiles,<https://192.168.1.31:8443/ovirt-engine/api/diskprofiles>; rel=diskprofiles,<https://192.168.1.31:8443/ovirt-engine/api/cpuprofiles>;
-        rel=cpuprofiles,<https://192.168.1.31:8443/ovirt-engine/api/schedulingpolicyunits>; rel=schedulingpolicyunits,<https://192.168.1.31:8443/ovirt-engine/api/schedulingpolicies>;
-        rel=schedulingpolicies,<https://192.168.1.31:8443/ovirt-engine/api/permissions>; rel=permissions,<https://192.168.1.31:8443/ovirt-engine/api/macpools>;
-        rel=macpools,<https://192.168.1.31:8443/ovirt-engine/api/operatingsystems>; rel=operatingsystems,<https://192.168.1.31:8443/ovirt-engine/api/externalhostproviders>;
+        rel=vmpools,<https://192.168.1.31:8443/ovirt-engine/api/vmpools?search={query}>;
+        rel=vmpools/search,<https://192.168.1.31:8443/ovirt-engine/api/vms>; rel=vms,<https://192.168.1.31:8443/ovirt-engine/api/vms?search={query}>;
+        rel=vms/search,<https://192.168.1.31:8443/ovirt-engine/api/disks>; rel=disks,<https://192.168.1.31:8443/ovirt-engine/api/disks?search={query}>;
+        rel=disks/search,<https://192.168.1.31:8443/ovirt-engine/api/jobs>; rel=jobs,<https://192.168.1.31:8443/ovirt-engine/api/storageconnections>;
+        rel=storageconnections,<https://192.168.1.31:8443/ovirt-engine/api/vnicprofiles>;
+        rel=vnicprofiles,<https://192.168.1.31:8443/ovirt-engine/api/diskprofiles>;
+        rel=diskprofiles,<https://192.168.1.31:8443/ovirt-engine/api/cpuprofiles>;
+        rel=cpuprofiles,<https://192.168.1.31:8443/ovirt-engine/api/schedulingpolicyunits>;
+        rel=schedulingpolicyunits,<https://192.168.1.31:8443/ovirt-engine/api/schedulingpolicies>;
+        rel=schedulingpolicies,<https://192.168.1.31:8443/ovirt-engine/api/permissions>;
+        rel=permissions,<https://192.168.1.31:8443/ovirt-engine/api/macpools>; rel=macpools,<https://192.168.1.31:8443/ovirt-engine/api/operatingsystems>;
+        rel=operatingsystems,<https://192.168.1.31:8443/ovirt-engine/api/externalhostproviders>;
         rel=externalhostproviders,<https://192.168.1.31:8443/ovirt-engine/api/openstackimageproviders>;
         rel=openstackimageproviders,<https://192.168.1.31:8443/ovirt-engine/api/openstackvolumeproviders>;
         rel=openstackvolumeproviders,<https://192.168.1.31:8443/ovirt-engine/api/openstacknetworkproviders>;
@@ -145,7 +154,7 @@ http_interactions:
             </summary>
             <time>2016-08-22T11:57:57.869+02:00</time>
         </api>
-    http_version:
+    http_version: 
   recorded_at: Mon, 22 Aug 2016 09:57:56 GMT
 - request:
     method: get
@@ -546,7 +555,7 @@ http_interactions:
             <next_run_configuration_exists>false</next_run_configuration_exists>
             <numa_tune_mode>interleave</numa_tune_mode>
         </vm>
-    http_version:
+    http_version: 
   recorded_at: Mon, 22 Aug 2016 09:57:57 GMT
 - request:
     method: get
@@ -671,7 +680,7 @@ http_interactions:
                 </version>
             </template>
         </templates>
-    http_version:
+    http_version: 
   recorded_at: Mon, 22 Aug 2016 09:57:57 GMT
 - request:
     method: get
@@ -748,7 +757,7 @@ http_interactions:
                 <critical_space_action_blocker>5</critical_space_action_blocker>
             </storage_domain>
         </storage_domains>
-    http_version:
+    http_version: 
   recorded_at: Mon, 22 Aug 2016 09:57:57 GMT
 - request:
     method: get
@@ -789,7 +798,7 @@ http_interactions:
       string: |
         <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
         <storage_domains/>
-    http_version:
+    http_version: 
   recorded_at: Mon, 22 Aug 2016 09:57:57 GMT
 - request:
     method: get
@@ -866,7 +875,7 @@ http_interactions:
                 <storage_type>image</storage_type>
             </disk>
         </disks>
-    http_version:
+    http_version: 
   recorded_at: Mon, 22 Aug 2016 09:57:58 GMT
 - request:
     method: get
@@ -918,7 +927,7 @@ http_interactions:
                 <persist_memorystate>false</persist_memorystate>
             </snapshot>
         </snapshots>
-    http_version:
+    http_version: 
   recorded_at: Mon, 22 Aug 2016 09:57:58 GMT
 - request:
     method: get
@@ -976,7 +985,7 @@ http_interactions:
                 <vnic_profile href="/ovirt-engine/api/vnicprofiles/0000000a-000a-000a-000a-000000000398" id="0000000a-000a-000a-000a-000000000398"/>
             </nic>
         </nics>
-    http_version:
+    http_version: 
   recorded_at: Mon, 22 Aug 2016 09:57:58 GMT
 - request:
     method: get
@@ -1012,28 +1021,36 @@ http_interactions:
       - mwYV3UE_RAAqoOx7HlfOE7hlM5EH_cIfuOhEqiZf
       Link:
       - "<https://192.168.1.31:8443/ovirt-engine/api/capabilities>; rel=capabilities,<https://192.168.1.31:8443/ovirt-engine/api/clusters>;
-        rel=clusters,<https://192.168.1.31:8443/ovirt-engine/api/clusters?search={query}>; rel=clusters/search,<https://192.168.1.31:8443/ovirt-engine/api/datacenters>;
+        rel=clusters,<https://192.168.1.31:8443/ovirt-engine/api/clusters?search={query}>;
+        rel=clusters/search,<https://192.168.1.31:8443/ovirt-engine/api/datacenters>;
         rel=datacenters,<https://192.168.1.31:8443/ovirt-engine/api/datacenters?search={query}>;
-        rel=datacenters/search,<https://192.168.1.31:8443/ovirt-engine/api/events>; rel=events,<https://192.168.1.31:8443/ovirt-engine/api/events;from={event_id}?search={query}>;
+        rel=datacenters/search,<https://192.168.1.31:8443/ovirt-engine/api/events>;
+        rel=events,<https://192.168.1.31:8443/ovirt-engine/api/events;from={event_id}?search={query}>;
         rel=events/search,<https://192.168.1.31:8443/ovirt-engine/api/hosts>; rel=hosts,<https://192.168.1.31:8443/ovirt-engine/api/hosts?search={query}>;
         rel=hosts/search,<https://192.168.1.31:8443/ovirt-engine/api/networks>; rel=networks,<https://192.168.1.31:8443/ovirt-engine/api/networks?search={query}>;
         rel=networks/search,<https://192.168.1.31:8443/ovirt-engine/api/roles>; rel=roles,<https://192.168.1.31:8443/ovirt-engine/api/storagedomains>;
         rel=storagedomains,<https://192.168.1.31:8443/ovirt-engine/api/storagedomains?search={query}>;
-        rel=storagedomains/search,<https://192.168.1.31:8443/ovirt-engine/api/tags>; rel=tags,<https://192.168.1.31:8443/ovirt-engine/api/bookmarks>;
-        rel=bookmarks,<https://192.168.1.31:8443/ovirt-engine/api/icons>; rel=icons,<https://192.168.1.31:8443/ovirt-engine/api/templates>;
-        rel=templates,<https://192.168.1.31:8443/ovirt-engine/api/templates?search={query}>; rel=templates/search,<https://192.168.1.31:8443/ovirt-engine/api/instancetypes>;
+        rel=storagedomains/search,<https://192.168.1.31:8443/ovirt-engine/api/tags>;
+        rel=tags,<https://192.168.1.31:8443/ovirt-engine/api/bookmarks>; rel=bookmarks,<https://192.168.1.31:8443/ovirt-engine/api/icons>;
+        rel=icons,<https://192.168.1.31:8443/ovirt-engine/api/templates>; rel=templates,<https://192.168.1.31:8443/ovirt-engine/api/templates?search={query}>;
+        rel=templates/search,<https://192.168.1.31:8443/ovirt-engine/api/instancetypes>;
         rel=instancetypes,<https://192.168.1.31:8443/ovirt-engine/api/instancetypes?search={query}>;
-        rel=instancetypes/search,<https://192.168.1.31:8443/ovirt-engine/api/users>; rel=users,<https://192.168.1.31:8443/ovirt-engine/api/users?search={query}>;
+        rel=instancetypes/search,<https://192.168.1.31:8443/ovirt-engine/api/users>;
+        rel=users,<https://192.168.1.31:8443/ovirt-engine/api/users?search={query}>;
         rel=users/search,<https://192.168.1.31:8443/ovirt-engine/api/groups>; rel=groups,<https://192.168.1.31:8443/ovirt-engine/api/groups?search={query}>;
         rel=groups/search,<https://192.168.1.31:8443/ovirt-engine/api/domains>; rel=domains,<https://192.168.1.31:8443/ovirt-engine/api/vmpools>;
-        rel=vmpools,<https://192.168.1.31:8443/ovirt-engine/api/vmpools?search={query}>; rel=vmpools/search,<https://192.168.1.31:8443/ovirt-engine/api/vms>;
-        rel=vms,<https://192.168.1.31:8443/ovirt-engine/api/vms?search={query}>; rel=vms/search,<https://192.168.1.31:8443/ovirt-engine/api/disks>;
-        rel=disks,<https://192.168.1.31:8443/ovirt-engine/api/disks?search={query}>; rel=disks/search,<https://192.168.1.31:8443/ovirt-engine/api/jobs>;
-        rel=jobs,<https://192.168.1.31:8443/ovirt-engine/api/storageconnections>; rel=storageconnections,<https://192.168.1.31:8443/ovirt-engine/api/vnicprofiles>;
-        rel=vnicprofiles,<https://192.168.1.31:8443/ovirt-engine/api/diskprofiles>; rel=diskprofiles,<https://192.168.1.31:8443/ovirt-engine/api/cpuprofiles>;
-        rel=cpuprofiles,<https://192.168.1.31:8443/ovirt-engine/api/schedulingpolicyunits>; rel=schedulingpolicyunits,<https://192.168.1.31:8443/ovirt-engine/api/schedulingpolicies>;
-        rel=schedulingpolicies,<https://192.168.1.31:8443/ovirt-engine/api/permissions>; rel=permissions,<https://192.168.1.31:8443/ovirt-engine/api/macpools>;
-        rel=macpools,<https://192.168.1.31:8443/ovirt-engine/api/operatingsystems>; rel=operatingsystems,<https://192.168.1.31:8443/ovirt-engine/api/externalhostproviders>;
+        rel=vmpools,<https://192.168.1.31:8443/ovirt-engine/api/vmpools?search={query}>;
+        rel=vmpools/search,<https://192.168.1.31:8443/ovirt-engine/api/vms>; rel=vms,<https://192.168.1.31:8443/ovirt-engine/api/vms?search={query}>;
+        rel=vms/search,<https://192.168.1.31:8443/ovirt-engine/api/disks>; rel=disks,<https://192.168.1.31:8443/ovirt-engine/api/disks?search={query}>;
+        rel=disks/search,<https://192.168.1.31:8443/ovirt-engine/api/jobs>; rel=jobs,<https://192.168.1.31:8443/ovirt-engine/api/storageconnections>;
+        rel=storageconnections,<https://192.168.1.31:8443/ovirt-engine/api/vnicprofiles>;
+        rel=vnicprofiles,<https://192.168.1.31:8443/ovirt-engine/api/diskprofiles>;
+        rel=diskprofiles,<https://192.168.1.31:8443/ovirt-engine/api/cpuprofiles>;
+        rel=cpuprofiles,<https://192.168.1.31:8443/ovirt-engine/api/schedulingpolicyunits>;
+        rel=schedulingpolicyunits,<https://192.168.1.31:8443/ovirt-engine/api/schedulingpolicies>;
+        rel=schedulingpolicies,<https://192.168.1.31:8443/ovirt-engine/api/permissions>;
+        rel=permissions,<https://192.168.1.31:8443/ovirt-engine/api/macpools>; rel=macpools,<https://192.168.1.31:8443/ovirt-engine/api/operatingsystems>;
+        rel=operatingsystems,<https://192.168.1.31:8443/ovirt-engine/api/externalhostproviders>;
         rel=externalhostproviders,<https://192.168.1.31:8443/ovirt-engine/api/openstackimageproviders>;
         rel=openstackimageproviders,<https://192.168.1.31:8443/ovirt-engine/api/openstackvolumeproviders>;
         rel=openstackvolumeproviders,<https://192.168.1.31:8443/ovirt-engine/api/openstacknetworkproviders>;
@@ -1123,6 +1140,6 @@ http_interactions:
             </summary>
             <time>2016-08-22T11:57:59.423+02:00</time>
         </api>
-    http_version:
+    http_version: 
   recorded_at: Mon, 22 Aug 2016 09:57:58 GMT
 recorded_with: VCR 3.0.3

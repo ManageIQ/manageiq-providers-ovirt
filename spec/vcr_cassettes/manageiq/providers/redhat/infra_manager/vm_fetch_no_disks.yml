@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://admin%40internal:engine@192.168.1.31:8443/ovirt-engine/api/storagedomains/ee745353-c069-4de8-8d76-ec2e155e2ca0/disks/da123bb9-095a-4933-95f2-8032dfa332e1
+    uri: https://192.168.1.31:8443/ovirt-engine/api/storagedomains/ee745353-c069-4de8-8d76-ec2e155e2ca0/disks/da123bb9-095a-4933-95f2-8032dfa332e1
     body:
       encoding: US-ASCII
       string: ''
@@ -17,6 +17,7 @@ http_interactions:
       - '3'
       Prefer:
       - persistent-auth
+      Authorization: Basic <%= Base64.encode64("admin%40internal:engine").chomp %>
   response:
     status:
       code: 404
@@ -25,7 +26,8 @@ http_interactions:
       Connection:
       - keep-alive
       Set-Cookie:
-      - JSESSIONID=wgFKbxhmyF8DSFVWxXLBhdTTj-3c-1snGjezqC4W.f18; path=/ovirt-engine/api; HttpOnly
+      - JSESSIONID=wgFKbxhmyF8DSFVWxXLBhdTTj-3c-1snGjezqC4W.f18; path=/ovirt-engine/api;
+        HttpOnly
       Content-Length:
       - '0'
       Jsessionid:
