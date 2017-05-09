@@ -45,15 +45,9 @@ module ManageIQ::Providers::Redhat::InfraManager::VmOrTemplateShared::Scanning
   1) Direct LUNs are attached to ManageIQ appliance
   2) Management Relationship is set for the ManageIQ appliance')
 
-  def proxies4job(job = nil)
+  def proxies4job(_job = nil)
     _log.debug "Enter (RHEVM)"
     msg = N_('Perform SmartState Analysis on this VM')
-
-    # If we do not get passed an model object assume it is a job guid
-    if job && !job.kind_of?(ActiveRecord::Base)
-      jobid = job
-      job = Job.find_by(:guid => jobid)
-    end
 
     all_proxy_list = storage2proxies
     proxies = storage2active_proxies(all_proxy_list)
@@ -61,7 +55,7 @@ module ManageIQ::Providers::Redhat::InfraManager::VmOrTemplateShared::Scanning
 
     if proxies.empty?
       msg = RHEVM_NO_PROXIES_ERROR_MSG
-      log_proxies(proxies, all_proxy_list, msg, job) if job
+      log_all_proxies(all_proxy_list, msg)
     end
 
     {:proxies => proxies.flatten, :message => _(msg)}
