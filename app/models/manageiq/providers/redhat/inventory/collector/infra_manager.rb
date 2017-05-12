@@ -1,33 +1,41 @@
 class ManageIQ::Providers::Redhat::Inventory::Collector::InfraManager < ManageIQ::Providers::Redhat::Inventory::Collector
   def clusters
-    # TODO
-  end
-
-  def vmpools
-    # TODO
+    collect_clusters
   end
 
   def networks
-    # TODO
+    collect_networks
   end
 
   def storagedomains
-    # TODO
+    collect_storagedomains
   end
 
   def datacenters
-    # TODO
+    collect_datacenters
   end
 
   def hosts
-    # TODO
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      connection.system_service.hosts_service.list
+    end
+  end
+
+  def host_stats(host)
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      connection.link?(host.statistics) ? connection.follow_link(host.statistics) : host.statistics
+    end
   end
 
   def vms
-    # TODO
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      connection.system_service.vms_service.list
+    end
   end
 
   def templates
-    # TODO
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      connection.system_service.templates_service.list
+    end
   end
 end

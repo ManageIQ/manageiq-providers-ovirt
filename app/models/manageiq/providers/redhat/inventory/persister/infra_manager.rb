@@ -8,6 +8,31 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
          operating_systems snapshots switchs system_services)
     )
 
-    # TODO: check what needs to be added here
+    add_inventory_collection(
+      infra.datacenter_children(
+        :dependency_attributes => {
+          :folders => [
+            [collections[:clusters]],
+            [collections[:vms]]
+          ]
+        }
+      )
+    )
+
+    add_inventory_collection(
+      infra.resource_pool_children(
+        :dependency_attributes => {
+          :vms => [collections[:vms]],
+        }
+      )
+    )
+
+    add_inventory_collection(
+      infra.cluster_children(
+        :dependency_attributes => {
+          :resource_pools => [collections[:resource_pools]],
+        }
+      )
+    )
   end
 end
