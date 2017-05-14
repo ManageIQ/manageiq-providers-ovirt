@@ -164,4 +164,61 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Disk do
       @task.poll_add_disks_complete
     end
   end
+
+  context "#find_storage!" do
+    let(:storage_name) { "test_storage" }
+    let(:storage_id) { 123 }
+
+    context "when storage exists" do
+      let(:storage) { FactoryGirl.create(:storage, :name => storage_name, :id => storage_id) }
+
+      it "finds a storage by its ID" do
+        disk_spec = { :datastore_id => storage_id }
+        allow(Storage).to receive(:search_by_id_or_name).with(storage_id, nil).and_return(storage)
+
+        expect(@task.send(:find_storage!, disk_spec)).to eq(storage)
+      end
+
+      it "finds a storage by its name" do
+        disk_spec = { :datastore => storage_name }
+        allow(Storage).to receive(:search_by_id_or_name).with(nil, storage_name).and_return(storage)
+
+        expect(@task.send(:find_storage!, disk_spec)).to eq(storage)
+      end
+
+      it "finds a storage both by its id and name" do
+        disk_spec = { :datastore_id => storage_id, :datastore => storage_name }
+        allow(Storage).to receive(:search_by_id_or_name).with(storage_id, storage_name).and_return(storage)
+
+        expect(@task.send(:find_storage!, disk_spec)).to eq(storage)
+      end
+    end
+
+    context "when storage does not exist" do
+      it "raises an exception when doesn't find storage by its ID" do
+        disk_spec = { :datastore_id => 123 }
+        allow(Storage).to receive(:search_by_id_or_name).with(storage_id, nil).and_return(nil)
+
+        expect { @task.send(:find_storage!, disk_spec) }.to raise_error(MiqException::MiqProvisionError)
+      end
+
+      it "raises an exception when doesn't find storage by its name" do
+        disk_spec = { :datastore => storage_name }
+        allow(Storage).to receive(:search_by_id_or_name).with(nil, storage_name).and_return(nil)
+
+        expect { @task.send(:find_storage!, disk_spec) }.to raise_error(MiqException::MiqProvisionError)
+      end
+
+      it "raises an exception when doesn't find storage both by its id and name" do
+        disk_spec = { :datastore_id => storage_id, :datastore => storage_name }
+        allow(Storage).to receive(:search_by_id_or_name).with(storage_id, storage_name).and_return(nil)
+
+        expect { @task.send(:find_storage!, disk_spec) }.to raise_error(MiqException::MiqProvisionError)
+      end
+
+      it "raises an exception when doesn't find storage without specifying id or name" do
+        expect { @task.send(:find_storage!, {}) }.to raise_error(MiqException::MiqProvisionError)
+      end
+    end
+  end
 end
