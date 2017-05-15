@@ -354,6 +354,10 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       end
     end
 
+    def event_fetcher
+      ManageIQ::Providers::Redhat::InfraManager::EventFetcher.new(ext_management_system)
+    end
+
     private
 
     #
