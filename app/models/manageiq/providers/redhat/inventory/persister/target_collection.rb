@@ -3,16 +3,16 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
     add_targeted_inventory_collections
     add_remaining_inventory_collections([infra], :strategy => :local_db_find_references)
 
-    # add_inventory_collection(
-    #   infra.datacenter_children(
-    #     :dependency_attributes => {
-    #       :folders => [
-    #         [collections[:clusters]],
-    #         [collections[:vms]]
-    #       ]
-    #     }
-    #   )
-    # )
+    add_inventory_collection(
+      infra.datacenter_children(
+        :dependency_attributes => {
+          :folders => [
+            [collections[:ems_clusters]],
+            [collections[:vms]]
+          ]
+        }
+      )
+    )
 
     add_inventory_collection(
       infra.resource_pool_children(
@@ -23,7 +23,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
     )
 
     add_inventory_collection(
-      infra.cluster_children(
+      infra.emsclusters_children(
         :dependency_attributes => {
           :resource_pools => [collections[:resource_pools]],
         }
@@ -47,7 +47,8 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
   def add_targeted_inventory_collections
     add_vms_inventory_collections(references(:vms))
     add_resource_pools_inventory_collections(references(:resource_pools))
-    add_clusters_inventory_collections(references(:clusters))
+    add_clusters_inventory_collections(references(:emsclusters))
+    add_datacenters_inventory_collections(references(:datacenters))
 
     # TODO: check what needs to be added here
   end
@@ -95,8 +96,19 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
     return if manager_refs.blank?
 
     add_inventory_collection(
-      infra.clusters(
-        :arel     => manager.clusters.where(:ems_ref => manager_refs),
+      infra.ems_clusters(
+        :arel     => manager.ems_clusters.where(:ems_ref => manager_refs),
+        :strategy => :local_db_find_missing_references
+      )
+    )
+  end
+
+  def add_datacenters_inventory_collections(manager_refs)
+    return if manager_refs.blank?
+
+    add_inventory_collection(
+      infra.datacenters(
+        :arel     => manager.ems_folders.where(:ems_ref => manager_refs, :type => Datacenter),
         :strategy => :local_db_find_missing_references
       )
     )

@@ -12,7 +12,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
       infra.datacenter_children(
         :dependency_attributes => {
           :folders => [
-            [collections[:clusters]],
+            [collections[:ems_clusters]],
             [collections[:vms]]
           ]
         }
@@ -28,7 +28,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
     )
 
     add_inventory_collection(
-      infra.cluster_children(
+      infra.ems_clusters_children(
         :dependency_attributes => {
           :resource_pools => [collections[:resource_pools]],
         }

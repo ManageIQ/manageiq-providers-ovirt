@@ -104,7 +104,7 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       super(attributes.merge!(extra_attributes))
     end
 
-    def clusters(extra_attributes = {})
+    def ems_clusters(extra_attributes = {})
       attributes = {
         :model_class                 => ::EmsCluster,
         :inventory_object_attributes => [

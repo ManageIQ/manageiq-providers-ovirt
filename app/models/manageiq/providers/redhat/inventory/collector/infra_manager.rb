@@ -1,6 +1,6 @@
 class ManageIQ::Providers::Redhat::Inventory::Collector::InfraManager < ManageIQ::Providers::Redhat::Inventory::Collector
-  def clusters
-    collect_clusters
+  def emsclusters
+    collect_emsclusters
   end
 
   def networks

@@ -13,7 +13,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   end
 
   def clusters
-    collector.clusters.each do |cluster|
+    collector.emsclusters.each do |cluster|
       persister.resource_pools.find_or_build(r_id).assign_attributes(
         :name       => "Default for Cluster #{cluster.name}",
         :uid_ems    => "#{cluster.id}_respool",
@@ -22,7 +22,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(cluster.href)
 
-      persister.clusters.find_or_build(cluster.id).assign_attributes(
+      persister.emsclusters.find_or_build(cluster.id).assign_attributes(
         :ems_ref       => ems_ref,
         :ems_ref_obj   => ems_ref,
         :uid_ems       => cluster.id,
@@ -51,7 +51,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(storagedomain.try(:href))
 
-      persister.datacenters.find_or_build(storagedomain.id).assign_attributes(
+      persister.storagedomains.find_or_build(storagedomain.id).assign_attributes(
         :ems_ref             => ems_ref,
         :ems_ref_obj         => ems_ref,
         :name                => storagedomain.try(:name),

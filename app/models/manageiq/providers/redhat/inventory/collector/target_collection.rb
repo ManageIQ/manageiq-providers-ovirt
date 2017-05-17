@@ -10,7 +10,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
   def clusters
     if target.kind_of? VmOrTemplate
-      return collect_clusters
+      return collect_emsclusters
     end
 
     []
