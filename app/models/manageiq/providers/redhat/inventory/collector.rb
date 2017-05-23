@@ -2,7 +2,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManagerRefresh::Invent
   require_nested :InfraManager
   require_nested :TargetCollection
 
-  attr_reader :emsclusters
+  attr_reader :ems_clusters
   attr_reader :networks
   attr_reader :storagedomains
   attr_reader :datacenters
@@ -19,7 +19,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManagerRefresh::Invent
   end
 
   def initialize_inventory_sources
-    @emsclusters    = []
+    @ems_clusters   = []
     @networks       = []
     @storagedomains = []
     @datacenters    = []
@@ -33,7 +33,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManagerRefresh::Invent
     ::ManageIQ::Providers::Redhat::Inventory::HashCollection
   end
 
-  def collect_emsclusters
+  def collect_ems_clusters
     manager.with_provider_connection(VERSION_HASH) do |connection|
       connection.system_service.clusters_service.list
     end

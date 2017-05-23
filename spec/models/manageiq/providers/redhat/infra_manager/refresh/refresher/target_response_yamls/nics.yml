@@ -1,0 +1,123 @@
+- !ruby/object:OvirtSDK4::Nic
+  href: "/ovirt-engine/api/vms/3a697bd0-7cea-42a1-95ef-fd292fcee721/nics/bec92d4f-9b9e-462f-9cd4-7d6b99948a81"
+  comment:
+  description:
+  id: bec92d4f-9b9e-462f-9cd4-7d6b99948a81
+  name: nic1
+  instance_type:
+  template:
+  vm: !ruby/object:OvirtSDK4::Vm
+    href: "/ovirt-engine/api/vms/3a697bd0-7cea-42a1-95ef-fd292fcee721"
+    comment:
+    description:
+    id: 3a697bd0-7cea-42a1-95ef-fd292fcee721
+    name:
+    bios:
+    cluster:
+    console:
+    cpu:
+    cpu_profile:
+    cpu_shares:
+    creation_time:
+    custom_compatibility_version:
+    custom_cpu_model:
+    custom_emulated_machine:
+    custom_properties:
+    delete_protected:
+    display:
+    domain:
+    high_availability:
+    initialization:
+    io:
+    large_icon:
+    memory:
+    memory_policy:
+    migration:
+    migration_downtime:
+    origin:
+    os:
+    quota:
+    rng_device:
+    serial_number:
+    small_icon:
+    soundcard_enabled:
+    sso:
+    start_paused:
+    stateless:
+    storage_domain:
+    time_zone:
+    tunnel_migration:
+    type:
+    usb:
+    virtio_scsi:
+    affinity_labels:
+    applications:
+    cdroms:
+    disk_attachments:
+    external_host_provider:
+    floppies:
+    fqdn:
+    graphics_consoles:
+    guest_operating_system:
+    guest_time_zone:
+    host:
+    host_devices:
+    instance_type:
+    katello_errata:
+    next_run_configuration_exists:
+    nics:
+    numa_nodes:
+    numa_tune_mode:
+    payloads:
+    permissions:
+    placement_policy:
+    reported_devices:
+    run_once:
+    sessions:
+    snapshots:
+    start_time:
+    statistics:
+    status:
+    status_detail:
+    stop_reason:
+    stop_time:
+    tags:
+    template:
+    use_latest_template_version:
+    vm_pool:
+    watchdogs:
+  vms:
+  boot_protocol:
+  interface: virtio
+  linked: true
+  mac: !ruby/object:OvirtSDK4::Mac
+    href:
+    address: 00:1a:4a:16:01:51
+  network:
+  network_attachments:
+  network_labels:
+  on_boot:
+  plugged: true
+  reported_devices: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/vms/3a697bd0-7cea-42a1-95ef-fd292fcee721/nics/bec92d4f-9b9e-462f-9cd4-7d6b99948a81/reporteddevices"
+  statistics: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/vms/3a697bd0-7cea-42a1-95ef-fd292fcee721/nics/bec92d4f-9b9e-462f-9cd4-7d6b99948a81/statistics"
+  virtual_function_allowed_labels:
+  virtual_function_allowed_networks:
+  vnic_profile: !ruby/object:OvirtSDK4::VnicProfile
+    href: "/ovirt-engine/api/vnicprofiles/0000000a-000a-000a-000a-000000000398"
+    comment:
+    description:
+    id: 0000000a-000a-000a-000a-000000000398
+    name:
+    custom_properties:
+    network:
+    network_filter:
+    pass_through:
+    permissions:
+    port_mirroring:
+    qos:

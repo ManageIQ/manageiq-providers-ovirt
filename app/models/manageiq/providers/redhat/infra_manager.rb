@@ -18,6 +18,8 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   supports :provisioning
   supports :refresh_new_target
 
+  has_many :ems_custom_attributes, :through => :vms_and_templates
+
   def refresher
     Refresh::RefresherBuilder.new(self).build
   end
@@ -76,7 +78,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
 
   def vm_reconfigure(vm, options = {})
     ovirt_services_for_reconfigure = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Builder.new(self)
-      .build(:use_highest_supported_version => true).new(:ems => self)
+                                                                                                      .build(:use_highest_supported_version => true).new(:ems => self)
     ovirt_services_for_reconfigure.vm_reconfigure(vm, options)
   end
 

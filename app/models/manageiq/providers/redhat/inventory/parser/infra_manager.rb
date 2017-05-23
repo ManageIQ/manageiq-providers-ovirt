@@ -3,8 +3,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     log_header = "MIQ(#{self.class.name}.#{__method__}) Collecting data for EMS name: [#{collector.manager.name}] id: [#{collector.manager.id}]"
     $rhevm_log.info("#{log_header}...")
 
+    ems_clusters
     datacenters
-    clusters
     storagedomains
     hosts
     vms
@@ -12,22 +12,24 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     $rhevm_log.info("#{log_header}...Complete")
   end
 
-  def clusters
-    collector.emsclusters.each do |cluster|
+  def ems_clusters
+    collector.ems_clusters.each do |cluster|
+      r_id = "#{cluster.id}_respool"
+
       persister.resource_pools.find_or_build(r_id).assign_attributes(
         :name       => "Default for Cluster #{cluster.name}",
-        :uid_ems    => "#{cluster.id}_respool",
+        :uid_ems    => r_id,
         :is_default => true,
       )
 
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(cluster.href)
 
-      persister.emsclusters.find_or_build(cluster.id).assign_attributes(
+      persister.ems_clusters.find_or_build(ems_ref).assign_attributes(
         :ems_ref       => ems_ref,
         :ems_ref_obj   => ems_ref,
         :uid_ems       => cluster.id,
         :name          => cluster.name,
-        :datacenter_id => persister.datacenters.lazy_find(cluster.data_center.id).id,
+        :datacenter_id => cluster.data_center.id,
       )
     end
   end
@@ -47,11 +49,10 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       used        = storagedomain.try(:used).to_i
       total       = free + used
       committed   = storagedomain.try(:committed).to_i
-      uncommitted = total - committed
 
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(storagedomain.try(:href))
 
-      persister.storagedomains.find_or_build(storagedomain.id).assign_attributes(
+      persister.storages.find_or_build(storagedomain.id).assign_attributes(
         :ems_ref             => ems_ref,
         :ems_ref_obj         => ems_ref,
         :name                => storagedomain.try(:name),
@@ -59,7 +60,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :storage_domain_type => storagedomain.dig(:type, :downcase),
         :total_space         => total,
         :free_space          => free,
-        :uncommitted         => uncommitted,
+        :uncommitted         => total - committed,
         :multiplehostaccess  => true,
         :location            => location,
         :master              => storagedomain.try(:master)
@@ -110,11 +111,12 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       host_os_version = host.dig(:os, :version)
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(host_inv.href)
 
-      clusters = persister.clusters.lazy_find(host.dig(:cluster, :id))
-      dc_ids = clusters.collect { |c| c[:datacenter_id] }.uniq
+      cluster = persister.ems_clusters.lazy_find(host.dig(:cluster, :id))
+      dc_id = cluster[:datacenter_id]
       storage_ids = []
       dcs.each do |dc|
-        if dc_ids.include? dc.id
+        if dc_id == dc.id
+          # TODO: check whether we could resolve this in a lazy way
           storage_ids << collector.collect_dc_domains(dc).to_miq_a.collect { |s| s[:id] }
         end
       end
@@ -133,14 +135,14 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :vmm_buildnumber  => (host_os_version.build if host_os_version),
         :connection_state => connection_state,
         :power_state      => power_state,
-        :ems_cluster      => clusters,
+        :ems_cluster      => cluster,
         :ipmi_address     => ipmi_address,
         :storages         => storage_ids
       )
 
       host_operating_systems(persister_host, host, hostname)
       networks = collector.collect_networks
-      switchs(persister_host, host, nics, networks)
+      switches(persister_host, host, nics, networks)
       host_hardware(persister_host, host, networks, nics)
     end
   end
@@ -187,11 +189,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     nics.to_miq_a.each do |nic|
       network = network_from_nic(nic, host, networks)
 
-      if network
-        switch_uid = network.id
-      else
-        switch_uid = network_name unless network_name.nil?
-      end
+      switch_uid = network.try(:id) || network_name
 
       location = nil
       location = $1 if nic.name =~ /(\d+)$/
@@ -203,17 +201,17 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :location        => location,
         :present         => true,
         :controller_type => 'ethernet',
-        :switch          => persister.switchs.lazy_find(switch_uid),
+        :switch          => persister.switches.lazy_find(switch_uid),
         :network         => persister.host_nics.lazy_find(network.id)
       )
     end
   end
 
-  def switchs(persister_host, host, nics, networks)
+  def switches(persister_host, host, nics, networks)
     nics.to_miq_a.each do |nic|
       network = network_from_nic(nic, host, networks)
 
-      persister_switch = persister.switchs.find_or_build(persister_host).assign_attributes(
+      persister_switch = persister.switches.find_or_build(persister_host).assign_attributes(
         :uid_ems => uid,
         :name    => name,
       )
@@ -225,12 +223,14 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   def network_for_nic(nic, host, networks)
     network_id = nic.dig(:network, :id)
     if network_id
+      # TODO: check to indexed_networks = networks.index_by(:id)
       network = networks.detect { |n| n.id == network_id }
     else
       network_name = nic.dig(:network, :name)
       cluster_id = host.dig(:cluster, :id)
       cluster = persister.clusters.lazy_find(cluster_id)
       datacenter_id = cluster.dig(:data_center, :id)
+      # TODO: get rid of detect
       network = networks.detect { |n| n.name == network_name && n.dig(:data_center, :id) == datacenter_id }
     end
 
@@ -300,7 +300,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :raw_power_state  => template ? "never" : vm.status,
         :boot_time        => vm.try(:start_time),
         :host             => persister.hosts.lazy_find(host_id),
-        :ems_cluster      => persister.clusters.lazy_find(vm.cluster.id),
+        :ems_cluster      => persister.ems_clusters.lazy_find(vm.cluster.id),
         :storages         => storages,
         :storage          => storages.first,
       )
@@ -314,9 +314,9 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
   def storages(vm)
     storages = []
-    collector.attached_disks(vm).to_miq_a.each do |disk|
+    collector.collect_attached_disks(vm).to_miq_a.each do |disk|
       disk.storage_domains.to_miq_a.each do |sd|
-        storages << persister.storages.lazy_find(:ems_ref => sd.id)
+        storages << persister.storages.lazy_find(sd.id)
       end
     end
     storages.compact!
@@ -329,8 +329,6 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     topology = vm.cpu.topology
     cpu_socks = topology.try(:sockets) || 1
     cpu_cores = topology.try(:cores) || 1
-
-    result[:memory_mb] = vm.memory / 1.megabyte
 
     persister_hardware = persister.hardwares.find_or_build(presister_vm).assign_attributes(
       :guest_os             => vm.dig(:os, :type),
@@ -398,13 +396,15 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
           :disk_type       => device.sparse == true ? 'thin' : 'thick',
           :mode            => 'persistent',
           :bootable        => device.try(:bootable),
-          :storage         => persister.storages.lazy_find(:ems_ref => storage_id)
+          :storage         => persister.storages.lazy_find(storage_id)
         )
       end
     end
   end
 
   def hardware_guest_devices(persister_hardware, vm, addresses)
+    network = addresses.to_a.empty? ? nil : persister.nics.lazy_find(addresses[0])
+
     collector.collect_nics(vm).each do |nic|
       persister.guest_devices.find_or_build_by(
         :hardware => persister_hardware,
@@ -416,7 +416,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :controller_type => 'ethernet',
         :address         => nic.dig(:mac, :address),
         :lan             => nic.dig(:network, :id),
-        :network         => persister.nics.lazy_find(addresses[0])
+        :network         => network
       )
     end
   end
@@ -428,7 +428,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       name = description = snapshot.description
       name = "Active Image" if name[0, 13] == '_ActiveImage_'
 
-      persister.snapshots.find_or_build_by(persister_vm).assign_attributes(
+      persister.snapshots.find_or_build(persister_vm).assign_attributes(
         :uid_ems     => snapshot.id,
         :uid         => snapshot.id,
         :parent_uid  => parent_id,
@@ -444,7 +444,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   def operating_systems(persister_vm, vm)
     guest_os = vm.dig(:os, :type)
 
-    persister.operating_systems.find_or_build_by(persister_vm).assign_attributes(
+    persister.operating_systems.find_or_build(persister_vm).assign_attributes(
       :product_name => guest_os.blank? ? "Other" : guest_os,
       :system_type  => vm.type
     )
@@ -452,10 +452,9 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
   def custom_attributes(persister_vm, vm)
     custom_attrs = vm.try(:custom_properties)
-    return result if custom_attrs.nil?
 
-    custom_attrs.each do |ca|
-      persister.custom_attributes.find_or_build_by(persister_vm).assign_attributes(
+    custom_attrs.to_a.each do |ca|
+      persister.custom_attributes.find_or_build(persister_vm).assign_attributes(
         :section => 'custom_field',
         :name    => ca.name,
         :value   => ca.value.try(:truncate, 255),

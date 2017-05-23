@@ -2,7 +2,7 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
   class << self
     def vms(extra_attributes = {})
       attributes = {
-        :model_class                 => ::ManageIQ::Providers::InfraManager::Vm,
+        :model_class                 => ::ManageIQ::Providers::Redhat::InfraManager::Vm,
         :inventory_object_attributes => [
           :type,
           :ems_ref,
@@ -60,6 +60,23 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       super(attributes.merge!(extra_attributes))
     end
 
+    def guest_devices(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::GuestDevice,
+        :inventory_object_attributes => [
+          :uid_ems,
+          :device_name,
+          :device_type,
+          :controller_type,
+          :address,
+          :lan,
+          :network
+        ]
+      }
+
+      super(attributes.merge!(extra_attributes))
+    end
+
     def hardwares(extra_attributes = {})
       attributes = {
         :model_class                 => ::Hardware,
@@ -70,6 +87,49 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
           :cpu_sockets,
           :cpu_total_cores,
           :memory_mb
+        ]
+      }
+
+      super(attributes.merge!(extra_attributes))
+    end
+
+    def snapshots(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::Snapshot,
+        :inventory_object_attributes => [
+          :uid_ems,
+          :uid,
+          :parent_uid,
+          :name,
+          :description,
+          :create_time,
+          :current,
+        ]
+      }
+
+      super(attributes.merge!(extra_attributes))
+    end
+
+    def operating_systems(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::OperatingSystem,
+        :inventory_object_attributes => [
+          :product_name,
+          :system_type
+        ]
+      }
+
+      super(attributes.merge!(extra_attributes))
+    end
+
+    def custom_attributes(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::CustomAttribute,
+        :inventory_object_attributes => [
+          :section,
+          :name,
+          :value,
+          :source,
         ]
       }
 
@@ -113,6 +173,53 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
           :uid_ems,
           :name,
           :datacenter_id,
+        ]
+      }
+
+      super(attributes.merge!(extra_attributes))
+    end
+
+    def storages(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::Storage,
+        :inventory_object_attributes => [
+          :ems_ref,
+          :ems_ref_obj,
+          :name,
+          :store_type,
+          :storage_domain_type,
+          :total_space,
+          :free_space,
+          :uncommitted,
+          :multiplehostaccess,
+          :location,
+          :master
+        ]
+      }
+
+      super(attributes.merge!(extra_attributes))
+    end
+
+    def hosts(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::ManageIQ::Providers::Redhat::InfraManager::Host,
+        :inventory_object_attributes => [
+          :type,
+          :ems_ref,
+          :ems_ref_obj,
+          :name,
+          :hostname,
+          :ipaddress,
+          :uid_ems,
+          :vmm_vendor,
+          :vmm_product,
+          :vmm_version,
+          :vmm_buildnumber,
+          :connection_state,
+          :power_state,
+          :ems_cluster,
+          :ipmi_address,
+          :storages
         ]
       }
 

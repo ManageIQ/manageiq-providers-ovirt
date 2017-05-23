@@ -23,26 +23,17 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   end
 
   before(:each) do
-    inventory_wrapper_class = ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
-    allow_any_instance_of(inventory_wrapper_class)
-      .to receive(:collect_clusters).and_return(load_response_mock_for('clusters'))
-    allow_any_instance_of(inventory_wrapper_class)
-      .to receive(:collect_datacenters).and_return(load_response_mock_for('datacenters'))
-    allow_any_instance_of(inventory_wrapper_class)
-      .to receive(:collect_vm_by_uuid).and_return(load_response_mock_for('vms'))
-    allow_any_instance_of(inventory_wrapper_class)
-      .to receive(:collect_storage).and_return(load_response_mock_for('storages'))
-    allow_any_instance_of(inventory_wrapper_class)
-      .to receive(:search_templates).and_return(load_response_mock_for('templates'))
-    allow_any_instance_of(inventory_wrapper_class).to receive(:api).and_return("4.2.0_master")
-    allow_any_instance_of(inventory_wrapper_class).to receive(:service)
+    @inventory_wrapper_class = ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
+    allow_any_instance_of(@inventory_wrapper_class).to receive(:api).and_return("4.2.0_master")
+    allow_any_instance_of(@inventory_wrapper_class).to receive(:service)
       .and_return(OpenStruct.new(:version_string => '4.2.0_master'))
 
     @cluster = FactoryGirl.create(:ems_cluster,
-                                  :ems_ref => "/api/clusters/00000002-0002-0002-0002-00000000017a",
-                                  :uid_ems => "00000002-0002-0002-0002-00000000017a",
-                                  :ems_id  => @ems.id,
-                                  :name    => "Default")
+                                  :ems_ref               => "/api/clusters/00000002-0002-0002-0002-00000000017a",
+                                  :uid_ems               => "00000002-0002-0002-0002-00000000017a",
+                                  # :ems_id  => @ems.id,
+                                  :ext_management_system => @ems,
+                                  :name                  => "Default")
 
     @storage = FactoryGirl.create(:storage,
                                   :ems_ref  => "/api/storagedomains/6cc26c9d-e1a7-43ba-95d3-c744442c7500",
@@ -65,6 +56,17 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   end
 
   it "should refresh a vm" do
+    allow_any_instance_of(@inventory_wrapper_class)
+      .to receive(:collect_clusters).and_return(load_response_mock_for('clusters'))
+    allow_any_instance_of(@inventory_wrapper_class)
+      .to receive(:collect_datacenters).and_return(load_response_mock_for('datacenters'))
+    allow_any_instance_of(@inventory_wrapper_class)
+      .to receive(:collect_vm_by_uuid).and_return(load_response_mock_for('vms'))
+    allow_any_instance_of(@inventory_wrapper_class)
+      .to receive(:collect_storage).and_return(load_response_mock_for('storages'))
+    allow_any_instance_of(@inventory_wrapper_class)
+      .to receive(:search_templates).and_return(load_response_mock_for('templates'))
+
     EmsRefresh.refresh(@vm)
 
     assert_table_counts
@@ -76,6 +78,39 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
   it "should collect a vm" do
     stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
+
+    cluster_service = double("cluster_service")
+    allow(cluster_service).to receive(:get).and_return(load_response_mock_for('clusters'))
+    allow_any_instance_of(OvirtSDK4::ClustersService).to receive(:cluster_service).and_return(cluster_service)
+
+    data_center_service = double("data_center_service")
+    allow(data_center_service).to receive(:get).and_return(load_response_mock_for('datacenters'))
+    allow_any_instance_of(OvirtSDK4::DataCentersService).to receive(:data_center_service).and_return(data_center_service)
+
+    storage_domain_service = double("storage_domain_service")
+    allow(storage_domain_service).to receive(:get).and_return(load_response_mock_for('storages'))
+    allow_any_instance_of(OvirtSDK4::StorageDomainsService).to receive(:storage_domain_service).and_return(storage_domain_service)
+
+    collector_class = ManageIQ::Providers::Redhat::Inventory::Collector
+    allow_any_instance_of(collector_class).to receive(:collect_attached_disks).and_return(load_response_mock_for('disks'))
+    allow_any_instance_of(collector_class).to receive(:collect_vm_devices).and_return([])
+    allow_any_instance_of(collector_class).to receive(:collect_nics).and_return(load_response_mock_for('nics'))
+    allow_any_instance_of(collector_class).to receive(:collect_snapshots).and_return(load_response_mock_for('snapshots'))
+    target_collector_class = ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection
+    allow_any_instance_of(target_collector_class).to receive(:templates).and_return(load_response_mock_for('templates'))
+    allow_any_instance_of(target_collector_class).to receive(:vms).and_return(load_response_mock_for('vms'))
+
+    allow(@vm).to receive(:ems_cluster).and_return(@cluster)
+
+    dc = FactoryGirl.create(:datacenter,
+                            :ems_ref => "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311",
+                            :name    => "Default",
+                            :uid_ems => "00000001-0001-0001-0001-000000000311")
+
+    allow(@vm).to receive(:parent_datacenter).and_return(dc)
+    vms = double("vms")
+    allow(vms).to receive(:where).and_return([@vm])
+    allow(@ems).to receive(:vms).and_return(vms)
 
     EmsRefresh.refresh(@vm)
 
