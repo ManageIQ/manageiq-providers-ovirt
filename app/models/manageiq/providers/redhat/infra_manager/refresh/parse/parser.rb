@@ -6,6 +6,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Parser
   def self.ems_inv_to_hashes(inv)
     uids = {}
     result = {:uid_lookup => uids}
+    result[:ems] = inv[:ems]
     result[:storages], uids[:storages] = storage_inv_to_hashes(inv[:storage])
     result[:clusters], uids[:clusters], result[:resource_pools] = cluster_inv_to_hashes(inv[:cluster])
     result[:hosts], uids[:hosts], uids[:lans], uids[:switches], uids[:guest_devices], uids[:scsi_luns] = host_inv_to_hashes(inv[:host], inv, uids[:clusters], uids[:storages])

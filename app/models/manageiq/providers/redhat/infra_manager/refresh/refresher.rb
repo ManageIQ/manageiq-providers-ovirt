@@ -22,12 +22,11 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
 
         end
 
+        data[:ems] = {:api_version => inventory.service.version_string}
+
         _log.info "Filtering inventory...Complete"
         [target, data]
       end
-
-      ems.api_version = inventory.service.version_string
-      ems.save
 
       targets_with_data
     end
