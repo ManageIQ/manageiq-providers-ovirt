@@ -38,7 +38,7 @@ module ManageIQ::Providers::Redhat::InfraManager::VmImport
   end
 
   def validate_import_vm
-    highest_supported_api_version && highest_supported_api_version >= '4'
+    Gem::Version.new(api_version) >= Gem::Version.new('4')
   end
 
   private
