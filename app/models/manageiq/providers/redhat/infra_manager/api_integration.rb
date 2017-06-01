@@ -16,7 +16,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
   def connect(options = {})
     raise "no credentials defined" if missing_credentials?(options[:auth_type])
-    version = options[:version] || 3
+    version = options[:version] || highest_allowed_api_version
     unless options[:skip_supported_api_validation] || supports_the_api_version?(version)
       raise "version #{version} of the api is not supported by the provider"
     end
@@ -142,13 +142,12 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   end
 
   def verify_credentials_for_rhevm(options = {})
-    require 'ovirt'
     with_provider_connection(options) { |connection| connection.test(true) }
   rescue SocketError, Errno::EHOSTUNREACH, Errno::ENETUNREACH
     _log.warn($ERROR_INFO)
     raise MiqException::MiqUnreachableError, $ERROR_INFO
-  rescue Ovirt::MissingResourceError, URI::InvalidURIError
-    raise MiqException::MiqUnreachableError, "Invalid URI specified for the server."
+  rescue MiqException::MiqUnreachableError => e
+    raise e
   rescue RestClient::Unauthorized
     raise MiqException::MiqInvalidCredentialsError, "Incorrect user name or password."
   rescue
@@ -332,6 +331,8 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     class OvirtConnectionDecorator < SimpleDelegator
       def test(_raise_exceptions)
         api
+      rescue Ovirt::MissingResourceError, URI::InvalidURIError
+        raise MiqException::MiqUnreachableError, "Invalid URI specified for the server."
       end
     end
 
