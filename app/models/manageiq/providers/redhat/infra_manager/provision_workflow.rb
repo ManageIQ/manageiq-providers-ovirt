@@ -92,4 +92,20 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
 
     result.select { |s| s.storage_domain_type == "data" }
   end
+
+  def source_ems
+    src = get_source_and_targets
+    load_ar_obj(src[:ems])
+  end
+
+  def load_allowed_vlans(hosts, vlans)
+    ems = source_ems
+    ems.ovirt_services.load_allowed_networks(hosts, vlans, self)
+  end
+
+  def filter_allowed_hosts(all_hosts)
+    ems = source_ems
+    ovirt_services = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Builder.new(ems).build(:use_highest_supported_version => true).new(:ems => ems)
+    ovirt_services.filter_allowed_hosts(self, all_hosts)
+  end
 end

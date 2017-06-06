@@ -79,6 +79,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
     end
 
     it 'only from same data_center as template' do
+      allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager).to receive(:supported_api_versions).and_return([3])
       expect(workflow.allowed_clusters).to match_array([[cluster1.id, cluster1.name], [cluster2.id, cluster2.name]])
     end
   end
@@ -194,6 +195,59 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
         :message      => "VM Provisioning request updated by <#{alt_user.userid}> for Vm:#{template.id}"
       )
       workflow.make_request(request, values)
+    end
+  end
+
+  context "load allowed vlans" do
+    let(:cluster1) { FactoryGirl.create(:ems_cluster, :uid_ems => "uid_ems", :name => 'Cluster1') }
+    let(:template) { FactoryGirl.create(:template_redhat, :ext_management_system => ems, :ems_cluster => cluster1) }
+    let(:workflow) { described_class.new({:src_vm_id => template.id}, admin) }
+    let(:hosts) { {} }
+    before do
+      stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
+      allow(workflow).to receive(:source_ems).and_return(ems)
+      @vlans = {}
+    end
+
+    context "ems version 4" do
+      let(:system_service) { double("system_service", :clusters_service => clusters_service, :vnic_profiles_service => vnic_profiles_service) }
+      let(:connection) { double("connection", :system_service => system_service) }
+      let(:vnic_profiles_service) { "vnic_profiles_service" }
+      let(:clusters_service) { double("clusters_service") }
+      let(:cluster_service1) { double("cluster", :networks_service => networks_service) }
+      let(:networks_service) { "networks_service" }
+      let(:network_profile) { double(:id => "network_profile-id", :name => "network_profile", :network => double(:id => network_id)) }
+      let(:network_profile2) { double(:id => "network_profile-id2", :name => "network_profile2", :network => double(:id => network_id)) }
+      let(:network) { double(:id => network_id, :name => "network") }
+      let(:network_id) { "network_id" }
+      before do
+        allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager).to receive(:supported_api_versions)
+          .and_return([4])
+        allow(ems).to receive(:with_provider_connection).with(:version => 4).and_yield(connection)
+        allow(clusters_service).to receive(:cluster_service).with(any_args).and_return(cluster_service1)
+        allow(VmOrTemplate).to receive(:find).with(any_args).and_return(template)
+      end
+      it "no profiles" do
+        allow(networks_service).to receive(:list).and_return([])
+        allow(vnic_profiles_service).to receive(:list).and_return([])
+
+        workflow.load_allowed_vlans(ems, @vlans)
+        expect(@vlans).to eq("<Empty>" => "<Empty>")
+      end
+      it "contains one profile" do
+        allow(networks_service).to receive(:list).and_return([network])
+        allow(vnic_profiles_service).to receive(:list).and_return([network_profile])
+
+        workflow.load_allowed_vlans(ems, @vlans)
+        expect(@vlans).to eq("network_profile-id" => "network_profile (network)", "<Empty>" => "<Empty>")
+      end
+      it "contains two profiles on the same network" do
+        allow(networks_service).to receive(:list).and_return([network])
+        allow(vnic_profiles_service).to receive(:list).and_return([network_profile, network_profile2])
+
+        workflow.load_allowed_vlans(ems, @vlans)
+        expect(@vlans).to eq("network_profile-id" => "network_profile (network)", "network_profile-id2" => "network_profile2 (network)", "<Empty>" => "<Empty>")
+      end
     end
   end
 end

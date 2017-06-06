@@ -71,25 +71,23 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       end
     end
 
-    def configure_vnic(args)
-      vnic = args[:vnic]
-
-      options = {
-        :name        => args[:nic_name],
-        :interface   => args[:interface],
-        :network_id  => args[:network][:id],
-        :mac_address => args[:mac_addr],
-      }.delete_blanks
-
-      args[:logger].info("with options: <#{options.inspect}>")
-
-      if vnic.nil?
-        args[:vm].with_provider_object do |rhevm_vm|
-          rhevm_vm.create_nic(options)
+    def configure_vnics(requested_vnics, destination_vnics, dest_cluster, destination_vm)
+      requested_vnics.stretch!(destination_vnics).each_with_index do |requested_vnic, idx|
+        if requested_vnic.nil?
+          # Remove any unneeded vm nics
+          destination_vnics[idx].destroy
+        else
+          configure_vnic_with_requested_data("nic#{idx + 1}", requested_vnic, destination_vnics[idx], dest_cluster, destination_vm)
         end
-      else
-        vnic.apply_options!(options)
       end
+    end
+
+    def load_allowed_networks(hosts, vlans, workflow)
+      workflow.load_hosts_vlans(hosts, vlans)
+    end
+
+    def filter_allowed_hosts(workflow, all_hosts)
+      workflow.filter_hosts_by_vlan_name(all_hosts)
     end
 
     def powered_off_in_provider?(vm)
@@ -335,6 +333,42 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
 
       # Return the adjusted guaranteed memory:
       adjusted
+    end
+
+    def configure_vnic(args)
+      vnic = args[:vnic]
+
+      options = {
+        :name        => args[:nic_name],
+        :interface   => args[:interface],
+        :network_id  => args[:network][:id],
+        :mac_address => args[:mac_addr],
+      }.delete_blanks
+
+      args[:logger].info("with options: <#{options.inspect}>")
+
+      if vnic.nil?
+        args[:vm].with_provider_object do |rhevm_vm|
+          rhevm_vm.create_nic(options)
+        end
+      else
+        vnic.apply_options!(options)
+      end
+    end
+
+    def configure_vnic_with_requested_data(name, requested_vnic, vnic, dest_cluster, destination_vm)
+      network = cluster_find_network_by_name(dest_cluster.ems_ref, requested_vnic[:network])
+      raise OvirtServices::NetworkNotFound, "Unable to find specified network: <#{requested_vnic[:network]}>" if network.nil?
+
+      configure_vnic(
+        :vm        => destination_vm,
+        :mac_addr  => requested_vnic[:mac_address],
+        :network   => network,
+        :nic_name  => name,
+        :interface => requested_vnic[:interface],
+        :vnic      => vnic,
+        :logger    => _log
+      )
     end
   end
 end

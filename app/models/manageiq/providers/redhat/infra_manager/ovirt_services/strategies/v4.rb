@@ -68,29 +68,32 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       end
     end
 
-    def configure_vnic(args)
-      vm = args[:vm]
-      mac_addr = args[:mac_addr]
-      interface = args[:interface]
-      vnic = args[:vnic]
+    def configure_vnics(requested_vnics, destination_vnics, destination_cluster, destination_vm)
+      destination_vm.with_provider_connection(VERSION_HASH) do |connection|
+        nics_service = connection.system_service.vms_service.vm_service(destination_vm.uid_ems).nics_service
 
-      vm.with_provider_connection(VERSION_HASH) do |connection|
-        uuid = uuid_from_href(vm.ems_ref)
-        profile_id = network_profile_id(connection, args[:network])
-        nics_service = connection.system_service.vms_service.vm_service(uuid).nics_service
-        options = {
-          :name         => args[:nic_name] || vnic && vnic.name,
-          :interface    => interface || vnic && vnic.interface,
-          :mac          => mac_addr ? OvirtSDK4::Mac.new(:address => mac_addr) : vnic && vnic.mac,
-          :vnic_profile => profile_id ? { :id => profile_id } : vnic && vnic.vnic_profile
-        }.delete_blanks
-        args[:logger].info("with options: <#{options.inspect}>")
-        if vnic
-          nics_service.nic_service(vnic.id).update(options)
-        else
-          nics_service.add(OvirtSDK4::Nic.new(options))
+        requested_vnics.stretch!(destination_vnics).each_with_index do |requested_vnic, idx|
+          if requested_vnic.nil?
+            nics_service.nic_service(destination_vnics[idx].id).remove
+          else
+            configure_vnic_with_requested_data("nic#{idx + 1}", requested_vnic, destination_vnics[idx], nics_service, destination_cluster)
+          end
         end
       end
+    end
+
+    def load_allowed_networks(_hosts, vlans, workflow)
+      uid_ems_cluster = VmOrTemplate.find(workflow.get_source_vm.id).ems_cluster.uid_ems
+      profiles = get_vnic_profiles_in_cluster(uid_ems_cluster)
+      profiles.each do |profile, profile_network|
+        vlans[profile.id] = "#{profile.name} (#{profile_network.name})"
+      end
+
+      vlans['<Empty>'] = _('<Empty>')
+    end
+
+    def filter_allowed_hosts(_workflow, all_hosts)
+      all_hosts
     end
 
     def powered_off_in_provider?(vm)
@@ -372,12 +375,6 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       connection.system_service.vms_service.vm_service(vm_uuid)
     end
 
-    def network_profile_id(connection, network_id)
-      profiles_service = connection.system_service.vnic_profiles_service
-      profile = profiles_service.list.detect { |pr| pr.network.id == network_id }
-      profile && profile.id
-    end
-
     #
     # Updates the amount memory of a virtual machine.
     #
@@ -529,6 +526,72 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
         attachment_service = attachments_service.attachment_service(disk_spec['disk_name'])
         attachment_service.remove(:detach_only => !disk_spec['delete_backing'])
       end
+    end
+
+    def configure_vnic_with_requested_data(name, requested_vnic, destination_vnic, nics_service, destination_cluster)
+      requested_profile_id = requested_vnic[:network]
+      if requested_profile_id == '<Empty>'
+        profile_id = nil
+      else
+        vnic_profile = find_vnic_profile_in_cluster(requested_profile_id, destination_cluster.uid_ems)
+        if vnic_profile.nil?
+          raise MiqException::MiqProvisionError, "Unable to find specified profile: <#{requested_profile_id}>"
+        else
+          profile_id = vnic_profile[0].id
+        end
+      end
+
+      configure_vnic(
+        :mac_addr     => requested_vnic[:mac_address],
+        :vnic_profile => profile_id,
+        :nic_name     => name,
+        :interface    => requested_vnic[:interface],
+        :vnic         => destination_vnic,
+        :nics_service => nics_service,
+        :logger       => _log
+      )
+    end
+
+    def configure_vnic(args)
+      mac_addr = args[:mac_addr]
+      vnic = args[:vnic]
+
+      profile_id = args[:vnic_profile]
+      nics_service = args[:nics_service]
+      options = {
+        :name         => args[:nic_name],
+        :interface    => args[:interface],
+        :mac          => mac_addr ? OvirtSDK4::Mac.new(:address => mac_addr) : nil,
+        :vnic_profile => {:id => profile_id}
+      }.delete_blanks
+      args[:logger].info("with options: <#{options.inspect}>")
+      if vnic
+        nics_service.nic_service(vnic.id).update(options)
+      else
+        nics_service.add(OvirtSDK4::Nic.new(options))
+      end
+    end
+
+    def get_vnic_profiles_in_cluster(uid_ems_cluster)
+      cluster_profiles = {}
+      ext_management_system.with_provider_connection(VERSION_HASH) do |connection|
+        profiles = connection.system_service.vnic_profiles_service.list
+
+        cluster_networks = connection.system_service.clusters_service.cluster_service(uid_ems_cluster).networks_service.list
+
+        profiles.each do |p|
+          profile_network = cluster_networks.detect { |n| n.id == p.network.id }
+          if profile_network
+            cluster_profiles[p] = profile_network
+          end
+        end
+      end
+      cluster_profiles
+    end
+
+    def find_vnic_profile_in_cluster(profile_id, uid_ems_cluster)
+      profiles = get_vnic_profiles_in_cluster(uid_ems_cluster)
+      profiles.detect { |profile, _profile_network| profile.id == profile_id }
     end
   end
 end
