@@ -8,15 +8,8 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Netw
       return
     end
 
-    requested_vnics.stretch!(destination_vnics).each_with_index do |requested_vnic, idx|
-      if requested_vnic.nil?
-        # Remove any unneeded vm nics
-        destination_vnics[idx].destroy
-      else
-        # Create or update existing nics
-        configure_vnic(requested_vnic, "nic#{idx + 1}", destination_vnics[idx])
-      end
-    end
+    ems = destination.ext_management_system
+    ems.ovirt_services.configure_vnics(requested_vnics, destination_vnics, dest_cluster, destination)
   end
 
   # TODO: Move this into EMS Refresh
@@ -57,21 +50,5 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Netw
       _log.info("vlan: #{vlan.inspect}")
       {:network => vlan, :mac_address => get_option_last(:mac_address)}
     end
-  end
-
-  def configure_vnic(network_hash, name, vnic)
-    mac_addr  = network_hash[:mac_address]
-    network   = find_network_in_cluster(network_hash[:network])
-    raise MiqException::MiqProvisionError, "Unable to find specified network: <#{network_hash[:network]}>" if network.nil?
-
-    ems.ovirt_services.configure_vnic(
-      :vm        => destination,
-      :mac_addr  => mac_addr,
-      :network   => network,
-      :nic_name  => name,
-      :interface => network_hash[:interface],
-      :vnic      => vnic,
-      :logger    => _log
-    )
   end
 end
