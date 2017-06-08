@@ -105,7 +105,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   # add disk to a virtual machine for a request arrived from an automation call
   def vm_add_disk(vm, options = {})
     storage = options[:datastore] || vm.storage
-    raise _("Data Store does not exist, unable to add disk") unless storage
+    raise _("Datastore does not exist, unable to add disk") unless storage
 
     da_options = {
       :size_in_mb       => options[:diskSize],
