@@ -41,15 +41,10 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
 
   def add_targeted_inventory_collections
     add_vms_inventory_collections(references(:vms))
-    add_resource_pools_inventory_collections(references(:resource_pools))
     add_clusters_inventory_collections(references(:ems_clusters))
     add_datacenters_inventory_collections(references(:datacenters))
-    add_storages_inventory_collcetions(references(:storages))
+    add_storages_inventory_collcetions(references(:storagedomains))
     add_hosts_inventory_collections(references(:hosts))
-    add_guest_devices_inventory_collections(references(:guest_devices))
-    add_snapshots_inventory_collections(references(:snapshots))
-    add_operating_systems_inventory_collections(references(:operating_systems))
-    add_custom_attributes_inventory_collections(references(:custom_attributes))
   end
 
   def add_vms_inventory_collections(manager_refs)
@@ -85,14 +80,33 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
         :strategy => :local_db_find_missing_references
       )
     )
-  end
-
-  def add_resource_pools_inventory_collections(manager_refs)
-    return if manager_refs.blank?
-
     add_inventory_collection(
-      infra.resource_pools(
-        :arel     => manager.resource_pools.where(:ems_ref => manager_refs),
+      infra.guest_devices(
+        :arel     => GuestDevice.joins(:hardware => :vm_or_template).where(
+          :hardware => {'vms' => {:ems_ref => manager_refs}}
+        ),
+        :strategy => :local_db_find_missing_references
+      )
+    )
+    add_inventory_collection(
+      infra.snapshots(
+        :arel     => Snapshot.joins(:vm_or_template).where(
+          'vms' => {:ems_ref => manager_refs}
+        ),
+        :strategy => :local_db_find_missing_references
+      )
+    )
+    add_inventory_collection(
+      infra.operating_systems(
+        :arel     => OperatingSystem.joins(:vm_or_template).where(
+          'vms' => {:ems_ref => manager_refs}
+        ),
+        :strategy => :local_db_find_missing_references
+      )
+    )
+    add_inventory_collection(
+      infra.custom_attributes(
+        :arel     => CustomAttribute.where(:resource => manager_refs, :source => "VC"),
         :strategy => :local_db_find_missing_references
       )
     )
@@ -104,6 +118,12 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
     add_inventory_collection(
       infra.ems_clusters(
         :arel     => manager.ems_clusters.where(:ems_ref => manager_refs),
+        :strategy => :local_db_find_missing_references
+      )
+    )
+    add_inventory_collection(
+      infra.resource_pools(
+        :arel     => manager.resource_pools.where(:uid_ems => manager_refs.collect { |ref| "#{URI(ref).path.split('/').last}_respool" }),
         :strategy => :local_db_find_missing_references
       )
     )
@@ -125,7 +145,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
 
     add_inventory_collection(
       infra.storages(
-        :arel     => manager.storages.where(:ems_ref => manager_refs),
+        :arel     => Storage.where(:ems_ref => manager_refs),
         :strategy => :local_db_find_missing_references
       )
     )
@@ -135,60 +155,8 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
     return if manager_refs.blank?
 
     add_inventory_collection(
-      infra.storages(
+      infra.hosts(
         :arel     => manager.hosts.where(:ems_ref => manager_refs),
-        :strategy => :local_db_find_missing_references
-      )
-    )
-  end
-
-  def add_guest_devices_inventory_collections(manager_refs)
-    return if manager_refs.blank?
-
-    add_inventory_collection(
-      infra.guest_devices(
-        :arel     => GuestDevice.joins(:hardware => :vm_or_template).where(
-          :hardware => {'vms' => {:ems_ref => manager_refs}}
-        ),
-        :strategy => :local_db_find_missing_references
-      )
-    )
-  end
-
-  def add_snapshots_inventory_collections(manager_refs)
-    return if manager_refs.blank?
-
-    add_inventory_collection(
-      infra.snapshots(
-        :arel     => Snapshot.joins(:vm_or_template).where(
-          'vms' => {:ems_ref => manager_refs}
-        ),
-        :strategy => :local_db_find_missing_references
-      )
-    )
-  end
-
-  def add_operating_systems_inventory_collections(manager_refs)
-    return if manager_refs.blank?
-
-    add_inventory_collection(
-      infra.operating_systems(
-        :arel     => OperatingSystem.joins(:vm_or_template).where(
-          'vms' => {:ems_ref => manager_refs}
-        ),
-        :strategy => :local_db_find_missing_references
-      )
-    )
-  end
-
-  def add_custom_attributes_inventory_collections(manager_refs)
-    return if manager_refs.blank?
-
-    add_inventory_collection(
-      infra.custom_attributes(
-        :arel     => manager.ems_custom_attributes.joins(:vm_or_template).where(
-          'vms' => {:ems_ref => manager_refs}
-        ),
         :strategy => :local_db_find_missing_references
       )
     )

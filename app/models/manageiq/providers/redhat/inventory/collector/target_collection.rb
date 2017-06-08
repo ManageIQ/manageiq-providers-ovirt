@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < ManageIQ::Providers::Redhat::Inventory::Collector
+  # TODO: review the changes here and find common parts with ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
   def initialize(_manager, _target)
     super
     parse_targets!
@@ -14,7 +15,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
       references(:ems_clusters).each do |id|
-        clusters + connection.system_service.clusters_service.cluster_service(id).get
+        clusters += connection.system_service.clusters_service.cluster_service(id).get
       end
     end
 
@@ -27,7 +28,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
       references(:networks).each do |id|
-        nets + connection.system_service.networks_service.network_service(id).get
+        nets += connection.system_service.networks_service.network_service(id).get
       end
     end
 
@@ -40,7 +41,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
       references(:storagedomains).each do |id|
-        domains + connection.system_service.storage_domains_service.storage_domain_service(id).get
+        domains += connection.system_service.storage_domains_service.storage_domain_service(id).get
       end
     end
 
@@ -53,7 +54,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
       references(:datacenters).each do |id|
-        dcs + connection.system_service.data_centers_service.data_center_service(id).get
+        dcs += connection.system_service.data_centers_service.data_center_service(id).get
       end
     end
 
@@ -66,7 +67,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
       references(:vms).each do |ems_ref|
-        h + connection.system_service.hosts_service.host_service(uuid_from_ems_ref(ems_ref)).get
+        h += connection.system_service.hosts_service.host_service(uuid_from_ems_ref(ems_ref)).get
       end
     end
 
@@ -79,7 +80,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
       references(:vms).each do |ems_ref|
-        v + connection.system_service.vms_service.vm_service(uuid_from_ems_ref(ems_ref)).get
+        v += connection.system_service.vms_service.vm_service(uuid_from_ems_ref(ems_ref)).get
       end
     end
 
@@ -92,7 +93,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
       references(:templates).each do |id|
-        temp + connection.system_service.templates_service.list(:search => "vm.id=#{id}")
+        temp += connection.system_service.templates_service.list(:search => "vm.id=#{id}")
       end
     end
 
@@ -142,24 +143,24 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     changed_vms = manager.vms.where(:ems_ref => references(:vms))
 
     changed_vms.each do |vm|
-      add_simple_target!(:ems_clusters, uuid_from_target(vm.ems_cluster))
-      vm.storages.collect(&:ems_ref).compact.each { |ems_ref| add_simple_target!(:storagedomains, uuid_from_ems_ref(ems_ref)) }
-      add_simple_target!(:datacenters, uuid_from_target(vm.parent_datacenter))
-      add_simple_target!(:templates, uuid_from_target(vm))
+      add_simple_target!(:ems_clusters, vm.ems_cluster.ems_ref)
+      vm.storages.collect(&:ems_ref).compact.each { |ems_ref| add_simple_target!(:storagedomains, ems_ref) }
+      add_simple_target!(:datacenters, vm.parent_datacenter.ems_ref)
+      add_simple_target!(:templates, vm.ems_ref)
     end
   end
 
   def infer_related_vm_ems_refs_api!
     vms.each do |vm|
-      add_simple_target!(:ems_clusters, vm.cluster.id)
+      add_simple_target!(:ems_clusters, ems_ref_from_sdk(vm.cluster))
       disks = collect_attached_disks(vm)
       disks.each do |disk|
         disk.storage_domains.to_miq_a.each do |sd|
-          add_simple_target!(:storagedomains, sd.id)
+          add_simple_target!(:storagedomains, ems_ref_from_sdk(sd))
         end
       end
-      add_simple_target!(:datacenters, vm.cluster.data_center.id)
-      add_simple_target!(:templates, vm.id)
+      add_simple_target!(:datacenters, ems_ref_from_sdk(vm.cluster.data_center))
+      add_simple_target!(:templates, ems_ref_from_sdk(vm))
     end
   end
 
@@ -189,6 +190,10 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
   def uuid_from_ems_ref(ems_ref)
     URI(ems_ref).path.split('/').last
+  end
+
+  def ems_ref_from_sdk(object)
+    ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(object.href)
   end
 
   def add_simple_target!(association, ems_ref)

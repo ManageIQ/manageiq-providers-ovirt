@@ -28,12 +28,34 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     allow_any_instance_of(@inventory_wrapper_class).to receive(:service)
       .and_return(OpenStruct.new(:version_string => '4.2.0_master'))
 
+    @root = FactoryGirl.create(:ems_folder,
+                               :ext_management_system => @ems,
+                               :name                  => "Datacenters")
+
+    @host_folder = FactoryGirl.create(:ems_folder,
+                                      :ext_management_system => @ems,
+                                      :name                  => "host")
+
+    @vm_folder = FactoryGirl.create(:ems_folder,
+                                    :ext_management_system => @ems,
+                                    :name                  => "vm")
+
+    @dc = FactoryGirl.create(:datacenter,
+                             :ems_ref               => "/api/datacenters/00000001-0001-0001-0001-000000000311",
+                             :ext_management_system => @ems,
+                             :name                  => "Default",
+                             :uid_ems               => "00000001-0001-0001-0001-000000000311")
+
     @cluster = FactoryGirl.create(:ems_cluster,
                                   :ems_ref               => "/api/clusters/00000002-0002-0002-0002-00000000017a",
                                   :uid_ems               => "00000002-0002-0002-0002-00000000017a",
-                                  # :ems_id  => @ems.id,
                                   :ext_management_system => @ems,
                                   :name                  => "Default")
+
+    @rp = FactoryGirl.create(:resource_pool,
+                             :ext_management_system => @ems,
+                             :name                  => "Default for Cluster Default",
+                             :uid_ems               => "00000002-0002-0002-0002-00000000017a_respool")
 
     @storage = FactoryGirl.create(:storage,
                                   :ems_ref  => "/api/storagedomains/6cc26c9d-e1a7-43ba-95d3-c744442c7500",
@@ -48,7 +70,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     @vm = FactoryGirl.create(:vm_redhat,
                              :ext_management_system => @ems,
                              :uid_ems               => "3a697bd0-7cea-42a1-95ef-fd292fcee721",
-                             :ems_cluster           => @cluster,
+                             :ems_cluster_id        => @cluster.id,
                              :ems_ref               => "/api/vms/3a697bd0-7cea-42a1-95ef-fd292fcee721",
                              :storage               => @storage,
                              :storages              => [@storage],
@@ -100,26 +122,27 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     allow_any_instance_of(target_collector_class).to receive(:templates).and_return(load_response_mock_for('templates'))
     allow_any_instance_of(target_collector_class).to receive(:vms).and_return(load_response_mock_for('vms'))
 
-    allow(@vm).to receive(:ems_cluster).and_return(@cluster)
+    @rp.with_relationship_type("ems_metadata") { @rp.add_child(@vm) }
+    @vm.with_relationship_type("ems_metadata") { @vm.set_parent @rp }
 
-    dc = FactoryGirl.create(:datacenter,
-                            :ems_ref => "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311",
-                            :name    => "Default",
-                            :uid_ems => "00000001-0001-0001-0001-000000000311")
+    @cluster.with_relationship_type("ems_metadata") { @cluster.add_child @rp }
+    @rp.with_relationship_type("ems_metadata") { @rp.set_parent @cluster }
 
-    allow(@vm).to receive(:parent_datacenter).and_return(dc)
-    vms = double("vms")
-    allow(vms).to receive(:where).and_return([@vm])
-    allow(@ems).to receive(:vms).and_return(vms)
+    @vm_folder.with_relationship_type("ems_metadata") { @vm_folder.add_child @vm }
+    @host_folder.with_relationship_type("ems_metadata") { @host_folder.add_child @cluster }
+    @dc.with_relationship_type("ems_metadata") { @dc.add_child @host_folder }
+    @dc.with_relationship_type("ems_metadata") { @dc.add_child @vm_folder }
+
+    @root.with_relationship_type("ems_metadata") { @root.add_child @dc }
+    @ems.add_child @root
 
     EmsRefresh.refresh(@vm)
 
-    # TODO: once implemented remove comments
-    # assert_table_counts
-    # assert_vm(@vm, @storage)
-    # assert_vm_rels(@vm, @hardware, @storage)
-    # assert_cluster(@vm)
-    # assert_storage(@storage, @vm)
+    assert_table_counts
+    assert_vm(@vm, @storage)
+    assert_vm_rels(@vm, @hardware, @storage)
+    assert_cluster(@vm)
+    assert_storage(@storage, @vm)
   end
 
   def assert_table_counts

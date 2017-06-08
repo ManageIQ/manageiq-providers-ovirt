@@ -37,7 +37,6 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
     end
 
     def preprocess_targets
-      # See if any should be escalated to a full refresh and do not use full_refresh_threshold
       @targets_by_ems_id.each do |ems_id, targets|
         ems = @ems_by_ems_id[ems_id]
         ems_in_list = targets.any? { |t| t.kind_of?(ExtManagementSystem) }

@@ -20,6 +20,7 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
           :ems_cluster,
           :storages,
           :storage,
+          :snapshots
         ]
       }
 

@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::Providers::Redhat::Inventory::Parser
+  # TODO: review the changes here and find common parts with ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::*
   def parse
     log_header = "MIQ(#{self.class.name}.#{__method__}) Collecting data for EMS name: [#{collector.manager.name}] id: [#{collector.manager.id}]"
     $rhevm_log.info("#{log_header}...")
@@ -16,7 +17,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     collector.ems_clusters.each do |cluster|
       r_id = "#{cluster.id}_respool"
 
-      persister.resource_pools.find_or_build(r_id).assign_attributes(
+      persister.resource_pools.find_or_build(:ems_uid => r_id).assign_attributes(
         :name       => "Default for Cluster #{cluster.name}",
         :uid_ems    => r_id,
         :is_default => true,
@@ -52,7 +53,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(storagedomain.try(:href))
 
-      persister.storages.find_or_build(storagedomain.id).assign_attributes(
+      persister.storages.find_or_build(ems_ref).assign_attributes(
         :ems_ref             => ems_ref,
         :ems_ref_obj         => ems_ref,
         :name                => storagedomain.try(:name),
@@ -230,7 +231,6 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       cluster_id = host.dig(:cluster, :id)
       cluster = persister.clusters.lazy_find(cluster_id)
       datacenter_id = cluster.dig(:data_center, :id)
-      # TODO: get rid of detect
       network = networks.detect { |n| n.name == network_name && n.dig(:data_center, :id) == datacenter_id }
     end
 
@@ -251,7 +251,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       return
     end
 
-    persister.lans..find_or_build_by(
+    persister.lans.find_or_build_by(
       :switch  => persister_switch,
       :uid_ems => uid
     ).assign_attributes(
@@ -300,13 +300,13 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :raw_power_state  => template ? "never" : vm.status,
         :boot_time        => vm.try(:start_time),
         :host             => persister.hosts.lazy_find(host_id),
-        :ems_cluster      => persister.ems_clusters.lazy_find(vm.cluster.id),
+        :ems_cluster      => persister.ems_clusters.lazy_find(ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm.cluster.href)),
         :storages         => storages,
         :storage          => storages.first,
+        :snapshots        => snapshots(vm)
       )
 
       vm_hardware(persister_vm, vm)
-      snapshots(persister_vm, vm)
       operating_systems(persister_vm, vm)
       custom_attributes(persister_vm, vm)
     end
@@ -316,7 +316,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     storages = []
     collector.collect_attached_disks(vm).to_miq_a.each do |disk|
       disk.storage_domains.to_miq_a.each do |sd|
-        storages << persister.storages.lazy_find(sd.id)
+        storages << persister.storages.lazy_find(ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(sd.href))
       end
     end
     storages.compact!
@@ -379,7 +379,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     disks.each do |interface, devices|
       devices.each_with_index do |device, index|
         storage_domain = device.storage_domains && device.storage_domains.first
-        storage_id = storage_domain && storage_domain.id
+        storage_ref = storage_domain && storage_domain.href
 
         persister.disks.find_or_build_by(
           :hardware    => persister_hardware,
@@ -396,7 +396,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
           :disk_type       => device.sparse == true ? 'thin' : 'thick',
           :mode            => 'persistent',
           :bootable        => device.try(:bootable),
-          :storage         => persister.storages.lazy_find(storage_id)
+          :storage         => persister.storages.lazy_find(ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(storage_ref))
         )
       end
     end
@@ -421,14 +421,15 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     end
   end
 
-  def snapshots(persister_vm, vm)
+  def snapshots(vm)
     snapshots = collector.collect_snapshots(vm)
     parent_id = nil
+    snaps = []
     snapshots.each_with_index do |snapshot, idx|
       name = description = snapshot.description
       name = "Active Image" if name[0, 13] == '_ActiveImage_'
 
-      persister.snapshots.find_or_build(persister_vm).assign_attributes(
+      snaps << persister.snapshots.find_or_build(:uid => snapshot.id).assign_attributes(
         :uid_ems     => snapshot.id,
         :uid         => snapshot.id,
         :parent_uid  => parent_id,
@@ -439,6 +440,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       )
       parent_id = snapshot.id
     end
+    snaps
   end
 
   def operating_systems(persister_vm, vm)
@@ -454,7 +456,10 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     custom_attrs = vm.try(:custom_properties)
 
     custom_attrs.to_a.each do |ca|
-      persister.custom_attributes.find_or_build(persister_vm).assign_attributes(
+      persister.custom_attributes.find_or_build(
+        :resource => persister_vm,
+        :name     => ca.name,
+      ).assign_attributes(
         :section => 'custom_field',
         :name    => ca.name,
         :value   => ca.value.try(:truncate, 255),

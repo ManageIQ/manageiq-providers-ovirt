@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Redhat::Inventory::Collector < ManagerRefresh::Inventory::Collector
+  # TODO: review the changes here and find common parts with ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
   require_nested :InfraManager
   require_nested :TargetCollection
 
@@ -26,11 +27,6 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManagerRefresh::Invent
     @hosts          = []
     @vms            = []
     @templates      = []
-  end
-
-  def hash_collection
-    # TODO: check whether needed
-    ::ManageIQ::Providers::Redhat::Inventory::HashCollection
   end
 
   def collect_ems_clusters
