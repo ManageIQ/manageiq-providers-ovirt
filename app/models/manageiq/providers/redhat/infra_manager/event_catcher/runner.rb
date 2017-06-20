@@ -2,17 +2,7 @@ require 'manageiq/providers/ovirt/legacy/event_monitor'
 
 class ManageIQ::Providers::Redhat::InfraManager::EventCatcher::Runner < ManageIQ::Providers::BaseManager::EventCatcher::Runner
   def event_monitor_handle
-    @event_monitor_handle ||= ManageIQ::Providers::Ovirt::Legacy::EventMonitor.new(event_monitor_options)
-  end
-
-  def event_monitor_options
-    {
-      :server     => @ems.hostname,
-      :port       => @ems.port.blank? ? nil : @ems.port.to_i,
-      :username   => @ems.authentication_userid,
-      :password   => @ems.authentication_password,
-      :verify_ssl => false
-    }
+    @event_monitor_handle ||= ManageIQ::Providers::Ovirt::Legacy::EventMonitor.new(:ems => @ems)
   end
 
   def reset_event_monitor_handle
@@ -41,12 +31,13 @@ class ManageIQ::Providers::Redhat::InfraManager::EventCatcher::Runner < ManageIQ
   end
 
   def queue_event(event)
-    _log.info "#{log_prefix} Caught event [#{event[:name]}]"
-    event_hash = ManageIQ::Providers::Redhat::InfraManager::EventParser.event_to_hash(event.to_hash, @cfg[:ems_id])
+    _log.info "#{log_prefix} Caught event [#{event.name}]"
+    parser = ManageIQ::Providers::Redhat::InfraManager::EventParsing::Builder.new(@ems).build
+    event_hash = parser.event_to_hash(event, @cfg[:ems_id])
     EmsEvent.add_queue('add', @cfg[:ems_id], event_hash)
   end
 
   def filtered?(event)
-    filtered_events.include?(event[:name])
+    filtered_events.include?(event.name)
   end
 end
