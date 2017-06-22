@@ -4,11 +4,11 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
   let(:mac_address)   { "mac_address" }
   let(:network_id)    { "network1-id" }
   let(:network_name)  { "network1-name" }
-  let(:rhevm_cluster) { double("Ovirt::Cluster", :find_network_by_name => {:id => network_id}) }
+  let(:rhevm_cluster) { double("Ovirt::Cluster") }
   let(:ems)           { FactoryGirl.create(:ems_redhat_with_authentication) }
-  let(:ems_cluster)   { FactoryGirl.create(:ems_cluster, :ext_management_system => ems) }
+  let(:ems_cluster)   { FactoryGirl.create(:ems_cluster, :ext_management_system => ems, :ems_ref => "ems_ref") }
   let(:template)      { FactoryGirl.create(:template_redhat, :ext_management_system => ems) }
-  let(:rhevm_vm)      { double("Ovirt::Vm") } # FactoryGirl.create(:vm_redhat, :ext_management_system => ems) }
+  let(:rhevm_vm)      { double("Ovirt::Vm") }
   let(:target_vm)     { FactoryGirl.create(:vm_redhat, :ext_management_system => ems) }
   let(:ovirt_service) { double("Ovirt::Service", :api_path => "/api") }
 
@@ -28,7 +28,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
     allow(Ovirt::Service).to receive_messages(:new => ovirt_service)
 
     allow(template).to receive_messages(:ext_management_system => ems)
-    allow(Ovirt::Cluster).to receive_messages(:find_by_href => rhevm_cluster)
+    allow(Ovirt::Cluster).to receive(:find_by_href).with(kind_of(ManageIQ::Providers::Redhat::InfraManager::ApiIntegration::OvirtConnectionDecorator), ems_cluster.ems_ref).and_return(rhevm_cluster)
+    allow(rhevm_cluster).to receive(:find_network_by_name).with(network_name).and_return(:id => network_id)
     allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager).to receive(:supported_api_versions)
       .and_return([3])
     allow(target_vm).to receive(:provider_object).and_return(rhevm_vm)
@@ -93,7 +94,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
         end
 
         it "should update an existing adapter's MAC address" do
-          @task.options[:networks] = [{:mac_address => mac_address}]
+          @task.options[:networks] = [{:network => network_name, :mac_address => mac_address}]
 
           expect(rhevm_vm).to receive(:nics).and_return([rhevm_nic1])
           expect(rhevm_nic1).to receive(:apply_options!).with(
@@ -120,6 +121,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
       end
 
       context "#get_mac_address_of_nic_on_requested_vlan" do
+        before { set_vlan }
         it "NIC found" do
           expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(mac_address)
         end
@@ -131,9 +133,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
         end
       end
     end
+
     context "ems version 4" do
-      let(:rhevm_nic1)    { double(:id => "nic1-id", :name => "nic1", :network => {:id => network_id}, :mac => {:address => mac_address}) }
-      let(:rhevm_nic2)    { double(:id => "nic2-id", :name => "nic2", :network => {:id => "network2-id"}) }
+      let(:rhevm_nic1) { double(:id => "nic1-id", :name => "nic1", :network => {:id => network_id}, :mac => ovirtSDK4_mac, :vnic_profile => vnic_profile_1) }
+      let(:rhevm_nic2) { double(:id => "nic2-id", :name => "nic2", :network => {:id => "network2-id"}, :vnic_profile => vnic_profile_2) }
       let(:vm_proxy) { "vm_proxy" }
       let(:system_service) { double("system_service", :vms_service => vms_service, :vnic_profiles_service => vnic_profiles_service, :clusters_service => clusters_service) }
       let(:connection) { double("connection", :system_service => system_service) }
@@ -149,6 +152,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
       let(:network_id) { "network_id" }
       let(:vnic_profiles_service) { "vnic_profiles_service" }
       let(:vnic_profile_id) { "vnic_profile_id" }
+      let(:vnic_profile_1) { double("vnic_prof1", :id => vnic_profile_id) }
+      let(:vnic_profile_2) { double("vnic_prof2", :id => "vnic_profile_id_2") }
       let(:vnic_profile_name) { "vnic_profile_name" }
       let(:set_vnic_profile) { @task.options[:vlan] = [vnic_profile_id, vnic_profile_name + " (" + network_name + ")"] }
       let(:network_profile) { double(:id => vnic_profile_id, :name => vnic_profile_name, :network => double(:id => network_id)) }
@@ -259,6 +264,22 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
         )
 
         @task.configure_network_adapters
+      end
+
+      context "#get_mac_address_of_nic_on_requested_vlan" do
+        before do
+          set_vnic_profile
+          allow(ems.ovirt_services).to receive(:nics_for_vm).with(target_vm).and_return([rhevm_nic1, rhevm_nic2])
+        end
+        it "NIC found" do
+          expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(mac_address)
+        end
+
+        it "NIC not found" do
+          allow(rhevm_nic1).to receive(:vnic_profile).and_return(vnic_profile_2)
+
+          expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(nil)
+        end
       end
     end
   end
