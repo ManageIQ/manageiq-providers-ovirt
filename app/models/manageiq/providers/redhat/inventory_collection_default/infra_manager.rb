@@ -27,6 +27,33 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       super(attributes.merge!(extra_attributes))
     end
 
+    def miq_templates(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::ManageIQ::Providers::Redhat::InfraManager::Template,
+        :inventory_object_attributes => [
+          :type,
+          :ems_ref,
+          :ems_ref_obj,
+          :uid_ems,
+          :connection_state,
+          :vendor,
+          :name,
+          :location,
+          :template,
+          :memory_reserve,
+          :raw_power_state,
+          :boot_time,
+          :host,
+          :ems_cluster,
+          :storages,
+          :storage,
+          :snapshots
+        ]
+      }
+
+      super(attributes.merge!(extra_attributes))
+    end
+
     def disks(extra_attributes = {})
       attributes = {
         :model_class                 => ::Disk,
@@ -53,8 +80,24 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       attributes = {
         :model_class                 => ::Network,
         :inventory_object_attributes => [
+          :description,
+          :hostname,
           :ipaddress,
-          :hostname
+          :subnet_mask,
+        ]
+      }
+
+      super(attributes.merge!(extra_attributes))
+    end
+
+    def host_nics(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::Network,
+        :inventory_object_attributes => [
+          :description,
+          :hostname,
+          :ipaddress,
+          :subnet_mask,
         ]
       }
 
@@ -65,13 +108,16 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       attributes = {
         :model_class                 => ::GuestDevice,
         :inventory_object_attributes => [
-          :uid_ems,
+          :address,
+          :controller_type,
           :device_name,
           :device_type,
-          :controller_type,
-          :address,
           :lan,
-          :network
+          :location,
+          :network,
+          :present,
+          :switch,
+          :uid_ems
         ]
       }
 
@@ -79,19 +125,34 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
     end
 
     def hardwares(extra_attributes = {})
-      attributes = {
+      attributes = hardwares_attributes
+
+      super(attributes.merge!(extra_attributes))
+    end
+
+    def host_hardwares(extra_attributes = {})
+      attributes = hardwares_attributes
+
+      super(attributes.merge!(extra_attributes))
+    end
+
+    def hardwares_attributes
+      {
         :model_class                 => ::Hardware,
         :inventory_object_attributes => [
-          :guest_os,
           :annotation,
           :cpu_cores_per_socket,
           :cpu_sockets,
+          :cpu_speed,
           :cpu_total_cores,
-          :memory_mb
+          :cpu_type,
+          :guest_os,
+          :manufacturer,
+          :memory_mb,
+          :model,
+          :networks
         ]
       }
-
-      super(attributes.merge!(extra_attributes))
     end
 
     def snapshots(extra_attributes = {})
@@ -112,15 +173,28 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
     end
 
     def operating_systems(extra_attributes = {})
-      attributes = {
-        :model_class                 => ::OperatingSystem,
-        :inventory_object_attributes => [
-          :product_name,
-          :system_type
-        ]
-      }
+      attributes = operating_systems_attributes
 
       super(attributes.merge!(extra_attributes))
+    end
+
+    def host_operating_systems(extra_attributes = {})
+      attributes = operating_systems_attributes
+
+      super(attributes.merge!(extra_attributes))
+    end
+
+    def operating_systems_attributes
+      {
+        :model_class                 => ::OperatingSystem,
+        :inventory_object_attributes => [
+          :name,
+          :product_name,
+          :product_type,
+          :system_type,
+          :version
+        ]
+      }
     end
 
     def custom_attributes(extra_attributes = {})
@@ -137,15 +211,16 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       super(attributes.merge!(extra_attributes))
     end
 
-    def datacenters(extra_attributes = {})
+    def ems_folders(extra_attributes = {})
       attributes = {
-        :model_class                 => ::Datacenter,
+        :model_class                 => ::EmsFolder,
         :inventory_object_attributes => [
           :name,
           :type,
+          :uid_ems,
           :ems_ref,
           :ems_ref_obj,
-          :uid_ems,
+          :hidden
         ]
       }
 
@@ -219,12 +294,143 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
           :connection_state,
           :power_state,
           :ems_cluster,
-          :ipmi_address,
-          :storages
+          :ipmi_address
         ]
       }
 
       super(attributes.merge!(extra_attributes))
+    end
+
+    def host_storages(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::HostStorage,
+        :inventory_object_attributes => [
+          :host,
+          :storage,
+        ]
+      }
+
+      super(attributes.merge!(extra_attributes))
+    end
+
+    def host_switches(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::HostSwitch,
+        :inventory_object_attributes => [
+          :host,
+          :switch,
+        ]
+      }
+
+      super(attributes.merge!(extra_attributes))
+    end
+
+    def switches(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::Switch,
+        :inventory_object_attributes => [
+          :uid_ems,
+          :name,
+          :lans
+        ]
+      }
+
+      super(attributes.merge!(extra_attributes))
+    end
+
+    def lans(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::Lan,
+        :inventory_object_attributes => [
+          :name,
+          :uid_ems,
+          :tag
+        ]
+      }
+
+      super(attributes.merge!(extra_attributes))
+    end
+
+    def ems_folder_children(extra_attributes = {})
+      folder_children_save_block = lambda do |ems, inventory_collection|
+        folder_collection = inventory_collection.dependency_attributes[:folders].try(:first)
+        cluster_collection = inventory_collection.dependency_attributes[:clusters].try(:first)
+        vm_collection = inventory_collection.dependency_attributes[:vms].try(:first)
+        template_collection = inventory_collection.dependency_attributes[:templates].try(:first)
+
+        dcs = folder_collection.data.select { |folder| folder.type == 'Datacenter' }
+        root = folder_collection.data.find { |folder| folder.uid_ems == 'root_dc' }
+        dcs.each do |dc|
+          uid = dc.uid_ems
+
+          clusters = cluster_collection.data.select { |cluster| cluster.datacenter_id == uid }
+          cluster_refs = clusters.map(&:ems_ref)
+
+          vms = vm_collection.data.select { |vm| cluster_refs.include? vm.ems_cluster.ems_ref }
+          templates = template_collection.data.select { |t| cluster_refs.include? t.ems_cluster.ems_ref }
+
+          ActiveRecord::Base.transaction do
+            host_folder = EmsFolder.find_by(:uid_ems => "#{uid}_host")
+            cs = EmsCluster.find(clusters.map(&:id))
+            cs.each do |c|
+              host_folder.with_relationship_type("ems_metadata") { host_folder.add_child c }
+            end
+
+            vm_folder = EmsFolder.find_by(:uid_ems => "#{uid}_vm")
+            vs = VmOrTemplate.find(vms.map(&:id))
+            vs.each do |v|
+              vm_folder.with_relationship_type("ems_metadata") { vm_folder.add_child v }
+            end
+
+            ts = MiqTemplate.find(templates.map(&:id))
+            ts.each do |t|
+              vm_folder.with_relationship_type("ems_metadata") { vm_folder.add_child t }
+            end
+
+            datacenter = EmsFolder.find(dc.id)
+            datacenter.with_relationship_type("ems_metadata") { datacenter.add_child host_folder }
+            datacenter.with_relationship_type("ems_metadata") { datacenter.add_child vm_folder }
+            root_dc = EmsFolder.find(root.id)
+            root_dc.with_relationship_type("ems_metadata") { root_dc.add_child datacenter }
+            ems.with_relationship_type("ems_metadata") { ems.add_child root_dc }
+          end
+        end
+      end
+
+      attributes = {
+        :association       => :ems_folder_children,
+        :custom_save_block => folder_children_save_block,
+      }
+
+      attributes.merge!(extra_attributes)
+    end
+
+    def ems_clusters_children(extra_attributes = {})
+      ems_cluster_children_save_block = lambda do |_ems, inventory_collection|
+        cluster_collection = inventory_collection.dependency_attributes[:clusters].try(:first)
+        vm_collection = inventory_collection.dependency_attributes[:vms].try(:first)
+
+        cluster_collection.each do |cluster|
+          vms = vm_collection.data.select { |vm| cluster.ems_ref == vm.ems_cluster.ems_ref }
+
+          ActiveRecord::Base.transaction do
+            vs = VmOrTemplate.find(vms.map(&:id))
+            rp = ResourcePool.find_by(:uid_ems => "#{cluster.uid_ems}_respool")
+            vs.each do |v|
+              rp.with_relationship_type("ems_metadata") { rp.add_child v }
+            end
+            c = EmsCluster.find(cluster.id)
+            c.with_relationship_type("ems_metadata") { c.add_child rp }
+          end
+        end
+      end
+
+      attributes = {
+        :association       => :ems_cluster_children,
+        :custom_save_block => ems_cluster_children_save_block,
+      }
+
+      attributes.merge!(extra_attributes)
     end
   end
 end

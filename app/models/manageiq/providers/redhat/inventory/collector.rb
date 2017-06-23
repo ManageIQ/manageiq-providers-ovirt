@@ -53,6 +53,24 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManagerRefresh::Invent
     end
   end
 
+  def collect_cluster_for_host(host)
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      connection.follow_link(host.cluster)
+    end
+  end
+
+  def collect_host_stats(host)
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      connection.link?(host.statistics) ? connection.follow_link(host.statistics) : host.statistics
+    end
+  end
+
+  def collect_datacenter_for_cluster(cluster)
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      connection.follow_link(cluster.data_center)
+    end
+  end
+
   def collect_attached_disks(disks_owner)
     manager.with_provider_connection(VERSION_HASH) do |connection|
       attachments = connection.follow_link(disks_owner.disk_attachments)

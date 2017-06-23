@@ -21,12 +21,6 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::InfraManager < ManageIQ
     end
   end
 
-  def host_stats(host)
-    manager.with_provider_connection(VERSION_HASH) do |connection|
-      connection.link?(host.statistics) ? connection.follow_link(host.statistics) : host.statistics
-    end
-  end
-
   def vms
     manager.with_provider_connection(VERSION_HASH) do |connection|
       connection.system_service.vms_service.list

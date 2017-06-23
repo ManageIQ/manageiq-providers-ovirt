@@ -2,27 +2,19 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
   def initialize_inventory_collections
     add_inventory_collections(
       infra,
-      %i(datacenters emsfolders ems_clusters hosts resourcepools vm_or_templates vm
-         miq_templates storages custom_attributes customization_specs disks
-         guest_devices hardwars lans miq_scsi_luns miq_scsi_targets networks
-         operating_systems snapshots switchs system_services)
+      %i(ems_clusters ems_folders hosts resource_pools vms miq_templates
+         storages custom_attributes disks guest_devices hardwares
+         host_hardwares host_nics host_operating_systems host_storages
+         host_switches lans nics operating_systems snapshots switches)
     )
 
     add_inventory_collection(
-      infra.datacenter_children(
+      infra.ems_folder_children(
         :dependency_attributes => {
-          :folders => [
-            [collections[:ems_clusters]],
-            [collections[:vms]]
-          ]
-        }
-      )
-    )
-
-    add_inventory_collection(
-      infra.resource_pool_children(
-        :dependency_attributes => {
-          :vms => [collections[:vms]],
+          :folders   => [collections[:ems_folders]],
+          :clusters  => [collections[:ems_clusters]],
+          :vms       => [collections[:vms]],
+          :templates => [collections[:miq_templates]]
         }
       )
     )
@@ -30,7 +22,16 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
     add_inventory_collection(
       infra.ems_clusters_children(
         :dependency_attributes => {
-          :resource_pools => [collections[:resource_pools]],
+          :vms      => [collections[:vms]],
+          :clusters => [collections[:ems_clusters]]
+        }
+      )
+    )
+
+    add_inventory_collection(
+      infra.snapshot_parent(
+        :dependency_attributes => {
+          :snapshots => [collections[:snapshots]]
         }
       )
     )

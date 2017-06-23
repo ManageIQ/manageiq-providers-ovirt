@@ -1,0 +1,773 @@
+--- !ruby/array:OvirtSDK4::List
+internal:
+- !ruby/object:OvirtSDK4::Host
+  href: "/ovirt-engine/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a"
+  comment:
+  description:
+  id: 5bf6b336-f86d-4551-ac08-d34621ec5f0a
+  name: bodh1
+  address: bodh1.usersys.redhat.com
+  affinity_labels: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a/affinitylabels"
+  agents:
+  auto_numa_status: disable
+  certificate: !ruby/object:OvirtSDK4::Certificate
+    href:
+    comment:
+    description:
+    id:
+    name:
+    content:
+    organization: Test
+    subject: O=Test,CN=bodh1.usersys.redhat.com
+  cluster: !ruby/object:OvirtSDK4::Cluster
+    href: "/ovirt-engine/api/clusters/00000002-0002-0002-0002-000000000092"
+    comment:
+    description:
+    id: 00000002-0002-0002-0002-000000000092
+    name:
+    affinity_groups:
+    ballooning_enabled:
+    cpu:
+    cpu_profiles:
+    custom_scheduling_policy_properties:
+    data_center:
+    display:
+    error_handling:
+    fencing_policy:
+    gluster_hooks:
+    gluster_service:
+    gluster_volumes:
+    ha_reservation:
+    ksm:
+    maintenance_reason_required:
+    management_network:
+    memory_policy:
+    migration:
+    network_filters:
+    networks:
+    optional_reason:
+    permissions:
+    required_rng_sources:
+    scheduling_policy:
+    serial_number:
+    supported_versions:
+    switch_type:
+    threads_as_cores:
+    trusted_service:
+    tunnel_migration:
+    version:
+    virt_service:
+  cpu: !ruby/object:OvirtSDK4::Cpu
+    href:
+    architecture:
+    cores:
+    cpu_tune:
+    level:
+    mode:
+    name: Westmere E56xx/L56xx/X56xx (Nehalem-C)
+    speed: 2400.0
+    topology: !ruby/object:OvirtSDK4::CpuTopology
+      href:
+      cores: 1
+      sockets: 2
+      threads: 1
+    type:
+  device_passthrough: !ruby/object:OvirtSDK4::HostDevicePassthrough
+    href:
+    enabled: false
+  devices: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a/devices"
+  display:
+  external_host_provider:
+  external_status: ok
+  hardware_information: !ruby/object:OvirtSDK4::HardwareInformation
+    href:
+    family: Red Hat Enterprise Linux
+    manufacturer: Red Hat
+    product_name: RHEV Hypervisor
+    serial_number: 30353036-3837-4247-3831-303946353235
+    supported_rng_sources:
+    - random
+    uuid: 4587CAA0-8F1A-4246-838B-0F5380A7E67E
+    version: 7.2-9.el7
+  hooks: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a/hooks"
+  hosted_engine:
+  iscsi: !ruby/object:OvirtSDK4::IscsiDetails
+    href:
+    address:
+    disk_id:
+    initiator: iqn.1994-05.com.redhat:3a591f887a5
+    lun_mapping:
+    password:
+    paths:
+    port:
+    portal:
+    product_id:
+    serial:
+    size:
+    status:
+    storage_domain_id:
+    target:
+    username:
+    vendor_id:
+    volume_group_id:
+  katello_errata: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a/katelloerrata"
+  kdump_status: disabled
+  ksm: !ruby/object:OvirtSDK4::Ksm
+    href:
+    enabled: false
+    merge_across_nodes:
+  libvirt_version: !ruby/object:OvirtSDK4::Version
+    href:
+    comment:
+    description:
+    id:
+    name:
+    build: 17
+    full_version: libvirt-1.2.17-13.el7_2.5
+    major: 1
+    minor: 2
+    revision: 0
+  max_scheduling_memory: 3568304128
+  memory: 3973054464
+  network_attachments: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a/networkattachments"
+  nics: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a/nics"
+  numa_nodes: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a/numanodes"
+  numa_supported: false
+  os: !ruby/object:OvirtSDK4::OperatingSystem
+    href:
+    boot:
+    cmdline:
+    custom_kernel_cmdline: ''
+    initrd:
+    kernel:
+    reported_kernel_cmdline: BOOT_IMAGE=/vmlinuz-3.10.0-327.18.2.el7.x86_64 root=/dev/mapper/vg0-lv_root
+      ro rd.lvm.lv=vg0/lv_root vconsole.font=latarcyrheb-sun16 rd.lvm.lv=vg0/lv_swap
+      crashkernel=auto vconsole.keymap=us rhgb quiet LANG=en_US.UTF-8
+    type: RHEL
+    version: !ruby/object:OvirtSDK4::Version
+      href:
+      comment:
+      description:
+      id:
+      name:
+      build:
+      full_version: 7 - 1.1503.el7.centos.2.8
+      major: 7
+      minor:
+      revision:
+  override_iptables:
+  permissions: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a/permissions"
+  port: 54321
+  power_management: !ruby/object:OvirtSDK4::PowerManagement
+    href:
+    address:
+    agents:
+    automatic_pm_enabled: true
+    enabled: false
+    kdump_detection: true
+    options:
+    password:
+    pm_proxies: !ruby/array:OvirtSDK4::List
+      internal: []
+      ivars:
+        :@href:
+    status:
+    type:
+    username:
+  protocol: stomp
+  root_password:
+  se_linux: !ruby/object:OvirtSDK4::SeLinux
+    href:
+    mode: enforcing
+  spm: !ruby/object:OvirtSDK4::Spm
+    href:
+    priority: 5
+    status: spm
+  ssh: !ruby/object:OvirtSDK4::Ssh
+    href:
+    comment:
+    description:
+    id:
+    name:
+    authentication_method:
+    fingerprint: SHA256:c34s0Cfo9dzBEtKX/P2gNqS6aoacuYJre2B21feC7Xk
+    port: 22
+    user:
+  statistics: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a/statistics"
+  status: up
+  status_detail:
+  storage_connection_extensions: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a/storageconnectionextensions"
+  storages:
+  summary: !ruby/object:OvirtSDK4::VmSummary
+    href:
+    active: 0
+    migrating: 0
+    total: 0
+  tags: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a/tags"
+  transparent_huge_pages: !ruby/object:OvirtSDK4::TransparentHugePages
+    href:
+    enabled: true
+  type: rhel
+  unmanaged_networks: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a/unmanagednetworks"
+  update_available: true
+  version: !ruby/object:OvirtSDK4::Version
+    href:
+    comment:
+    description:
+    id:
+    name:
+    build: 999
+    full_version: vdsm-4.18.999-156.git7c6905e.el7.centos
+    major: 4
+    minor: 18
+    revision: 0
+- !ruby/object:OvirtSDK4::Host
+  href: "/ovirt-engine/api/hosts/69cd8141-a6f5-4968-880d-121de26f3747"
+  comment:
+  description:
+  id: 69cd8141-a6f5-4968-880d-121de26f3747
+  name: bodh2
+  address: bodh2.usersys.redhat.com
+  affinity_labels: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/69cd8141-a6f5-4968-880d-121de26f3747/affinitylabels"
+  agents:
+  auto_numa_status: disable
+  certificate: !ruby/object:OvirtSDK4::Certificate
+    href:
+    comment:
+    description:
+    id:
+    name:
+    content:
+    organization: Test
+    subject: O=Test,CN=bodh2.usersys.redhat.com
+  cluster: !ruby/object:OvirtSDK4::Cluster
+    href: "/ovirt-engine/api/clusters/504ae500-3476-450e-8243-f6df0f7f7acf"
+    comment:
+    description:
+    id: 504ae500-3476-450e-8243-f6df0f7f7acf
+    name:
+    affinity_groups:
+    ballooning_enabled:
+    cpu:
+    cpu_profiles:
+    custom_scheduling_policy_properties:
+    data_center:
+    display:
+    error_handling:
+    fencing_policy:
+    gluster_hooks:
+    gluster_service:
+    gluster_volumes:
+    ha_reservation:
+    ksm:
+    maintenance_reason_required:
+    management_network:
+    memory_policy:
+    migration:
+    network_filters:
+    networks:
+    optional_reason:
+    permissions:
+    required_rng_sources:
+    scheduling_policy:
+    serial_number:
+    supported_versions:
+    switch_type:
+    threads_as_cores:
+    trusted_service:
+    tunnel_migration:
+    version:
+    virt_service:
+  cpu: !ruby/object:OvirtSDK4::Cpu
+    href:
+    architecture:
+    cores:
+    cpu_tune:
+    level:
+    mode:
+    name: Westmere E56xx/L56xx/X56xx (Nehalem-C)
+    speed: 2400.0
+    topology: !ruby/object:OvirtSDK4::CpuTopology
+      href:
+      cores: 4
+      sockets: 2
+      threads: 1
+    type:
+  device_passthrough: !ruby/object:OvirtSDK4::HostDevicePassthrough
+    href:
+    enabled: false
+  devices: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/69cd8141-a6f5-4968-880d-121de26f3747/devices"
+  display:
+  external_host_provider:
+  external_status: ok
+  hardware_information: !ruby/object:OvirtSDK4::HardwareInformation
+    href:
+    family: Red Hat Enterprise Linux
+    manufacturer: Red Hat
+    product_name: RHEV Hypervisor
+    serial_number: 30353036-3837-4247-3831-303946353235
+    supported_rng_sources:
+    - random
+    uuid: 263886E9-5A74-48D4-8839-6FEAFBC380F4
+    version: 7.3-7.el7
+  hooks: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/69cd8141-a6f5-4968-880d-121de26f3747/hooks"
+  hosted_engine:
+  iscsi: !ruby/object:OvirtSDK4::IscsiDetails
+    href:
+    address:
+    disk_id:
+    initiator: iqn.1994-05.com.redhat:d8ad6f214bf
+    lun_mapping:
+    password:
+    paths:
+    port:
+    portal:
+    product_id:
+    serial:
+    size:
+    status:
+    storage_domain_id:
+    target:
+    username:
+    vendor_id:
+    volume_group_id:
+  katello_errata: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/69cd8141-a6f5-4968-880d-121de26f3747/katelloerrata"
+  kdump_status: disabled
+  ksm: !ruby/object:OvirtSDK4::Ksm
+    href:
+    enabled: false
+    merge_across_nodes:
+  libvirt_version: !ruby/object:OvirtSDK4::Version
+    href:
+    comment:
+    description:
+    id:
+    name:
+    build: 17
+    full_version: libvirt-1.2.17-13.el7_2.5
+    major: 1
+    minor: 2
+    revision: 0
+  max_scheduling_memory: 14055112704
+  memory: 16650338304
+  network_attachments: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/69cd8141-a6f5-4968-880d-121de26f3747/networkattachments"
+  nics: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/69cd8141-a6f5-4968-880d-121de26f3747/nics"
+  numa_nodes: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/69cd8141-a6f5-4968-880d-121de26f3747/numanodes"
+  numa_supported: false
+  os: !ruby/object:OvirtSDK4::OperatingSystem
+    href:
+    boot:
+    cmdline:
+    custom_kernel_cmdline: ''
+    initrd:
+    kernel:
+    reported_kernel_cmdline: BOOT_IMAGE=/vmlinuz-3.10.0-327.18.2.el7.x86_64 root=/dev/mapper/vg0-lv_root
+      ro crashkernel=auto rd.lvm.lv=vg0/lv_root rd.lvm.lv=vg0/lv_swap rhgb quiet
+      LANG=en_US.UTF-8
+    type: RHEL
+    version: !ruby/object:OvirtSDK4::Version
+      href:
+      comment:
+      description:
+      id:
+      name:
+      build:
+      full_version: 7.2 - 9.el7
+      major: 7
+      minor: 2
+      revision:
+  override_iptables:
+  permissions: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/69cd8141-a6f5-4968-880d-121de26f3747/permissions"
+  port: 54321
+  power_management: !ruby/object:OvirtSDK4::PowerManagement
+    href:
+    address:
+    agents:
+    automatic_pm_enabled: true
+    enabled: false
+    kdump_detection: true
+    options:
+    password:
+    pm_proxies: !ruby/array:OvirtSDK4::List
+      internal: []
+      ivars:
+        :@href:
+    status:
+    type:
+    username:
+  protocol: stomp
+  root_password:
+  se_linux: !ruby/object:OvirtSDK4::SeLinux
+    href:
+    mode: enforcing
+  spm: !ruby/object:OvirtSDK4::Spm
+    href:
+    priority: 5
+    status: spm
+  ssh: !ruby/object:OvirtSDK4::Ssh
+    href:
+    comment:
+    description:
+    id:
+    name:
+    authentication_method:
+    fingerprint: SHA256:GHC9k+DeY93GWGRpwbqgluCBmkXxFvz1FK29FCtju4Q
+    port: 22
+    user:
+  statistics: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/69cd8141-a6f5-4968-880d-121de26f3747/statistics"
+  status: up
+  status_detail:
+  storage_connection_extensions: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/69cd8141-a6f5-4968-880d-121de26f3747/storageconnectionextensions"
+  storages:
+  summary: !ruby/object:OvirtSDK4::VmSummary
+    href:
+    active: 1
+    migrating: 0
+    total: 1
+  tags: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/69cd8141-a6f5-4968-880d-121de26f3747/tags"
+  transparent_huge_pages: !ruby/object:OvirtSDK4::TransparentHugePages
+    href:
+    enabled: true
+  type: rhel
+  unmanaged_networks: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/69cd8141-a6f5-4968-880d-121de26f3747/unmanagednetworks"
+  update_available: true
+  version: !ruby/object:OvirtSDK4::Version
+    href:
+    comment:
+    description:
+    id:
+    name:
+    build: 999
+    full_version: vdsm-4.18.999-156.git7c6905e.el7.centos
+    major: 4
+    minor: 18
+    revision: 0
+- !ruby/object:OvirtSDK4::Host
+  href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa"
+  comment: ''
+  description:
+  id: 2d0f658b-37fe-4692-b0d7-7d18b18eadaa
+  name: motis
+  address: venus-vdsb.usersys.redhat.com
+  affinity_labels: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa/affinitylabels"
+  agents:
+  auto_numa_status: disable
+  certificate: !ruby/object:OvirtSDK4::Certificate
+    href:
+    comment:
+    description:
+    id:
+    name:
+    content:
+    organization: Test
+    subject: O=Test,CN=venus-vdsb.usersys.redhat.com
+  cluster: !ruby/object:OvirtSDK4::Cluster
+    href: "/ovirt-engine/api/clusters/13fea00a-05fc-4024-8ed2-216cf20bf610"
+    comment:
+    description:
+    id: 13fea00a-05fc-4024-8ed2-216cf20bf610
+    name:
+    affinity_groups:
+    ballooning_enabled:
+    cpu:
+    cpu_profiles:
+    custom_scheduling_policy_properties:
+    data_center:
+    display:
+    error_handling:
+    fencing_policy:
+    gluster_hooks:
+    gluster_service:
+    gluster_volumes:
+    ha_reservation:
+    ksm:
+    maintenance_reason_required:
+    management_network:
+    memory_policy:
+    migration:
+    network_filters:
+    networks:
+    optional_reason:
+    permissions:
+    required_rng_sources:
+    scheduling_policy:
+    serial_number:
+    supported_versions:
+    switch_type:
+    threads_as_cores:
+    trusted_service:
+    tunnel_migration:
+    version:
+    virt_service:
+  cpu: !ruby/object:OvirtSDK4::Cpu
+    href:
+    architecture:
+    cores:
+    cpu_tune:
+    level:
+    mode:
+    name: Intel(R) Core(TM)2 Quad CPU    Q8400  @ 2.66GHz
+    speed: 2660.0
+    topology: !ruby/object:OvirtSDK4::CpuTopology
+      href:
+      cores: 4
+      sockets: 1
+      threads: 1
+    type:
+  device_passthrough: !ruby/object:OvirtSDK4::HostDevicePassthrough
+    href:
+    enabled: false
+  devices: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa/devices"
+  display:
+  external_host_provider:
+  external_status: ok
+  hardware_information: !ruby/object:OvirtSDK4::HardwareInformation
+    href:
+    family:
+    manufacturer: Dell Inc.
+    product_name: OptiPlex 780
+    serial_number: 7BL605J
+    supported_rng_sources:
+    - random
+    uuid: 44454c4c-4200-104c-8036-b7c04f30354a
+    version:
+  hooks: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa/hooks"
+  hosted_engine:
+  iscsi: !ruby/object:OvirtSDK4::IscsiDetails
+    href:
+    address:
+    disk_id:
+    initiator: iqn.1994-05.com.redhat:bodnopoz-vm-2
+    lun_mapping:
+    password:
+    paths:
+    port:
+    portal:
+    product_id:
+    serial:
+    size:
+    status:
+    storage_domain_id:
+    target:
+    username:
+    vendor_id:
+    volume_group_id:
+  katello_errata: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa/katelloerrata"
+  kdump_status: enabled
+  ksm: !ruby/object:OvirtSDK4::Ksm
+    href:
+    enabled: false
+    merge_across_nodes:
+  libvirt_version: !ruby/object:OvirtSDK4::Version
+    href:
+    comment:
+    description:
+    id:
+    name:
+    build: 17
+    full_version: libvirt-1.2.17-13.el7_2.4
+    major: 1
+    minor: 2
+    revision: 0
+  max_scheduling_memory: 3463446528
+  memory: 3868196864
+  network_attachments: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa/networkattachments"
+  nics: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa/nics"
+  numa_nodes: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa/numanodes"
+  numa_supported: false
+  os: !ruby/object:OvirtSDK4::OperatingSystem
+    href:
+    boot:
+    cmdline:
+    custom_kernel_cmdline: ''
+    initrd:
+    kernel:
+    reported_kernel_cmdline:
+    type: RHEL
+    version: !ruby/object:OvirtSDK4::Version
+      href:
+      comment:
+      description:
+      id:
+      name:
+      build:
+      full_version: 7 - 1.1503.el7.centos.2.8
+      major: 7
+      minor:
+      revision:
+  override_iptables:
+  permissions: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa/permissions"
+  port: 54321
+  power_management: !ruby/object:OvirtSDK4::PowerManagement
+    href:
+    address:
+    agents:
+    automatic_pm_enabled: true
+    enabled: false
+    kdump_detection: true
+    options:
+    password:
+    pm_proxies: !ruby/array:OvirtSDK4::List
+      internal: []
+      ivars:
+        :@href:
+    status:
+    type:
+    username:
+  protocol: stomp
+  root_password:
+  se_linux: !ruby/object:OvirtSDK4::SeLinux
+    href:
+    mode: enforcing
+  spm: !ruby/object:OvirtSDK4::Spm
+    href:
+    priority: 5
+    status: none
+  ssh: !ruby/object:OvirtSDK4::Ssh
+    href:
+    comment:
+    description:
+    id:
+    name:
+    authentication_method:
+    fingerprint: SHA256:mm10Fxl4ZSOAYncZ68gWU9T31f8tQFHgLAvV5+2UHZ8
+    port: 22
+    user:
+  statistics: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa/statistics"
+  status: non_responsive
+  status_detail:
+  storage_connection_extensions: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa/storageconnectionextensions"
+  storages:
+  summary: !ruby/object:OvirtSDK4::VmSummary
+    href:
+    active: 0
+    migrating: 0
+    total: 0
+  tags: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa/tags"
+  transparent_huge_pages: !ruby/object:OvirtSDK4::TransparentHugePages
+    href:
+    enabled: true
+  type: rhel
+  unmanaged_networks: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa/unmanagednetworks"
+  update_available: false
+  version: !ruby/object:OvirtSDK4::Version
+    href:
+    comment:
+    description:
+    id:
+    name:
+    build: 32
+    full_version: vdsm-4.17.32-0.el7.centos
+    major: 4
+    minor: 17
+    revision: 0
+ivars:
+  :@href:

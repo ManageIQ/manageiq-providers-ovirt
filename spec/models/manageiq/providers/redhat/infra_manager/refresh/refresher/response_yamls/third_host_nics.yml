@@ -1,0 +1,212 @@
+--- !ruby/array:OvirtSDK4::List
+internal:
+- !ruby/object:OvirtSDK4::HostNic
+  href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa/nics/1e49055d-11e6-4c06-9dd7-0ad1e1e32f43"
+  comment:
+  description:
+  id: 1e49055d-11e6-4c06-9dd7-0ad1e1e32f43
+  name: enp4s0
+  ad_aggregator_id:
+  base_interface:
+  bonding:
+  boot_protocol: none
+  bridged: false
+  check_connectivity:
+  custom_configuration:
+  host: !ruby/object:OvirtSDK4::Host
+    href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa"
+    comment:
+    description:
+    id: 2d0f658b-37fe-4692-b0d7-7d18b18eadaa
+    name:
+    address:
+    affinity_labels:
+    agents:
+    auto_numa_status:
+    certificate:
+    cluster:
+    cpu:
+    device_passthrough:
+    devices:
+    display:
+    external_host_provider:
+    external_status:
+    hardware_information:
+    hooks:
+    hosted_engine:
+    iscsi:
+    katello_errata:
+    kdump_status:
+    ksm:
+    libvirt_version:
+    max_scheduling_memory:
+    memory:
+    network_attachments:
+    nics:
+    numa_nodes:
+    numa_supported:
+    os:
+    override_iptables:
+    permissions:
+    port:
+    power_management:
+    protocol:
+    root_password:
+    se_linux:
+    spm:
+    ssh:
+    statistics:
+    status:
+    status_detail:
+    storage_connection_extensions:
+    storages:
+    summary:
+    tags:
+    transparent_huge_pages:
+    type:
+    unmanaged_networks:
+    update_available:
+    version:
+  ip: !ruby/object:OvirtSDK4::Ip
+    href:
+    address: ''
+    gateway:
+    netmask: ''
+    version: v4
+  ipv6:
+  ipv6_boot_protocol: none
+  mac: !ruby/object:OvirtSDK4::Mac
+    href:
+    address: 00:07:e9:11:0d:e5
+  mtu: 1500
+  network:
+  network_labels:
+  override_configuration:
+  physical_function:
+  properties:
+  qos:
+  speed:
+  statistics:
+  status: down
+  virtual_functions_configuration:
+  vlan:
+- !ruby/object:OvirtSDK4::HostNic
+  href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa/nics/192e4fce-7237-49bd-8e75-13ac27bd8349"
+  comment:
+  description:
+  id: 192e4fce-7237-49bd-8e75-13ac27bd8349
+  name: enp0s25
+  ad_aggregator_id:
+  base_interface:
+  bonding:
+  boot_protocol: dhcp
+  bridged: true
+  check_connectivity:
+  custom_configuration: true
+  host: !ruby/object:OvirtSDK4::Host
+    href: "/ovirt-engine/api/hosts/2d0f658b-37fe-4692-b0d7-7d18b18eadaa"
+    comment:
+    description:
+    id: 2d0f658b-37fe-4692-b0d7-7d18b18eadaa
+    name:
+    address:
+    affinity_labels:
+    agents:
+    auto_numa_status:
+    certificate:
+    cluster:
+    cpu:
+    device_passthrough:
+    devices:
+    display:
+    external_host_provider:
+    external_status:
+    hardware_information:
+    hooks:
+    hosted_engine:
+    iscsi:
+    katello_errata:
+    kdump_status:
+    ksm:
+    libvirt_version:
+    max_scheduling_memory:
+    memory:
+    network_attachments:
+    nics:
+    numa_nodes:
+    numa_supported:
+    os:
+    override_iptables:
+    permissions:
+    port:
+    power_management:
+    protocol:
+    root_password:
+    se_linux:
+    spm:
+    ssh:
+    statistics:
+    status:
+    status_detail:
+    storage_connection_extensions:
+    storages:
+    summary:
+    tags:
+    transparent_huge_pages:
+    type:
+    unmanaged_networks:
+    update_available:
+    version:
+  ip: !ruby/object:OvirtSDK4::Ip
+    href:
+    address: 10.35.0.154
+    gateway: 10.35.1.254
+    netmask: 255.255.254.0
+    version: v4
+  ipv6: !ruby/object:OvirtSDK4::Ip
+    href:
+    address:
+    gateway: "::"
+    netmask:
+    version: v6
+  ipv6_boot_protocol: none
+  mac: !ruby/object:OvirtSDK4::Mac
+    href:
+    address: 84:2b:2b:bf:60:43
+  mtu: 1500
+  network: !ruby/object:OvirtSDK4::Network
+    href: "/ovirt-engine/api/networks/6ad90f38-5496-47fb-9882-5aa55e1314ef"
+    comment:
+    description:
+    id: 6ad90f38-5496-47fb-9882-5aa55e1314ef
+    name:
+    cluster:
+    data_center:
+    display:
+    ip:
+    mtu:
+    network_labels:
+    permissions:
+    profile_required:
+    qos:
+    required:
+    status:
+    stp:
+    usages:
+    vlan:
+    vnic_profiles:
+  network_labels:
+  override_configuration:
+  physical_function:
+  properties: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href:
+  qos:
+  speed: 100000000
+  statistics:
+  status: up
+  virtual_functions_configuration:
+  vlan:
+ivars:
+  :@href:
