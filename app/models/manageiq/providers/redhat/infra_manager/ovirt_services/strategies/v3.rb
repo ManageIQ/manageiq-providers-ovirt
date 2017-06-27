@@ -262,9 +262,24 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       end
     end
 
-    def find_mac_address_on_network(nics, network, log)
+    def get_mac_address_of_nic_on_requested_vlan(args)
+      network = find_network_in_cluster(args[:value_of_vlan_option], args[:dest_cluster])
+      return nil if network.nil?
+
+      find_mac_address_on_network(network, args[:destination])
+    end
+
+    def find_network_in_cluster(network_name, dest_cluster)
+      network = cluster_find_network_by_name(dest_cluster.ems_ref, network_name)
+
+      _log.warn "Cannot find network name=#{network_name}" if network.nil?
+      network
+    end
+
+    def find_mac_address_on_network(network, destination)
+      nics = nics_for_vm(destination)
       nic = nics.detect { |n| n.network.try(:id) == network[:id] }
-      log.warn "Cannot find NIC with network id=#{network[:id].inspect}" if nic.nil?
+      _log.warn "Cannot find NIC with network id=#{network[:id].inspect}" if nic.nil?
       nic && nic[:mac] && nic[:mac][:address]
     end
 

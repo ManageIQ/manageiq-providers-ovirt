@@ -14,10 +14,12 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Netw
 
   # TODO: Move this into EMS Refresh
   def get_mac_address_of_nic_on_requested_vlan
-    network = find_network_in_cluster(get_option(:vlan))
-    return nil if network.nil?
-
-    find_mac_address_on_network(network)
+    args = {
+      :value_of_vlan_option => get_option(:vlan),
+      :dest_cluster         => dest_cluster,
+      :destination          => destination
+    }
+    source.ext_management_system.ovirt_services.get_mac_address_of_nic_on_requested_vlan(args)
   end
 
   private
@@ -27,19 +29,8 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Netw
     @destination_vnics ||= nics.sort_by(&:name)
   end
 
-  def find_network_in_cluster(network_name)
-    network = source.ext_management_system.ovirt_services.cluster_find_network_by_name(dest_cluster.ems_ref, network_name)
-
-    _log.warn "Cannot find network name=#{network_name}" if network.nil?
-    network
-  end
-
   def nics
     destination.ext_management_system.ovirt_services.nics_for_vm(destination)
-  end
-
-  def find_mac_address_on_network(network)
-    destination.ext_management_system.ovirt_services.find_mac_address_on_network(nics, network, _log)
   end
 
   def configure_dialog_nic

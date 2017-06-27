@@ -10,6 +10,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionViaPxe do
       allow(@task).to receive(:destination_image_locked?).and_return(false)
       @ovirt_services = double("ovirt_services")
       allow(ems).to receive(:ovirt_services).and_return(@ovirt_services)
+      allow(@ovirt_services).to receive(:get_mac_address_of_nic_on_requested_vlan).and_return("some_mac_address")
       allow(@task).to receive(:update_and_notify_parent).and_return(nil)
     end
 
