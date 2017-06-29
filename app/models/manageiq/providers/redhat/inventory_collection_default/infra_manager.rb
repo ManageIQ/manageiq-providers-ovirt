@@ -76,7 +76,7 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       super(attributes.merge!(extra_attributes))
     end
 
-    def nics(extra_attributes = {})
+    def networks(extra_attributes = {})
       attributes = {
         :model_class                 => ::Network,
         :inventory_object_attributes => [
@@ -90,14 +90,14 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       super(attributes.merge!(extra_attributes))
     end
 
-    def host_nics(extra_attributes = {})
+    def host_networks(extra_attributes = {})
       attributes = {
         :model_class                 => ::Network,
         :inventory_object_attributes => [
           :description,
           :hostname,
           :ipaddress,
-          :subnet_mask,
+          :subnet_mask
         ]
       }
 
@@ -136,25 +136,6 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       super(attributes.merge!(extra_attributes))
     end
 
-    def hardwares_attributes
-      {
-        :model_class                 => ::Hardware,
-        :inventory_object_attributes => [
-          :annotation,
-          :cpu_cores_per_socket,
-          :cpu_sockets,
-          :cpu_speed,
-          :cpu_total_cores,
-          :cpu_type,
-          :guest_os,
-          :manufacturer,
-          :memory_mb,
-          :model,
-          :networks
-        ]
-      }
-    end
-
     def snapshots(extra_attributes = {})
       attributes = {
         :model_class                 => ::Snapshot,
@@ -184,19 +165,6 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       super(attributes.merge!(extra_attributes))
     end
 
-    def operating_systems_attributes
-      {
-        :model_class                 => ::OperatingSystem,
-        :inventory_object_attributes => [
-          :name,
-          :product_name,
-          :product_type,
-          :system_type,
-          :version
-        ]
-      }
-    end
-
     def custom_attributes(extra_attributes = {})
       attributes = {
         :model_class                 => ::CustomAttribute,
@@ -211,20 +179,83 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       super(attributes.merge!(extra_attributes))
     end
 
-    def ems_folders(extra_attributes = {})
+    def datacenters(extra_attributes = {})
       attributes = {
-        :model_class                 => ::EmsFolder,
+        :model_class                 => ::Datacenter,
         :inventory_object_attributes => [
           :name,
           :type,
           :uid_ems,
           :ems_ref,
           :ems_ref_obj,
-          :hidden
-        ]
+        ],
+        :association                 => :datacenters,
+        :builder_params              => {
+          :ems_id => ->(persister) { persister.manager.id },
+        },
       }
 
-      super(attributes.merge!(extra_attributes))
+      attributes.merge!(extra_attributes)
+    end
+
+    def vm_folders(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::EmsFolder,
+        :inventory_object_attributes => [
+          :name,
+          :type,
+          :uid_ems,
+          :hidden
+        ],
+        :association                 => :vm_folders,
+        :manager_ref                 => [:uid_ems],
+        :attributes_blacklist        => [:ems_children],
+        :builder_params              => {
+          :ems_id => ->(persister) { persister.manager.id },
+        },
+      }
+
+      attributes.merge!(extra_attributes)
+    end
+
+    def host_folders(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::EmsFolder,
+        :inventory_object_attributes => [
+          :name,
+          :type,
+          :uid_ems,
+          :hidden
+        ],
+        :association                 => :host_folders,
+        :manager_ref                 => [:uid_ems],
+        :attributes_blacklist        => [:ems_children],
+        :builder_params              => {
+          :ems_id => ->(persister) { persister.manager.id },
+        },
+      }
+
+      attributes.merge!(extra_attributes)
+    end
+
+    def root_folders(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::EmsFolder,
+        :inventory_object_attributes => [
+          :name,
+          :type,
+          :uid_ems,
+          :hidden
+        ],
+        :association                 => :root_folders,
+        :manager_ref                 => [:uid_ems],
+        :attributes_blacklist        => [:ems_children],
+        :builder_params              => {
+          :ems_id => ->(persister) { persister.manager.id },
+        },
+      }
+
+      attributes.merge!(extra_attributes)
     end
 
     def resource_pools(extra_attributes = {})
@@ -353,14 +384,12 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
 
     def ems_folder_children(extra_attributes = {})
       folder_children_save_block = lambda do |ems, inventory_collection|
-        folder_collection = inventory_collection.dependency_attributes[:folders].try(:first)
         cluster_collection = inventory_collection.dependency_attributes[:clusters].try(:first)
         vm_collection = inventory_collection.dependency_attributes[:vms].try(:first)
         template_collection = inventory_collection.dependency_attributes[:templates].try(:first)
+        datacenter_collection = inventory_collection.dependency_attributes[:datacenters].try(:first)
 
-        dcs = folder_collection.data.select { |folder| folder.type == 'Datacenter' }
-        root = folder_collection.data.find { |folder| folder.uid_ems == 'root_dc' }
-        dcs.each do |dc|
+        datacenter_collection.data.each do |dc|
           uid = dc.uid_ems
 
           clusters = cluster_collection.data.select { |cluster| cluster.datacenter_id == uid }
@@ -390,7 +419,7 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
             datacenter = EmsFolder.find(dc.id)
             datacenter.with_relationship_type("ems_metadata") { datacenter.add_child host_folder }
             datacenter.with_relationship_type("ems_metadata") { datacenter.add_child vm_folder }
-            root_dc = EmsFolder.find(root.id)
+            root_dc = EmsFolder.find_by(:uid_ems => 'root_dc', :ems_id => ems.id)
             root_dc.with_relationship_type("ems_metadata") { root_dc.add_child datacenter }
             ems.with_relationship_type("ems_metadata") { ems.add_child root_dc }
           end
@@ -431,6 +460,40 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       }
 
       attributes.merge!(extra_attributes)
+    end
+
+    private
+
+    def hardwares_attributes
+      {
+        :model_class                 => ::Hardware,
+        :inventory_object_attributes => [
+          :annotation,
+          :cpu_cores_per_socket,
+          :cpu_sockets,
+          :cpu_speed,
+          :cpu_total_cores,
+          :cpu_type,
+          :guest_os,
+          :manufacturer,
+          :memory_mb,
+          :model,
+          :networks
+        ]
+      }
+    end
+
+    def operating_systems_attributes
+      {
+        :model_class                 => ::OperatingSystem,
+        :inventory_object_attributes => [
+          :name,
+          :product_name,
+          :product_type,
+          :system_type,
+          :version
+        ]
+      }
     end
   end
 end

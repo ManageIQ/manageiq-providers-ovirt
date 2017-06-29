@@ -59,7 +59,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   end
 
   it "will perform a graph full refresh" do
-    allow(Settings.ems_refresh).to receive(:rhevm).and_return(:inventory_object_refresh => true)
+    stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
 
     allow_any_instance_of(OvirtSDK4::ClustersService).to receive(:list).and_return(load_response_mock_for('clusters'))
     allow_any_instance_of(OvirtSDK4::DataCentersService).to receive(:list).and_return(load_response_mock_for('datacenters'))

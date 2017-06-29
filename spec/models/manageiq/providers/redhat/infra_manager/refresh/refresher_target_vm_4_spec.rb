@@ -30,14 +30,17 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
     @root = FactoryGirl.create(:ems_folder,
                                :ext_management_system => @ems,
+                               :uid_ems               => 'root_dc',
                                :name                  => "Datacenters")
 
     @host_folder = FactoryGirl.create(:ems_folder,
                                       :ext_management_system => @ems,
+                                      :uid_ems               => "00000001-0001-0001-0001-000000000311_host",
                                       :name                  => "host")
 
     @vm_folder = FactoryGirl.create(:ems_folder,
                                     :ext_management_system => @ems,
+                                    :uid_ems               => "00000001-0001-0001-0001-000000000311_vm",
                                     :name                  => "vm")
 
     @dc = FactoryGirl.create(:datacenter,

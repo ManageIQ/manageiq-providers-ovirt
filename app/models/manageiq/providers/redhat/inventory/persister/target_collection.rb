@@ -6,10 +6,10 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
     add_inventory_collection(
       infra.ems_folder_children(
         :dependency_attributes => {
-          :folders   => [collections[:ems_folders]],
-          :clusters  => [collections[:ems_clusters]],
-          :vms       => [collections[:vms]],
-          :templates => [collections[:miq_templates]]
+          :clusters    => [collections[:ems_clusters]],
+          :datacenters => [collections[:datacenters]],
+          :vms         => [collections[:vms]],
+          :templates   => [collections[:miq_templates]]
         }
       )
     )
@@ -24,7 +24,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
     )
 
     add_inventory_collection(
-      infra.snapshot_patent(
+      infra.snapshot_parent(
         :dependency_attributes => {
           :snapshots => [collections[:snapshots]]
         }
@@ -72,7 +72,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
       )
     )
     add_inventory_collection(
-      infra.nics(
+      infra.networks(
         :arel     => manager.networks.joins(:hardware => :vm_or_template).where(
           :hardware => {'vms' => {:ems_ref => manager_refs}}
         ),
@@ -81,9 +81,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
     )
     add_inventory_collection(
       infra.switches(
-        :arel     => manager.switches.joins(:hardware => :vm_or_template).where(
-          :hardware => {'vms' => {:ems_ref => manager_refs}}
-        ),
+        :arel     => manager.switches.where('vms' => {:ems_ref => manager_refs}),
         :strategy => :local_db_find_missing_references
       )
     )
@@ -148,8 +146,26 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
     return if manager_refs.blank?
 
     add_inventory_collection(
-      infra.ems_folders(
-        :arel     => manager.ems_folders.where(:ems_ref => manager_refs),
+      infra.datacenters(
+        :arel     => manager.ems_folders.where(:ems_ref => manager_refs, :type => 'Datacenter'),
+        :strategy => :local_db_find_missing_references
+      )
+    )
+    add_inventory_collection(
+      infra.vm_folders(
+        :arel     => manager.ems_folders.where(:uid_ems => manager_refs.collect { |ref| "#{URI(ref).path.split('/').last}_vm" }),
+        :strategy => :local_db_find_missing_references
+      )
+    )
+    add_inventory_collection(
+      infra.host_folders(
+        :arel     => manager.ems_folders.where(:uid_ems => manager_refs.collect { |ref| "#{URI(ref).path.split('/').last}_host" }),
+        :strategy => :local_db_find_missing_references
+      )
+    )
+    add_inventory_collection(
+      infra.root_folders(
+        :arel     => manager.ems_folders.where(:uid_ems => 'root_dc'),
         :strategy => :local_db_find_missing_references
       )
     )
@@ -204,7 +220,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
       )
     )
     add_inventory_collection(
-      infra.host_nics(
+      infra.host_networks(
         :arel     => manager.networks.joins(:hardware => :host).where(
           :hardware => {'hosts' => {:ems_ref => manager_refs}}
         ),
