@@ -1,6 +1,5 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine do
   include MiqProvision::StateMachineSpecHelper
-
   let(:cluster)  { FactoryGirl.create(:ems_cluster, :ext_management_system => ems) }
   let(:ems)      { FactoryGirl.create(:ems_redhat_with_authentication) }
   let(:disk_attachments_service) { double("disk_attachments_service", :add => nil) }
@@ -19,9 +18,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine do
       allow(ems).to receive(:storages).and_return(storages)
       allow(storages).to receive(:find_by).with(:name => storage_name).and_return(storage)
       allow(ems).to receive(:hosts).and_return(hosts)
-      # TODO: (inventory) write for v4
-      allow(ems).to receive(:supported_api_versions).and_return([3])
+      allow(ems).to receive(:supported_api_versions).and_return(supported_api_versions)
     end
+  end
+
+  let(:storage) do
+    FactoryGirl.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ", :name => storage_name)
   end
 
   let(:storage) do
@@ -78,7 +80,59 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine do
     }
   end
 
-  include_examples "End-to-end State Machine Run"
+  context "version 3" do
+    include_examples "End-to-end State Machine Run"
+
+    ### BRANCH STATES
+    def test_autostart_destination_with_use_cloud_init
+      task.phase_context[:boot_with_cloud_init] = true
+
+      xml = double("XML")
+      expect(xml).to receive(:use_cloud_init).with(true)
+      expect(rhevm_vm).to receive(:start).and_yield(xml)
+
+      call_method
+    end
+
+    def test_autostart_destination_without_use_cloud_init
+      task.phase_context.delete(:boot_with_cloud_init)
+
+      xml = double("XML")
+      expect(xml).not_to receive(:use_cloud_init)
+      expect(rhevm_vm).to receive(:start).and_yield(xml)
+
+      call_method
+    end
+
+    let(:supported_api_versions) { [3] }
+  end
+
+  context "version 4" do
+    let(:supported_api_versions) { [3, 4] }
+
+    before do
+      stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
+    end
+
+    ## BRANCH STATES
+    def test_autostart_destination_with_use_cloud_init
+      task.phase_context[:boot_with_cloud_init] = true
+
+      expect(rhevm_vm).to receive(:start).with(:use_cloud_init => an_instance_of(CustomAttribute))
+
+      call_method
+    end
+
+    def test_autostart_destination_without_use_cloud_init
+      task.phase_context.delete(:boot_with_cloud_init)
+
+      expect(rhevm_vm).not_to receive(:start).with(:use_cloud_init => an_instance_of(CustomAttribute))
+
+      call_method
+    end
+
+    include_examples "End-to-end State Machine Run"
+  end
 
   def test_customize_guest
     call_method
@@ -100,11 +154,11 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine do
 
   def test_poll_clone_complete
     @test_poll_clone_complete_setup ||= begin
-      expect(task).to receive(:clone_complete?).and_return(false, false, true)
-      expect(task).to receive(:requeue_phase).twice { requeue_phase }
-      # make sure that full refresh is not run
-      expect(EmsRefresh).not_to receive(:queue_refresh).with(no_args)
-    end
+                                          expect(task).to receive(:clone_complete?).and_return(false, false, true)
+                                          expect(task).to receive(:requeue_phase).twice { requeue_phase }
+                                          # make sure that full refresh is not run
+                                          expect(EmsRefresh).not_to receive(:queue_refresh).with(no_args)
+                                        end
 
     call_method
   end
@@ -113,10 +167,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine do
     expect(task.destination).to be_kind_of(ManageIQ::Providers::Redhat::InfraManager::Vm) # TODO: For previous state
 
     @test_customize_destination_setup ||= begin
-      expect(task).to receive(:requeue_phase).twice { requeue_phase }
-      expect(task).to receive(:destination_image_locked?).and_return(true, true, false)
-      expect(task).to receive(:configure_container)
-    end
+                                            expect(task).to receive(:requeue_phase).twice { requeue_phase }
+                                            expect(task).to receive(:destination_image_locked?).and_return(true, true, false)
+                                            expect(task).to receive(:configure_container)
+                                          end
 
     call_method
   end
@@ -125,27 +179,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine do
     expect(vm).to receive(:start).twice { vm.raw_start }
     test_autostart_destination_with_use_cloud_init
     test_autostart_destination_without_use_cloud_init
-  end
-
-  ### BRANCH STATES
-  def test_autostart_destination_with_use_cloud_init
-    task.phase_context[:boot_with_cloud_init] = true
-
-    xml = double("XML")
-    expect(xml).to receive(:use_cloud_init).with(true)
-    expect(rhevm_vm).to receive(:start).and_yield(xml)
-
-    call_method
-  end
-
-  def test_autostart_destination_without_use_cloud_init
-    task.phase_context.delete(:boot_with_cloud_init)
-
-    xml = double("XML")
-    expect(xml).not_to receive(:use_cloud_init)
-    expect(rhevm_vm).to receive(:start).and_yield(xml)
-
-    call_method
   end
 
   def test_configure_disks
