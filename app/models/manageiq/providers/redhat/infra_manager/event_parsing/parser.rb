@@ -65,7 +65,7 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing
       dc      = folders.detect { |f| f[:type] == 'Datacenter' }
 
       cluster = parse_new_cluster(ems, full_data[:cluster], dc)
-      rp      = parse_new_rp(cluster)
+      rp      = parse_new_resource_pool(cluster)
       vm      = parse_new_vm(ems, full_data[:vm], dc, cluster, message, event_type)
 
       target_hash = {
@@ -125,7 +125,7 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing
       cluster_hash
     end
 
-    def self.parse_new_rp(cluster)
+    def self.parse_new_resource_pool(cluster)
       rp_hash = {
         :name         => "Default for Cluster #{cluster[:name]}",
         :uid_ems      => "#{cluster[:uid_ems]}_respool",
