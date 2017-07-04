@@ -9,3 +9,5 @@
     :password:
     :port:
     :user:
+:ems_refresh:
+  :inventory_object_refresh: false

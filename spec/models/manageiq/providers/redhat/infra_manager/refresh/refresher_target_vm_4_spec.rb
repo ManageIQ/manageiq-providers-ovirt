@@ -37,40 +37,54 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     allow_any_instance_of(inventory_wrapper_class).to receive(:api).and_return("4.2.0_master")
     allow_any_instance_of(inventory_wrapper_class).to receive(:service)
       .and_return(OpenStruct.new(:version_string => '4.2.0_master'))
-  end
 
-  it "should refresh a vm" do
     @cluster = FactoryGirl.create(:ems_cluster,
                                   :ems_ref => "/api/clusters/00000002-0002-0002-0002-00000000017a",
                                   :uid_ems => "00000002-0002-0002-0002-00000000017a",
                                   :ems_id  => @ems.id,
                                   :name    => "Default")
 
-    storage = FactoryGirl.create(:storage,
-                                 :ems_ref  => "/api/storagedomains/6cc26c9d-e1a7-43ba-95d3-c744442c7500",
-                                 :location => "192.168.1.107:/export/data")
+    @storage = FactoryGirl.create(:storage,
+                                  :ems_ref  => "/api/storagedomains/6cc26c9d-e1a7-43ba-95d3-c744442c7500",
+                                  :location => "192.168.1.107:/export/data")
 
-    disk = FactoryGirl.create(:disk,
-                              :storage  => storage,
-                              :filename => "c413aff6-e988-4830-8b24-f74af66ced5a")
-    hardware = FactoryGirl.create(:hardware,
-                                  :disks => [disk])
+    @disk = FactoryGirl.create(:disk,
+                               :storage  => @storage,
+                               :filename => "c413aff6-e988-4830-8b24-f74af66ced5a")
+    @hardware = FactoryGirl.create(:hardware,
+                                   :disks => [@disk])
 
-    vm = FactoryGirl.create(:vm_redhat,
-                            :ext_management_system => @ems,
-                            :uid_ems               => "3a697bd0-7cea-42a1-95ef-fd292fcee721",
-                            :ems_cluster           => @cluster,
-                            :ems_ref               => "/api/vms/3a697bd0-7cea-42a1-95ef-fd292fcee721",
-                            :storage               => storage,
-                            :storages              => [storage],
-                            :hardware              => hardware)
-    EmsRefresh.refresh(vm)
+    @vm = FactoryGirl.create(:vm_redhat,
+                             :ext_management_system => @ems,
+                             :uid_ems               => "3a697bd0-7cea-42a1-95ef-fd292fcee721",
+                             :ems_cluster           => @cluster,
+                             :ems_ref               => "/api/vms/3a697bd0-7cea-42a1-95ef-fd292fcee721",
+                             :storage               => @storage,
+                             :storages              => [@storage],
+                             :hardware              => @hardware)
+  end
+
+  it "should refresh a vm" do
+    EmsRefresh.refresh(@vm)
 
     assert_table_counts
-    assert_vm(vm, storage)
-    assert_vm_rels(vm, hardware, storage)
-    assert_cluster(vm)
-    assert_storage(storage, vm)
+    assert_vm(@vm, @storage)
+    assert_vm_rels(@vm, @hardware, @storage)
+    assert_cluster(@vm)
+    assert_storage(@storage, @vm)
+  end
+
+  it "should collect a vm" do
+    stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
+
+    EmsRefresh.refresh(@vm)
+
+    # TODO: once implemented remove comments
+    # assert_table_counts
+    # assert_vm(@vm, @storage)
+    # assert_vm_rels(@vm, @hardware, @storage)
+    # assert_cluster(@vm)
+    # assert_storage(@storage, @vm)
   end
 
   def assert_table_counts
