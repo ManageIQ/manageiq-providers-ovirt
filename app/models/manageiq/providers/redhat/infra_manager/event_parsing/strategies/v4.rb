@@ -34,27 +34,81 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing::Strategies
     end
 
     def self.parse_new_target(full_data, message, ems, event_type)
-      cluster = full_data.cluster
-      cluster_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(cluster.href)
+      folders = parse_new_folders(full_data.data_center)
+      dc      = folders.detect { |f| f[:type] == 'Datacenter' }
+
+      cluster = parse_new_cluster(ems, full_data.cluster, dc)
+      rp      = parse_new_resource_pool(cluster)
+      vm      = parse_new_vm(ems, full_data.vm, dc, cluster, message, event_type)
+
+      target_hash = {
+        :vms            => [vm],
+        :clusters       => [cluster],
+        :resource_pools => [rp],
+        :folders        => [*folders]
+      }
+
+      return target_hash, 'ManageIQ::Providers::Redhat::InfraManager::Vm', {:uid_ems => vm[:uid_ems]}
+    end
+
+    def self.parse_new_folders(dc)
+      vm_folder_hash = {
+        :type    => 'EmsFolder',
+        :name    => 'vm',
+        :uid_ems => "#{dc.id}_vm",
+        :hidden  => true
+      }
+
+      host_folder_hash = {
+        :type    => 'EmsFolder',
+        :name    => 'host',
+        :uid_ems => "#{dc.id}_host",
+        :hidden  => true
+      }
+
+      dc_ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(dc.href)
+      dc_hash = {
+        :type         => 'Datacenter',
+        :ems_ref      => dc_ems_ref,
+        :ems_ref_obj  => dc_ems_ref,
+        :uid_ems      => dc.id,
+        :ems_children => {:folders => [vm_folder_hash, host_folder_hash]}
+      }
+
+      [dc_hash, vm_folder_hash, host_folder_hash]
+    end
+
+    def self.parse_new_vm(ems, vm_data, datacenter, cluster, message, event_type)
+      ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm_data.href)
+      parser = ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::ParserBuilder.new(ems).build
+
+      vm_hash = parser.create_vm_hash(ems_ref.include?('/templates/'), ems_ref, vm_data.id, parse_target_name(message, event_type))
+
+      vm_hash[:ems_cluster] = cluster
+      cluster[:ems_children][:resource_pools].first[:ems_children][:vms] << vm_hash
+
+      vm_folder = datacenter[:ems_children][:folders].detect { |f| f[:name] == 'vm' }
+      vm_folder[:ems_children] = {:vms => [vm_hash]}
+
+      vm_hash
+    end
+
+    def self.parse_new_cluster(ems, cluster_data, datacenter)
+      cluster_ref  = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(cluster_data.href)
       cluster_name = ems.ovirt_services.cluster_name_href(cluster_ref)
 
-      {
-        :ems_id         => ems.id,
-        :vm             => parse_new_vm(full_data.vm, message, event_type, ems),
-        :cluster        => parse_new_cluster(cluster_ref, cluster.id, cluster_name),
-        :resource_pools => parse_new_resource_pool(cluster.id, cluster_name),
-        :folders        => parse_new_dc(full_data.data_center)
+      cluster_hash = {
+        :ems_ref      => cluster_ref,
+        :ems_ref_obj  => cluster_ref,
+        :uid_ems      => cluster_data.id,
+        :name         => cluster_name,
+        :ems_children => {:resource_pools => []}
       }
-    end
 
-    def self.parse_new_vm(vm, message, event_type, ems)
-      ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm.href)
-      parser = ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::ParserBuilder.new(ems).build
-      parser.create_vm_hash(ems_ref.include?('/templates/'), ems_ref, vm.id, parse_target_name(message, event_type))
-    end
+      host_folder = datacenter[:ems_children][:folders].detect { |f| f[:name] == 'host' }
+      host_folder[:ems_children] = {:clusters => [cluster_hash]}
 
-    def self.parse_new_dc(dc)
-      {:ems_ref => ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(dc.href)}
+      cluster_hash
     end
   end
 end
