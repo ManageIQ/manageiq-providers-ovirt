@@ -1,0 +1,103 @@
+---
+- !ruby/object:OvirtSDK4::Disk
+  href: "/ovirt-engine/api/disks/c413aff6-e988-4830-8b24-f74af66ced5a"
+  comment:
+  description:
+  id: c413aff6-e988-4830-8b24-f74af66ced5a
+  name: new_Disk1
+  instance_type:
+  template:
+  vm:
+  vms:
+  active: true
+  actual_size: 0
+  alias_: new_Disk1
+  bootable: true
+  disk_profile: !ruby/object:OvirtSDK4::DiskProfile
+    href: "/ovirt-engine/api/diskprofiles/5ea19cf2-37fa-45fd-9034-87fe4c4d1c0a"
+    comment:
+    description:
+    id: 5ea19cf2-37fa-45fd-9034-87fe4c4d1c0a
+    name:
+    permissions:
+    qos:
+    storage_domain:
+  format: raw
+  image_id: 7c702634-a9e5-4107-8bb1-b0c3d900096d
+  initial_size:
+  interface: virtio_scsi
+  logical_name:
+  lun_storage:
+  openstack_volume_type:
+  permissions: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/disks/c413aff6-e988-4830-8b24-f74af66ced5a/permissions"
+  propagate_errors: false
+  provisioned_size: 1073741824
+  quota: !ruby/object:OvirtSDK4::Quota
+    href:
+    comment:
+    description:
+    id: 58ad9d24-00d3-00c3-01e2-00000000035b
+    name:
+    cluster_hard_limit_pct:
+    cluster_soft_limit_pct:
+    data_center:
+    disks:
+    permissions:
+    quota_cluster_limits:
+    quota_storage_limits:
+    storage_hard_limit_pct:
+    storage_soft_limit_pct:
+    users:
+    vms:
+  read_only:
+  sgio:
+  shareable: false
+  snapshot:
+  sparse: true
+  statistics: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/disks/c413aff6-e988-4830-8b24-f74af66ced5a/statistics"
+  status: ok
+  storage_domain:
+  storage_domains: !ruby/array:OvirtSDK4::List
+    internal:
+    - !ruby/object:OvirtSDK4::StorageDomain
+      href: "/ovirt-engine/api/storagedomains/6cc26c9d-e1a7-43ba-95d3-c744442c7500"
+      comment:
+      description:
+      id: 6cc26c9d-e1a7-43ba-95d3-c744442c7500
+      name:
+      available:
+      committed:
+      critical_space_action_blocker:
+      data_center:
+      data_centers:
+      disk_profiles:
+      disk_snapshots:
+      disks:
+      external_status:
+      files:
+      host:
+      images:
+      import:
+      master:
+      permissions:
+      status:
+      storage:
+      storage_connections:
+      storage_format:
+      templates:
+      type:
+      used:
+      vms:
+      warning_low_space_indicator:
+      wipe_after_delete:
+    ivars:
+      :@href:
+  storage_type: image
+  uses_scsi_reservation:
+  wipe_after_delete: false

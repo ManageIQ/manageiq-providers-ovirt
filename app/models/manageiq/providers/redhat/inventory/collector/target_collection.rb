@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < ManageIQ::Providers::Redhat::Inventory::Collector
+  # TODO: review the changes here and find common parts with ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
   def initialize(_manager, _target)
     super
     parse_targets!
@@ -8,40 +9,103 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     target.manager_refs_by_association_reset
   end
 
-  def clusters
-    # TODO
-  end
+  def ems_clusters
+    clusters = []
+    return clusters if references(:ems_clusters).blank?
 
-  def vmpools
-    # TODO
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      references(:ems_clusters).each do |id|
+        clusters += connection.system_service.clusters_service.cluster_service(id).get
+      end
+    end
+
+    clusters
   end
 
   def networks
-    # TODO
+    nets = []
+    return domains if references(:networks).blank?
+
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      references(:networks).each do |id|
+        nets += connection.system_service.networks_service.network_service(id).get
+      end
+    end
+
+    nets
   end
 
   def storagedomains
-    # TODO
+    domains = []
+    return domains if references(:storagedomains).blank?
+
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      references(:storagedomains).each do |id|
+        domains += connection.system_service.storage_domains_service.storage_domain_service(id).get
+      end
+    end
+
+    domains
   end
 
   def datacenters
-    # TODO
+    dcs = []
+    return dcs if references(:datacenters).blank?
+
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      references(:datacenters).each do |id|
+        dcs += connection.system_service.data_centers_service.data_center_service(id).get
+      end
+    end
+
+    dcs
   end
 
   def hosts
-    # TODO
+    h = []
+    return h if references(:hosts).blank?
+
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      references(:vms).each do |ems_ref|
+        h += connection.system_service.hosts_service.host_service(uuid_from_ems_ref(ems_ref)).get
+      end
+    end
+
+    h
   end
 
   def vms
-    # TODO
+    v = []
+    return v if references(:vms).blank?
+
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      references(:vms).each do |ems_ref|
+        v += connection.system_service.vms_service.vm_service(uuid_from_ems_ref(ems_ref)).get
+      end
+    end
+
+    v
   end
 
   def templates
-    # TODO
+    temp = []
+    return temp if references(:templates).blank?
+
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      references(:templates).each do |id|
+        temp += connection.system_service.templates_service.list(:search => "vm.id=#{id}")
+      end
+    end
+
+    temp
   end
 
   def references(collection)
     target.manager_refs_by_association.try(:[], collection).try(:[], :ems_ref).try(:to_a) || []
+  end
+
+  def name_references(collection)
+    target.manager_refs_by_association.try(:[], collection).try(:[], :name).try(:to_a) || []
   end
 
   def parse_targets!
@@ -63,25 +127,78 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     add_simple_target!(:hosts, t.ems_ref)
   end
 
-  def add_simple_target!(association, ems_ref)
-    return if ems_ref.blank?
-
-    target.add_target(:association => association, :manager_ref => {:ems_ref => ems_ref})
-  end
-
   def infer_related_ems_refs!
-    # TODO: check whether we can do it for either vms or hosts
-    unless references(:vms).blank? || references(:hosts).blank?
+    unless references(:vms).blank?
       infer_related_vm_ems_refs_db!
       infer_related_vm_ems_refs_api!
+    end
+
+    unless references(:hosts).blank?
+      infer_related_host_ems_refs_db!
+      infer_related_host_ems_refs_api!
     end
   end
 
   def infer_related_vm_ems_refs_db!
-    # TODO
+    changed_vms = manager.vms.where(:ems_ref => references(:vms))
+
+    changed_vms.each do |vm|
+      add_simple_target!(:ems_clusters, vm.ems_cluster.ems_ref)
+      vm.storages.collect(&:ems_ref).compact.each { |ems_ref| add_simple_target!(:storagedomains, ems_ref) }
+      add_simple_target!(:datacenters, vm.parent_datacenter.ems_ref)
+      add_simple_target!(:templates, vm.ems_ref)
+    end
   end
 
   def infer_related_vm_ems_refs_api!
-    # TODO
+    vms.each do |vm|
+      add_simple_target!(:ems_clusters, ems_ref_from_sdk(vm.cluster))
+      disks = collect_attached_disks(vm)
+      disks.each do |disk|
+        disk.storage_domains.to_miq_a.each do |sd|
+          add_simple_target!(:storagedomains, ems_ref_from_sdk(sd))
+        end
+      end
+      add_simple_target!(:datacenters, ems_ref_from_sdk(vm.cluster.data_center))
+      add_simple_target!(:templates, ems_ref_from_sdk(vm))
+    end
+  end
+
+  def infer_related_host_ems_refs_db!
+    changed_hosts = manager.hosts.where(:ems_ref => references(:hosts))
+
+    changed_hosts.each do |host|
+      add_simple_target!(:ems_clusters, uuid_from_target(host.ems_cluster))
+      # TODO: host.hardware.networks do not have ems_ref nor ems_uid
+    end
+  end
+
+  def infer_related_host_ems_refs_api!
+    hosts.each do |host|
+      add_simple_target!(:ems_clusters, host.cluster.id)
+      host.network_attachments.each do |attachement|
+        add_simple_target!(:networks, attachement.network.id)
+      end
+    end
+  end
+
+  private
+
+  def uuid_from_target(t)
+    uuid_from_ems_ref(t.ems_ref)
+  end
+
+  def uuid_from_ems_ref(ems_ref)
+    URI(ems_ref).path.split('/').last
+  end
+
+  def ems_ref_from_sdk(object)
+    ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(object.href)
+  end
+
+  def add_simple_target!(association, ems_ref)
+    return if ems_ref.blank?
+
+    target.add_target(:association => association, :manager_ref => {:ems_ref => ems_ref})
   end
 end

@@ -1,0 +1,85 @@
+- !ruby/object:OvirtSDK4::Snapshot
+  href: "/ovirt-engine/api/vms/3a697bd0-7cea-42a1-95ef-fd292fcee721/snapshots/4af35c92-7c6e-4c23-b25e-e05cb29bed49"
+  comment:
+  description: Active VM
+  id: 4af35c92-7c6e-4c23-b25e-e05cb29bed49
+  name:
+  bios:
+  cluster:
+  console:
+  cpu:
+  cpu_profile:
+  cpu_shares:
+  creation_time:
+  custom_compatibility_version:
+  custom_cpu_model:
+  custom_emulated_machine:
+  custom_properties:
+  delete_protected:
+  display:
+  domain:
+  high_availability:
+  initialization:
+  io:
+  large_icon:
+  memory:
+  memory_policy:
+  migration:
+  migration_downtime:
+  origin:
+  os:
+  quota:
+  rng_device:
+  serial_number:
+  small_icon:
+  soundcard_enabled:
+  sso:
+  start_paused:
+  stateless:
+  storage_domain:
+  time_zone:
+  tunnel_migration:
+  type:
+  usb:
+  virtio_scsi:
+  affinity_labels:
+  applications:
+  cdroms:
+  disk_attachments:
+  external_host_provider:
+  floppies:
+  fqdn:
+  graphics_consoles:
+  guest_operating_system:
+  guest_time_zone:
+  host:
+  host_devices:
+  instance_type:
+  katello_errata:
+  next_run_configuration_exists:
+  nics:
+  numa_nodes:
+  numa_tune_mode:
+  payloads:
+  permissions:
+  placement_policy:
+  reported_devices:
+  run_once:
+  sessions:
+  snapshots:
+  start_time:
+  statistics:
+  status:
+  status_detail:
+  stop_reason:
+  stop_time:
+  tags:
+  template:
+  use_latest_template_version:
+  vm_pool:
+  watchdogs:
+  date: !ruby/object:DateTime 2017-02-23 15:58:23.054000000 +01:00
+  persist_memorystate: false
+  snapshot_status: ok
+  snapshot_type: active
+  vm:

@@ -28,7 +28,26 @@
         cpu: 
         cpu_profiles: 
         custom_scheduling_policy_properties: 
-        data_center: 
+        data_center: !ruby/object:OvirtSDK4::DataCenter
+          href: "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311"
+          comment:
+          description:
+          id: 00000001-0001-0001-0001-000000000311
+          name:
+          clusters:
+          iscsi_bonds:
+          local:
+          mac_pool:
+          networks:
+          permissions:
+          qoss:
+          quota_mode:
+          quotas:
+          status:
+          storage_domains:
+          storage_format:
+          supported_versions:
+          version:
         display: 
         error_handling: 
         fencing_policy: 
