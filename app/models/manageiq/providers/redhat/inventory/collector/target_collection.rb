@@ -14,8 +14,12 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     return clusters if references(:ems_clusters).blank?
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
-      references(:ems_clusters).each do |id|
-        clusters += connection.system_service.clusters_service.cluster_service(id).get
+      references(:ems_clusters).each do |ems_ref|
+        begin
+          clusters << connection.system_service.clusters_service.cluster_service(uuid_from_ems_ref(ems_ref)).get
+        rescue OvirtSDK4::Error # when 404
+          nil
+        end
       end
     end
 
@@ -27,8 +31,12 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     return domains if references(:networks).blank?
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
-      references(:networks).each do |id|
-        nets += connection.system_service.networks_service.network_service(id).get
+      references(:networks).each do |ems_ref|
+        begin
+          nets << connection.system_service.networks_service.network_service(uuid_from_ems_ref(ems_ref)).get
+        rescue OvirtSDK4::Error # when 404
+          nil
+        end
       end
     end
 
@@ -40,8 +48,12 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     return domains if references(:storagedomains).blank?
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
-      references(:storagedomains).each do |id|
-        domains += connection.system_service.storage_domains_service.storage_domain_service(id).get
+      references(:storagedomains).each do |ems_ref|
+        begin
+          domains << connection.system_service.storage_domains_service.storage_domain_service(uuid_from_ems_ref(ems_ref)).get
+        rescue OvirtSDK4::Error # when 404
+          nil
+        end
       end
     end
 
@@ -53,8 +65,12 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     return dcs if references(:datacenters).blank?
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
-      references(:datacenters).each do |id|
-        dcs += connection.system_service.data_centers_service.data_center_service(id).get
+      references(:datacenters).each do |ems_ref|
+        begin
+          dcs << connection.system_service.data_centers_service.data_center_service(uuid_from_ems_ref(ems_ref)).get
+        rescue OvirtSDK4::Error # when 404
+          nil
+        end
       end
     end
 
@@ -67,7 +83,11 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
       references(:vms).each do |ems_ref|
-        h += connection.system_service.hosts_service.host_service(uuid_from_ems_ref(ems_ref)).get
+        begin
+          h << connection.system_service.hosts_service.host_service(uuid_from_ems_ref(ems_ref)).get
+        rescue OvirtSDK4::Error # when 404
+          nil
+        end
       end
     end
 
@@ -80,7 +100,11 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
       references(:vms).each do |ems_ref|
-        v += connection.system_service.vms_service.vm_service(uuid_from_ems_ref(ems_ref)).get
+        begin
+          v << connection.system_service.vms_service.vm_service(uuid_from_ems_ref(ems_ref)).get
+        rescue OvirtSDK4::Error # when 404
+          nil
+        end
       end
     end
 
@@ -92,8 +116,13 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     return temp if references(:templates).blank?
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
-      references(:templates).each do |id|
-        temp += connection.system_service.templates_service.list(:search => "vm.id=#{id}")
+      references(:templates).each do |ems_ref|
+        begin
+          # returns OvirtSDK4::List
+          temp + connection.system_service.templates_service.list(:search => "vm.id=#{uuid_from_ems_ref(ems_ref)}")
+        rescue OvirtSDK4::Error # when 404
+          nil
+        end
       end
     end
 
@@ -152,14 +181,20 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
   def infer_related_vm_ems_refs_api!
     vms.each do |vm|
-      add_simple_target!(:ems_clusters, ems_ref_from_sdk(vm.cluster))
+      clusters = collect_ems_clusters
+      clusters.each do |c|
+        add_simple_target!(:ems_clusters, ems_ref_from_sdk(c))
+        if c.id == vm.cluster.id
+          add_simple_target!(:datacenters, ems_ref_from_sdk(c.data_center))
+        end
+      end
+
       disks = collect_attached_disks(vm)
       disks.each do |disk|
         disk.storage_domains.to_miq_a.each do |sd|
           add_simple_target!(:storagedomains, ems_ref_from_sdk(sd))
         end
       end
-      add_simple_target!(:datacenters, ems_ref_from_sdk(vm.cluster.data_center))
       add_simple_target!(:templates, ems_ref_from_sdk(vm))
     end
   end

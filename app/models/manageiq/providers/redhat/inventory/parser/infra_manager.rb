@@ -367,7 +367,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     storages = []
     disks = []
     collector.collect_attached_disks(vm).to_miq_a.each do |disk|
-      next if disk.kind_of?(Array) && [].empty?
+      next if disk.kind_of?(Array) && disk.empty?
 
       disks << disk
       disk.storage_domains.to_miq_a.each do |sd|
@@ -395,19 +395,17 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     )
 
     hardware_disks(persister_hardware, disks)
-    addresses = hardware_networks(persister_hardware, vm, template)
+    addresses = hardware_networks(persister_hardware, vm) unless template
     hardware_guest_devices(persister_hardware, vm, addresses)
   end
 
-  def hardware_networks(persister_hardware, vm, template)
+  def hardware_networks(persister_hardware, vm)
     addresses = []
-    return addresses if template
 
     devices = collector.collect_vm_devices(vm)
-    devices = devices.reject(&:blank?) unless devices.nil?
-    return if devices.blank?
+    device = devices.to_a.detect(&:present?)
+    return if device.blank?
 
-    device = devices[0]
     nets = device.ips if device
     return if nets.nil?
 
@@ -459,10 +457,12 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   end
 
   def hardware_guest_devices(persister_hardware, vm, addresses)
-    network = addresses.to_a.empty? ? nil : persister.networks.lazy_find(
-      :hardware  => persister_hardware,
-      :ipaddress => addresses[0]
-    )
+    unless addresses.to_a.empty?
+      network = persister.networks.lazy_find(
+        :hardware  => persister_hardware,
+        :ipaddress => addresses[0]
+      )
+    end
 
     collector.collect_nics(vm).each do |nic|
       next if nic.blank?
@@ -487,7 +487,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     return snaps if vm.try(:snapshots).nil?
 
     snapshots = collector.collect_snapshots(vm)
-    snapshots = snapshots.sort_by(&:date).reverse!
+    snapshots = snapshots.sort_by(&:date).reverse
 
     parent_id = nil
     snapshots.each_with_index do |snapshot, idx|

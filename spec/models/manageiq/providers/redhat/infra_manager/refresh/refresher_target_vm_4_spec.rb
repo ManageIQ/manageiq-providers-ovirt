@@ -105,15 +105,16 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
 
     cluster_service = double("cluster_service")
-    allow(cluster_service).to receive(:get).and_return(load_response_mock_for('clusters'))
+    allow(cluster_service).to receive(:get).and_return(load_response_mock_for('cluster'))
     allow_any_instance_of(OvirtSDK4::ClustersService).to receive(:cluster_service).and_return(cluster_service)
+    allow_any_instance_of(OvirtSDK4::ClustersService).to receive(:list).and_return(load_response_mock_for('clusters'))
 
     data_center_service = double("data_center_service")
-    allow(data_center_service).to receive(:get).and_return(load_response_mock_for('datacenters'))
+    allow(data_center_service).to receive(:get).and_return(load_response_mock_for('datacenter'))
     allow_any_instance_of(OvirtSDK4::DataCentersService).to receive(:data_center_service).and_return(data_center_service)
 
     storage_domain_service = double("storage_domain_service")
-    allow(storage_domain_service).to receive(:get).and_return(load_response_mock_for('storages'))
+    allow(storage_domain_service).to receive(:get).and_return(load_response_mock_for('storage'))
     allow_any_instance_of(OvirtSDK4::StorageDomainsService).to receive(:storage_domain_service).and_return(storage_domain_service)
 
     collector_class = ManageIQ::Providers::Redhat::Inventory::Collector

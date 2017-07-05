@@ -80,12 +80,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
       )
     )
     add_inventory_collection(
-      infra.switches(
-        :arel     => manager.switches.where('vms' => {:ems_ref => manager_refs}),
-        :strategy => :local_db_find_missing_references
-      )
-    )
-    add_inventory_collection(
       infra.hardwares(
         :arel     => manager.hardwares.joins(:vm_or_template).where(
           'vms' => {:ems_ref => manager_refs}
@@ -214,8 +208,8 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
       )
     )
     add_inventory_collection(
-      infra.host_storages(
-        :arel     => manager.host_storages.where(:ems_ref => manager_refs),
+      infra.host_switches(
+        :arel     => manager.host_switches.where(:ems_ref => manager_refs),
         :strategy => :local_db_find_missing_references
       )
     )

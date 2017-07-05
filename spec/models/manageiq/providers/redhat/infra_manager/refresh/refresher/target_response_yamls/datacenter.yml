@@ -1,0 +1,66 @@
+---
+!ruby/object:OvirtSDK4::DataCenter
+  href: "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311"
+  comment:
+  description: The default Data Center
+  id: 00000001-0001-0001-0001-000000000311
+  name: Default
+  clusters: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311/clusters"
+  iscsi_bonds: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311/iscsibonds"
+  local: false
+  mac_pool:
+  networks: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311/networks"
+  permissions: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311/permissions"
+  qoss: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311/qoss"
+  quota_mode: disabled
+  quotas: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311/quotas"
+  status: up
+  storage_domains: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/datacenters/00000001-0001-0001-0001-000000000311/storagedomains"
+  storage_format: v4
+  supported_versions: !ruby/array:OvirtSDK4::List
+    internal:
+    - !ruby/object:OvirtSDK4::Version
+      href:
+      comment:
+      description:
+      id:
+      name:
+      build:
+      full_version:
+      major: 4
+      minor: 1
+      revision:
+    ivars:
+      :@href:
+  version: !ruby/object:OvirtSDK4::Version
+    href:
+    comment:
+    description:
+    id:
+    name:
+    build:
+    full_version:
+    major: 4
+    minor: 1
+    revision:
