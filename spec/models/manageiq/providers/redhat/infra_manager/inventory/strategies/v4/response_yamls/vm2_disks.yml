@@ -1,0 +1,107 @@
+---
+- !ruby/object:OvirtSDK4::Disk
+  href: "/ovirt-engine/api/disks/f067ba7a-563e-4592-8f09-9789cb8cb2c9"
+  comment: 
+  description: cfme-5.8 (52cf052)
+  id: f067ba7a-563e-4592-8f09-9789cb8cb2c9
+  name: GlanceDisk-52cf052
+  instance_type: 
+  template: 
+  vm: 
+  vms: 
+  active: true
+  actual_size: 575905792
+  alias_: GlanceDisk-52cf052
+  bootable: false
+  disk_profile: !ruby/object:OvirtSDK4::DiskProfile
+    href: "/ovirt-engine/api/diskprofiles/182da989-4b28-462f-9b75-67a59357b231"
+    comment: 
+    description: 
+    id: 182da989-4b28-462f-9b75-67a59357b231
+    name: 
+    permissions: 
+    qos: 
+    storage_domain: 
+  format: cow
+  image_id: 4c2f902f-13da-43de-9879-b2e58cdf8e35
+  initial_size: 
+  interface: virtio
+  logical_name: 
+  lun_storage: 
+  openstack_volume_type: 
+  permissions: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/disks/f067ba7a-563e-4592-8f09-9789cb8cb2c9/permissions"
+  propagate_errors: false
+  provisioned_size: 42949672960
+  qcow_version: qcow2_v3
+  quota: !ruby/object:OvirtSDK4::Quota
+    href: 
+    comment: 
+    description: 
+    id: b9d2bf96-1337-4d16-87c3-ac9ce6a50555
+    name: 
+    cluster_hard_limit_pct: 
+    cluster_soft_limit_pct: 
+    data_center: 
+    disks: 
+    permissions: 
+    quota_cluster_limits: 
+    quota_storage_limits: 
+    storage_hard_limit_pct: 
+    storage_soft_limit_pct: 
+    users: 
+    vms: 
+  read_only: 
+  sgio: 
+  shareable: false
+  snapshot: 
+  sparse: true
+  statistics: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/disks/f067ba7a-563e-4592-8f09-9789cb8cb2c9/statistics"
+  status: ok
+  storage_domain: 
+  storage_domains: !ruby/array:OvirtSDK4::List
+    internal:
+    - !ruby/object:OvirtSDK4::StorageDomain
+      href: "/ovirt-engine/api/storagedomains/a0e21780-59cb-462e-b17e-72171a6d2e92"
+      comment: 
+      description: 
+      id: a0e21780-59cb-462e-b17e-72171a6d2e92
+      name: 
+      available: 
+      committed: 
+      critical_space_action_blocker: 
+      data_center: 
+      data_centers: 
+      discard_after_delete: 
+      disk_profiles: 
+      disk_snapshots: 
+      disks: 
+      external_status: 
+      files: 
+      host: 
+      images: 
+      import: 
+      master: 
+      permissions: 
+      status: 
+      storage: 
+      storage_connections: 
+      storage_format: 
+      supports_discard: 
+      supports_discard_zeroes_data: 
+      templates: 
+      type: 
+      used: 
+      vms: 
+      warning_low_space_indicator: 
+      wipe_after_delete: 
+    ivars:
+      :@href: 
+  storage_type: image
+  uses_scsi_reservation: 
+  wipe_after_delete: false
