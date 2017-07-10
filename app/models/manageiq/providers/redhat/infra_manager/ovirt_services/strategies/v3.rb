@@ -206,6 +206,14 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       raise ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error, err
     end
 
+    def host_activate(host)
+      host.with_provider_object(&:activate)
+    end
+
+    def host_deactivate(host)
+      host.with_provider_object(&:deactivate)
+    end
+
     def event_fetcher
       EventFetcher.new(ext_management_system)
     end

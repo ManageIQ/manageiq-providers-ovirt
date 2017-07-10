@@ -24,4 +24,34 @@ class ManageIQ::Providers::Redhat::InfraManager::Host < ::Host
       unsupported_reason_add(:quick_stats, 'RHV API version does not support quick_stats')
     end
   end
+
+  def validate_enter_maint_mode
+    return inactive_provider_message unless has_active_ems?
+
+    result = validate_power_state('on')
+    return result unless result.nil?
+
+    { :available => true, :message => nil }
+  end
+
+  def validate_exit_maint_mode
+    return inactive_provider_message unless has_active_ems?
+
+    result = validate_power_state('maintenance')
+    return result unless result.nil?
+
+    { :available => true, :message => nil }
+  end
+
+  def inactive_provider_message
+    { :available => false, :message => _('The Host is not connected to an active provider') }
+  end
+
+  def enter_maint_mode
+    ext_management_system.ovirt_services.host_deactivate(self)
+  end
+
+  def exit_maint_mode
+    ext_management_system.ovirt_services.host_activate(self)
+  end
 end
