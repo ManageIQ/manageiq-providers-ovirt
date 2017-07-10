@@ -1,0 +1,89 @@
+--- !ruby/array:OvirtSDK4::List
+internal:
+- !ruby/object:OvirtSDK4::Disk
+  href: "/ovirt-engine/api/disks/1e9668b0-0054-4afd-8ae3-970346ebe513"
+  comment:
+  description:
+  id: 1e9668b0-0054-4afd-8ae3-970346ebe513
+  name: vmdc1_Disk1
+  instance_type:
+  template:
+  vm:
+  vms:
+  active: true
+  actual_size: 204800
+  alias_: vmdc1_Disk1
+  bootable: false
+  disk_profile: !ruby/object:OvirtSDK4::DiskProfile
+    href: "/ovirt-engine/api/diskprofiles/b1f0065e-9aef-4eb1-8939-aaad13eee28e"
+    comment:
+    description:
+    id: b1f0065e-9aef-4eb1-8939-aaad13eee28e
+    name:
+    permissions:
+    qos:
+    storage_domain:
+  format: cow
+  image_id: 7a9246c6-c600-4755-afd9-48551b807372
+  interface: virtio
+  logical_name:
+  lun_storage:
+  openstack_volume_type:
+  permissions: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/disks/1e9668b0-0054-4afd-8ae3-970346ebe513/permissions"
+  propagate_errors: false
+  provisioned_size: 1073741824
+  quota:
+  read_only:
+  sgio:
+  shareable: false
+  snapshot:
+  sparse: true
+  statistics: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/disks/1e9668b0-0054-4afd-8ae3-970346ebe513/statistics"
+  status: ok
+  storage_domain:
+  storage_domains: !ruby/array:OvirtSDK4::List
+    internal:
+    - !ruby/object:OvirtSDK4::StorageDomain
+      href: "/ovirt-engine/api/storagedomains/4672fe17-c260-4ecc-aab0-b535f4d0dbeb"
+      comment:
+      description:
+      id: 4672fe17-c260-4ecc-aab0-b535f4d0dbeb
+      name:
+      available:
+      committed:
+      critical_space_action_blocker:
+      data_center:
+      data_centers:
+      disk_profiles:
+      disk_snapshots:
+      disks:
+      external_status:
+      files:
+      host:
+      images:
+      import:
+      master:
+      permissions:
+      status:
+      storage:
+      storage_connections:
+      storage_format:
+      templates:
+      type:
+      used:
+      vms:
+      warning_low_space_indicator:
+      wipe_after_delete:
+    ivars:
+      :@href:
+  storage_type: image
+  uses_scsi_reservation:
+  wipe_after_delete: false
+ivars:
+  :@href:

@@ -19,33 +19,35 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   end
 
   before(:each) do
-    inventory_wrapper_class = ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
-    allow_any_instance_of(inventory_wrapper_class)
-      .to receive(:collect_clusters).and_return(load_response_mock_for('clusters'))
-    allow_any_instance_of(inventory_wrapper_class)
-      .to receive(:collect_storages).and_return(load_response_mock_for('storages'))
-    allow_any_instance_of(inventory_wrapper_class)
-      .to receive(:collect_hosts).and_return(load_response_mock_for('hosts'))
-    allow_any_instance_of(inventory_wrapper_class)
-      .to receive(:collect_vms).and_return(load_response_mock_for('vms'))
-    allow_any_instance_of(inventory_wrapper_class)
-      .to receive(:collect_templates).and_return(load_response_mock_for('templates'))
-    allow_any_instance_of(inventory_wrapper_class)
-      .to receive(:collect_networks).and_return(load_response_mock_for('networks'))
-    allow_any_instance_of(inventory_wrapper_class)
-      .to receive(:collect_datacenters).and_return(load_response_mock_for('datacenters'))
-    allow_any_instance_of(inventory_wrapper_class).to receive(:api).and_return("4.2.0_master")
-    allow_any_instance_of(inventory_wrapper_class).to receive(:service)
+    @inventory_wrapper_class = ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
+
+    allow_any_instance_of(@inventory_wrapper_class).to receive(:api).and_return("4.2.0_master")
+    allow_any_instance_of(@inventory_wrapper_class).to receive(:service)
       .and_return(OpenStruct.new(:version_string => '4.2.0_master'))
   end
 
   it "will perform a full refresh on v4.1" do
+    allow_any_instance_of(@inventory_wrapper_class)
+      .to receive(:collect_clusters).and_return(load_response_mock_for('clusters'))
+    allow_any_instance_of(@inventory_wrapper_class)
+      .to receive(:collect_storages).and_return(load_response_mock_for('storages'))
+    allow_any_instance_of(@inventory_wrapper_class)
+      .to receive(:collect_hosts).and_return(load_response_mock_for('hosts'))
+    allow_any_instance_of(@inventory_wrapper_class)
+      .to receive(:collect_vms).and_return(load_response_mock_for('vms'))
+    allow_any_instance_of(@inventory_wrapper_class)
+      .to receive(:collect_templates).and_return(load_response_mock_for('templates'))
+    allow_any_instance_of(@inventory_wrapper_class)
+      .to receive(:collect_networks).and_return(load_response_mock_for('networks'))
+    allow_any_instance_of(@inventory_wrapper_class)
+      .to receive(:collect_datacenters).and_return(load_response_mock_for('datacenters'))
+
     VCR.use_cassette("#{described_class.name.underscore}_4_1", :allow_unused_http_interactions => true, :allow_playback_repeats => true, :record => :new_episodes) do
       EmsRefresh.refresh(@ems)
     end
     @ems.reload
 
-    assert_table_counts
+    assert_table_counts(3)
     assert_ems
     assert_specific_cluster
     assert_specific_storage
@@ -56,7 +58,106 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     assert_relationship_tree
   end
 
-  def assert_table_counts
+  it "will perform a graph full refresh" do
+    stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
+
+    allow_any_instance_of(OvirtSDK4::ClustersService).to receive(:list).and_return(load_response_mock_for('clusters'))
+    allow_any_instance_of(OvirtSDK4::DataCentersService).to receive(:list).and_return(load_response_mock_for('datacenters'))
+    allow_any_instance_of(OvirtSDK4::StorageDomainsService).to receive(:list).and_return(load_response_mock_for('storages'))
+    allow_any_instance_of(OvirtSDK4::HostsService).to receive(:list).and_return(load_response_mock_for('collector_hosts'))
+    allow_any_instance_of(OvirtSDK4::VmsService).to receive(:list).and_return(load_response_mock_for('vms'))
+    allow_any_instance_of(OvirtSDK4::TemplatesService).to receive(:list).and_return(load_response_mock_for('templates'))
+
+    collector_class = ManageIQ::Providers::Redhat::Inventory::Collector
+    allow_any_instance_of(collector_class).to receive(:collect_host_nics) do |_, object|
+      if object.id == '5bf6b336-f86d-4551-ac08-d34621ec5f0a'
+        ret = load_response_mock_for('first_host_nics')
+      elsif object.id == '69cd8141-a6f5-4968-880d-121de26f3747'
+        ret = load_response_mock_for('second_host_nics')
+      elsif object.id == '2d0f658b-37fe-4692-b0d7-7d18b18eadaa'
+        ret = load_response_mock_for('third_host_nics')
+      end
+      ret
+    end
+    allow_any_instance_of(collector_class).to receive(:collect_cluster_for_host)
+      .and_return(load_response_mock_for('first_host_cluster'), load_response_mock_for('second_host_cluster'), load_response_mock_for('third_host_cluster'))
+    allow_any_instance_of(collector_class).to receive(:collect_host_stats)
+      .and_return(load_response_mock_for('first_host_stats'), load_response_mock_for('second_host_stats'), load_response_mock_for('third_host_stats'))
+    allow_any_instance_of(collector_class).to receive(:collect_datacenter_for_cluster)
+      .and_return(load_response_mock_for('first_host_datacenter'), load_response_mock_for('second_host_datacenter'), load_response_mock_for('second_host_datacenter'))
+    allow_any_instance_of(collector_class).to receive(:collect_dc_domains)
+      .and_return(load_response_mock_for('first_host_storages'), load_response_mock_for('second_host_storages'), load_response_mock_for('second_host_storages'))
+    allow_any_instance_of(collector_class).to receive(:collect_networks).and_return(load_response_mock_for('networks'))
+    allow_any_instance_of(collector_class).to receive(:collect_attached_disks) do |_, object|
+      ret = load_response_mock_for('empty_list')
+      if object.id == '3a9401a0-bf3d-4496-8acf-edd3e903511f'
+        ret = load_response_mock_for('fifth_vm_disk')
+      elsif object.id == '072093dc-3492-4cb1-b240-dbf88a8f4fbf'
+        ret = load_response_mock_for('sixth_vm_disk')
+      elsif object.id == '7c0f1dfc-ffd5-48b1-b9f8-bfb492b39761'
+        ret = load_response_mock_for('seventh_vm_disk')
+      elsif object.id == '9a3d9765-1a23-41f0-a578-50013a8ad5ba'
+        ret = load_response_mock_for('eighth_vm_disk')
+      elsif object.id == '785e845e-baa0-4812-8a8c-467f37ad6c79'
+        ret = load_response_mock_for('second_template_disk')
+      end
+      ret
+    end
+    allow_any_instance_of(collector_class).to receive(:collect_snapshots) do |_, object|
+      ret = load_response_mock_for('empty_list')
+      if object.id == '63978315-2d17-4e67-b393-2ea60a8aeacb'
+        ret = load_response_mock_for('first_vm_snapshots')
+      elsif object.id == 'ed7f875f-4518-4618-aec6-e04d0034475b'
+        ret = load_response_mock_for('second_vm_snapshots')
+      elsif object.id == '5aa608f3-1e02-4aca-8db5-445ec2170a27'
+        ret = load_response_mock_for('third_vm_snapshots')
+      elsif object.id == 'f664d87c-6a0d-4207-b6e5-d418247cecbe'
+        ret = load_response_mock_for('forth_vm_snapshots')
+      elsif object.id == '3a9401a0-bf3d-4496-8acf-edd3e903511f'
+        ret = load_response_mock_for('fifth_vm_snapshots')
+      elsif object.id == '072093dc-3492-4cb1-b240-dbf88a8f4fbf'
+        ret = load_response_mock_for('sixth_vm_snapshots')
+      elsif object.id == '7c0f1dfc-ffd5-48b1-b9f8-bfb492b39761'
+        ret = load_response_mock_for('seventh_vm_snapshots')
+      elsif object.id == '9a3d9765-1a23-41f0-a578-50013a8ad5ba'
+        ret = load_response_mock_for('eighth_vm_snapshots')
+      end
+      ret
+    end
+    allow_any_instance_of(collector_class).to receive(:collect_vm_devices) do |_, object|
+      ret = load_response_mock_for('empty_list')
+      if object.id == '3a9401a0-bf3d-4496-8acf-edd3e903511f'
+        ret = load_response_mock_for('fifth_vm_reported_devices')
+      end
+      ret
+    end
+    allow_any_instance_of(collector_class).to receive(:collect_nics) do |_, object|
+      ret = load_response_mock_for('empty_list')
+      if object.id == '3a9401a0-bf3d-4496-8acf-edd3e903511f'
+        ret = load_response_mock_for('fifth_vm_nics')
+      elsif object.id == '072093dc-3492-4cb1-b240-dbf88a8f4fbf'
+        ret = load_response_mock_for('sixth_vm_nics')
+      elsif object.id == '785e845e-baa0-4812-8a8c-467f37ad6c79'
+        ret = load_response_mock_for('first_template_nics')
+      end
+      ret
+    end
+
+    EmsRefresh.refresh(@ems)
+    @ems.reload
+
+    assert_table_counts(2)
+    assert_ems
+    assert_specific_cluster
+    assert_specific_storage
+    assert_specific_host
+    assert_specific_vm_powered_on
+    assert_specific_vm_powered_off
+    assert_specific_template
+    assert_relationship_tree
+  end
+
+  def assert_table_counts(lan_number)
     expect(ExtManagementSystem.count).to eq(1)
     expect(EmsFolder.count).to eq(7)
     expect(EmsCluster.count).to eq(3)
@@ -72,13 +173,15 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(Disk.count).to eq(5)
     expect(GuestDevice.count).to eq(7)
     expect(Hardware.count).to eq(13)
-    expect(Lan.count).to eq(3)
+    # the old code expects 3 and new 2
+    expect(Lan.count).to eq(lan_number)
     expect(MiqScsiLun.count).to eq(0)
     expect(MiqScsiTarget.count).to eq(0)
     expect(Network.count).to eq(7)
     expect(OperatingSystem.count).to eq(13)
     expect(Snapshot.count).to eq(11)
-    expect(Switch.count).to eq(3)
+    # the old code expects 3 and new 2
+    expect(Switch.count).to eq(lan_number)
     expect(SystemService.count).to eq(0)
 
     expect(Relationship.count).to eq(32)
@@ -191,10 +294,9 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     )
 
     @host_cluster = EmsCluster.find_by(:ems_ref => "/api/clusters/00000002-0002-0002-0002-000000000092")
-
     expect(@host.ems_cluster).to eq(@host_cluster)
     expect(@host.storages.size).to eq(1)
-    expect(@host.storages).to      include(@storage2)
+    expect(@host.storages).to include(@storage2)
 
     expect(@host.operating_system).to have_attributes(
       :name         => "bodh1.usersys.redhat.com", # TODO: ?????
@@ -321,6 +423,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(v.custom_attributes.size).to eq(0)
 
     expect(v.snapshots.size).to eq(2)
+
     snapshot = v.snapshots.detect { |s| s.current == 1 } # TODO: Fix this boolean column
     expect(snapshot).to have_attributes(
       :uid         => "e13fc61c-c566-4264-9a75-0e62fe5d7a30",
