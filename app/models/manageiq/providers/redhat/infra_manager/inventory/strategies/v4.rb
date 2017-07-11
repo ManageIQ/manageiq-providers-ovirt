@@ -88,8 +88,16 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
 
     def collect_vms
       connection.system_service.vms_service.list.collect do |vm|
-        VmPreloadedAttributesDecorator.new(vm, connection)
+        VmPreloadedAttributesDecorator.new(vm, connection, preloaded_disks)
       end
+    end
+
+    def preloaded_disks
+      @preloaded_disks ||= collect_disks_as_hash
+    end
+
+    def collect_disks_as_hash
+      Hash[connection.system_service.disks_service.list.collect { |d| [d.id, d] }]
     end
 
     def collect_vm_by_uuid(uuid)
@@ -101,13 +109,13 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
 
     def collect_templates
       connection.system_service.templates_service.list.collect do |template|
-        TemplatePreloadedAttributesDecorator.new(template, connection)
+        TemplatePreloadedAttributesDecorator.new(template, connection, preloaded_disks)
       end
     end
 
     def search_templates(search)
       connection.system_service.templates_service.list(:search => search).collect do |template|
-        TemplatePreloadedAttributesDecorator.new(template, connection)
+        TemplatePreloadedAttributesDecorator.new(template, connection, preloaded_disks)
       end
     end
 
@@ -154,38 +162,43 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
 
     class VmPreloadedAttributesDecorator < SimpleDelegator
       attr_reader :disks, :nics, :reported_devices, :snapshots
-      def initialize(vm, connection)
+      def initialize(vm, connection, preloaded_disks = nil)
         @obj = vm
-        @disks = self.class.get_attached_disks(vm, connection)
+        @disks = self.class.get_attached_disks(vm, connection, preloaded_disks)
         @nics = connection.follow_link(vm.nics)
         @reported_devices = connection.follow_link(vm.reported_devices)
         @snapshots = connection.follow_link(vm.snapshots)
         super(vm)
       end
 
-      def self.get_attached_disks(vm, connection)
-        AttachedDisksFetcher.get_attached_disks(vm, connection)
+      def self.get_attached_disks(vm, connection, preloaded_disks = nil)
+        AttachedDisksFetcher.get_attached_disks(vm, connection, preloaded_disks)
       end
     end
 
     class AttachedDisksFetcher
-      def self.get_attached_disks(disks_owner, connection)
+      def self.get_attached_disks(disks_owner, connection, preloaded_disks = nil)
         attachments = connection.follow_link(disks_owner.disk_attachments)
         attachments.map do |attachment|
-          res = connection.follow_link(attachment.disk)
+          res = disk_from_attachment(connection, attachment, preloaded_disks)
           res.interface = attachment.interface
           res.bootable = attachment.bootable
           res.active = attachment.active
           res
         end
       end
+
+      def self.disk_from_attachment(connection, attachment, preloaded_disks)
+        disk = preloaded_disks && preloaded_disks[attachment.disk.id]
+        disk || connection.follow_link(attachment.disk)
+      end
     end
 
     class TemplatePreloadedAttributesDecorator < SimpleDelegator
       attr_reader :disks, :nics
-      def initialize(template, connection)
+      def initialize(template, connection, preloaded_disks = nil)
         @obj = template
-        @disks = AttachedDisksFetcher.get_attached_disks(template, connection)
+        @disks = AttachedDisksFetcher.get_attached_disks(template, connection, preloaded_disks)
         @nics = connection.follow_link(template.nics)
         super(template)
       end

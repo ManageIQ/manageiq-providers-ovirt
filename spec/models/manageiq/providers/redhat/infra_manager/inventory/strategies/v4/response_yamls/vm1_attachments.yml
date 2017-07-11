@@ -1,0 +1,139 @@
+--- !ruby/array:OvirtSDK4::List
+internal:
+- !ruby/object:OvirtSDK4::DiskAttachment
+  href: "/ovirt-engine/api/vms/0c2b1225-1487-4741-b19f-2945f999ab8d/diskattachments/10c3dd0e-90b4-4708-bcba-b71dc4bda979"
+  comment: 
+  description: 
+  id: 10c3dd0e-90b4-4708-bcba-b71dc4bda979
+  name: 
+  active: true
+  bootable: false
+  disk: !ruby/object:OvirtSDK4::Disk
+    href: "/ovirt-engine/api/disks/10c3dd0e-90b4-4708-bcba-b71dc4bda979"
+    comment: 
+    description: 
+    id: 10c3dd0e-90b4-4708-bcba-b71dc4bda979
+    name: 
+    instance_type: 
+    template: 
+    vm: 
+    vms: 
+    active: 
+    actual_size: 
+    alias_: 
+    bootable: 
+    disk_profile: 
+    format: 
+    image_id: 
+    initial_size: 
+    interface: 
+    logical_name: 
+    lun_storage: 
+    openstack_volume_type: 
+    permissions: 
+    propagate_errors: 
+    provisioned_size: 
+    qcow_version: 
+    quota: 
+    read_only: 
+    sgio: 
+    shareable: 
+    snapshot: 
+    sparse: 
+    statistics: 
+    status: 
+    storage_domain: 
+    storage_domains: 
+    storage_type: 
+    uses_scsi_reservation: 
+    wipe_after_delete: 
+  interface: virtio
+  logical_name: "/dev/vda"
+  pass_discard: false
+  read_only: false
+  template: 
+  uses_scsi_reservation: false
+  vm: !ruby/object:OvirtSDK4::Vm
+    href: "/ovirt-engine/api/vms/0c2b1225-1487-4741-b19f-2945f999ab8d"
+    comment: 
+    description: 
+    id: 0c2b1225-1487-4741-b19f-2945f999ab8d
+    name: 
+    bios: 
+    cluster: 
+    console: 
+    cpu: 
+    cpu_profile: 
+    cpu_shares: 
+    creation_time: 
+    custom_compatibility_version: 
+    custom_cpu_model: 
+    custom_emulated_machine: 
+    custom_properties: 
+    delete_protected: 
+    display: 
+    domain: 
+    high_availability: 
+    initialization: 
+    io: 
+    large_icon: 
+    lease: 
+    memory: 
+    memory_policy: 
+    migration: 
+    migration_downtime: 
+    origin: 
+    os: 
+    quota: 
+    rng_device: 
+    serial_number: 
+    small_icon: 
+    soundcard_enabled: 
+    sso: 
+    start_paused: 
+    stateless: 
+    storage_domain: 
+    time_zone: 
+    tunnel_migration: 
+    type: 
+    usb: 
+    virtio_scsi: 
+    affinity_labels: 
+    applications: 
+    cdroms: 
+    disk_attachments: 
+    external_host_provider: 
+    floppies: 
+    fqdn: 
+    graphics_consoles: 
+    guest_operating_system: 
+    guest_time_zone: 
+    host: 
+    host_devices: 
+    instance_type: 
+    katello_errata: 
+    next_run_configuration_exists: 
+    nics: 
+    numa_nodes: 
+    numa_tune_mode: 
+    original_template: 
+    payloads: 
+    permissions: 
+    placement_policy: 
+    reported_devices: 
+    run_once: 
+    sessions: 
+    snapshots: 
+    start_time: 
+    statistics: 
+    status: 
+    status_detail: 
+    stop_reason: 
+    stop_time: 
+    tags: 
+    template: 
+    use_latest_template_version: 
+    vm_pool: 
+    watchdogs: 
+ivars:
+  :@href: 
