@@ -199,7 +199,6 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
       def initialize(template, connection, preloaded_disks = nil)
         @obj = template
         @disks = AttachedDisksFetcher.get_attached_disks(template, connection, preloaded_disks)
-        @nics = connection.follow_link(template.nics)
         super(template)
       end
     end

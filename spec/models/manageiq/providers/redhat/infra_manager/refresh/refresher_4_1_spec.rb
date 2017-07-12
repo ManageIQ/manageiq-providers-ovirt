@@ -171,7 +171,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(CustomAttribute.count).to eq(0) # TODO: 3.0 spec has values for this
     expect(CustomizationSpec.count).to eq(0)
     expect(Disk.count).to eq(5)
-    expect(GuestDevice.count).to eq(7)
+    expect(GuestDevice.count).to eq(6)
     expect(Hardware.count).to eq(13)
     # the old code expects 3 and new 2
     expect(Lan.count).to eq(lan_number)
@@ -716,8 +716,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     )
     expect(disk.storage).to eq(@storage)
 
-    expect(v.hardware.guest_devices.size).to eq(1)
-    expect(v.hardware.nics.size).to eq(1)
+    expect(v.hardware.guest_devices.size).to eq(0)
+    expect(v.hardware.nics.size).to eq(0)
     expect(v.hardware.networks.size).to eq(0)
 
     expect(v.parent_datacenter).to have_attributes(
