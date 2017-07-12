@@ -3,7 +3,6 @@
   :__v2__:
   - :@obj
   - :@disks
-  - :@nics
   ? - &1 !ruby/object:OvirtSDK4::Template
       href: "/ovirt-engine/api/templates/00000000-0000-0000-0000-000000000000"
       comment: 
@@ -222,16 +221,11 @@
         ivars:
           :@href: "/ovirt-engine/api/templates/00000000-0000-0000-0000-000000000000/watchdogs"
     - []
-    - !ruby/array:OvirtSDK4::List
-      internal: []
-      ivars:
-        :@href: 
   : *1
 - !ruby/marshalable:ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4::TemplatePreloadedAttributesDecorator
   :__v2__:
   - :@obj
   - :@disks
-  - :@nics
   ? - &2 !ruby/object:OvirtSDK4::Template
       href: "/ovirt-engine/api/templates/785e845e-baa0-4812-8a8c-467f37ad6c79"
       comment: 
@@ -607,105 +601,11 @@
         storage_type: image
         uses_scsi_reservation: 
         wipe_after_delete: false
-    - !ruby/array:OvirtSDK4::List
-      internal:
-      - !ruby/object:OvirtSDK4::Nic
-        href: "/ovirt-engine/api/templates/785e845e-baa0-4812-8a8c-467f37ad6c79/nics/b2761a52-fdfb-4424-8ef9-8ec49335bfb4"
-        comment: 
-        description: 
-        id: b2761a52-fdfb-4424-8ef9-8ec49335bfb4
-        name: nic1
-        instance_type: 
-        template: !ruby/object:OvirtSDK4::Template
-          href: "/ovirt-engine/api/templates/785e845e-baa0-4812-8a8c-467f37ad6c79"
-          comment: 
-          description: 
-          id: 785e845e-baa0-4812-8a8c-467f37ad6c79
-          name: 
-          bios: 
-          cluster: 
-          console: 
-          cpu: 
-          cpu_profile: 
-          cpu_shares: 
-          creation_time: 
-          custom_compatibility_version: 
-          custom_cpu_model: 
-          custom_emulated_machine: 
-          custom_properties: 
-          delete_protected: 
-          display: 
-          domain: 
-          high_availability: 
-          initialization: 
-          io: 
-          large_icon: 
-          memory: 
-          memory_policy: 
-          migration: 
-          migration_downtime: 
-          origin: 
-          os: 
-          quota: 
-          rng_device: 
-          serial_number: 
-          small_icon: 
-          soundcard_enabled: 
-          sso: 
-          start_paused: 
-          stateless: 
-          storage_domain: 
-          time_zone: 
-          tunnel_migration: 
-          type: 
-          usb: 
-          virtio_scsi: 
-          cdroms: 
-          disk_attachments: 
-          graphics_consoles: 
-          nics: 
-          permissions: 
-          status: 
-          tags: 
-          version: 
-          vm: 
-          watchdogs: 
-        vm: 
-        vms: 
-        boot_protocol: 
-        interface: virtio
-        linked: true
-        mac: 
-        network: 
-        network_attachments: 
-        network_labels: 
-        on_boot: 
-        plugged: true
-        reported_devices: 
-        statistics: 
-        virtual_function_allowed_labels: 
-        virtual_function_allowed_networks: 
-        vnic_profile: !ruby/object:OvirtSDK4::VnicProfile
-          href: "/ovirt-engine/api/vnicprofiles/361634d2-4975-4ef7-8429-c009871ce903"
-          comment: 
-          description: 
-          id: 361634d2-4975-4ef7-8429-c009871ce903
-          name: 
-          custom_properties: 
-          network: 
-          network_filter: 
-          pass_through: 
-          permissions: 
-          port_mirroring: 
-          qos: 
-      ivars:
-        :@href: 
   : *2
 - !ruby/marshalable:ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4::TemplatePreloadedAttributesDecorator
   :__v2__:
   - :@obj
   - :@disks
-  - :@nics
   ? - &3 !ruby/object:OvirtSDK4::Template
       href: "/ovirt-engine/api/templates/187e40e6-dfff-453c-9433-066ac1b14e5b"
       comment: 
@@ -972,8 +872,4 @@
         ivars:
           :@href: "/ovirt-engine/api/templates/187e40e6-dfff-453c-9433-066ac1b14e5b/watchdogs"
     - []
-    - !ruby/array:OvirtSDK4::List
-      internal: []
-      ivars:
-        :@href: 
   : *3

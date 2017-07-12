@@ -396,7 +396,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
     hardware_disks(persister_hardware, disks)
     addresses = hardware_networks(persister_hardware, vm) unless template
-    hardware_guest_devices(persister_hardware, vm, addresses)
+    hardware_guest_devices(persister_hardware, vm, addresses) unless template
   end
 
   def hardware_networks(persister_hardware, vm)
