@@ -146,4 +146,9 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   def supports_migrate_for_all?(vms)
     vms.map(&:ems_cluster).uniq.compact.size == 1
   end
+
+  def version_higher_than?(version)
+    ems_version = api_version[/\d+\.\d+/x]
+    Gem::Version.new(ems_version) >= Gem::Version.new(version)
+  end
 end

@@ -268,6 +268,11 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
           end
         end
       end
+
+      def update_memory!(memory, _limit = nil)
+        # memory limit is not supported in v3
+        self.memory= memory
+      end
     end
 
     def get_mac_address_of_nic_on_requested_vlan(args)
