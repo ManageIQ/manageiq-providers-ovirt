@@ -5,6 +5,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   extend ActiveSupport::Concern
 
   require 'ovirtsdk4'
+  require 'ovirt'
 
   included do
     process_api_features_support
