@@ -9,7 +9,6 @@ begin
 rescue LoadError
 end
 
-require 'manageiq-providers-ovirt'
 require 'bundler/gem_tasks'
 
 FileList['lib/tasks_private/**/*.rake'].each { |r| load r }
