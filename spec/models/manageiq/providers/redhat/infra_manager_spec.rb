@@ -354,4 +354,44 @@ describe ManageIQ::Providers::Redhat::InfraManager do
       end
     end
   end
+
+  context ".raw_connect" do
+    let(:options) do
+      {
+        :username => 'user',
+        :password => 'pword',
+        :version  => '4'
+      }
+    end
+    let(:connection) { double(OvirtSDK4::Connection) }
+
+    before do
+      allow(connection).to receive(:test).and_return(true)
+    end
+
+    it "works with different versions" do
+      expect(described_class).to receive(:raw_connect_v4).and_return(connection)
+
+      described_class.raw_connect(options)
+
+      expect(described_class).to receive(:raw_connect_v3).and_return(connection)
+
+      described_class.raw_connect(options.merge(:version => '3'))
+    end
+
+    it "always closes the connection" do
+      expect(described_class).to receive(:raw_connect_v4).and_return(connection)
+      expect(connection).to receive(:disconnect)
+
+      described_class.raw_connect(options)
+    end
+
+    it "decrypts the password" do
+      allow(described_class).to receive(:raw_connect_v4).and_return(connection)
+
+      expect(MiqPassword).to receive(:try_decrypt).with(options[:password])
+
+      described_class.raw_connect(options)
+    end
+  end
 end
