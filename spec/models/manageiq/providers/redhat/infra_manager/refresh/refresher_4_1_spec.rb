@@ -26,38 +26,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       .and_return(OpenStruct.new(:version_string => '4.2.0_master'))
   end
 
-  it "will perform a full refresh on v4.1" do
-    allow_any_instance_of(@inventory_wrapper_class)
-      .to receive(:collect_clusters).and_return(load_response_mock_for('clusters'))
-    allow_any_instance_of(@inventory_wrapper_class)
-      .to receive(:collect_storages).and_return(load_response_mock_for('storages'))
-    allow_any_instance_of(@inventory_wrapper_class)
-      .to receive(:collect_hosts).and_return(load_response_mock_for('hosts'))
-    allow_any_instance_of(@inventory_wrapper_class)
-      .to receive(:collect_vms).and_return(load_response_mock_for('vms'))
-    allow_any_instance_of(@inventory_wrapper_class)
-      .to receive(:collect_templates).and_return(load_response_mock_for('templates'))
-    allow_any_instance_of(@inventory_wrapper_class)
-      .to receive(:collect_networks).and_return(load_response_mock_for('networks'))
-    allow_any_instance_of(@inventory_wrapper_class)
-      .to receive(:collect_datacenters).and_return(load_response_mock_for('datacenters'))
-
-    VCR.use_cassette("#{described_class.name.underscore}_4_1", :allow_unused_http_interactions => true, :allow_playback_repeats => true, :record => :new_episodes) do
-      EmsRefresh.refresh(@ems)
-    end
-    @ems.reload
-
-    assert_table_counts(3)
-    assert_ems
-    assert_specific_cluster
-    assert_specific_storage
-    assert_specific_host
-    assert_specific_vm_powered_on
-    assert_specific_vm_powered_off
-    assert_specific_template
-    assert_relationship_tree
-  end
-
   it "will perform a graph full refresh" do
     stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
 

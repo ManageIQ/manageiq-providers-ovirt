@@ -24,6 +24,8 @@
 :ems_refresh:
   :rhevm:
     :inventory_object_refresh: false
+    :pipeline: 40
+    :connections: 10
 :log:
   :level_rhevm: info
 :workers:
