@@ -86,7 +86,9 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManagerRefresh::Invent
   # This code is copied from redhat/infra_manager/inventory/strategies/v4.rb it is a part of other code
   # which will should be extracted to a common place when the graph refresh is stabelized.
   def collect_disks_as_hash
-    Hash[connection.system_service.disks_service.list.collect { |d| [d.id, d] }]
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      Hash[connection.system_service.disks_service.list.collect { |d| [d.id, d] }]
+    end
   end
 
   # This code is copied from redhat/infra_manager/inventory/strategies/v4.rb it is a part of other code
