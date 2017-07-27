@@ -129,11 +129,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       # using the `disconnect` method. If `version` is 4 the object is created by the oVirt Ruby SDK, and
       # it is closed using the `close` method.
       begin
-        if connection.respond_to?(:disconnect)
-          connection.disconnect
-        elsif connection.respond_to?(:close)
-          connection.close
-        end
+        self.class.disconnect(connection)
       rescue => error
         _log.error("Error while disconnecting #{error}")
         nil
@@ -245,6 +241,14 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   end
 
   class_methods do
+    def disconnect(connection)
+      if connection.respond_to?(:disconnect)
+        connection.disconnect
+      elsif connection.respond_to?(:close)
+        connection.close
+      end
+    end
+
     def api3_supported_features
       []
     end
@@ -270,6 +274,19 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
             unsupported_reason_add(feature, _("This feature is not supported by the api version of the provider"))
           end
         end
+      end
+    end
+
+    def raw_connect(options)
+      version = options[:version] || highest_allowed_api_version
+      options[:password] = MiqPassword.try_decrypt(options[:password])
+      connect_method = "raw_connect_v#{version}".to_sym
+
+      begin
+        connection = public_send(connect_method, options)
+        connection.test(true)
+      ensure
+        disconnect(connection)
       end
     end
 
