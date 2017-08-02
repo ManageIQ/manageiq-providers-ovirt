@@ -15,8 +15,40 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   include_concern :ApiIntegration
   include_concern :VmImport
 
+  has_many :cloud_tenants, :foreign_key => :ems_id, :dependent => :destroy
+
+  include HasNetworkManagerMixin
+
   supports :provisioning
   supports :refresh_new_target
+
+  before_update :ensure_managers
+  before_update :ensure_managers_zone_and_provider_region
+
+  def ensure_network_manager
+    auth_url = ovirt_services.collect_external_network_providers.first.authentication_url # TODO - Alona - How to find the ovn via the providers? Is there only one?
+    if (auth_url)
+      build_network_manager(:type => 'ManageIQ::Providers::Redhat::NetworkManager') unless network_manager
+      uri = URI.parse(auth_url)
+      parse_network_manager_url(uri)
+    end
+    # TODO - Alona - if there is no ovn but previoulsy was, should remove from db?
+  end
+
+  def parse_network_manager_url(uri)
+    network_manager.hostname = uri.host
+    network_manager.port = uri.port
+
+    network_manager.api_version = uri.path.split('/').last.split('.').first
+
+    if (uri.instance_of? URI::HTTPS)
+      network_manager.security_protocol = "ssl"
+    else
+      if (uri.instance_of? URI::HTTP)
+        network_manager.security_protocol = "non-ssl"
+      end
+    end
+  end
 
   def refresher
     Refresh::RefresherBuilder.new(self).build

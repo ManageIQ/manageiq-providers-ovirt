@@ -378,6 +378,12 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       ManageIQ::Providers::Redhat::InfraManager::EventFetcher.new(ext_management_system)
     end
 
+    def collect_external_network_providers
+      ext_management_system.with_provider_connection(VERSION_HASH) do |connection|
+        connection.system_service.openstack_network_providers_service.list
+      end
+    end
+
     private
 
     #
