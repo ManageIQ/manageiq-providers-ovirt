@@ -203,7 +203,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       :cpu_sockets          => cpu_sockets,
       :cpu_total_cores      => cpu_sockets * cpu_cores,
       :manufacturer         => hw_info.manufacturer,
-      :model                => hw_info.product_name
+      :model                => hw_info.product_name,
+      :number_of_nics       => nics.count
     )
 
     host_guest_devices(persister_hardware, host, nics, networks)
