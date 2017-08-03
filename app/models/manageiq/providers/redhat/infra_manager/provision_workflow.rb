@@ -105,6 +105,7 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
 
   def filter_allowed_hosts(all_hosts)
     ems = source_ems
+    return all_hosts unless ems
     ovirt_services = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Builder.new(ems).build(:use_highest_supported_version => true).new(:ems => ems)
     ovirt_services.filter_allowed_hosts(self, all_hosts)
   end
