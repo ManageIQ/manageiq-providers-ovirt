@@ -338,6 +338,9 @@ describe ManageIQ::Providers::Redhat::InfraManager do
 
         ems.api_version = "4.2.0_master"
         expect(ems.version_higher_than?("4.1")).to be_truthy
+
+        ems.api_version = "4.2.1_master"
+        expect(ems.version_higher_than?("4.2.0")).to be_truthy
       end
     end
 
@@ -351,6 +354,18 @@ describe ManageIQ::Providers::Redhat::InfraManager do
 
         ems.api_version = "4.0.0_master"
         expect(ems.version_higher_than?("4.1")).to be_falsey
+
+        ems.api_version = "4.0.1_master"
+        expect(ems.version_higher_than?("4.0.2")).to be_falsey
+      end
+    end
+
+    context "api version not set" do
+      let(:api_version) { nil }
+      it 'always return false' do
+        expect(ems.version_higher_than?("10.1")).to be_falsey
+
+        expect(ems.version_higher_than?("0")).to be_falsey
       end
     end
   end

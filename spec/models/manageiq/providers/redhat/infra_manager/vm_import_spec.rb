@@ -105,8 +105,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::VmImport do
     let(:ems) { FactoryGirl.create(:ems_redhat) }
 
     it 'validates successfully' do
-      allow(ems).to receive(:api_version).and_return('4')
+      allow(ems).to receive(:api_version).and_return('4.1.5')
       expect(ems.validate_import_vm).to be_truthy
+    end
+
+    it 'fails validation on old api version' do
+      allow(ems).to receive(:api_version).and_return('4.1.4')
+      expect(ems.validate_import_vm).to be_falsey
     end
 
     it 'validates before connecting' do

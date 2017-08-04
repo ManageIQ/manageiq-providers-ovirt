@@ -148,7 +148,9 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   end
 
   def version_higher_than?(version)
-    ems_version = api_version[/\d+\.\d+/x]
+    return false if api_version.nil?
+
+    ems_version = api_version[/\d+\.\d+\.?\d*/x]
     Gem::Version.new(ems_version) >= Gem::Version.new(version)
   end
 end
