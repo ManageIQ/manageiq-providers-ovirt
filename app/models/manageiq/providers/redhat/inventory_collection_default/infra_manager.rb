@@ -478,7 +478,8 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
           :manufacturer,
           :memory_mb,
           :model,
-          :networks
+          :networks,
+          :number_of_nics
         ]
       }
     end

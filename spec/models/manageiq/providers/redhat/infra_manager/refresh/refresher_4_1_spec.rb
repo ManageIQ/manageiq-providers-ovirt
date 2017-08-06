@@ -338,7 +338,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :cpu_type             => "Westmere E56xx/L56xx/X56xx (Nehalem-C)",
       :manufacturer         => "Red Hat",
       :model                => "RHEV Hypervisor",
-      :number_of_nics       => nil,
+      :number_of_nics       => 1,
       :memory_mb            => 3789,
       :memory_console       => nil,
       :cpu_sockets          => 2,

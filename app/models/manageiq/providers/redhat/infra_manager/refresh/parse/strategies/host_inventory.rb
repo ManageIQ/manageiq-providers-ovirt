@@ -196,6 +196,8 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
         result[:model] = hw_info.product_name
       end
 
+      result[:number_of_nics] = inv.nics.count
+
       result
     end
 
