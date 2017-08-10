@@ -69,6 +69,11 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm < ManageIQ::Providers::Infra
     ext_management_system.ovirt_services.collect_disks_by_hrefs(disks.compact)
   end
 
+  def exists_on_provider?
+    return false unless ext_management_system
+    ext_management_system.ovirt_services.vm_exists_on_provider?(self)
+  end
+
   def disconnect_inv
     disconnect_storage
 
