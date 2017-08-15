@@ -100,7 +100,7 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
 
   def load_allowed_vlans(hosts, vlans)
     ems = source_ems
-    ems.ovirt_services.load_allowed_networks(hosts, vlans, self)
+    ems.ovirt_services.load_allowed_networks(hosts, vlans, self) if ems
   end
 
   def filter_allowed_hosts(all_hosts)
