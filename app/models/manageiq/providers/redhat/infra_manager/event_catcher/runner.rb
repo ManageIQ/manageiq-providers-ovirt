@@ -26,6 +26,12 @@ class ManageIQ::Providers::Redhat::InfraManager::EventCatcher::Runner < ManageIQ
       @queue.enq events
       sleep_poll_normal
     end
+  rescue SignalException => e
+    if e.message == "SIGTERM"
+      _log.info("#{self.class.name}##{__method__}: ignoring SIGTERM")
+    else
+      raise
+    end
   ensure
     reset_event_monitor_handle
   end

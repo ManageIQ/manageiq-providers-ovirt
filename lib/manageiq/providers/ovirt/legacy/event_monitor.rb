@@ -12,7 +12,6 @@ module ManageIQ
           end
 
           def start
-            trap(:TERM) { $rhevm_log.info "EventMonitor#start: ignoring SIGTERM" }
             @since          = nil
             @event_fetcher  = nil
             @monitor_events = true
