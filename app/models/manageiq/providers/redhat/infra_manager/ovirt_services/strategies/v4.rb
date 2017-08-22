@@ -49,6 +49,15 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       end
     end
 
+    def exists_on_provider?(vm)
+      vm.with_provider_object(VERSION_HASH) do |vm_proxy|
+        vm_proxy.get
+        true
+      end
+    rescue OvirtSDK4::Error
+      false
+    end
+
     def populate_phase_context(phase_context, vm)
       phase_context[:new_vm_ems_ref] = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm.href)
     end

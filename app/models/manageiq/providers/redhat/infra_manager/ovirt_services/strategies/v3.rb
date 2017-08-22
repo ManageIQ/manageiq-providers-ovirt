@@ -57,6 +57,14 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       end
     end
 
+    def exists_on_provider?(vm)
+      vm.with_provider_object do |_rhevm_vm|
+        true
+      end
+    rescue Ovirt::MissingResourceError
+      false
+    end
+
     def populate_phase_context(phase_context, vm)
       phase_context[:new_vm_ems_ref] = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm[:href])
       phase_context[:clone_task_ref] = vm.creation_status_link
