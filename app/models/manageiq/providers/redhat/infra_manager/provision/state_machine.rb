@@ -33,15 +33,19 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine
   end
 
   def customize_destination
-    if destination_image_locked?
-      _log.info("Destination image locked; re-queuing")
-      requeue_phase
+    if source.template?
+      if destination_image_locked?
+        _log.info("Destination image locked; re-queuing")
+        requeue_phase
+      else
+        message = "Starting New #{destination_type} Customization"
+        _log.info("#{message} #{for_destination}")
+        update_and_notify_parent(:message => message)
+        configure_container
+        signal :configure_disks
+      end
     else
-      message = "Starting New #{destination_type} Customization"
-      _log.info("#{message} #{for_destination}")
-      update_and_notify_parent(:message => message)
-      configure_container
-      signal :configure_disks
+      signal :post_provision
     end
   end
 

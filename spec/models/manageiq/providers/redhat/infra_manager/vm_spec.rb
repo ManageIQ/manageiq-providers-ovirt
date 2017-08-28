@@ -115,6 +115,50 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
     end
   end
 
+  describe "#supports_publish?" do
+    context "when vm has no storage" do
+      let(:vm) { FactoryGirl.create(:vm_redhat, :storage => nil, :ext_management_system => nil) }
+
+      it "does not support publish" do
+        expect(vm.supports_publish?).to be_falsey
+      end
+    end
+
+    context "when vm has no ems" do
+      let(:storage) { FactoryGirl.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
+      let(:vm) { FactoryGirl.create(:vm_redhat, :storage => storage, :ext_management_system => nil) }
+
+      it "does not support publish" do
+        expect(vm.supports_publish?).to be_falsey
+      end
+    end
+
+    context "when vm is not in down state" do
+      let(:storage) { FactoryGirl.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
+      let(:ems) { FactoryGirl.create(:ems_redhat_with_authentication) }
+      let(:vm) { FactoryGirl.create(:vm_redhat, :ext_management_system => ems, :storage => storage) }
+
+      it "does not support publish" do
+        allow(vm).to receive(:power_state).and_return("on")
+
+        expect(vm.supports_publish?).to be_falsey
+      end
+    end
+
+    context "when vm is down" do
+      let(:storage) { FactoryGirl.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
+      let(:ems) { FactoryGirl.create(:ems_redhat_with_authentication) }
+      let(:vm) { FactoryGirl.create(:vm_redhat, :ext_management_system => ems, :storage => storage) }
+
+      it "does support publish" do
+        allow(ems).to receive(:supported_api_versions).and_return([4])
+        allow(vm).to receive(:power_state).and_return("off")
+
+        expect(vm.supports_publish?).to be_truthy
+      end
+    end
+  end
+
   describe "#disconnect_storage" do
     before(:each) do
       _, _, zone = EvmSpecHelper.create_guid_miq_server_zone

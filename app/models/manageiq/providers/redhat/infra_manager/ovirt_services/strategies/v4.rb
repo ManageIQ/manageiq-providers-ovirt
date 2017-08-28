@@ -36,11 +36,28 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       phase_context = args[:phase_context]
       logger = args[:logger]
 
+      if source.template?
+        vm_clone_completed?(logger, phase_context, source)
+      else
+        template_clone_completed?(logger, phase_context, source)
+      end
+    end
+
+    def vm_clone_completed?(logger, phase_context, source)
       source.with_provider_connection(VERSION_HASH) do |connection|
         vm = vm_service_by_href(phase_context[:new_vm_ems_ref], connection).get
         status = vm.status
         logger.info("The Vm being cloned is #{status}")
         status == OvirtSDK4::VmStatus::DOWN
+      end
+    end
+
+    def template_clone_completed?(logger, phase_context, source)
+      source.with_provider_connection(VERSION_HASH) do |connection|
+        template = template_service_by_href(phase_context[:new_vm_ems_ref], connection).get
+        status = template.status
+        logger.info("The status of the template being cloned is #{status}")
+        status == OvirtSDK4::TemplateStatus::OK
       end
     end
 
@@ -170,7 +187,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
     end
 
     def get_vm_proxy(vm, connection)
-      VmProxyDecorator.new(connection.system_service.vms_service.vm_service(vm.uid_ems), self)
+      VmProxyDecorator.new(connection.system_service.vms_service.vm_service(vm.uid_ems), connection, self)
     end
 
     def collect_disks_by_hrefs(disks)
@@ -202,6 +219,13 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       source.with_provider_object(VERSION_HASH) do |rhevm_template|
         vm = rhevm_template.create_vm(clone_options)
         populate_phase_context(phase_context, vm)
+      end
+    end
+
+    def make_template(source, clone_options, phase_context)
+      source.with_provider_object(VERSION_HASH) do |rhevm_vm|
+        template = rhevm_vm.make_template(clone_options)
+        populate_phase_context(phase_context, template)
       end
     end
 
@@ -298,11 +322,13 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
     end
 
     class VmProxyDecorator < SimpleDelegator
-      attr_reader :service
-      def initialize(vm, service)
-        @obj = vm
-        @service = service
-        super(vm)
+      attr_reader :ovirt_services, :connection
+
+      def initialize(vm_service, connection, ovirt_services)
+        @obj = vm_service
+        @connection = connection
+        @ovirt_services = ovirt_services
+        super(vm_service)
       end
 
       def update_memory_reserve!(memory_reserve_size)
@@ -326,7 +352,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
 
       def update_host_affinity!(dest_host_ems_ref)
         vm = get
-        vm.placement_policy.hosts = [OvirtSDK4::Host.new(:id => service.uuid_from_href(dest_host_ems_ref))]
+        vm.placement_policy.hosts = [OvirtSDK4::Host.new(:id => ovirt_services.uuid_from_href(dest_host_ems_ref))]
         update(vm)
       end
 
@@ -405,6 +431,33 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
           )
         )
       end
+
+      def make_template(options)
+        templates_service = connection.system_service.templates_service
+        cluster = ovirt_services.cluster_from_href(options[:cluster], connection)
+        if options[:storage]
+          storage = ovirt_services.storage_from_href(options[:storage], connection)
+        end
+        vm = get
+        vm.disk_attachments = connection.follow_link(vm.disk_attachments)
+        template = build_template_from_hash(:name        => options[:name],
+                                            :vm          => vm,
+                                            :description => options[:description],
+                                            :cluster     => cluster,
+                                            :storage     => storage)
+        templates_service.add(template)
+      end
+
+      def build_template_from_hash(args)
+        options = {
+          :name           => args[:name],
+          :description    => args[:description],
+          :vm             => args[:vm],
+          :cluster        => args[:cluster],
+          :storage_domain => args[:storage] && {:id => args[:storage].id}
+        }.compact
+        OvirtSDK4::Template.new(options)
+      end
     end
 
     class TemplateProxyDecorator < SimpleDelegator
@@ -435,6 +488,10 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
 
     def cluster_from_href(href, connection)
       connection.system_service.clusters_service.cluster_service(uuid_from_href(href)).get
+    end
+
+    def storage_from_href(href, connection)
+      connection.system_service.storage_domains_service.storage_domain_service(uuid_from_href(href)).get
     end
 
     def uuid_from_href(ems_ref)
@@ -474,6 +531,11 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
     def vm_service_by_href(href, connection)
       vm_uuid = uuid_from_href(href)
       connection.system_service.vms_service.vm_service(vm_uuid)
+    end
+
+    def template_service_by_href(href, connection)
+      template_uuid = uuid_from_href(href)
+      connection.system_service.templates_service.template_service(template_uuid)
     end
 
     #
