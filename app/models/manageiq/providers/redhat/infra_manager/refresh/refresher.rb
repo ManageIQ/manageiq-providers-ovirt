@@ -26,7 +26,12 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
           end
         end
 
-        data[:ems] = {:api_version => inventory.service.version_string}
+        case ems.highest_allowed_api_version
+        when '3'
+          data[:ems_api_version] = {:api_version => inventory.service.version_string}
+        when '4'
+          data.instance_variable_set(:@ems_api_version, :api_version => inventory.service.version_string)
+        end
 
         _log.info "Filtering inventory...Complete"
         [target, data]
