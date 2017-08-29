@@ -4,6 +4,8 @@ require 'resolv'
 module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   extend ActiveSupport::Concern
 
+  HIGHEST_ALLOWED_API_VERSION = 4
+
   require 'ovirtsdk4'
 
   included do
@@ -278,7 +280,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     end
 
     def raw_connect(options)
-      version = options[:version] || highest_allowed_api_version
+      version = options[:version] || HIGHEST_ALLOWED_API_VERSION
       options[:password] = MiqPassword.try_decrypt(options[:password])
       connect_method = "raw_connect_v#{version}".to_sym
 

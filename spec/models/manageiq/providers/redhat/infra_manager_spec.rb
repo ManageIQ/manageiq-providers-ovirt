@@ -394,6 +394,12 @@ describe ManageIQ::Providers::Redhat::InfraManager do
       described_class.raw_connect(options.merge(:version => '3'))
     end
 
+    it "calls the default version" do
+      expect(described_class).to receive(:raw_connect_v4).and_return(connection)
+
+      described_class.raw_connect(options.except(:version))
+    end
+
     it "always closes the connection" do
       expect(described_class).to receive(:raw_connect_v4).and_return(connection)
       expect(connection).to receive(:disconnect)
