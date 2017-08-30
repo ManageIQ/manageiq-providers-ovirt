@@ -1,4 +1,5 @@
 require 'ovirtsdk4'
+require 'yaml'
 
 module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
   class V4
@@ -333,6 +334,76 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
         vm = get
         vm.cpu.topology = OvirtSDK4::CpuTopology.new(cpu_hash)
         update(vm)
+      end
+
+      #
+      # Updates the `initialization` of the virtual machine using the given custom script.
+      #
+      # @param content [String] YAML text containing the cloud-init configuration.
+      #
+      def update_cloud_init!(content)
+        # When this was implemented using version 3 of the API some of the attributes of the
+        # initialization object were directly copied from the YAML text, ignoring the syntax of the
+        # cloud-init files. For example, we expected to have a YAML file like this:
+        #
+        #   host_name: myvm.example.com
+        #   user_name: root
+        #   root_password: mypass
+        #   ...
+        #
+        # These are *not* part of the syntax supported by cloud-init, but just values that we used
+        # to copy to the initialization object. To preserve backwards compatibility, and to support
+        # the existing customization scripts, we need to use the same logic that the 'ovirt' gem
+        # used to extract these values. For more details see 'cloud_init=' and
+        # 'converted_cloud_init' methods in the 'vm.rb' file of the 'ovirt' gem.
+        #
+        # This is the list of keys that need special treatment:
+        keys = %i(
+          active_directory_ou
+          authorized_ssh_keys
+          dns_search
+          dns_servers
+          domain
+          host_name
+          input_locale
+          nic_configurations
+          org_name
+          regenerate_ssh_keys
+          root_password
+          system_locale
+          timezone
+          ui_language
+          user_locale
+          user_name
+        )
+
+        # Create the hash that will be used to create the initialization object:
+        hash = {}
+
+        # Load the YAML text and convert the keys to symbols, as that is what the SDK will need in
+        # order to later convert it to an SDK object:
+        yaml = YAML.safe_load(content).deep_symbolize_keys
+
+        # Remove from the YAML the keys that need special treatment, and add them to the hash that
+        # will be used to create the initialization object.
+        keys.each do |key|
+          value = yaml.delete(key)
+          hash[key] = value if value
+        end
+
+        # Convert the remaining YAML back to text, removing the initial '---' line that the dump
+        # method adds, as cloud-init does not understand it. The result will be used as the custom
+        # cloud-init script.
+        script = YAML.dump(yaml)
+        script.sub!(/^---\n/, '')
+        hash[:custom_script] = script unless script.blank?
+
+        # Send the update to the server:
+        update(
+          OvirtSDK4::Vm.new(
+            :initialization => hash
+          )
+        )
       end
     end
 
