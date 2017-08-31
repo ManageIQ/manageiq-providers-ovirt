@@ -7,12 +7,12 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration
   def attach_floppy_payload
     return unless content = customization_template_content
     filename = customization_template.default_filename
-    get_provider_destination.attach_floppy(filename => content)
+    with_provider_destination { |d| d.attach_floppy(filename => content) }
   end
 
   def configure_cloud_init
     return unless content = customization_template_content
-    get_provider_destination.update_cloud_init!(content)
+    with_provider_destination { |d| d.update_cloud_init!(content) }
 
     if Gem::Version.new(source.ext_management_system.api_version) >= Gem::Version.new("3.5.5.0")
       phase_context[:boot_with_cloud_init] = true

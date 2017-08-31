@@ -39,7 +39,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionViaIso do
       context "version 3" do
         before do
           @vm_service = double("vm_service")
-          allow(@vm).to receive(:with_provider_object).and_return(@vm_service)
+          allow(@vm).to receive(:with_provider_object).and_yield(@vm_service)
           allow(@ems).to receive(:supported_api_versions).and_return([3])
         end
 

@@ -9,8 +9,8 @@ class ManageIQ::Providers::Redhat::InfraManager::Provision < MiqProvision
     "Vm"
   end
 
-  def get_provider_destination
-    return nil if destination.nil?
-    destination.with_provider_object { |rhevm_vm| return rhevm_vm }
+  def with_provider_destination
+    return if destination.nil?
+    destination.with_provider_object { |obj| yield obj }
   end
 end
