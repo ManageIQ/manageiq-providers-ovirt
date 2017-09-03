@@ -66,6 +66,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManagerRefresh::Invent
   end
 
   def collect_datacenter_for_cluster(cluster)
+    return unless cluster.data_center
     manager.with_provider_connection(VERSION_HASH) do |connection|
       connection.follow_link(cluster.data_center)
     end
@@ -136,6 +137,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManagerRefresh::Invent
   end
 
   def collect_dc_domains(dc)
+    return unless dc
     manager.with_provider_connection(VERSION_HASH) do |connection|
       connection.follow_link(dc.storage_domains)
     end

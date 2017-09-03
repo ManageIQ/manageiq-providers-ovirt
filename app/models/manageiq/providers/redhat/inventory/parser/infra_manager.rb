@@ -30,7 +30,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :ems_ref_obj   => ems_ref,
         :uid_ems       => cluster.id,
         :name          => cluster.name,
-        :datacenter_id => cluster.data_center.id,
+        :datacenter_id => cluster.dig(:data_center, :id),
       )
     end
   end
@@ -275,13 +275,16 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   end
 
   def network_from_nic(nic, dc, networks)
+    return unless dc
     network_id = nic.dig(:network, :id)
     if network_id
       # TODO: check to indexed_networks = networks.index_by(:id)
       network = networks.detect { |n| n.id == network_id }
     else
       network_name = nic.dig(:network, :name)
-      network = networks.detect { |n| n.name == network_name && n.dig(:data_center, :id) == dc.id }
+      if network_name
+        network = networks.detect { |n| n.name == network_name && n.dig(:data_center, :id) == dc.id }
+      end
     end
 
     network
