@@ -1,5 +1,9 @@
 module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
   class Api4 < ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Parser
+    def self.ems_version_to_hashes(inv)
+      inv.instance_variable_get(:@ems_api_version)
+    end
+
     def self.cluster_inv_to_hashes(inv)
       result = []
       result_uids = {}

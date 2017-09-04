@@ -47,6 +47,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
       allow(@ems).to receive(:supported_api_versions).and_return([3])
       allow(@ems).to receive(:resolve_ip_address).with(ip_address).and_return(ip_address)
+      stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => false } })
     end
 
     it "should refresh a vm" do
@@ -88,7 +89,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       name        = add_vm_event[:name]
 
       ep_class = ManageIQ::Providers::Redhat::InfraManager::EventParser
-
       target_hash, target_klass, target_find = ep_class.parse_new_target(add_vm_event, description, @ems, name)
 
       new_vm = VCR.use_cassette("#{described_class.name.underscore}_target_new_vm", :allow_unused_http_interactions => true) do
