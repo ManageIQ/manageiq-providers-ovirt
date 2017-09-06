@@ -171,7 +171,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
 
     def vm_start(vm, cloud_init)
       vm.with_provider_object do |rhevm_vm|
-        rhevm_vm.start { |action| action.use_cloud_init(true) if cloud_init }
+        rhevm_vm.start { |action| action.use_cloud_init(true) if cloud_init[:use_cloud_init] }
       end
     rescue Ovirt::VmAlreadyRunning
     end

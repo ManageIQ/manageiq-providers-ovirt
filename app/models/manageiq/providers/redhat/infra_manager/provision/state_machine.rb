@@ -76,6 +76,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine
 
   def autostart_destination
     destination.custom_attributes.create!(:name => "miq_provision_boot_with_cloud_init") if phase_context[:boot_with_cloud_init]
+    destination.custom_attributes.create!(:name => "miq_provision_boot_with_sysyprep") if phase_context[:boot_with_sysprep]
 
     super
   end

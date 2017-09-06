@@ -107,6 +107,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
 
   context "#allowed_customization_templates" do
     let(:workflow) { described_class.new({:src_vm_id => template.id}, admin) }
+    let(:source_vm) { double("OvirtSDK4::Vm") }
 
     it "should retrieve cloud-init templates when cloning" do
       options = {'key' => 'value'}

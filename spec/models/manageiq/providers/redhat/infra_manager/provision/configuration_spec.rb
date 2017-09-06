@@ -60,6 +60,28 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration do
     end
   end
 
+  context "#configure_sysprep" do
+    let(:vm_service)     { double("OvirtSDK4::VmService") }
+    let(:connection)     { double("OvirtSDK4::Connection") }
+    let(:ovirt_services) { double("ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4") }
+    let(:provider_object) { ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4::VmProxyDecorator.new(vm_service, connection, ovirt_services) }
+
+    it "should configure sysprep" do
+      task.options[:customization_template_id] = cust_template.id
+      allow(task).to receive(:get_option).and_return("#some_script")
+
+      expect(vm_service).to receive(:update).with(OvirtSDK4::Vm.new(
+                                                    :initialization => {
+                                                      :custom_script => '#some_script'
+                                                    }
+      ))
+
+      task.configure_sysprep
+
+      expect(task.phase_context[:boot_with_sysprep]).to eq(true)
+    end
+  end
+
   context "#configure_container" do
     let(:connection) { instance_double("OvirtInventory") }
     before do

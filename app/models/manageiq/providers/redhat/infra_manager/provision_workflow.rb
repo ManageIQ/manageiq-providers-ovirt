@@ -55,14 +55,29 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
 
   def allowed_customization_templates(options = {})
     if supports_native_clone?
-      return allowed_cloud_init_customization_templates(options)
+      allowed_cloud_init_customization_templates(options)
     else
-      return super(options)
+      super(options)
     end
   end
 
   def allowed_datacenters(_options = {})
     super.slice(datacenter_by_vm.try(:id))
+  end
+
+  def allowed_customization(_options = {})
+    src = get_source_and_targets
+    return {} if src.blank?
+    return {"fields" => "Specification"} if @values[:forced_sysprep_enabled] == 'fields'
+
+    result = {"disabled" => "<None>"}
+
+    case src[:vm].platform
+    when 'windows' then result["file"] = "Sysprep Answer File"
+    when 'linux'   then result["fields"] = "Specification"
+    end
+
+    result
   end
 
   def datacenter_by_vm
