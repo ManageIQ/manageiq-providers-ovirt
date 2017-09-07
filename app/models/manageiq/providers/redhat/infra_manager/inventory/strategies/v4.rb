@@ -42,18 +42,90 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
       get_uuid_from_href(object.ems_ref)
     end
 
+    ATTRIBUTES_TO_FETCH_FOR_INV_TYPE = {
+      :host        => [:nics, :statistics],
+      :data_center => [:storage_domains],
+      :vm          => [:nics, :reported_devices, :snapshots, :disk_attachments],
+      :template    => [:disk_attachments]
+    }.freeze
+
     def refresh
       ems.with_provider_connection(VERSION_HASH) do |connection|
         @connection = connection
-        res = {}
-        res[:cluster] = collect_clusters
-        res[:storage] = collect_storages
-        res[:host] = collect_hosts
-        res[:vm] = collect_vms
-        res[:template] = collect_templates
-        res[:network] = collect_networks
-        res[:datacenter] = collect_datacenters
+        top_level_fututres_hash = collect_top_level_futures
+        res = wait_on_top_level_collections(top_level_fututres_hash)
+        res.each { |inv_name, inv| res[inv_name] = collect_inv_with_attributes_async(inv, inv_name_to_inv_type(inv_name)) }
+        preloaded_disks = collect_disks_as_hash(res[:disk])
+        collect_disks_from_attachments(res[:vm], preloaded_disks)
+        collect_disks_from_attachments(res[:template], preloaded_disks)
         res
+      end
+    end
+
+    def collect_disks_from_attachments(inv, preloaded_disks)
+      inv.each do |inv_item|
+        disks = AttachedDisksFetcher.attached_disks(inv_item, connection, preloaded_disks)
+        inv_item.singleton_class.send(:attr_accessor, :disks)
+        inv_item.disks = disks
+      end
+    end
+
+    def collect_inv_with_attributes_async(inv, inv_type)
+      return inv if ATTRIBUTES_TO_FETCH_FOR_INV_TYPE[inv_type].blank?
+      inv_keyed_requests = collect_inv_attributes_request(inv, inv_type)
+      inv_fetched_attributes = ManageIQ::Providers::Redhat::InfraManager::FuturesCollector.process_keyed_requests_queue(inv_keyed_requests)
+      set_inv_attributes!(inv, inv_fetched_attributes, inv_type)
+    end
+
+    def apply_hosts_fetched_results!(hosts, fetched_host_results)
+      set_inv_attributes!(hosts, fetched_host_results, :host)
+    end
+
+    def set_inv_attributes!(inv, inv_fetched_attributes, inv_type)
+      inv.each do |obj|
+        key = base_key_for_obj(obj, inv_type)
+        ATTRIBUTES_TO_FETCH_FOR_INV_TYPE[inv_type].each do |attribute_name|
+          obj.instance_variable_set("@#{attribute_name}", inv_fetched_attributes["#{key}#{attribute_name}"])
+        end
+      end
+    end
+
+    def collect_inv_attributes_request(objs, obj_type)
+      obj_requests = []
+      objs.each do |obj|
+        ATTRIBUTES_TO_FETCH_FOR_INV_TYPE[obj_type].each do |attribute_name|
+          obj_requests << obj_attribute_request(obj, obj_type, attribute_name)
+        end
+      end
+      obj_requests
+    end
+
+    def wait_on_top_level_collections(top_level_fututres_hash)
+      top_level_fututres_hash.each do |k, v|
+        top_level_fututres_hash[k] = v.wait
+      end
+      top_level_fututres_hash
+    end
+
+    def collect_top_level_futures
+      res = {}
+      %w(cluster storage host vm template network datacenter disk).each { |inv_name| res[inv_name.to_sym] = collect_inv_future(inv_name.to_sym) }
+      res
+    end
+
+    def collect_inv_future(inv_name)
+      inv_type = inv_name_to_inv_type(inv_name)
+      connection.system_service.send("#{inv_type}s_service").list(:wait => false)
+    end
+
+    def inv_name_to_inv_type(inv_name)
+      case inv_name
+      when :datacenter
+        :data_center
+      when :storage
+        :storage_domain
+      else
+        inv_name.to_sym
       end
     end
 
@@ -87,8 +159,11 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
     end
 
     def collect_vms
-      connection.system_service.vms_service.list.collect do |vm|
-        VmPreloadedAttributesDecorator.new(vm, connection, preloaded_disks)
+      vms_service = connection.system_service.vms_service
+      vms = vms_service.list
+      future_disk_attachments = collect_future_vm_disk_attachments(vms, vms_service)
+      vms.collect do |vm|
+        VmPreloadedAttributesDecorator.new(vm, connection, preloaded_disks, future_disk_attachments[vm.id])
       end
     end
 
@@ -96,8 +171,19 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
       @preloaded_disks ||= collect_disks_as_hash
     end
 
-    def collect_disks_as_hash
-      Hash[connection.system_service.disks_service.list.collect { |d| [d.id, d] }]
+    def collect_disks_as_hash(disks = nil)
+      disks ||= connection.system_service.disks_service.list
+      Hash[disks.collect { |d| [d.id, d] }]
+    end
+
+    def collect_future_vm_disk_attachments(vms, vms_service)
+      vms_attachments = vms.collect do |vm|
+        vm_service = vms_service.vm_service(vm.id)
+        atts_service = vm_service.disk_attachments_service
+        atts_future = atts_service.list(:wait => false)
+        [vm.id, atts_future]
+      end
+      Hash[vms_attachments]
     end
 
     def collect_vm_by_uuid(uuid)
@@ -107,10 +193,40 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
       []
     end
 
-    def collect_templates
-      connection.system_service.templates_service.list.collect do |template|
-        TemplatePreloadedAttributesDecorator.new(template, connection, preloaded_disks)
+    def collect_templates_future
+      connection.system_service.templates_service.list(:wait => false)
+    end
+
+    def base_key_for_obj(obj, obj_type)
+      "#{obj_type}_#{obj.id}_"
+    end
+
+    def obj_attribute_request(obj, obj_type, attr_name)
+      objs_service = connection.system_service.send("#{obj_type}s_service")
+      procedure = proc do
+        objs_service.send("#{obj_type}_service", obj.id).send("#{attr_name}_service").list(:wait => false)
       end
+      key = "#{base_key_for_obj(obj, obj_type)}#{attr_name}"
+      { key => procedure}
+    end
+
+    def collect_templates
+      templates_service = connection.system_service.templates_service
+      templates = templates_service.list
+      future_disk_attachments = collect_future_template_disk_attachments(templates, templates_service)
+      templates.collect do |template|
+        TemplatePreloadedAttributesDecorator.new(template, connection, preloaded_disks, future_disk_attachments)
+      end
+    end
+
+    def collect_future_template_disk_attachments(templates, templates_service)
+      templates_attachments = templates.collect do |template|
+        template_service = templates_service.template_service(template.id)
+        atts_service = template_service.disk_attachments_service
+        atts_future = atts_service.list(:wait => false)
+        [template.id, atts_future]
+      end
+      Hash[templates_attachments]
     end
 
     def search_templates(search)
@@ -162,24 +278,34 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
 
     class VmPreloadedAttributesDecorator < SimpleDelegator
       attr_reader :disks, :nics, :reported_devices, :snapshots
-      def initialize(vm, connection, preloaded_disks = nil)
+      def initialize(vm, connection, preloaded_disks = nil, future_disk_attachments = nil)
         @obj = vm
-        @disks = self.class.get_attached_disks(vm, connection, preloaded_disks)
+        @disks = self.class.get_attached_disks_from_futures(vm, connection, preloaded_disks, future_disk_attachments)
         @nics = connection.follow_link(vm.nics)
         @reported_devices = connection.follow_link(vm.reported_devices)
         @snapshots = connection.follow_link(vm.snapshots)
         super(vm)
       end
 
-      def self.get_attached_disks(vm, connection, preloaded_disks = nil)
-        AttachedDisksFetcher.get_attached_disks(vm, connection, preloaded_disks)
+      def self.get_attached_disks_from_futures(vm, connection, preloaded_disks = nil, future_disk_attachments = nil)
+        AttachedDisksFetcher.get_attached_disks_from_futures(vm, connection, preloaded_disks, future_disk_attachments)
       end
     end
 
     class AttachedDisksFetcher
-      def self.get_attached_disks(disks_owner, connection, preloaded_disks = nil)
-        attachments = connection.follow_link(disks_owner.disk_attachments)
+      def self.get_attached_disks_from_futures(disks_owner, connection, preloaded_disks = nil, future_disk_attachments = nil)
+        attachments = future_disk_attachments ? future_disk_attachments.wait : connection.follow_link(disks_owner.disk_attachments)
         attachments.map do |attachment|
+          res = disk_from_attachment(connection, attachment, preloaded_disks)
+          res.interface = attachment.interface
+          res.bootable = attachment.bootable
+          res.active = attachment.active
+          res
+        end
+      end
+
+      def self.attached_disks(disks_owner, connection, preloaded_disks)
+        disks_owner.disk_attachments.map do |attachment|
           res = disk_from_attachment(connection, attachment, preloaded_disks)
           res.interface = attachment.interface
           res.bootable = attachment.bootable
@@ -195,10 +321,10 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
     end
 
     class TemplatePreloadedAttributesDecorator < SimpleDelegator
-      attr_reader :disks, :nics
-      def initialize(template, connection, preloaded_disks = nil)
+      attr_reader :disks
+      def initialize(template, connection, preloaded_disks = nil, future_disk_attachments = nil)
         @obj = template
-        @disks = AttachedDisksFetcher.get_attached_disks(template, connection, preloaded_disks)
+        @disks = AttachedDisksFetcher.get_attached_disks_from_futures(template, connection, preloaded_disks, future_disk_attachments[template.id])
         super(template)
       end
     end
