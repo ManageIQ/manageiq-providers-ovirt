@@ -23,6 +23,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
     # Prepare the options to call the method that creates the actual connection:
     connect_options = {
+      :id         => id,
       :scheme     => options[:scheme] || 'https',
       :server     => options[:ip] || address,
       :port       => options[:port] || port,
@@ -124,10 +125,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       connection = connect(options)
       yield connection
     ensure
-      # The `connect` method will return different types of objects depending on the value of the `version`
-      # parameter. If `version` is 3 the connection object is created by the `ovirt` gem and it is closed
-      # using the `disconnect` method. If `version` is 4 the object is created by the oVirt Ruby SDK, and
-      # it is closed using the `close` method.
       begin
         self.class.disconnect(connection)
       rescue => error
@@ -244,8 +241,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     def disconnect(connection)
       if connection.respond_to?(:disconnect)
         connection.disconnect
-      elsif connection.respond_to?(:close)
-        connection.close
       end
     end
 
@@ -311,7 +306,8 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
         :path   => options[:path] || '/ovirt-engine/api'
       )
 
-      OvirtSDK4::Connection.new(
+      ManageIQ::Providers::Redhat::ConnectionManager.instance.get(
+        options[:id],
         :url      => url.to_s,
         :username => options[:username],
         :password => options[:password],

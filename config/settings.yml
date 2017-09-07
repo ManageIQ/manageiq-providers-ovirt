@@ -4,6 +4,8 @@
     :blacklisted_event_names: []
     :event_handling:
       :event_groups:
+    :connection_manager:
+      :purge_interval: 1.hour
 :http_proxy:
   :ovirt:
     :host:
