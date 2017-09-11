@@ -119,7 +119,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       @ems = FactoryGirl.create(:ems_redhat, :zone => zone,
                                 :hostname => ip_address, :ipaddress => ip_address, :port => 443)
       @ems.update_authentication(:default => {:userid => "admin@internal", :password => "password"})
-      allow(@ems).to receive(:supported_api_versions).and_return([3])
+      allow(@ems).to receive(:supported_api_versions).and_return(['3'])
       allow(@ems).to receive(:resolve_ip_address).with(ip_address).and_return(ip_address)
     end
 
