@@ -204,6 +204,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       :cpu_total_cores      => cpu_sockets * cpu_cores,
       :manufacturer         => hw_info.manufacturer,
       :model                => hw_info.product_name,
+      :serial_number        => hw_info.serial_number,
       :number_of_nics       => nics.count
     )
 

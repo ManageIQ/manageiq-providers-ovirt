@@ -194,6 +194,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
       unless hw_info.blank?
         result[:manufacturer] = hw_info.manufacturer
         result[:model] = hw_info.product_name
+        result[:serial_number] = hw_info.serial_number
       end
 
       result[:number_of_nics] = inv.nics.count
