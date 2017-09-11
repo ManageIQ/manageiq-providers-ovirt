@@ -112,7 +112,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
         before do
           allow(@ems).to receive(:resolve_ip_address).with(@ems.hostname).and_return("1.2.3.4")
           rhevm_vm = double(:attributes => {:status => {:state => "down"}})
-          allow(@vm_prov).to receive(:get_provider_destination).and_return(rhevm_vm)
+          allow(@vm_prov).to receive(:with_provider_destination).and_yield(rhevm_vm)
           allow(@vm_prov).to receive(:destination).and_return(destination_vm)
           allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager).to receive(:supported_api_versions)
             .and_return([3])
@@ -127,13 +127,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
           end
 
           it "with an imaged_locked destination" do
-            @vm_prov.get_provider_destination.attributes[:status][:state] = "image_locked"
+            @vm_prov.with_provider_destination { |d| d.attributes[:status][:state] = "image_locked" }
 
             expect(@vm_prov.destination_image_locked?).to be_truthy
           end
 
           it "when destination is nil" do
-            allow(@vm_prov).to receive(:get_provider_destination).and_return(nil)
+            allow(@vm_prov).to receive(:with_provider_destination)
             expect(@vm_prov.destination_image_locked?).to be_falsey
           end
         end
@@ -147,7 +147,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
           end
 
           it "when destination_image_locked is true" do
-            @vm_prov.get_provider_destination.attributes[:status][:state] = "image_locked"
+            @vm_prov.with_provider_destination { |d| d.attributes[:status][:state] = "image_locked" }
             expect(@vm_prov).to receive(:requeue_phase)
 
             @vm_prov.customize_destination

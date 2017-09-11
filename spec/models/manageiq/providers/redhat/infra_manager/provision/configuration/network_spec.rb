@@ -20,10 +20,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
                                :status      => 'Ok',
                                :options     => {:src_vm_id => template.id})
     allow(@task).to receive_messages(
-      :dest_cluster             => ems_cluster,
-      :get_provider_destination => rhevm_vm,
-      :source                   => template,
+      :dest_cluster => ems_cluster,
+      :source       => template,
     )
+    allow(@task).to receive(:get_provider_destination).and_yield(rhevm_vm)
 
     allow(Ovirt::Service).to receive_messages(:new => ovirt_service)
 

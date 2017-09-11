@@ -10,7 +10,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration do
   let(:template)      { FactoryGirl.create(:template_redhat, :ext_management_system => ems) }
   let(:vm)            { FactoryGirl.create(:vm_redhat, :ext_management_system => ems) }
 
-  before { allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager::Provision).to receive(:get_provider_destination).and_return(provider_object) }
+  before { allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager::Provision).to receive(:with_provider_destination).and_yield(provider_object) }
   before(:each) { allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager).to receive(:supported_api_versions).and_return([3]) }
   context "#attach_floppy_payload" do
     it "should attach floppy if customization template provided" do

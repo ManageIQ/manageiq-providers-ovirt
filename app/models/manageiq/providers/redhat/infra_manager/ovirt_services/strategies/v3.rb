@@ -110,17 +110,17 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
     end
 
     def vm_boot_from_cdrom(operation, name)
-      operation.get_provider_destination.boot_from_cdrom(name)
+      operation.with_provider_destination { |d| d.boot_from_cdrom(name) }
     rescue Ovirt::VmNotReadyToBoot
       raise OvirtServices::VmNotReadyToBoot
     end
 
     def detach_floppy(operation)
-      operation.get_provider_destination.detach_floppy
+      operation.with_provider_destination(&:detach_floppy)
     end
 
     def vm_boot_from_network(operation)
-      operation.get_provider_destination.boot_from_network
+      operation.with_provider_destination(&:boot_from_network)
     rescue Ovirt::VmNotReadyToBoot
       raise OvirtServices::VmNotReadyToBoot
     end
