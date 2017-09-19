@@ -13,6 +13,8 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing::Strategies
         username = ems.ovirt_services.username_by_href(user_href)
       end
 
+      vm_ref = template?(event.name) ? ems_ref_from_object_in_event(event.template) : ems_ref_from_object_in_event(event.vm)
+
       # Build the event hash
       {
         :event_type          => event.name,
@@ -22,7 +24,7 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing::Strategies
         :username            => username,
         :full_data           => event,
         :ems_id              => ems_id,
-        :vm_ems_ref          => ems_ref_from_object_in_event(event.vm) || ems_ref_from_object_in_event(event.template),
+        :vm_ems_ref          => vm_ref,
         :host_ems_ref        => ems_ref_from_object_in_event(event.host),
         :ems_cluster_ems_ref => ems_ref_from_object_in_event(event.cluster),
       }
@@ -39,7 +41,14 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing::Strategies
 
       cluster = parse_new_cluster(ems, full_data.cluster, dc)
       rp      = parse_new_resource_pool(cluster)
-      vm      = parse_new_vm(ems, full_data.vm, dc, cluster, message, event_type)
+      if template?(event_type)
+        vm_data = full_data.template
+        klass = 'ManageIQ::Providers::Redhat::InfraManager::Template'
+      else
+        vm_data = full_data.vm
+        klass = 'ManageIQ::Providers::Redhat::InfraManager::Vm'
+      end
+      vm = parse_new_vm(ems, vm_data, dc, cluster, message, event_type)
 
       target_hash = {
         :vms            => [vm],
@@ -48,7 +57,7 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing::Strategies
         :folders        => [*folders]
       }
 
-      return target_hash, 'ManageIQ::Providers::Redhat::InfraManager::Vm', {:uid_ems => vm[:uid_ems]}
+      return target_hash, klass, {:uid_ems => vm[:uid_ems]}
     end
 
     def self.parse_new_folders(dc)
