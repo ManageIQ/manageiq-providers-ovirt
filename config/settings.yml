@@ -16,7 +16,7 @@
     :connection_manager:
       :purge_interval: 1.hour
 :http_proxy:
-  :ovirt:
+  :rhevm:
     :host:
     :password:
     :port:
