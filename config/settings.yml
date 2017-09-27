@@ -9,8 +9,8 @@
     :service:
       :read_timeout: 1.hour
       :open_timeout: 1.minute
-  :ems_ovirt:
     :blacklisted_event_names: []
+  :ems_ovirt:
     :event_handling:
       :event_groups:
     :connection_manager:
