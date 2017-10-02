@@ -22,8 +22,18 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm < ManageIQ::Providers::Infra
     end
   end
 
-  supports_not :publish
   supports_not :reset
+  supports :publish do
+    if blank? || orphaned? || archived?
+      unsupported_reason_add(:publish, _('Publish operation in not supported'))
+    elsif ext_management_system.blank?
+      unsupported_reason_add(:publish, _('The virtual machine is not associated with a provider'))
+    elsif !ext_management_system.supports_publish?
+      unsupported_reason_add(:publish, _('This feature is not supported by the api version of the provider'))
+    elsif power_state != "off"
+      unsupported_reason_add(:publish, _('The virtual machine must be down'))
+    end
+  end
 
   POWER_STATES = {
     'up'        => 'on',

@@ -135,4 +135,13 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
       _("%{description} VM Memory is larger than Memory Limit") % {:description => required_description(dlg, fld)}
     end
   end
+
+  def validate_seal_template(_field, values, _dlg, _fld, _value)
+    seal = get_value(values[:seal])
+    return nil unless seal
+
+    if get_source_vm.platform == 'windows'
+      _("Template sealing is supported only for non-Windows OS.")
+    end
+  end
 end
