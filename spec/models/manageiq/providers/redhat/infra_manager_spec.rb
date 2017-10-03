@@ -409,4 +409,45 @@ describe ManageIQ::Providers::Redhat::InfraManager do
       described_class.raw_connect(options)
     end
   end
+
+  context "network manager validations" do
+    let(:api_version) { "4.2" }
+
+    before do
+      @ems = FactoryGirl.build(:ems_redhat_with_ensure_managers, :api_version => api_version)
+      @provider = double(:authentication_url => 'https://hostname.usersys.redhat.com:35357/v2.0')
+      @providers = double("providers", :sort_by => [@provider], :first => @provider)
+      allow(@ems).to receive(:ovirt_services).and_return(double(:collect_external_network_providers => @providers))
+
+      @ems.save
+    end
+
+    it "does not create orphaned network_manager" do
+      expect(ExtManagementSystem.count).to eq(2)
+      same_ems = ExtManagementSystem.find(@ems.id)
+      allow(same_ems).to receive(:ovirt_services).and_return(double(:collect_external_network_providers => @providers))
+
+      @ems.destroy
+      expect(ExtManagementSystem.count).to eq(0)
+
+      same_ems.hostname = "dummy-mandatory"
+      same_ems.save!
+      expect(ExtManagementSystem.count).to eq(0)
+    end
+
+    context "network manager url is valid" do
+      it "returns the correct hostname" do
+        expect(@ems.network_manager.hostname).to eq "hostname.usersys.redhat.com"
+      end
+      it "returns the correct port" do
+        expect(@ems.network_manager.port).to eq(35357)
+      end
+      it "returns the correct version" do
+        expect(@ems.network_manager.api_version).to eq("v2")
+      end
+      it "returns the correct security protocol" do
+        expect(@ems.network_manager.security_protocol).to eq("ssl")
+      end
+    end
+  end
 end

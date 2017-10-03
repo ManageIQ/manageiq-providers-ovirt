@@ -1,13 +1,21 @@
 class ManageIQ::Providers::Redhat::Builder
   class << self
     def build_inventory(ems, target)
-      if target.kind_of? ManagerRefresh::TargetCollection
+      if target.kind_of?(ManagerRefresh::TargetCollection)
         inventory(
           ems,
           target,
           ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection,
           ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection,
           [parser]
+        )
+      elsif target.kind_of?(ManageIQ::Providers::Redhat::NetworkManager)
+        inventory(
+          ems,
+          target,
+          ManageIQ::Providers::Redhat::Inventory::Collector::NetworkManager,
+          ManageIQ::Providers::Redhat::Inventory::Persister::NetworkManager,
+          [ManageIQ::Providers::Redhat::Inventory::Parser::NetworkManager]
         )
       else
         # Fallback to ems refresh or full refresh
