@@ -304,6 +304,10 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       nic && nic[:mac] && nic[:mac][:address]
     end
 
+    def collect_external_network_providers
+      # Return nothing
+    end
+
     private
 
     #

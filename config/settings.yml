@@ -11,8 +11,19 @@
       :open_timeout: 1.minute
     :blacklisted_event_names: []
   :ems_ovirt:
+    :ems_network:
+      :refresh:
+        :inventory_object_refresh: true
     :event_handling:
       :event_groups:
+        :network:
+          :critical:
+          - network.create.end
+          - network.delete.end
+          - network.update.end
+          - subnet.create.end
+          - subnet.delete.end
+          - subnet.update.end
     :connection_manager:
       :purge_interval: 1.hour
 :http_proxy:
@@ -33,8 +44,21 @@
     :event_catcher:
       :event_catcher_redhat:
         :poll: 15.seconds
+      :event_catcher_redhat_network:
+        :poll: 15.seconds
+        :topics:
+          :neutron: "notifications.*"
+        :duration: 10.seconds
+        :capacity: 50
+        :amqp_port: 5672
+        :amqp_heartbeat: 30
+        :amqp_recovery_attempts: 4
+        :ceilometer:
+          :event_types_regex: '\A(firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn)'
     :queue_worker_base:
       :ems_metrics_collector_worker:
         :ems_metrics_collector_worker_redhat: {}
+        :ems_metrics_collector_worker_redhat_network: {}
       :ems_refresh_worker:
         :ems_refresh_worker_redhat: {}
+        :ems_refresh_worker_redhat_network: {}

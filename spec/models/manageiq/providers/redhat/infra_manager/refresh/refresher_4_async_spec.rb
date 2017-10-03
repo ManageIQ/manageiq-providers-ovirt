@@ -1,11 +1,15 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   before(:each) do
     _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-    @ems = FactoryGirl.create(:ems_redhat, :zone => zone, :hostname => "localhost", :ipaddress => "localhost",
+    @ems = FactoryGirl.build(:ems_redhat_with_ensure_managers, :zone => zone, :hostname => "localhost", :ipaddress => "localhost",
                               :port => 8443)
+    @ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4
+    allow_any_instance_of(@ovirt_service)
+      .to receive(:collect_external_network_providers).and_return(load_response_mock_for('external_network_providers'))
     @ems.update_authentication(:default => {:userid => "admin@internal", :password => "123456"})
     @ems.default_endpoint.verify_ssl = OpenSSL::SSL::VERIFY_NONE
     allow(@ems).to(receive(:supported_api_versions).and_return(%w(3 4)))
+    @ems.save
     stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
     allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).and_call_original
     allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).with(kind_of(Hash)) do |opts|
@@ -22,12 +26,19 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       .and_return(OpenStruct.new(:version_string => '4.2.0_master.')))
   end
 
+  require 'yaml'
+  def load_response_mock_for(filename)
+    prefix = described_class.name.underscore
+    YAML.load_file(File.join('spec', 'models', prefix, 'response_yamls', filename + '.yml'))
+  end
+
   it "will perform a full refresh on v4.1" do
     EmsRefresh.refresh(@ems)
     @ems.reload
 
     assert_table_counts(3)
     assert_ems
+    assert_network_manager
     assert_specific_cluster
     assert_specific_storage
     assert_specific_host
@@ -38,7 +49,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   end
 
   def assert_table_counts(_lan_number)
-    expect(ExtManagementSystem.count).to eq(1)
+    expect(ExtManagementSystem.count).to eq(2)
     expect(EmsFolder.count).to eq(7)
     expect(EmsCluster.count).to eq(3)
     expect(Host.count).to eq(3)
@@ -84,6 +95,18 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(@ems.miq_templates.size).to eq(3)
 
     expect(@ems.customization_specs.size).to eq(0)
+  end
+
+  def assert_network_manager
+    @network_manager = ExtManagementSystem.find_by(:type => 'ManageIQ::Providers::Redhat::NetworkManager')
+    expect(@network_manager).to have_attributes(
+      :name              => @ems.name + " Network Manager",
+      :hostname          => "localhost",
+      :port              => 35357,
+      :api_version       => "v2",
+      :security_protocol => "non-ssl",
+      :zone_id           => @ems.zone_id
+    )
   end
 
   def assert_specific_cluster

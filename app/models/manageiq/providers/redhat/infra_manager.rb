@@ -15,8 +15,58 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   include_concern :ApiIntegration
   include_concern :VmImport
 
+  has_many :cloud_tenants, :foreign_key => :ems_id, :dependent => :destroy
+
+  include HasNetworkManagerMixin
+
   supports :provisioning
   supports :refresh_new_target
+
+  before_save :ensure_managers
+
+  def ensure_network_manager
+    providers = ovirt_services.collect_external_network_providers
+
+    unless providers.blank?
+      providers = providers.sort_by(&:name)
+      auth_url = providers.first.authentication_url
+    end
+
+    if auth_url
+      if network_manager.nil?
+        ems_was_removed = false
+
+        if id # before update
+          ems = ExtManagementSystem.find_by(:id => id)
+          ems_was_removed = ems.nil? || !ems.enabled
+        end
+
+        unless ems_was_removed
+          build_network_manager(:type => 'ManageIQ::Providers::Redhat::NetworkManager')
+        end
+      end
+
+      if network_manager
+        populate_network_manager_connectivity(auth_url)
+      end
+    elsif network_manager
+      network_manager.orchestrate_destroy
+    end
+  end
+
+  def populate_network_manager_connectivity(auth_url)
+    uri = URI.parse(auth_url)
+    network_manager.hostname = uri.host
+    network_manager.port = uri.port
+
+    network_manager.api_version = uri.path.split('/').last.split('.').first
+
+    if uri.instance_of?(URI::HTTPS)
+      network_manager.security_protocol = "ssl"
+    elsif uri.instance_of?(URI::HTTP)
+      network_manager.security_protocol = "non-ssl"
+    end
+  end
 
   def refresher
     Refresh::RefresherBuilder.new(self).build
