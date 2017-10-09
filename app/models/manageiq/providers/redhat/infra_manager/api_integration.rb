@@ -86,7 +86,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     probe_results.map(&:version) if probe_results
   rescue => error
     _log.error("Error while probing supported api versions #{error}")
-    []
+    raise
   end
 
   def supports_the_api_version?(version)
