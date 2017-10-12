@@ -14,7 +14,7 @@ module ManageIQ::Providers::Redhat::InfraManager::VmOrTemplateShared::Scanning
     require 'MiqVm/MiqRhevmVm'
 
     log_pref = "MIQ(#{self.class.name}##{__method__})"
-    vm_name  = File.uri_to_local_path(ost.args[0])
+    vm_name  = ManageIQ::Smartstate::Util.uri_to_local_path(ost.args[0])
     $log.debug "#{log_pref} VM = #{vm_name}"
 
     args1 = ost.args[1]
