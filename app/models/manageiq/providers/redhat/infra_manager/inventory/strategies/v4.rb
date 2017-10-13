@@ -316,9 +316,9 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
 
     class TemplatePreloadedAttributesDecorator < SimpleDelegator
       attr_reader :disks
-      def initialize(template, connection, preloaded_disks = nil, future_disk_attachments = nil)
+      def initialize(template, connection, preloaded_disks = nil)
         @obj = template
-        @disks = AttachedDisksFetcher.get_attached_disks_from_futures(template, connection, preloaded_disks, future_disk_attachments[template.id])
+        @disks = AttachedDisksFetcher.get_attached_disks_from_futures(template, connection, preloaded_disks, nil)
         super(template)
       end
     end
