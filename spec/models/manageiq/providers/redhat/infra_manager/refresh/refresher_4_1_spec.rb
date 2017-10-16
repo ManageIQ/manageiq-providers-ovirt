@@ -334,7 +334,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :guest_os_full_name   => nil,
       :vmotion_enabled      => nil,
       :cpu_usage            => nil,
-      :memory_usage         => nil
+      :memory_usage         => nil,
+      :serial_number        => "30353036-3837-4247-3831-303946353235"
     )
 
     expect(@host.hardware.networks.size).to eq(1)
