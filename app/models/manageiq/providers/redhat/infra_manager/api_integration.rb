@@ -85,8 +85,12 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     probe_results = OvirtSDK4::Probe.probe(probe_args)
     probe_results.map(&:version) if probe_results
   rescue => error
-    _log.error("Error while probing supported api versions #{error}")
-    raise
+    # Note that errors when trying to find the supported API versions are perfectly normal, in particular authorization
+    # errors are expected, as in many situations, for example during discovery, the user name and the password aren't
+    # yet known. In these situations we *must* return an empty array, to indicate to the caller that it wasn't possible
+    # to determine the supported API versions.
+    _log.info("Can't determine the API versions supported by the server: #{error}")
+    []
   end
 
   def supports_the_api_version?(version)
@@ -226,7 +230,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   end
 
   def highest_supported_api_version
-    supported_api_versions.sort.last
+    supported_api_versions.sort.last || '3'
   end
 
   def highest_allowed_api_version
