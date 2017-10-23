@@ -4,6 +4,8 @@ require 'resolv'
 module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   extend ActiveSupport::Concern
 
+  include SupportedApisMixin
+
   require 'ovirtsdk4'
   require 'ovirt'
 
@@ -63,31 +65,9 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     true
   end
 
-  def supported_api_versions
-    supported_api_versions_from_cache
-  end
-
-  def supported_api_versions_from_cache
-    cacher = Cacher.new(cache_key)
-    current_cache_val = cacher.read
-    force = current_cache_val.blank?
-    cacher.fetch_fresh(last_refresh_date, :force => force) { supported_api_versions_from_sdk }
-  end
-
-  def cache_key
-    "REDHAT_EMS_CACHE_KEY_#{id}"
-  end
-
-  def supported_api_versions_from_sdk
-    username = authentication_userid(:basic)
-    password = authentication_password(:basic)
-    probe_args = { :host => hostname, :port => port, :username => username, :password => password, :insecure => true }
-    probe_results = OvirtSDK4::Probe.probe(probe_args)
-    probe_results.map(&:version) if probe_results
-  rescue => error
-    _log.error("Error while probing supported api versions #{error}")
-    raise
-  end
+  #def supported_api_versions
+    #ManageIQ::Providers::Redhat::InfraManager::SupportedApisDetector.new(self).supported_api_versions
+  #end
 
   def supports_the_api_version?(version)
     if supported_api_versions.empty?
@@ -376,36 +356,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     end
   end
 
-  class Cacher
-    attr_reader :key
-
-    def initialize(key)
-      @key = key
-    end
-
-    def fetch_fresh(last_refresh_time, options)
-      force = options[:force] || stale_cache?(last_refresh_time)
-      res = Rails.cache.fetch(key, :force => force) { build_entry { yield } }
-      res[:value]
-    end
-
-    def read
-      res = Rails.cache.read(key)
-      res && res[:value]
-    end
-
-    private
-
-    def build_entry
-      {:created_at => Time.now.utc, :value => yield}
-    end
-
-    def stale_cache?(last_refresh_time)
-      current_val = Rails.cache.read(key)
-      return true unless current_val && current_val[:created_at] && last_refresh_time
-      last_refresh_time > current_val[:created_at]
-    end
-  end
 
   private
 
