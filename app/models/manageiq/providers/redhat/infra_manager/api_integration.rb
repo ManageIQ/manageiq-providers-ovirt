@@ -4,6 +4,8 @@ require 'resolv'
 module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   extend ActiveSupport::Concern
 
+  include SupportedApisMixin
+
   require 'ovirtsdk4'
   require 'ovirt'
 
@@ -17,7 +19,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
   def connect(options = {})
     raise "no credentials defined" if missing_credentials?(options[:auth_type])
-    version = options[:version] || highest_allowed_api_version
+    version = options[:version] || highest_allowed_api_version(use_queue: options[:use_queue_for_probing_apis])
     unless options[:skip_supported_api_validation] || supports_the_api_version?(version)
       raise "version #{version} of the api is not supported by the provider"
     end
@@ -61,32 +63,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
   def supports_port?
     true
-  end
-
-  def supported_api_versions
-    supported_api_versions_from_cache
-  end
-
-  def supported_api_versions_from_cache
-    cacher = Cacher.new(cache_key)
-    current_cache_val = cacher.read
-    force = current_cache_val.blank?
-    cacher.fetch_fresh(last_refresh_date, :force => force) { supported_api_versions_from_sdk }
-  end
-
-  def cache_key
-    "REDHAT_EMS_CACHE_KEY_#{id}"
-  end
-
-  def supported_api_versions_from_sdk
-    username = authentication_userid(:basic)
-    password = authentication_password(:basic)
-    probe_args = { :host => hostname, :port => port, :username => username, :password => password, :insecure => true }
-    probe_results = OvirtSDK4::Probe.probe(probe_args)
-    probe_results.map(&:version) if probe_results
-  rescue => error
-    _log.error("Error while probing supported api versions #{error}")
-    raise
   end
 
   def supports_the_api_version?(version)
@@ -136,7 +112,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   end
 
   def verify_credentials_for_rhevm(options = {})
-    with_provider_connection(options) { |connection| connection.test(true) }
+    with_provider_connection(options.merge(use_queue_for_probing_apis: true)) { |connection| connection.test(true) }
   rescue SocketError, Errno::EHOSTUNREACH, Errno::ENETUNREACH
     _log.warn($ERROR_INFO)
     raise MiqException::MiqUnreachableError, $ERROR_INFO
@@ -225,13 +201,13 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     connection.close
   end
 
-  def highest_supported_api_version
-    supported_api_versions.sort.last
+  def highest_supported_api_version(use_queue: false)
+    supported_api_versions(use_queue: use_queue).sort.last
   end
 
-  def highest_allowed_api_version
+  def highest_allowed_api_version(use_queue: false)
     return '3' unless use_ovirt_sdk?
-    highest_supported_api_version
+    highest_supported_api_version(use_queue: use_queue)
   end
 
   def use_ovirt_sdk?
@@ -376,36 +352,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     end
   end
 
-  class Cacher
-    attr_reader :key
-
-    def initialize(key)
-      @key = key
-    end
-
-    def fetch_fresh(last_refresh_time, options)
-      force = options[:force] || stale_cache?(last_refresh_time)
-      res = Rails.cache.fetch(key, :force => force) { build_entry { yield } }
-      res[:value]
-    end
-
-    def read
-      res = Rails.cache.read(key)
-      res && res[:value]
-    end
-
-    private
-
-    def build_entry
-      {:created_at => Time.now.utc, :value => yield}
-    end
-
-    def stale_cache?(last_refresh_time)
-      current_val = Rails.cache.read(key)
-      return true unless current_val && current_val[:created_at] && last_refresh_time
-      last_refresh_time > current_val[:created_at]
-    end
-  end
 
   private
 
