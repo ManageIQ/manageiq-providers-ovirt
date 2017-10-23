@@ -4,6 +4,8 @@ require 'resolv'
 module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   extend ActiveSupport::Concern
 
+  include SupportedApisMixin
+
   require 'ovirtsdk4'
   require 'ovirt'
 
@@ -61,43 +63,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
   def supports_port?
     true
-  end
-
-  def supported_api_versions
-    supported_api_versions_from_cache
-  end
-
-  def supported_api_versions_from_cache
-    cacher = Cacher.new(cache_key)
-    current_cache_val = cacher.read
-    force = current_cache_val.blank?
-    cacher.fetch_fresh(last_refresh_date, :force => force) { supported_api_versions_from_sdk }
-  end
-
-  def cache_key
-    "REDHAT_EMS_CACHE_KEY_#{id}"
-  end
-
-  def supported_api_versions_from_sdk
-    username = authentication_userid(:basic)
-    password = authentication_password(:basic)
-    probe_args = { :host => hostname, :port => port, :username => username, :password => password, :insecure => true }
-    probe_results = OvirtSDK4::Probe.probe(probe_args)
-    probe_results.map(&:version) if probe_results
-  rescue => error
-    # Note that errors when trying to find the supported API versions are perfectly normal, in particular authorization
-    # errors are expected, as in many situations, for example during discovery, the user name and the password aren't
-    # yet known. In these situations we *must* return an empty array, to indicate to the caller that it wasn't possible
-    # to determine the supported API versions.
-    _log.info("Can't determine the API versions supported by the server: #{error}")
-    []
-  end
-
-  def supports_the_api_version?(version)
-    if supported_api_versions.empty?
-      raise MiqException::MiqUnreachableError, "Not able to connect to the server."
-    end
-    supported_api_versions.map(&:to_s).include?(version.to_s)
   end
 
   def supported_auth_types
@@ -227,15 +192,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     yield service
   ensure
     connection.close
-  end
-
-  def highest_supported_api_version
-    supported_api_versions.sort.last || '3'
-  end
-
-  def highest_allowed_api_version
-    return '3' unless use_ovirt_sdk?
-    highest_supported_api_version
   end
 
   def use_ovirt_sdk?
@@ -380,36 +336,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     end
   end
 
-  class Cacher
-    attr_reader :key
-
-    def initialize(key)
-      @key = key
-    end
-
-    def fetch_fresh(last_refresh_time, options)
-      force = options[:force] || stale_cache?(last_refresh_time)
-      res = Rails.cache.fetch(key, :force => force) { build_entry { yield } }
-      res[:value]
-    end
-
-    def read
-      res = Rails.cache.read(key)
-      res && res[:value]
-    end
-
-    private
-
-    def build_entry
-      {:created_at => Time.now.utc, :value => yield}
-    end
-
-    def stale_cache?(last_refresh_time)
-      current_val = Rails.cache.read(key)
-      return true unless current_val && current_val[:created_at] && last_refresh_time
-      last_refresh_time > current_val[:created_at]
-    end
-  end
 
   private
 
