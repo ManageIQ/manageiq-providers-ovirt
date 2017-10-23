@@ -14,6 +14,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   require_nested  :Vm
   include_concern :ApiIntegration
   include_concern :VmImport
+  include_concern :AdminUI
 
   has_many :cloud_tenants, :foreign_key => :ems_id, :dependent => :destroy
 
@@ -21,6 +22,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
 
   supports :provisioning
   supports :refresh_new_target
+  supports :admin_ui
 
   def ensure_managers
     return unless enabled
