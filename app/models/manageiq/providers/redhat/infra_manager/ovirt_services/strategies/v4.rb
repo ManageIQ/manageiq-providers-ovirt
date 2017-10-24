@@ -229,10 +229,8 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       end
     end
 
-    def vm_start(vm, cloud_init)
-      opts = {}
+    def vm_start(vm, opts = {})
       vm.with_provider_object(VERSION_HASH) do |rhevm_vm|
-        opts = {:use_cloud_init => cloud_init} if cloud_init
         rhevm_vm.start(opts)
       end
     rescue OvirtSDK4::Error
@@ -457,6 +455,14 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
           :storage_domain => args[:storage] && {:id => args[:storage].id}
         }.compact
         OvirtSDK4::Template.new(options)
+      end
+
+      def update_sysprep!(content)
+        update(OvirtSDK4::Vm.new(
+                 :initialization => {
+                   :custom_script => content
+                 }
+        ))
       end
     end
 

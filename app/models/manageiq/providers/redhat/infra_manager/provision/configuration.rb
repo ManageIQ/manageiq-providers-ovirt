@@ -19,6 +19,15 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration
     end
   end
 
+  def configure_sysprep
+    content = get_option(:sysprep_upload_text)
+
+    return unless content
+    with_provider_destination { |d| d.update_sysprep!(content) }
+
+    phase_context[:boot_with_sysprep] = true
+  end
+
   def configure_container
     vm.with_provider_object(:version => vm.ext_management_system.highest_allowed_api_version) do |rhevm_vm|
       configure_container_description(rhevm_vm)
@@ -27,7 +36,13 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration
       configure_cpu(rhevm_vm)
       configure_host_affinity(rhevm_vm)
       configure_network_adapters
-      configure_cloud_init
+
+      sysprep_option = get_option(:sysprep_enabled)
+      if sysprep_option == 'file'
+        configure_sysprep
+      elsif sysprep_option == 'fields'
+        configure_cloud_init
+      end
     end
   end
 
