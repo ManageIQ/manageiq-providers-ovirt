@@ -1,14 +1,13 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   before(:each) do
     guid, server, zone = EvmSpecHelper.create_guid_miq_server_zone
-    @ems = FactoryGirl.build(:ems_redhat_with_ensure_managers, :zone => zone, :hostname => "localhost", :ipaddress => "localhost",
+    @ems = FactoryGirl.create(:ems_redhat, :zone => zone, :hostname => "localhost", :ipaddress => "localhost",
                               :port => 8443)
     @ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4
     allow_any_instance_of(@ovirt_service)
       .to receive(:collect_external_network_providers).and_return(load_response_mock_for('external_network_providers'))
     @ems.update_authentication(:default => {:userid => "admin@internal", :password => "123456"})
     allow(@ems).to receive(:supported_api_versions).and_return(%w(3 4))
-    @ems.save
     stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
   end
 
@@ -159,7 +158,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
     expect(Relationship.count).to eq(32)
 
-    expect(MiqQueue.count).to eq(13)
+    expect(MiqQueue.count).to eq(14)
   end
 
   def assert_ems

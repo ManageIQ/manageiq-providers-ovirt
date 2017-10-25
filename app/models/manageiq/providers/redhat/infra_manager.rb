@@ -22,7 +22,16 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   supports :provisioning
   supports :refresh_new_target
 
-  before_save :ensure_managers
+  def ensure_managers
+    return unless enabled
+    ensure_network_manager
+    if network_manager
+      network_manager.name = "#{name} Network Manager"
+      network_manager.zone_id = zone_id
+      network_manager.provider_region = provider_region
+      network_manager.save!
+    end
+  end
 
   def ensure_network_manager
     providers = ovirt_services.collect_external_network_providers

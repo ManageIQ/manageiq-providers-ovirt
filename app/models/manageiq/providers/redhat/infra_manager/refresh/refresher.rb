@@ -37,6 +37,8 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
         [target, data]
       end
 
+      ems.ensure_managers
+
       targets_with_data
     end
 
