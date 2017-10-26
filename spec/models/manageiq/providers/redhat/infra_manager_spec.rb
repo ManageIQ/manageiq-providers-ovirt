@@ -191,16 +191,64 @@ describe ManageIQ::Providers::Redhat::InfraManager do
 
   context "api versions" do
     require 'ovirtsdk4'
+
     let(:ems) { FactoryGirl.create(:ems_redhat_with_authentication) }
-    subject(:supported_api_versions) { ems.supported_api_versions }
-    context "#supported_api_versions" do
-      before(:each) do
-        Rails.cache.delete(ems.cache_key)
-        Rails.cache.write(ems.cache_key, cached_api_versions)
+    context 'when parsing database api_version' do
+      let(:ems) { FactoryGirl.create(:ems_redhat, :api_version => api_version) }
+      subject(:supported_api_versions) { ems.supported_api_versions }
+      context "version 4.2" do
+        let(:api_version) { "4.2.0" }
+        it 'returns versions 3 and 4' do
+          expect(supported_api_versions).to match_array(%w(3 4))
+        end
       end
 
-      context "when no cached supported_api_versions" do
-        let(:cached_api_versions) { nil }
+      context "version 3.6.1" do
+        let(:api_version) { "3.6.1" }
+        it 'returns versions 3' do
+          expect(supported_api_versions).to match_array(%w(3))
+        end
+      end
+
+      context "version 4.2.0-0.0.master.20170917124606.gita804ef7.el7.centos" do
+        let(:api_version) { "4.2.0-0.0.master.20170917124606.gita804ef7.el7.centos" }
+        it 'returns versions 3 and 4' do
+          expect(supported_api_versions).to match_array(%w(3 4))
+        end
+      end
+
+      context "version 4.2.1.3" do
+        let(:api_version) { "4.2.1.3" }
+        it 'returns versions 3 and 4' do
+          expect(supported_api_versions).to match_array(%w(3 4))
+        end
+      end
+
+      context "version 4.2.1a" do
+        let(:api_version) { "4.2.1a" }
+        it 'returns versions 3 and 4' do
+          expect(supported_api_versions).to match_array(%w(3 4))
+        end
+      end
+
+      context "version 4.3" do
+        let(:api_version) { "4.3" }
+        it 'returns versions 3 and 4' do
+          expect(supported_api_versions).to match_array(%w(3 4))
+        end
+      end
+
+      context "version 5.5" do
+        let(:api_version) { "5.5" }
+        it 'returns empty array' do
+          expect(supported_api_versions).to match_array([])
+        end
+      end
+    end
+
+    context 'when probing provider directly' do
+      subject(:supported_api_versions) { ems.supported_api_versions }
+      context "#supported_api_versions" do
         it 'calls the OvirtSDK4::Probe.probe' do
           expect(OvirtSDK4::Probe).to receive(:probe).and_return([])
           supported_api_versions
@@ -211,57 +259,6 @@ describe ManageIQ::Providers::Redhat::InfraManager do
             .and_return([OvirtSDK4::ProbeResult.new(:version => '3'),
                          OvirtSDK4::ProbeResult.new(:version => '4')])
           expect(supported_api_versions).to match_array(%w(3 4))
-        end
-      end
-
-      context "when cache of supported_api_versions is stale" do
-        let(:cached_api_versions) do
-          {
-            :created_at => Time.now.utc,
-            :value      => [3]
-          }
-        end
-
-        before(:each) do
-          allow(ems).to receive(:last_refresh_date)
-            .and_return(cached_api_versions[:created_at] + 1.day)
-        end
-
-        it 'calls the OvirtSDK4::Probe.probe' do
-          expect(OvirtSDK4::Probe).to receive(:probe).and_return([])
-          supported_api_versions
-        end
-      end
-
-      context "when cache of supported_api_versions available" do
-        let(:cached_api_versions) do
-          {
-            :created_at => Time.now.utc,
-            :value      => [3]
-          }
-        end
-
-        before(:each) do
-          allow(ems).to receive(:last_refresh_date)
-            .and_return(cached_api_versions[:created_at] - 1.day)
-        end
-
-        it 'returns from cache' do
-          expect(supported_api_versions).to match_array([3])
-        end
-
-        context "when the stored value is empty" do
-          let(:cached_api_versions) do
-            {
-              :created_at => Time.now.utc,
-              :value      => []
-            }
-          end
-
-          it "fetches new values by calling the probe" do
-            expect(OvirtSDK4::Probe).to receive(:probe).and_return([])
-            supported_api_versions
-          end
         end
       end
     end
