@@ -2,7 +2,6 @@
 - description: Transform VM
   buttons: submit,cancel
   label: Transform VM
-  blueprint_id:
   dialog_tabs:
   - description:
     display: edit
