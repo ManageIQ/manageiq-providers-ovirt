@@ -463,7 +463,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
   def hardware_guest_devices(persister_hardware, vm, addresses)
     unless addresses.to_a.empty?
-      network = persister.networks.lazy_find(
+      network = persister.networks.lazy_find_by(
         :hardware  => persister_hardware,
         :ipaddress => addresses[0]
       )
