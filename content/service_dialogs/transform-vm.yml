@@ -19,7 +19,7 @@
       position: 0
       dialog_fields:
       - name: tag_category
-        description: Tag category.
+        description: Tag category
         data_type: string
         notes:
         notes_display:
@@ -57,7 +57,7 @@
           ae_message:
           ae_attributes: {}
       - name: tag_name
-        description: Tag name.
+        description: Tag name
         data_type: string
         notes:
         notes_display:
