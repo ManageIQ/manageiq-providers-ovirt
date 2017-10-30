@@ -147,6 +147,7 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
           :description,
           :create_time,
           :current,
+          :vm_or_template
         ]
       }
 

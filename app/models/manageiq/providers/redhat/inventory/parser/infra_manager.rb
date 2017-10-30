@@ -359,9 +359,9 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :ems_cluster      => persister.ems_clusters.lazy_find(ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm.cluster.href)),
         :storages         => storages,
         :storage          => storages.first,
-        :snapshots        => snapshots(vm)
       )
 
+      snapshots(persister_vm, vm)
       vm_hardware(persister_vm, vm, disks, template)
       operating_systems(persister_vm, vm)
       custom_attributes(persister_vm, vm)
@@ -487,7 +487,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     end
   end
 
-  def snapshots(vm)
+  def snapshots(persister_vm, vm)
     snaps = []
     return snaps if vm.try(:snapshots).nil?
 
@@ -500,13 +500,14 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       name = "Active Image" if name[0, 13] == '_ActiveImage_'
 
       snaps << persister.snapshots.find_or_build(:uid => snapshot.id).assign_attributes(
-        :uid_ems     => snapshot.id,
-        :uid         => snapshot.id,
-        :parent_uid  => parent_id,
-        :name        => name,
-        :description => description,
-        :create_time => snapshot.date.getutc,
-        :current     => idx == snapshots.length - 1
+        :uid_ems        => snapshot.id,
+        :uid            => snapshot.id,
+        :parent_uid     => parent_id,
+        :name           => name,
+        :description    => description,
+        :create_time    => snapshot.date.getutc,
+        :current        => idx == snapshots.length - 1,
+        :vm_or_template => persister_vm
       )
       parent_id = snapshot.id
     end
