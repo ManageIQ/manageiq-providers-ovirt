@@ -17,6 +17,82 @@
       display_method_options:
       position: 0
       dialog_fields:
+      - name: tag_category
+        description: Tag category
+        data_type: string
+        notes:
+        notes_display:
+        display: edit
+        display_method:
+        display_method_options: {}
+        required: false
+        required_method:
+        required_method_options: {}
+        default_value: ''
+        values: []
+        values_method:
+        values_method_options: {}
+        options:
+          :sort_by: :value
+        label: Tag Category
+        position: 0
+        validator_type:
+        validator_rule:
+        reconfigurable:
+        dynamic: true
+        show_refresh_button:
+        load_values_on_init:
+        read_only:
+        auto_refresh:
+        trigger_auto_refresh: true
+        visible: true
+        type: DialogFieldDropDownList
+        resource_action:
+          action:
+          resource_type: DialogField
+          ae_namespace: Infrastructure/VM/Transform
+          ae_class: Import
+          ae_instance: list_tag_categories
+          ae_message:
+          ae_attributes: {}
+      - name: tag_name
+        description: Tag name
+        data_type: string
+        notes:
+        notes_display:
+        display: edit
+        display_method:
+        display_method_options: {}
+        required: false
+        required_method:
+        required_method_options: {}
+        default_value: ''
+        values: []
+        values_method:
+        values_method_options: {}
+        options:
+          :sort_by: :value
+        label: Tag Name
+        position: 1
+        validator_type:
+        validator_rule:
+        reconfigurable:
+        dynamic: true
+        show_refresh_button:
+        load_values_on_init:
+        read_only:
+        auto_refresh: true
+        trigger_auto_refresh: false
+        visible: true
+        type: DialogFieldDropDownList
+        resource_action:
+          action:
+          resource_type: DialogField
+          ae_namespace: Infrastructure/VM/Transform
+          ae_class: Import
+          ae_instance: list_tag_names
+          ae_message:
+          ae_attributes: {}
       - name: name
         description: Name of the newly created virtual machine
         data_type:
@@ -25,7 +101,7 @@
         display: edit
         display_method:
         display_method_options: {}
-        required: true
+        required: false
         required_method:
         required_method_options: {}
         default_value: ''
@@ -35,11 +111,11 @@
         options:
           :protected: false
         label: Name
-        position: 0
+        position: 2
         validator_type:
         validator_rule:
         reconfigurable:
-        dynamic: false
+        dynamic: true
         show_refresh_button:
         load_values_on_init:
         read_only:
@@ -50,9 +126,9 @@
         resource_action:
           action:
           resource_type: DialogField
-          ae_namespace:
-          ae_class:
-          ae_instance:
+          ae_namespace: Infrastructure/VM/Transform
+          ae_class: Import
+          ae_instance: show_name
           ae_message:
           ae_attributes: {}
       - name: provider
@@ -74,7 +150,7 @@
         options:
           :sort_by: :value
         label: Provider
-        position: 1
+        position: 3
         validator_type:
         validator_rule:
         reconfigurable:
@@ -112,7 +188,7 @@
         options:
           :sort_by: :value
         label: Cluster
-        position: 2
+        position: 4
         validator_type:
         validator_rule:
         reconfigurable: false
@@ -150,7 +226,7 @@
         options:
           :sort_by: :value
         label: Storage
-        position: 3
+        position: 5
         validator_type:
         validator_rule:
         reconfigurable:
@@ -187,7 +263,7 @@
         values_method_options: {}
         options: {}
         label: Thin provisioning
-        position: 4
+        position: 6
         validator_type:
         validator_rule:
         reconfigurable:
@@ -224,7 +300,7 @@
         values_method_options: {}
         options: {}
         label: Install Windows Drivers
-        position: 5
+        position: 7
         validator_type:
         validator_rule:
         reconfigurable:
@@ -263,7 +339,7 @@
           :force_multi_value: false
           :sort_by: :description
         label: Drivers
-        position: 6
+        position: 8
         validator_type:
         validator_rule:
         reconfigurable:
