@@ -17,16 +17,40 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "\n"
 
+msgid "\"Memory Limit is supported for RHV 4.1 and above. Current provider version is #{ems.api_version}.\""
+msgstr ""
+
+msgid "%{description} VM Memory is larger than Memory Limit"
+msgstr ""
+
+msgid "<Empty>"
+msgstr ""
+
 msgid "Cannot import archived VMs"
 msgstr ""
 
-msgid "Cannot import to a RHEV provider of version < 4.0"
+msgid "Cannot import to a RHEV provider of version < 4.1.5"
 msgstr ""
 
-msgid "Data Store does not exist, unable to add disk"
+msgid "Datastore does not exist, unable to add disk"
+msgstr ""
+
+msgid "Delete is not allowed for a snapshot that is the active one"
+msgstr ""
+
+msgid "Error while configuring VM network."
+msgstr ""
+
+msgid "Error while importing the VM."
+msgstr ""
+
+msgid "Memory Limit is supported only when using ovirt-engine-sdk (To enable, set: ':use_ovirt_engine_sdk: true' in settings.yml)."
 msgstr ""
 
 msgid "Perform SmartState Analysis on this VM"
+msgstr ""
+
+msgid "Publish operation in not supported"
 msgstr ""
 
 msgid "Removing all snapshots is currently not supported"
@@ -47,6 +71,12 @@ msgstr ""
 msgid "Source provider must be of type Vmware"
 msgstr ""
 
+msgid "Template sealing is supported only for non-Windows OS."
+msgstr ""
+
+msgid "The Host is not connected to an active provider"
+msgstr ""
+
 msgid "The VM is not powered on"
 msgstr ""
 
@@ -54,6 +84,9 @@ msgid "The provider does not support reconfigure disks"
 msgstr ""
 
 msgid "The virtual machine is not associated with a provider"
+msgstr ""
+
+msgid "The virtual machine must be down"
 msgstr ""
 
 msgid "This feature is not supported by the api version of the provider"
