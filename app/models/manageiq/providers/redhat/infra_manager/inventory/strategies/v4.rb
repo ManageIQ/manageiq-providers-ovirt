@@ -156,6 +156,8 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
     def collect_host(uuid)
       host = connection.system_service.hosts_service.host_service(uuid).get
       [HostPreloadedAttributesDecorator.new(host, connection)]
+    rescue OvirtSDK4::Error
+      []
     end
 
     def collect_vms
