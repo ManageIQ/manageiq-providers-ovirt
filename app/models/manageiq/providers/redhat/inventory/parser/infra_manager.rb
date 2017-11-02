@@ -352,6 +352,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :name             => URI.decode(vm.name),
         :location         => "#{vm.id}.ovf",
         :template         => template,
+        :memory_limit     => extract_vm_memory_policy(vm, :max),
         :memory_reserve   => vm_memory_reserve(vm),
         :raw_power_state  => template ? "never" : vm.status,
         :boot_time        => vm.try(:start_time),
@@ -543,8 +544,12 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
   require 'ostruct'
 
-  def vm_memory_reserve(vm)
-    in_bytes = vm.dig(:memory_policy, :guaranteed)
+  def vm_memory_reserve(vm_inv)
+    extract_vm_memory_policy(vm_inv, :guaranteed)
+  end
+
+  def extract_vm_memory_policy(vm_inv, type)
+    in_bytes = vm_inv.dig(:memory_policy, type)
     in_bytes.nil? ? nil : in_bytes / Numeric::MEGABYTE
   end
 
