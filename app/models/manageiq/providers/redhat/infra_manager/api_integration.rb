@@ -251,8 +251,8 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     def raw_connect_v4(options = {})
       require 'ovirtsdk4'
 
-      # Get the timeout from the configuration:
-      timeout, = ems_timeouts(:ems_redhat, options[:service])
+      # Get the timeouts from the configuration:
+      read_timeout, open_timeout = ems_timeouts(:ems_redhat, options[:service])
 
       # The constructor of the SDK expects a list of certificates, but that list can't be empty, or contain only 'nil'
       # values, so we need to check the value passed and make a list only if it won't be empty. If it will be empty then
@@ -270,15 +270,16 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
       ManageIQ::Providers::Redhat::ConnectionManager.instance.get(
         options[:id],
-        :url      => url.to_s,
-        :username => options[:username],
-        :password => options[:password],
-        :timeout  => timeout,
-        :insecure => options[:verify_ssl] == OpenSSL::SSL::VERIFY_NONE,
-        :ca_certs => ca_certs,
-        :log      => $rhevm_log,
-        :connections => options[:connections] || ::Settings.ems.ems_redhat.connections,
-        :pipeline    => options[:pipeline] || ::Settings.ems.ems_redhat.pipeline
+        :url             => url.to_s,
+        :username        => options[:username],
+        :password        => options[:password],
+        :timeout         => read_timeout,
+        :connect_timeout => open_timeout,
+        :insecure        => options[:verify_ssl] == OpenSSL::SSL::VERIFY_NONE,
+        :ca_certs        => ca_certs,
+        :log             => $rhevm_log,
+        :connections     => options[:connections] || ::Settings.ems.ems_redhat.connections,
+        :pipeline        => options[:pipeline] || ::Settings.ems.ems_redhat.pipeline
       )
     end
 
