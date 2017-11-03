@@ -190,8 +190,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     connection = connect(:version => 4)
     service = connection.system_service.vms_service.vm_service(vm.uid_ems)
     yield service
-  ensure
-    connection.close
   end
 
   def use_ovirt_sdk?
