@@ -1,0 +1,108 @@
+---
+https://localhost:8443/ovirt-engine/api/clusters/59c8cd2d-01d6-0367-037e-0000000002f7{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <cluster href="/ovirt-engine/api/clusters/59c8cd2d-01d6-0367-037e-0000000002f7" id="59c8cd2d-01d6-0367-037e-0000000002f7">
+        <actions>
+            <link href="/ovirt-engine/api/clusters/59c8cd2d-01d6-0367-037e-0000000002f7/resetemulatedmachine" rel="resetemulatedmachine"/>
+        </actions>
+        <name>Default</name>
+        <description>The default server cluster</description>
+        <link href="/ovirt-engine/api/clusters/59c8cd2d-01d6-0367-037e-0000000002f7/networkfilters" rel="networkfilters"/>
+        <link href="/ovirt-engine/api/clusters/59c8cd2d-01d6-0367-037e-0000000002f7/networks" rel="networks"/>
+        <link href="/ovirt-engine/api/clusters/59c8cd2d-01d6-0367-037e-0000000002f7/permissions" rel="permissions"/>
+        <link href="/ovirt-engine/api/clusters/59c8cd2d-01d6-0367-037e-0000000002f7/cpuprofiles" rel="cpuprofiles"/>
+        <link href="/ovirt-engine/api/clusters/59c8cd2d-01d6-0367-037e-0000000002f7/affinitygroups" rel="affinitygroups"/>
+        <link href="/ovirt-engine/api/clusters/59c8cd2d-01d6-0367-037e-0000000002f7/glusterhooks" rel="glusterhooks"/>
+        <link href="/ovirt-engine/api/clusters/59c8cd2d-01d6-0367-037e-0000000002f7/glustervolumes" rel="glustervolumes"/>
+        <ballooning_enabled>false</ballooning_enabled>
+        <cpu>
+            <architecture>x86_64</architecture>
+            <type>Intel SandyBridge Family</type>
+        </cpu>
+        <custom_scheduling_policy_properties>
+            <property>
+                <name>HighUtilization</name>
+                <value>80</value>
+            </property>
+            <property>
+                <name>CpuOverCommitDurationMinutes</name>
+                <value>2</value>
+            </property>
+        </custom_scheduling_policy_properties>
+        <error_handling>
+            <on_error>migrate</on_error>
+        </error_handling>
+        <fencing_policy>
+            <enabled>true</enabled>
+            <skip_if_connectivity_broken>
+                <enabled>false</enabled>
+                <threshold>50</threshold>
+            </skip_if_connectivity_broken>
+            <skip_if_gluster_bricks_up>false</skip_if_gluster_bricks_up>
+            <skip_if_gluster_quorum_not_met>false</skip_if_gluster_quorum_not_met>
+            <skip_if_sd_active>
+                <enabled>false</enabled>
+            </skip_if_sd_active>
+        </fencing_policy>
+        <firewall_type>iptables</firewall_type>
+        <gluster_service>false</gluster_service>
+        <ha_reservation>false</ha_reservation>
+        <ksm>
+            <enabled>true</enabled>
+            <merge_across_nodes>true</merge_across_nodes>
+        </ksm>
+        <maintenance_reason_required>false</maintenance_reason_required>
+        <memory_policy>
+            <over_commit>
+                <percent>100</percent>
+            </over_commit>
+            <transparent_hugepages>
+                <enabled>true</enabled>
+            </transparent_hugepages>
+        </memory_policy>
+        <migration>
+            <auto_converge>inherit</auto_converge>
+            <bandwidth>
+                <assignment_method>auto</assignment_method>
+            </bandwidth>
+            <compressed>inherit</compressed>
+            <policy id="80554327-0569-496b-bdeb-fcbbf52b827b"/>
+        </migration>
+        <optional_reason>false</optional_reason>
+        <required_rng_sources>
+            <required_rng_source>urandom</required_rng_source>
+        </required_rng_sources>
+        <switch_type>legacy</switch_type>
+        <threads_as_cores>false</threads_as_cores>
+        <trusted_service>false</trusted_service>
+        <tunnel_migration>false</tunnel_migration>
+        <version>
+            <major>4</major>
+            <minor>2</minor>
+        </version>
+        <virt_service>true</virt_service>
+        <data_center href="/ovirt-engine/api/datacenters/59c8cd2d-0183-025f-035a-000000000086" id="59c8cd2d-0183-025f-035a-000000000086"/>
+        <mac_pool href="/ovirt-engine/api/macpools/58ca604b-017d-0374-0220-00000000014e" id="58ca604b-017d-0374-0220-00000000014e"/>
+        <scheduling_policy href="/ovirt-engine/api/schedulingpolicies/b4ed2332-a7ac-4d5f-9596-99a439cb2812" id="b4ed2332-a7ac-4d5f-9596-99a439cb2812"/>
+    </cluster>
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '1152'
+    correlation-id: c0f14676-f4f7-4d7f-ae98-57a238810859
+    date: Thu, 02 Nov 2017 15:45:50 GMT
+  :message:
+https://localhost:8443/ovirt-engine/api/hosts/11089411-53a2-4337-8613-7c1d411e8ae8{}GET:
+- :body:
+  :code: 404
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '0'
+    correlation-id: c0f14676-f4f7-4d7f-ae98-57a238810859
+    date: Thu, 02 Nov 2017 15:45:50 GMT
+  :message:
