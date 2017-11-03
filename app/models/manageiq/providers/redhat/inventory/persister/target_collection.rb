@@ -2,6 +2,19 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
   def initialize_inventory_collections
     add_targeted_inventory_collections
     add_remaining_inventory_collections([infra], :strategy => :local_db_find_references)
+    add_vms_dependency_collections(references(:vms))
+  end
+
+  def references(collection)
+    target.manager_refs_by_association.try(:[], collection).try(:[], :ems_ref).try(:to_a) || []
+  end
+
+  def infra
+    ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager
+  end
+
+  def add_vms_dependency_collections(manager_refs)
+    return if manager_refs.blank?
 
     add_inventory_collection(
       infra.ems_folder_children(
@@ -13,7 +26,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
         }
       )
     )
-
     add_inventory_collection(
       infra.ems_clusters_children(
         :dependency_attributes => {
@@ -22,7 +34,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
         }
       )
     )
-
     add_inventory_collection(
       infra.snapshot_parent(
         :dependency_attributes => {
@@ -30,14 +41,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
         }
       )
     )
-  end
-
-  def references(collection)
-    target.manager_refs_by_association.try(:[], collection).try(:[], :ems_ref).try(:to_a) || []
-  end
-
-  def infra
-    ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager
   end
 
   def add_targeted_inventory_collections
@@ -209,7 +212,9 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
     )
     add_inventory_collection(
       infra.host_switches(
-        :arel     => manager.host_switches.where(:ems_ref => manager_refs),
+        :arel     => HostSwitch.joins(:host).where(
+          'hosts' => {:ems_ref => manager_refs}
+        ),
         :strategy => :local_db_find_missing_references
       )
     )
