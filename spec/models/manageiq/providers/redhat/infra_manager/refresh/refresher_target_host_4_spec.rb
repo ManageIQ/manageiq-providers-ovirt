@@ -13,8 +13,14 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     @ems.update_authentication(:default => {:userid => "admin@internal", :password => "engine"})
     @ems.default_endpoint.path = "/ovirt-engine/api"
     allow(@ems).to receive(:supported_api_versions).and_return([3, 4])
-    allow(@ems).to receive(:resolve_ip_address).with(ip_address).and_return(ip_address)
-    stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
+    stub_settings_merge(
+      :ems => {
+        :ems_redhat => {
+          :use_ovirt_engine_sdk => true,
+          :resolve_ip_addresses => false
+        }
+      }
+    )
     allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).and_call_original
     allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).with(kind_of(Hash)) do |opts|
       Spec::Support::OvirtSDK::ConnectionVCR.new(opts, 'spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/refresher_target_host.yml')

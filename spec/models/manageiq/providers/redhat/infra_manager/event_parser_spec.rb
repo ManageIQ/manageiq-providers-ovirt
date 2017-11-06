@@ -9,7 +9,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
       @ems.update_authentication(:default => {:userid => "admin@internal", :password => "engine"})
       @ems.default_endpoint.verify_ssl = OpenSSL::SSL::VERIFY_NONE
       allow(@ems).to receive(:supported_api_versions).and_return([3])
-      allow(@ems).to receive(:resolve_ip_address).with(ip_address).and_return(ip_address)
+      stub_settings_merge(
+        :ems => {
+          :ems_redhat => {
+            :resolve_ip_addresses => false
+          }
+        }
+      )
     end
 
     it "should parse event" do
@@ -153,7 +159,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
       @ems.update_authentication(:default => {:userid => "admin@internal", :password => "engine"})
       @ems.default_endpoint.path = "/ovirt-engine/api"
       allow(@ems).to receive(:supported_api_versions).and_return([3, 4])
-      allow(@ems).to receive(:resolve_ip_address).with(ip_address).and_return(ip_address)
+      stub_settings_merge(
+        :ems => {
+          :ems_redhat => {
+            :resolve_ip_addresses => false
+          }
+        }
+      )
     end
 
     require 'yaml'
