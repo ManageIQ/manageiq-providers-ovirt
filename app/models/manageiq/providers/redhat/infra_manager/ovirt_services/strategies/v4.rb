@@ -464,6 +464,10 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
                  }
         ))
       end
+
+      def destroy
+        remove
+      end
     end
 
     class TemplateProxyDecorator < SimpleDelegator
