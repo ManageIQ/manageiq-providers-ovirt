@@ -172,9 +172,13 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     changed_vms = manager.vms.where(:ems_ref => references(:vms))
 
     changed_vms.each do |vm|
-      add_simple_target!(:ems_clusters, vm.ems_cluster.ems_ref)
+      unless vm.ems_cluster.nil?
+        # when we target new vm
+        add_simple_target!(:ems_clusters, vm.ems_cluster.ems_ref)
+        add_simple_target!(:datacenters, vm.parent_datacenter.ems_ref)
+      end
+
       vm.storages.collect(&:ems_ref).compact.each { |ems_ref| add_simple_target!(:storagedomains, ems_ref) } unless vm.storages.nil?
-      add_simple_target!(:datacenters, vm.parent_datacenter.ems_ref)
       add_simple_target!(:templates, vm.ems_ref)
     end
   end
