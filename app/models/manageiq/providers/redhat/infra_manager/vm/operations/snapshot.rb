@@ -75,28 +75,8 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Operations::Snapshot
   end
 
   def with_snapshots_service(vm_uid_ems)
-    closeable_service = closeable_snapshots_service(ext_management_system, vm_uid_ems)
-    yield closeable_service
-  ensure
-    closeable_service.close if closeable_service
-  end
-
-  def closeable_snapshots_service(ems, vm_uid_ems, options = {})
-    version = options[:version] || 4
-    connection = ems.connect(:version => version)
+    connection = ext_management_system.connect(:version => 4)
     service = connection.system_service.vms_service.vm_service(vm_uid_ems).snapshots_service
-    CloseableService.new(service) { connection.close }
-  end
-
-  class CloseableService < SimpleDelegator
-    attr_reader :closing_block
-    def initialize(service, &closing_block)
-      @closing_block = closing_block
-      super service
-    end
-
-    def close
-      closing_block.call
-    end
+    yield service
   end
 end
