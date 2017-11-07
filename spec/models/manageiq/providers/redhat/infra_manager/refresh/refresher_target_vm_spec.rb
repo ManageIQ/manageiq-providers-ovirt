@@ -46,8 +46,14 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
                                     :name    => "Default")
 
       allow(@ems).to receive(:supported_api_versions).and_return([3])
-      allow(@ems).to receive(:resolve_ip_address).with(ip_address).and_return(ip_address)
-      stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => false } })
+      stub_settings_merge(
+        :ems => {
+          :ems_redhat => {
+            :use_ovirt_engine_sdk => false,
+            :resolve_ip_addresses => false
+          }
+        }
+      )
     end
 
     it "should refresh a vm" do
@@ -120,7 +126,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
                                 :hostname => ip_address, :ipaddress => ip_address, :port => 443)
       @ems.update_authentication(:default => {:userid => "admin@internal", :password => "password"})
       allow(@ems).to receive(:supported_api_versions).and_return(['3'])
-      allow(@ems).to receive(:resolve_ip_address).with(ip_address).and_return(ip_address)
+      stub_settings_merge(
+        :ems => {
+          :ems_redhat => {
+            :resolve_ip_addresses => false
+          }
+        }
+      )
     end
 
     it 'should save the vms new host' do

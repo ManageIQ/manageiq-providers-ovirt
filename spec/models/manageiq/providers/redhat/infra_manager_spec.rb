@@ -371,35 +371,49 @@ describe ManageIQ::Providers::Redhat::InfraManager do
     let(:options) do
       {
         :username => 'user',
-        :password => 'pword',
-        :version  => '4'
+        :password => 'pword'
       }
     end
-    let(:connection) { double(OvirtSDK4::Connection) }
+    let(:v4_connection) { double(OvirtSDK4::Connection) }
+    let(:v3_connection) { double(Ovirt::Service) }
 
     before do
-      allow(connection).to receive(:test).and_return(true)
+      allow(v3_connection).to receive(:disconnect)
     end
 
-    it "works with different versions" do
-      expect(described_class).to receive(:raw_connect_v4).and_return(connection)
+    it "works with version 4" do
+      expect(described_class).to receive(:raw_connect_v4).and_return(v4_connection)
+      expect(v4_connection).to receive(:test).with(hash_including(:raise_exception => true))
+        .and_return(true)
 
       described_class.raw_connect(options)
-
-      expect(described_class).to receive(:raw_connect_v3).and_return(connection)
-
-      described_class.raw_connect(options.merge(:version => '3'))
     end
 
-    it "always closes the connection" do
-      expect(described_class).to receive(:raw_connect_v4).and_return(connection)
-      expect(connection).to receive(:disconnect)
+    it "works with version 3" do
+      expect(described_class).to receive(:raw_connect_v4).and_return(v4_connection)
+      expect(v4_connection).to receive(:test).with(hash_including(:raise_exception => true))
+        .and_raise(OvirtSDK4::Error.new('Something failed'))
+      expect(described_class).to receive(:raw_connect_v3).and_return(v3_connection)
+      expect(v3_connection).to receive(:api).and_return(nil)
+
+      described_class.raw_connect(options)
+    end
+
+    it "always closes the V3 connection" do
+      expect(described_class).to receive(:raw_connect_v4).and_return(v4_connection)
+      expect(v4_connection).to receive(:test).with(hash_including(:raise_exception => true))
+        .and_raise(OvirtSDK4::Error.new('Something failed'))
+      expect(described_class).to receive(:raw_connect_v3).and_return(v3_connection)
+      expect(v3_connection).to receive(:api).and_return(nil)
+      expect(v3_connection).to receive(:disconnect)
 
       described_class.raw_connect(options)
     end
 
     it "decrypts the password" do
-      allow(described_class).to receive(:raw_connect_v4).and_return(connection)
+      allow(described_class).to receive(:raw_connect_v4).and_return(v4_connection)
+      expect(v4_connection).to receive(:test).with(hash_including(:raise_exception => true))
+        .and_return(true)
 
       expect(MiqPassword).to receive(:try_decrypt).with(options[:password])
 
