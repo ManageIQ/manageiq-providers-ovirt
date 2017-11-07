@@ -110,7 +110,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
       context "with a destination vm" do
         let(:destination_vm) { FactoryGirl.create(:vm_redhat, :ext_management_system => @ems) }
         before do
-          allow(@ems).to receive(:resolve_ip_address).with(@ems.hostname).and_return("1.2.3.4")
+          stub_settings_merge(
+            :ems => {
+              :ems_redhat => {
+                :resolve_ip_addresses => false
+              }
+            }
+          )
           rhevm_vm = double(:attributes => {:status => {:state => "down"}})
           allow(@vm_prov).to receive(:with_provider_destination).and_yield(rhevm_vm)
           allow(@vm_prov).to receive(:destination).and_return(destination_vm)

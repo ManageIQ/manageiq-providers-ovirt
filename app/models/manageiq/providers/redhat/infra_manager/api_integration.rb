@@ -41,8 +41,8 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     # Starting with version 4 of oVirt authentication doesn't work when using directly the IP address, it requires
     # the fully qualified host name, so if we received an IP address we try to convert it into the corresponding
     # host name:
-    if resolve_ip_addresses?
-      resolved = resolve_ip_address(connect_options[:server])
+    if self.class.resolve_ip_addresses?
+      resolved = self.class.resolve_ip_address(connect_options[:server])
       if resolved != connect_options[:server]
         _log.info("IP address '#{connect_options[:server]}' has been resolved to host name '#{resolved}'.")
         default_endpoint.hostname = resolved
@@ -232,17 +232,78 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       end
     end
 
-    def raw_connect(options)
-      version = options[:version] || highest_allowed_api_version
-      options[:password] = MiqPassword.try_decrypt(options[:password])
-      connect_method = "raw_connect_v#{version}".to_sym
+    #
+    # This method is called only when the UI button to verify the connection details is clicked. It isn't used create
+    # the connections actually used by the provider.
+    #
+    # Note that the protocol (HTTP or HTTPS) and the version of the API are *not* options of this method, if they are
+    # provided they will be silently ignored.
+    #
+    # @param opts [Hash] A hash containing the connection details and the credentials.
+    # @option opts [String] :username The name of the user.
+    # @option opts [String] :password The password of the user.
+    # @option opts [String] :server The host name or IP address of the server.
+    # @option opts [Integer] :port ('443') The port number of the server.
+    # @option opts [Integer] :verify_ssl ('1') A numeric flag indicating if TLS certificates should be checked. Value
+    #   `0` indicates that the should not be checked, value `1` indicates that they should be checked.
+    # @option opts [String] :ca_certs The custom trusted CA certificates, in PEM format. A blank or nil value means
+    #   that no custom CA certificates should be used.
+    # @return [Boolean] Returns `true` if the connection details and credentials are valid, or `false` otherwise.
+    #
+    def raw_connect(opts = {})
+      # Get options and assign default values:
+      username = opts[:username]
+      password = opts[:password]
+      server = opts[:server]
+      port = opts[:port] || 443
+      verify_ssl = opts[:verify_ssl] || 1
+      ca_certs = opts[:ca_certs]
 
+      # Decrypt the password:
+      password = MiqPassword.try_decrypt(password)
+
+      # Starting with version 4 of oVirt authentication doesn't work when using directly the IP address, it requires
+      # the fully qualified host name, so if we received an IP address we try to convert it into the corresponding
+      # host name:
+      resolved = server
+      if resolve_ip_addresses?
+        resolved = resolve_ip_address(server)
+        if resolved != server
+          _log.info("IP address '#{server}' has been resolved to host name '#{resolved}'.")
+        end
+      end
+
+      # Build the options that will be used to call the methods that create the connection with specific versions
+      # of the API:
+      opts = {
+        :username   => username,
+        :password   => password,
+        :server     => resolved,
+        :port       => port,
+        :verify_ssl => verify_ssl,
+        :ca_certs   => ca_certs,
+        :service    => 'Inventory' # This is needed only for version 3 of the API.
+      }
+
+      # Try to verify the details using version 4 of the API. If this succeeds or fails with an authentication
+      # exception, then we don't need to do anything else. Note that the connection should not be closed, because
+      # that is handled by the `ConnectionManager` class.
       begin
-        connection = public_send(connect_method, options)
-        connection.test(true)
+        connection = raw_connect_v4(opts)
+        connection.test(:raise_exception => true)
+        return true
+      rescue OvirtSDK4::Error => error
+        raise error if /error.*sso/i =~ error.message
+      end
+
+      # Try to verify the details using version 3 of the API.
+      begin
+        connection = raw_connect_v3(opts)
+        connection.api
       ensure
         disconnect(connection)
       end
+      true
     end
 
     # Connect to the engine using version 4 of the API and the `ovirt-engine-sdk` gem.
@@ -260,10 +321,10 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       ca_certs = [ca_certs] if ca_certs
 
       url = URI::Generic.build(
-        :scheme => options[:scheme],
+        :scheme => 'https',
         :host   => options[:server],
         :port   => options[:port],
-        :path   => options[:path] || '/ovirt-engine/api'
+        :path   => '/ovirt-engine/api'
       )
 
       ManageIQ::Providers::Redhat::ConnectionManager.instance.get(
@@ -295,7 +356,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       params = {
         :server     => options[:server],
         :port       => options[:port].presence && options[:port].to_i,
-        :path       => options[:path],
+        :path       => '/ovirt-engine/api',
         :username   => options[:username],
         :password   => options[:password],
         :verify_ssl => options[:verify_ssl],
@@ -333,42 +394,43 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     def extract_ems_ref_id(href)
       href && href.split("/").last
     end
-  end
 
+    #
+    # Checks if IP address to host name resolving is enabled.
+    #
+    # @return [Boolean] `true` if host name resolving is enabled in the configuration, `false` otherwise.
+    #
+    # @api private
+    #
+    def resolve_ip_addresses?
+      ::Settings.ems.ems_redhat.resolve_ip_addresses
+    end
 
-  private
+    #
+    # Tries to convert the given IP address into a host name, doing a reverse DNS lookup if needed. If it
+    # isn't possible to find the host name the original IP address will be returned, and a warning will be
+    # written to the log.
+    #
+    # @param address [String] The IP address.
+    # @return [String] The host name.
+    #
+    # @api private
+    #
+    def resolve_ip_address(address)
+      # Don't try to resolve unless the string is really an IP address and not a host name:
+      return address unless address =~ Resolv::IPv4::Regex || address =~ Resolv::IPv6::Regex
 
-  #
-  # Checks if IP address to host name resolving is enabled.
-  #
-  # @return [Boolean] `true` if host name resolving is enabled in the configuration, `false` otherwise.
-  #
-  def resolve_ip_addresses?
-    ::Settings.ems.ems_redhat.resolve_ip_addresses
-  end
-
-  #
-  # Tries to convert the given IP address into a host name, doing a reverse DNS lookup if needed. If it
-  # isn't possible to find the host name the original IP address will be returned, and a warning will be
-  # written to the log.
-  #
-  # @param address [String] The IP address.
-  # @return [String] The host name.
-  #
-  def resolve_ip_address(address)
-    # Don't try to resolve unless the string is really an IP address and not a host name:
-    return address unless address =~ Resolv::IPv4::Regex || address =~ Resolv::IPv6::Regex
-
-    # Try to do a reverse resolve of the address to find the host name, using the default resolver, which
-    # means first using the local hosts file and then DNS:
-    begin
-      Resolv.getname(address)
-    rescue Resolv::ResolvError
-      _log.warn(
-        "Can't find fully qualified host name for IP address '#{address}', will use the IP address " \
-        "directly."
-      )
-      address
+      # Try to do a reverse resolve of the address to find the host name, using the default resolver, which
+      # means first using the local hosts file and then DNS:
+      begin
+        Resolv.getname(address)
+      rescue Resolv::ResolvError
+        _log.warn(
+          "Can't find fully qualified host name for IP address '#{address}', will use the IP address " \
+          "directly."
+        )
+        address
+      end
     end
   end
 end

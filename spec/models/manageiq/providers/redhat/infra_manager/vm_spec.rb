@@ -167,8 +167,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
       ems.update_authentication(:default => {:userid => "admin@internal", :password => "engine"})
       # TODO: (inventory) resvisit this test and write one for V4
       allow(ems).to receive(:supported_api_versions).and_return([3])
-      allow(ems).to receive(:resolve_ip_address).with(ip_address).and_return(ip_address)
-
+      stub_settings_merge(
+        :ems => {
+          :ems_redhat => {
+            :resolve_ip_addresses => false
+          }
+        }
+      )
       @storage = FactoryGirl.create(:storage, :ems_ref => "/api/storagedomains/ee745353-c069-4de8-8d76-ec2e155e2ca0")
       disk = FactoryGirl.create(:disk, :storage => @storage, :filename => "da123bb9-095a-4933-95f2-8032dfa332e1")
       hardware = FactoryGirl.create(:hardware, :disks => [disk])

@@ -7,7 +7,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     @ems.update_authentication(:default => {:userid => "evm@manageiq.com", :password => "password"})
     allow(@ems).to receive(:supported_api_versions).and_return([3])
     allow(@ems).to receive(:highest_allowed_api_version).and_return('3')
-    allow(@ems).to receive(:resolve_ip_address).with(ip_address).and_return(ip_address)
+    stub_settings_merge(
+      :ems => {
+        :ems_redhat => {
+          :resolve_ip_addresses => false
+        }
+      }
+    )
   end
 
   it ".ems_type" do
