@@ -1,4 +1,5 @@
 require 'openssl'
+require 'ovirt_metrics'
 require 'resolv'
 
 module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
@@ -136,26 +137,16 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   end
 
   def verify_credentials_for_rhevm_metrics(options = {})
-    require 'ovirt_metrics'
     OvirtMetrics.connect(rhevm_metrics_connect_options(options))
     OvirtMetrics.connected?
-  rescue PGError => e
-    message = (e.message.starts_with?("FATAL:") ? e.message[6..-1] : e.message).strip
-
-    case message
-    when /database \".*\" does not exist/
-      if database.nil? && (conn_info[:database] != OvirtMetrics::DEFAULT_HISTORY_DATABASE_NAME_3_0)
-        conn_info[:database] = OvirtMetrics::DEFAULT_HISTORY_DATABASE_NAME_3_0
-        retry
-      end
-    end
-
-    _log.warn("PGError: #{message}")
-    raise MiqException::MiqEVMLoginError, message
-  rescue Exception => e
-    raise MiqException::MiqEVMLoginError, e.to_s
+  rescue StandardError => error
+    raise self.class.adapt_metrics_error(error)
   ensure
-    OvirtMetrics.disconnect rescue nil
+    begin
+      OvirtMetrics.disconnect
+    rescue
+      nil
+    end
   end
 
   def authentications_to_validate
@@ -240,17 +231,33 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     # provided they will be silently ignored.
     #
     # @param opts [Hash] A hash containing the connection details and the credentials.
-    # @option opts [String] :username The name of the user.
-    # @option opts [String] :password The password of the user.
-    # @option opts [String] :server The host name or IP address of the server.
-    # @option opts [Integer] :port ('443') The port number of the server.
-    # @option opts [Integer] :verify_ssl ('1') A numeric flag indicating if TLS certificates should be checked. Value
-    #   `0` indicates that the should not be checked, value `1` indicates that they should be checked.
-    # @option opts [String] :ca_certs The custom trusted CA certificates, in PEM format. A blank or nil value means
-    #   that no custom CA certificates should be used.
+    # @option opts [String] :username The name of the API user.
+    # @option opts [String] :password The password of the API user.
+    # @option opts [String] :server The host name or IP address of the API server.
+    # @option opts [Integer] :port ('443') The port number of the API server.
+    # @option opts [Integer] :verify_ssl ('1') A numeric flag indicating if the TLS certificates of the API server
+    #   should be checked. Value `0` indicates that the should not be checked, value `1` indicates that they should
+    #   be checked.
+    # @option opts [String] :ca_certs The custom trusted CA certificates used to check the TLS certificates of the
+    #   API server, in PEM format. A blank or nil value means that no custom CA certificates should be used.
+    # @option opts [String] :metrics_userid The name of the metrics database user.
+    # @option opts [String] :metrics_password The password of the metrics database user.
+    # @options opts [String] :metrics_server The host name or IP address of the metrics database server.
+    # @options opts [Integer] :metrics_port ('5432') The port number of the metrics database server.
+    # @options opts [String] :metrics_database The name of the metrics database.
     # @return [Boolean] Returns `true` if the connection details and credentials are valid, or `false` otherwise.
     #
     def raw_connect(opts = {})
+      check_connect_api(opts)
+      check_connect_metrics(opts)
+    end
+
+    #
+    # Checks the API connection details.
+    #
+    # @api private
+    #
+    def check_connect_api(opts = {})
       # Get options and assign default values:
       username = opts[:username]
       password = opts[:password]
@@ -304,6 +311,48 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
         disconnect(connection)
       end
       true
+    end
+
+    #
+    # Checks the metrics connection details.
+    #
+    # @api private
+    #
+    def check_connect_metrics(opts = {})
+      # Get the options and assign defaults:
+      username = opts[:metrics_username]
+      password = opts[:metrics_password]
+      server = opts[:metrics_server]
+      port = opts[:metrics_port] || 5432
+      database = opts[:metrics_database] || default_history_database_name
+
+      # Metrics are optional, so we should only check the details if the server has been specified:
+      return true unless server
+
+      # Decrypt the password:
+      password = MiqPassword.try_decrypt(password)
+
+      # Build the options that will be used to call the methods that checks that the metrics connection can
+      # be created:
+      opts = {
+        :username => username,
+        :password => password,
+        :host     => server,
+        :port     => port,
+        :database => database
+      }
+      begin
+        OvirtMetrics.connect(opts)
+        OvirtMetrics.connected?
+      rescue StandardError => error
+        raise adapt_metrics_error(error)
+      ensure
+        begin
+          OvirtMetrics.disconnect
+        rescue
+          nil
+        end
+      end
     end
 
     # Connect to the engine using version 4 of the API and the `ovirt-engine-sdk` gem.
@@ -380,7 +429,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     end
 
     def default_history_database_name
-      require 'ovirt_metrics'
       OvirtMetrics::DEFAULT_HISTORY_DATABASE_NAME
     end
 
@@ -430,6 +478,27 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
           "directly."
         )
         address
+      end
+    end
+
+    #
+    # Adapts the given error raised by the metrics connection into the exceptions that the ManageIQ core expects.
+    #
+    # @param error [Exception] The exception generated by the attempt to connect to the metrics database.
+    # @return [Exception] The exception that the ManageIQ expects.
+    #
+    # @api private
+    #
+    def adapt_metrics_error(error)
+      case error
+      when PGError
+        message = error.message
+        message = error.message[6..-1] if message.starts_with?('FATAL:')
+        message = message.strip
+        _log.warn("PGError: #{message}")
+        MiqException::MiqEVMLoginError.new(message)
+      else
+        MiqException::MiqEVMLoginError.new(error.to_s)
       end
     end
   end
