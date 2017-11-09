@@ -327,7 +327,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       database = opts[:metrics_database] || default_history_database_name
 
       # Metrics are optional, so we should only check the details if the server has been specified:
-      return true unless server
+      return true if server.blank?
 
       # Decrypt the password:
       password = MiqPassword.try_decrypt(password)
