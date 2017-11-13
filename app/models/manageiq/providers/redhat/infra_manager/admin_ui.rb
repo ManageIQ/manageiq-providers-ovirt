@@ -49,22 +49,23 @@ module ManageIQ::Providers::Redhat::InfraManager::AdminUI
 
     # Request new SSO token using the provider credentials:
     request = OvirtSDK4::HttpRequest.new
-    request.method = :GET
+    request.method = :POST
     request.url = URI::HTTPS.build(
-      :host  => default_endpoint.hostname,
-      :port  => default_endpoint.port,
-      :path  => '/ovirt-engine/sso/oauth/token',
-      :query => URI.encode_www_form(
-        :grant_type => 'password',
-        :username   => user,
-        :password   => password,
-        :scope      => 'ovirt-app-admin ovirt-app-portal'
-      )
+      :host => default_endpoint.hostname,
+      :port => default_endpoint.port,
+      :path => '/ovirt-engine/sso/oauth/token'
     ).to_s
     request.headers = {
-      'Accept'     => 'application/json',
-      'User-Agent' => "manageiq-providers-ovirt/#{ManageIQ::Providers::Ovirt::VERSION}"
+      'Accept'       => 'application/json',
+      'Content-Type' => 'application/x-www-form-urlencoded',
+      'User-Agent'   => "manageiq-providers-ovirt/#{ManageIQ::Providers::Ovirt::VERSION}"
     }
+    request.body = URI.encode_www_form(
+      :grant_type => 'password',
+      :username   => user,
+      :password   => password,
+      :scope      => 'ovirt-app-admin ovirt-app-portal'
+    )
     client.send(request)
     response = client.wait(request)
 
