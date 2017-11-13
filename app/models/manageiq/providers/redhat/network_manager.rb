@@ -3,12 +3,15 @@ class ManageIQ::Providers::Redhat::NetworkManager < ManageIQ::Providers::Network
   require_nested :CloudSubnet
   require_nested :EventCatcher
   require_nested :EventParser
+  require_nested :FloatingIp
   require_nested :MetricsCapture
   require_nested :MetricsCollectorWorker
   require_nested :NetworkPort
+  require_nested :NetworkRouter
   require_nested :RefreshParser
   require_nested :RefreshWorker
   require_nested :Refresher
+  require_nested :SecurityGroup
 
   include ManageIQ::Providers::Openstack::ManagerMixin
   include SupportsFeatureMixin
@@ -110,6 +113,69 @@ class ManageIQ::Providers::Redhat::NetworkManager < ManageIQ::Providers::Network
     queue_opts = {
       :class_name  => self.class.name,
       :method_name => 'create_cloud_subnet',
+      :instance_id => id,
+      :priority    => MiqQueue::HIGH_PRIORITY,
+      :role        => 'ems_operations',
+      :zone        => my_zone,
+      :args        => [options]
+    }
+    MiqTask.generic_action_with_callback(task_opts, queue_opts)
+  end
+
+  def create_network_router(options)
+    NetworkRouter.raw_create_network_router(self, options)
+  end
+
+  def create_network_router_queue(userid, options = {})
+    task_opts = {
+      :action => "creating Network Router for user #{userid}",
+      :userid => userid
+    }
+    queue_opts = {
+      :class_name  => self.class.name,
+      :method_name => 'create_network_router',
+      :instance_id => id,
+      :priority    => MiqQueue::HIGH_PRIORITY,
+      :role        => 'ems_operations',
+      :zone        => my_zone,
+      :args        => [options]
+    }
+    MiqTask.generic_action_with_callback(task_opts, queue_opts)
+  end
+
+  def create_floating_ip(options)
+    FloatingIp.raw_create_floating_ip(self, options)
+  end
+
+  def create_floating_ip_queue(userid, options = {})
+    task_opts = {
+      :action => "creating Floating IP for user #{userid}",
+      :userid => userid
+    }
+    queue_opts = {
+      :class_name  => self.class.name,
+      :method_name => 'create_floating_ip',
+      :instance_id => id,
+      :priority    => MiqQueue::HIGH_PRIORITY,
+      :role        => 'ems_operations',
+      :zone        => my_zone,
+      :args        => [options]
+    }
+    MiqTask.generic_action_with_callback(task_opts, queue_opts)
+  end
+
+  def create_security_group(options)
+    SecurityGroup.raw_create_security_group(self, options)
+  end
+
+  def create_security_group_queue(userid, options = {})
+    task_opts = {
+      :action => "creating Security Group for user #{userid}",
+      :userid => userid
+    }
+    queue_opts = {
+      :class_name  => self.class.name,
+      :method_name => 'create_security_group',
       :instance_id => id,
       :priority    => MiqQueue::HIGH_PRIORITY,
       :role        => 'ems_operations',
