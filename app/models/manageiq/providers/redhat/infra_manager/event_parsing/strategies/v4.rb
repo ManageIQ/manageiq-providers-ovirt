@@ -27,7 +27,18 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing::Strategies
         :vm_ems_ref          => vm_ref,
         :host_ems_ref        => ems_ref_from_object_in_event(event.host),
         :ems_cluster_ems_ref => ems_ref_from_object_in_event(event.cluster),
+        :vm_location         => vm_location(event.data_center, vm_ref)
       }
+    end
+
+    def self.vm_location(dc, vm_ref)
+      uid_ems = ManageIQ::Providers::Redhat::InfraManager.extract_ems_ref_id(vm_ref)
+      location = "#{uid_ems}.ovf"
+      return location if dc.blank?
+
+      dc_ref = ems_ref_from_object_in_event(dc)
+      dc_uid = ManageIQ::Providers::Redhat::InfraManager.extract_ems_ref_id(dc_ref)
+      File.join('/rhev/data-center', dc_uid, 'mastersd/master/vms', uid_ems, location)
     end
 
     def self.ems_ref_from_object_in_event(data)
