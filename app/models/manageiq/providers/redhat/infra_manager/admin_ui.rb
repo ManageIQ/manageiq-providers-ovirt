@@ -32,7 +32,7 @@ module ManageIQ::Providers::Redhat::InfraManager::AdminUI
     password = authentication_password(:default)
 
     # Get the timeouts from the configuration:
-    read_timeout, open_timeout = ems_timeouts(:ems_redhat, options[:service])
+    read_timeout, open_timeout = self.class.ems_timeouts(:ems_redhat, "Service")
 
     # Create the HTTP client:
     insecure = default_endpoint.verify_ssl == OpenSSL::SSL::VERIFY_NONE,
@@ -73,9 +73,9 @@ module ManageIQ::Providers::Redhat::InfraManager::AdminUI
     client.close
 
     # Extract the SSO token, return nil in case of error:
-    if response.is_a?(OvirtSDK4::Error) || response.code != 200
+    if response.kind_of?(OvirtSDK4::Error) || response.code != 200
       $rhevm_log.warn("Failed to obtain SSO token from oVirt Engine.")
-      $rhevm_log.warn(response.message) unless response.is_a?(OvirtSDK4::Error)
+      $rhevm_log.warn(response.message) if response.kind_of?(OvirtSDK4::Error)
       return nil
     end
     sso_token = JSON.parse(response.body)['access_token']

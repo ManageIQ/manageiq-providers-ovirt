@@ -22,7 +22,11 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
 
   supports :provisioning
   supports :refresh_new_target
-  supports :admin_ui
+
+  def supports_admin_ui?
+    # Link to oVirt Admin UI is supported for Engine version >= 4.2
+    version_higher_than?('4.2')
+  end
 
   def ensure_managers
     return unless enabled
