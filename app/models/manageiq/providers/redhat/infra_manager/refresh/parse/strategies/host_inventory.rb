@@ -68,6 +68,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
           :vmm_buildnumber  => (host_os_version.build if host_os_version),
           :connection_state => connection_state,
           :power_state      => power_state,
+          :maintenance      => power_state == 'maintenance',
           :operating_system => host_inv_to_os_hash(host_inv, hostname),
           :ems_cluster      => cluster_uids[host_inv.dig(:cluster, :id)],
           :hardware         => hardware,

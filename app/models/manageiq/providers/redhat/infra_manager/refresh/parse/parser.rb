@@ -138,6 +138,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Parser
         :vmm_buildnumber  => (host_os_version[:build] if host_os_version),
         :connection_state => connection_state,
         :power_state      => power_state,
+        :maintenance      => power_state == 'maintenance',
 
         :operating_system => host_inv_to_os_hash(host_inv, hostname),
 
