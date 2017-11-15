@@ -178,6 +178,29 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       raise ManageIQ::Providers::Redhat::InfraManager::OvirtServices::VmNotReadyToBoot
     end
 
+    def remote_console_acquire_ticket(vm, userid, originating_server)
+      ticket = nil
+      rhevm_vm = nil
+      vm.with_provider_object do |vm_service|
+        ticket = vm_service.ticket
+        rhevm_vm = vm_service.get
+      end
+
+      SystemConsole.force_vm_invalid_token(vm.id)
+      console_args = {
+        :user       => User.find_by(:userid => userid),
+        :vm_id      => vm.id,
+        :protocol   => rhevm_vm.display.type,
+        :secret     => ticket.value,
+        :url_secret => SecureRandom.hex,
+        :ssl        => rhevm_vm.display.secure_port.present?
+      }
+      host_address = rhevm_vm.display.address
+      host_port    = rhevm_vm.display.secure_port || rhevm_vm.display.port
+
+      SystemConsole.launch_proxy_if_not_local(console_args, originating_server, host_address, host_port)
+    end
+
     def get_template_proxy(template, connection)
       TemplateProxyDecorator.new(
         connection.system_service.templates_service.template_service(template.uid_ems),

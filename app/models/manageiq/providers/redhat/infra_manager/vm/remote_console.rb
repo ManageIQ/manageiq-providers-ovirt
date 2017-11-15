@@ -4,10 +4,6 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm
       %w(SPICE VNC).include?(type.upcase)
     end
 
-    def remote_display
-      provider_object.attributes[:display]
-    end
-
     def validate_remote_console_acquire_ticket(protocol, options = {})
       raise(MiqException::RemoteConsoleNotSupportedError,
             "#{protocol} protocol not enabled for this vm") unless protocol.to_sym == :html5
@@ -22,24 +18,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm
 
     def remote_console_acquire_ticket(userid, originating_server, console_type)
       validate_remote_console_acquire_ticket(console_type)
-
-      parsed_ticket = Nokogiri::XML(provider_object.ticket)
-      display = provider_object.attributes[:display]
-
-      SystemConsole.force_vm_invalid_token(id)
-
-      console_args = {
-        :user       => User.find_by(:userid => userid),
-        :vm_id      => id,
-        :protocol   => display[:type],
-        :secret     => parsed_ticket.xpath('action/ticket/value')[0].text,
-        :url_secret => SecureRandom.hex,
-        :ssl        => display[:secure_port].present?
-      }
-      host_address = display[:address]
-      host_port    = display[:secure_port] || display[:port]
-
-      SystemConsole.launch_proxy_if_not_local(console_args, originating_server, host_address, host_port)
+      ext_management_system.ovirt_services.remote_console_acquire_ticket(self, userid, originating_server)
     end
 
     def remote_console_acquire_ticket_queue(protocol, userid)

@@ -204,6 +204,26 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       _log.info("#{log_header} Completed.")
     end
 
+    def remote_console_acquire_ticket(vm, userid, originating_server)
+      parsed_ticket = Nokogiri::XML(vm.with_provider_object(&:ticket))
+      display = vm.with_provider_object { |rhevm_vm| rhevm_vm.attributes.fetch_path(:display) }
+
+      SystemConsole.force_vm_invalid_token(vm.id)
+
+      console_args = {
+        :user       => User.find_by(:userid => userid),
+        :vm_id      => vm.id,
+        :protocol   => display[:type],
+        :secret     => parsed_ticket.xpath('action/ticket/value')[0].text,
+        :url_secret => SecureRandom.hex,
+        :ssl        => display[:secure_port].present?
+      }
+      host_address = display[:address]
+      host_port    = display[:secure_port] || display[:port]
+
+      SystemConsole.launch_proxy_if_not_local(console_args, originating_server, host_address, host_port)
+    end
+
     def advertised_images
       ext_management_system.with_provider_connection do |rhevm|
         rhevm.iso_images.collect { |image| image[:name] }
