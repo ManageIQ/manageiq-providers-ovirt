@@ -151,6 +151,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :vmm_buildnumber  => (host_os_version.build if host_os_version),
         :connection_state => connection_state,
         :power_state      => power_state,
+        :maintenance      => power_state == 'maintenance',
         :ems_cluster      => persister.ems_clusters.lazy_find(ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(cluster.href)),
         :ipmi_address     => ipmi_address,
       )
