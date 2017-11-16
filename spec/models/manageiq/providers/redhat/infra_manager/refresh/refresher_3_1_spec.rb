@@ -185,6 +185,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :vmm_product      => "rhel",
       :vmm_buildnumber  => nil,
       :power_state      => "on",
+      :maintenance      => false,
       :connection_state => "connected"
     )
 

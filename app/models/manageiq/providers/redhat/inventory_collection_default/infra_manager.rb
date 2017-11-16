@@ -328,7 +328,8 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
           :connection_state,
           :power_state,
           :ems_cluster,
-          :ipmi_address
+          :ipmi_address,
+          :maintenance
         ]
       }
 
