@@ -14,6 +14,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   require_nested  :Vm
   include_concern :ApiIntegration
   include_concern :VmImport
+  include_concern :AdminUI
 
   has_many :cloud_tenants, :foreign_key => :ems_id, :dependent => :destroy
 
@@ -21,6 +22,11 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
 
   supports :provisioning
   supports :refresh_new_target
+
+  def supports_admin_ui?
+    # Link to oVirt Admin UI is supported for Engine version >= 4.2
+    version_higher_than?('4.2')
+  end
 
   def ensure_managers
     return unless enabled
