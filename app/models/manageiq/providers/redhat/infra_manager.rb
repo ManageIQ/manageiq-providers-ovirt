@@ -24,8 +24,9 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   supports :refresh_new_target
 
   def supports_admin_ui?
-    # Link to oVirt Admin UI is supported for Engine version >= 4.2
-    version_higher_than?('4.2')
+    # Link to oVirt Admin UI is supported for Engine version >= 4.1.8
+    # See https://bugzilla.redhat.com/1512989 for details.
+    version_higher_than?('4.1.8')
   end
 
   def ensure_managers
