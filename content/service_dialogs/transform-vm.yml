@@ -28,7 +28,7 @@
         required: false
         required_method:
         required_method_options: {}
-        default_value: ''
+        default_value: 'migration_group'
         values: []
         values_method:
         values_method_options: {}
