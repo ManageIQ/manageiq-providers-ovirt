@@ -116,7 +116,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
         vlans[profile.id] = "#{profile.name} (#{profile_network.name})"
       end
 
-      vlans['<Empty>'] = _('<Empty>')
+      vlans['<Empty>'] = _('<No Profile>')
     end
 
     def filter_allowed_hosts(_workflow, all_hosts)
