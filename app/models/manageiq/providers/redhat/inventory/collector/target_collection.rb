@@ -1,5 +1,7 @@
 class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < ManageIQ::Providers::Redhat::Inventory::Collector
   # TODO: review the changes here and find common parts with ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
+  include Vmdb::Logging
+
   def initialize(_manager, _target)
     super
     parse_targets!
@@ -28,7 +30,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
   def networks
     nets = []
-    return domains if references(:networks).blank?
+    return nets if references(:networks).blank?
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
       references(:networks).each do |ems_ref|
@@ -82,7 +84,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     return h if references(:hosts).blank?
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
-      references(:vms).each do |ems_ref|
+      references(:hosts).each do |ems_ref|
         begin
           h << connection.system_service.hosts_service.host_service(uuid_from_ems_ref(ems_ref)).get
         rescue OvirtSDK4::Error # when 404
@@ -208,7 +210,12 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
     changed_hosts.each do |host|
       add_simple_target!(:ems_clusters, uuid_from_target(host.ems_cluster))
-      # TODO: host.hardware.networks do not have ems_ref nor ems_uid
+      host.storages.each do |storage|
+        add_simple_target!(:storagedomains, uuid_from_target(storage))
+      end
+      host.switches.each do |switch|
+        add_simple_target!(:networks, switch.uid_ems)
+      end
     end
   end
 

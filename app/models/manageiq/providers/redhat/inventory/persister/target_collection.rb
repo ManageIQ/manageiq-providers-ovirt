@@ -48,6 +48,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
     add_clusters_inventory_collections(references(:ems_clusters))
     add_datacenters_inventory_collections(references(:datacenters))
     add_storages_inventory_collcetions(references(:storagedomains))
+    add_networks_inventory_collcetions(references(:networks))
     add_hosts_inventory_collections(references(:hosts))
   end
 
@@ -174,6 +175,17 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
     add_inventory_collection(
       infra.storages(
         :arel     => Storage.where(:ems_ref => manager_refs),
+        :strategy => :local_db_find_missing_references
+      )
+    )
+  end
+
+  def add_networks_inventory_collcetions(manager_refs)
+    return if manager_refs.blank?
+
+    add_inventory_collection(
+      infra.switches(
+        :arel     => Switch.where(:uid_ems => manager_refs),
         :strategy => :local_db_find_missing_references
       )
     )
