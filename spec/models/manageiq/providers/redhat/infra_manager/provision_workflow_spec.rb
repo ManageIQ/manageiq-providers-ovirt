@@ -233,21 +233,21 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
         allow(vnic_profiles_service).to receive(:list).and_return([])
 
         workflow.load_allowed_vlans(ems, @vlans)
-        expect(@vlans).to eq("<Empty>" => "<Empty>")
+        expect(@vlans).to eq("<Empty>" => "<No Profile>")
       end
       it "contains one profile" do
         allow(networks_service).to receive(:list).and_return([network])
         allow(vnic_profiles_service).to receive(:list).and_return([network_profile])
 
         workflow.load_allowed_vlans(ems, @vlans)
-        expect(@vlans).to eq("network_profile-id" => "network_profile (network)", "<Empty>" => "<Empty>")
+        expect(@vlans).to eq("network_profile-id" => "network_profile (network)", "<Empty>" => "<No Profile>")
       end
       it "contains two profiles on the same network" do
         allow(networks_service).to receive(:list).and_return([network])
         allow(vnic_profiles_service).to receive(:list).and_return([network_profile, network_profile2])
 
         workflow.load_allowed_vlans(ems, @vlans)
-        expect(@vlans).to eq("network_profile-id" => "network_profile (network)", "network_profile-id2" => "network_profile2 (network)", "<Empty>" => "<Empty>")
+        expect(@vlans).to eq("network_profile-id" => "network_profile (network)", "network_profile-id2" => "network_profile2 (network)", "<Empty>" => "<No Profile>")
       end
     end
   end
