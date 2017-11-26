@@ -1,7 +1,6 @@
 class ManageIQ::Providers::Redhat::Inventory::Parser::NetworkManager < ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager
   def parse
-    cloud_networks
-    network_ports
+    super
     cloud_tenants
   end
 
