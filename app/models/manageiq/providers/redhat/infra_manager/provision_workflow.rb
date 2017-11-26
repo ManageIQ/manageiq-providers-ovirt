@@ -141,7 +141,7 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
       return _("Memory Limit is supported only when using ovirt-engine-sdk (To enable, set: ':use_ovirt_engine_sdk: true' in settings.yml).")
     end
 
-    unless ems.version_higher_than?("4.1")
+    unless ems.version_at_least?("4.1")
       return _("Memory Limit is supported for RHV 4.1 and above. Current provider version is #{ems.api_version}.")
     end
 

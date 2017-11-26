@@ -60,7 +60,7 @@ module ManageIQ::Providers::Redhat::InfraManager::VmImport
 
   def validate_import_vm
     # The version of the RHV needs to be at least 4.1.5 due to https://bugzilla.redhat.com/1477375
-    version_higher_than?('4.1.5')
+    version_at_least?('4.1.5')
   end
 
   def submit_configure_imported_vm_networks(userid, vm_id)

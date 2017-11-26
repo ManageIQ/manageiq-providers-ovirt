@@ -213,7 +213,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
     vms.map(&:ems_cluster).uniq.compact.size == 1
   end
 
-  def version_higher_than?(version)
+  def version_at_least?(version)
     return false if api_version.nil?
 
     ems_version = api_version[/\d+\.\d+\.?\d*/x]
