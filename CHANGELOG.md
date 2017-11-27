@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 73 ending 2017-11-13
+
+### Added
+- Support sysprep for windows templates [(#91)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/91)
+
+### Fixed
+- Fill VmOrTemplate relation correctly [(#120)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/120)
+- We need to use lazy_find_by for hash index [(#117)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/117)
+- v2v: Extend 'VM Transform' dialog to select VMs by tag [(#115)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/115)
+- Move detecting the api versions to database query [(#114)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/114)
+- Running 'ensure_network provider' as a separate job [(#110)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/110)
+- Assume 3 when can't determine API version [(#108)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/108)
+
 ## Unreleased as of Sprint 72 ending 2017-10-30
 
 ### Fixed
