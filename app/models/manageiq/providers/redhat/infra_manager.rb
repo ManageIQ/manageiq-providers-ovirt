@@ -28,9 +28,9 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   end
 
   def supports_admin_ui?
-    # Link to oVirt Admin UI is supported for Engine version >= 4.1.8
+    # Link to oVirt Admin UI is supported for Engine version 4.1.8 or better.
     # See https://bugzilla.redhat.com/1512989 for details.
-    version_higher_than?('4.1.8')
+    version_at_least?('4.1.8')
   end
 
   def ensure_managers
