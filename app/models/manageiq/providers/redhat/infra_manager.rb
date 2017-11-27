@@ -22,6 +22,10 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
 
   supports :provisioning
   supports :refresh_new_target
+  supports :vm_import do
+    # The version of the RHV needs to be at least 4.1.5 due to https://bugzilla.redhat.com/1477375
+    unsupported_reason_add(:vm_import, _('Cannot import to a RHV provider of version < 4.1.5')) unless version_at_least?('4.1.5')
+  end
 
   def supports_admin_ui?
     # Link to oVirt Admin UI is supported for Engine version 4.1.8 or better.

@@ -58,11 +58,6 @@ module ManageIQ::Providers::Redhat::InfraManager::VmImport
     task.task_results
   end
 
-  def validate_import_vm
-    # The version of the RHV needs to be at least 4.1.5 due to https://bugzilla.redhat.com/1477375
-    version_at_least?('4.1.5')
-  end
-
   def submit_configure_imported_vm_networks(userid, vm_id)
     task_id = queue_self_method_call(userid, "Configure imported VM's networks", 'configure_imported_vm_networks', vm_id)
     task = MiqTask.wait_for_taskid(task_id)
@@ -77,7 +72,7 @@ module ManageIQ::Providers::Redhat::InfraManager::VmImport
   def check_import_supported!(source_provider)
     raise _('Cannot import archived VMs') if source_provider.nil?
 
-    raise _('Cannot import to a RHEV provider of version < 4.1.5') unless validate_import_vm
+    raise unsupported_reason(:vm_import) unless supports_vm_import?
     unless source_provider.type == ManageIQ::Providers::Vmware::InfraManager.name
       raise _('Source provider must be of type Vmware')
     end
