@@ -1,7 +1,12 @@
 module ManageIQ::Providers::Redhat::InfraManager::SupportedApisMixin
   def supported_api_versions
+    reload_if_api_version_available_in_db if api_version.blank?
     return supported_api_versions_from_sdk(probe_args) if api_version.blank?
     supported_api_versions_from_db
+  end
+
+  def reload_if_api_version_available_in_db
+    reload if ExtManagementSystem.where(:id => id).select(:api_version).take&.api_version
   end
 
   def highest_supported_api_version
