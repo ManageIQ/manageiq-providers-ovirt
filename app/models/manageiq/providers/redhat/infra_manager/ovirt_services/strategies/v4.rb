@@ -389,6 +389,9 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       # @param content [String] YAML text containing the cloud-init configuration.
       #
       def update_cloud_init!(content)
+        # Do nothing if the cloud-init configuration is empty or nil:
+        return if content.blank?
+
         # When this was implemented using version 3 of the API some of the attributes of the
         # initialization object were directly copied from the YAML text, ignoring the syntax of the
         # cloud-init files. For example, we expected to have a YAML file like this:
@@ -424,26 +427,36 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
           user_name
         )
 
-        # Create the hash that will be used to create the initialization object:
-        hash = {}
-
-        # Load the YAML text and convert the keys to symbols, as that is what the SDK will need in
-        # order to later convert it to an SDK object:
-        yaml = YAML.safe_load(content).deep_symbolize_keys
+        # Load the YAML text and check it is a hash, as otherwise we will not be able to process it
+        # and cloud-init will not understand it either.
+        yaml = YAML.safe_load(content)
+        unless yaml.kind_of?(Hash)
+          message = \
+            "The cloud-init configuration '#{content}' can't be parsed as hash;" \
+            "cloud-init would not understand it"
+          raise MiqException::MiqProvisionError, message
+        end
 
         # Remove from the YAML the keys that need special treatment, and add them to the hash that
         # will be used to create the initialization object.
+        hash = {}
         keys.each do |key|
-          value = yaml.delete(key)
+          value = yaml.delete(key.to_s)
           hash[key] = value if value
         end
+
+        # The SDK expects a hash where keys are symbols, but we may have strings inside nested
+        # hashes, for example for NIC configurations, so we need to convert them to symbols:
+        hash = hash.deep_symbolize_keys
 
         # Convert the remaining YAML back to text, removing the initial '---' line that the dump
         # method adds, as cloud-init does not understand it. The result will be used as the custom
         # cloud-init script.
-        script = YAML.dump(yaml)
-        script.sub!(/^---\n/, '')
-        hash[:custom_script] = script unless script.blank?
+        unless yaml.empty?
+          script = YAML.dump(yaml)
+          script.sub!(/^---\n/, '')
+          hash[:custom_script] = script
+        end
 
         # Send the update to the server:
         update(
