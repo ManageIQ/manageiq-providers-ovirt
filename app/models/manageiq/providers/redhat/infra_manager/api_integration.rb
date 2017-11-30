@@ -114,9 +114,23 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     raise e
   rescue RestClient::Unauthorized
     raise MiqException::MiqInvalidCredentialsError, "Incorrect user name or password."
+  rescue OvirtSDK4::Error => e
+    rethrow_as_a_miq_error(e)
   rescue
     _log.error("Error while verifying credentials #{$ERROR_INFO}")
     raise MiqException::MiqEVMLoginError, $ERROR_INFO
+  end
+
+  def rethrow_as_a_miq_error(e)
+    case e.message
+    when /The username or password is incorrect/
+      raise MiqException::MiqInvalidCredentialsError
+    when /Couldn't connect to server/, /Couldn't resolve host name/
+      raise MiqException::MiqUnreachableError, $ERROR_INFO
+    else
+      _log.error("Error while verifying credentials #{$ERROR_INFO}")
+      raise MiqException::MiqEVMLoginError, $ERROR_INFO
+    end
   end
 
   def rhevm_metrics_connect_options(options = {})
