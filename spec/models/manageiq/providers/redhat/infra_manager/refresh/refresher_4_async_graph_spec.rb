@@ -79,11 +79,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   end
 
   def assert_ems
-    # TODO: We can't use graph refresh in production until this is fixed.
-    # expect(@ems).to have_attributes(
-    # :api_version => "4.2.0_master.",
-    # :uid_ems     => nil
-    # )
+    expect(@ems).to have_attributes(
+      :api_version => "4.2.0_master.",
+      :uid_ems     => nil
+    )
 
     expect(@ems.ems_folders.size).to eq(7)
     expect(@ems.ems_clusters.size).to eq(3)
