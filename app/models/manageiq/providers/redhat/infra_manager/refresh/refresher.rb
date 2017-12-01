@@ -15,6 +15,10 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
         # TODO: make sure not to use with api v3
         if refresher_options.try(:[], :inventory_object_refresh)
           data = ManageIQ::Providers::Redhat::Builder.build_inventory(ems, target)
+
+          # TODO: remove when graph refresh supports ems updates
+          ems.api_version = inventory.service.version_string
+          ems.save
         else
           case target
           when Host
