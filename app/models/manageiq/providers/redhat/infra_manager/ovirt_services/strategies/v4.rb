@@ -479,7 +479,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
                                             :description => options[:description],
                                             :cluster     => cluster,
                                             :storage     => storage)
-        templates_service.add(template)
+        templates_service.add(template, :seal => options[:seal])
       end
 
       def build_template_from_hash(args)
