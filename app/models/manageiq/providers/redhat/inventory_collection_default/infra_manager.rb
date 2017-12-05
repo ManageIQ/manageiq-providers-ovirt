@@ -86,6 +86,7 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
           :hostname,
           :ipaddress,
           :subnet_mask,
+          :ipv6address
         ]
       }
 
