@@ -91,6 +91,14 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm < ManageIQ::Providers::Infra
     super
   end
 
+  def migration_complete(task, automate_drives)
+    if automate_drives
+      task.update_and_notify_parent(:state => 'active', :message => "#{task.request_class::TASK_DESCRIPTION} in progress")
+    else
+      task.update_and_notify_parent(:state => 'finished', :message => "#{task.request_class::TASK_DESCRIPTION} complete")
+    end
+  end
+
   #
   # UI Button Validation Methods
   #
