@@ -35,7 +35,13 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Placement
   end
 
   def automatic_placement
-    update_placement_info(get_placement_via_automate)
+    result = get_placement_via_automate
+    if result[:cluster].nil? && !get_source_vm.template? && get_option(:placement_cluster_name).nil?
+      options[:placement_cluster_name] = [get_source_vm.ems_cluster_id, get_source_vm.ems_cluster_name]
+      _log.info("placement_cluster_name:<#{options[:placement_cluster_name].inspect}>")
+    end
+
+    update_placement_info(result)
   end
 
   def update_placement_info(result = {})
