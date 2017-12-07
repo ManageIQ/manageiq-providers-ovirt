@@ -50,7 +50,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Cloning
       :name        => dest_name,
       :cluster     => dest_cluster.ems_ref,
       :description => get_option(:vm_description),
-      :seal        => get_option(:seal)
+      :seal        => get_option(:seal_template)
     }
 
     clone_options[:storage] = dest_datastore.ems_ref unless dest_datastore.nil?

@@ -152,7 +152,7 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
   end
 
   def validate_seal_template(_field, values, _dlg, _fld, _value)
-    seal = get_value(values[:seal])
+    seal = get_value(values[:seal_template])
     return nil unless seal
 
     if get_source_vm.platform == 'windows'
