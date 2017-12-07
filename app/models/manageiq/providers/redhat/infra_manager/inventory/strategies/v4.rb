@@ -20,6 +20,19 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
       end
     end
 
+    def template_targeted_refresh(target)
+      ems.with_provider_connection(VERSION_HASH) do |connection|
+        @connection = connection
+        template_id = get_uuid_from_target(target)
+        res = {}
+        res[:cluster] = collect_clusters
+        res[:datacenter] = collect_datacenters
+        res[:template] = collect_template_by_uuid(template_id)
+        res[:storage] = target.storages.empty? ? collect_storages : collect_storage(target.storages.map { |s| get_uuid_from_target(s) })
+        res
+      end
+    end
+
     def vm_targeted_refresh(target)
       ems.with_provider_connection(VERSION_HASH) do |connection|
         @connection = connection
@@ -188,6 +201,13 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
     def collect_vm_by_uuid(uuid)
       vm = connection.system_service.vms_service.vm_service(uuid).get
       [VmPreloadedAttributesDecorator.new(vm, connection)]
+    rescue OvirtSDK4::Error
+      []
+    end
+
+    def collect_template_by_uuid(uuid)
+      template = connection.system_service.templates_service.template_service(uuid).get
+      [TemplatePreloadedAttributesDecorator.new(template, connection)]
     rescue OvirtSDK4::Error
       []
     end

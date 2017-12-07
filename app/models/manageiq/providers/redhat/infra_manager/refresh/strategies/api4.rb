@@ -14,6 +14,10 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Strategies
       inventory.vm_targeted_refresh(target)
     end
 
+    def template_targeted_refresh(inventory, target)
+      inventory.template_targeted_refresh(target)
+    end
+
     require 'uri'
 
     def inventory_from_ovirt(ems)
