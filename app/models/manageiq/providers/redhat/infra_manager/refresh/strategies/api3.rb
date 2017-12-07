@@ -39,5 +39,22 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Strategies
       }
       inventory.targeted_refresh(methods)
     end
+
+    def template_targeted_refresh(inventory, target)
+      require 'uri'
+
+      methods = {
+        :primary   => {
+          :cluster    => {:clusters => "cluster"},
+          :datacenter => {:datacenters => "data_center"},
+          :template   => target.ems_ref,
+          :storage    => target.storages.empty? ? {:storagedomains => "storage_domain"} : target.storages.map(&:ems_ref)
+        },
+        :secondary => {
+          :template => [:disks]
+        }
+      }
+      inventory.targeted_refresh(methods)
+    end
   end
 end
