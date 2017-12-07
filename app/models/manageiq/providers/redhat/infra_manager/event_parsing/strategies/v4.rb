@@ -16,7 +16,7 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing::Strategies
       vm_ref = template?(event.name) ? ems_ref_from_object_in_event(event.template) : ems_ref_from_object_in_event(event.vm)
 
       # Build the event hash
-      {
+      hash = {
         :event_type          => event.name,
         :source              => 'RHEVM',
         :message             => event.description,
@@ -27,18 +27,23 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing::Strategies
         :vm_ems_ref          => vm_ref,
         :host_ems_ref        => ems_ref_from_object_in_event(event.host),
         :ems_cluster_ems_ref => ems_ref_from_object_in_event(event.cluster),
-        :vm_location         => vm_location(event.data_center, vm_ref)
       }
+
+      add_vm_location(hash, event.data_center, vm_ref)
     end
 
-    def self.vm_location(dc, vm_ref)
+    def self.add_vm_location(hash, dc, vm_ref)
+      return hash if vm_ref.nil?
+
       uid_ems = ManageIQ::Providers::Redhat::InfraManager.extract_ems_ref_id(vm_ref)
       location = "#{uid_ems}.ovf"
       return location if dc.blank?
 
       dc_ref = ems_ref_from_object_in_event(dc)
       dc_uid = ManageIQ::Providers::Redhat::InfraManager.extract_ems_ref_id(dc_ref)
-      File.join('/rhev/data-center', dc_uid, 'mastersd/master/vms', uid_ems, location)
+
+      hash[:vm_location] = File.join('/rhev/data-center', dc_uid, 'mastersd/master/vms', uid_ems, location)
+      hash
     end
 
     def self.ems_ref_from_object_in_event(data)
