@@ -460,4 +460,12 @@ describe ManageIQ::Providers::Redhat::InfraManager do
       end
     end
   end
+
+  context 'catalog types' do
+    let(:ems) { FactoryGirl.create(:ems_redhat) }
+
+    it "#supported_catalog_types" do
+      expect(ems.supported_catalog_types).to eq(%w(redhat))
+    end
+  end
 end

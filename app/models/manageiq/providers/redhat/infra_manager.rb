@@ -144,6 +144,10 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
     end
   end
 
+  def supported_catalog_types
+    %w(redhat)
+  end
+
   def vm_reconfigure(vm, options = {})
     ovirt_services_for_reconfigure = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Builder.new(self)
       .build(:use_highest_supported_version => true).new(:ems => self)
