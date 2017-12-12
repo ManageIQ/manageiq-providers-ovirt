@@ -19,6 +19,12 @@
         :inventory_object_refresh: true
     :event_handling:
       :event_groups:
+        :console:
+          :critical:
+          - VM_CONSOLE_CONNECTED
+          - VM_CONSOLE_DISCONNECTED
+          - VM_SET_TICKET
+          - VM_SET_TICKET_FAILED
         :network:
           :critical:
           - network.create.end
