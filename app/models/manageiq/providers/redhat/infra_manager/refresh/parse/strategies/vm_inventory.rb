@@ -153,27 +153,54 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
     end
 
     def vm_inv_to_network_hashes(inv, guest_device_uids)
-      reported_device = inv.respond_to?(:reported_devices) ? inv.reported_devices[0] : nil
-      inv_net = reported_device.ips if reported_device
-      result = []
-      return result if inv_net.nil?
+      reported_devices = inv.respond_to?(:reported_devices) ? inv.reported_devices : nil
+      all_networks = []
+      return all_networks if !reported_devices || reported_devices.blank?
 
-      inv_net.to_miq_a.each do |data|
-        new_result = { :ipaddress => data.address }
-        result << new_result unless new_result.blank?
+      network_by_mac = {}
+      host_name = inv.fqdn if inv.respond_to?(:fqdn)
+      reported_devices.to_miq_a.each do |reported_device|
+        inv_net = reported_device.ips
+        next if inv_net.nil?
+
+        ipaddresses = ipaddresses(inv_net)
+
+        ipaddresses.each do |ipv4address, ipv6address|
+          new_network = {
+            :hostname => host_name
+          }
+          new_network[:ipaddress] = ipv4address
+          new_network[:ipv6address] = ipv6address
+
+          device_mac = reported_device&.mac&.address
+          network_by_mac[device_mac] ||= new_network if device_mac
+          all_networks << new_network
+        end
       end
 
-      # There is not data to corridnate what IPs go with what networks
-      # So if there is only 1 of each link them together.
-      if result.length == 1 && guest_device_uids.length == 1
-        guest_device = guest_device_uids[guest_device_uids.keys.first]
-        guest_device[:network] = result.first unless guest_device.nil?
-      end
+      update_guest_device_network(guest_device_uids, network_by_mac)
 
-      # RHV reports hostname for the entire vm and not per specific network interface.
-      # Therefore, the hostname will be set for the first nic.
-      result[0][:hostname] = inv.fqdn if !result.blank? && inv.respond_to?(:fqdn)
-      result
+      all_networks
+    end
+
+    def ipaddresses(inv_net)
+      ipv4addresses = []
+      ipv6addresses = []
+
+      inv_net.to_miq_a.each do |net|
+        (net.version == "v4" ? ipv4addresses : ipv6addresses) << net.address
+      end
+      ipv4addresses = ipv4addresses.sort
+      ipv6addresses = ipv6addresses.sort
+      ipv4addresses.zip_stretched(ipv6addresses)
+    end
+
+    def update_guest_device_network(guest_device_uids, network_by_mac)
+      guest_device_uids.values.each do |guest_device|
+        next unless guest_device
+        guest_device_mac = guest_device[:address]
+        guest_device[:network] = network_by_mac[guest_device_mac] if guest_device_mac
+      end
     end
 
     def vm_inv_to_disk_hashes(inv, storage_uids)

@@ -407,24 +407,25 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   end
 
   def hardware_networks(persister_hardware, vm)
-    addresses = []
+    addresses = {}
 
     devices = collector.collect_vm_devices(vm)
-    device = devices.to_a.detect(&:present?)
-    return if device.blank?
+    devices.to_miq_a.each do |device|
+      nets = device.ips
+      return addresses unless nets
 
-    nets = device.ips if device
-    return if nets.nil?
-
-    nets.to_miq_a.each do |net|
-      addresses << net.address
-      persister.networks.find_or_build_by(
-        :hardware  => persister_hardware,
-        :ipaddress => net.address
-      ).assign_attributes(
-        :ipaddress => net.address,
-        :hostname  => vm.fqdn
-      )
+      ipaddresses = ipaddresses(addresses, device, nets)
+      ipaddresses.each do |ipv4address, ipv6address|
+        persister.networks.find_or_build_by(
+          :hardware    => persister_hardware,
+          :ipaddress   => ipv4address,
+          :ipv6address => ipv6address
+        ).assign_attributes(
+          :ipaddress   => ipv4address,
+          :ipv6address => ipv6address,
+          :hostname    => vm.fqdn
+        )
+      end
     end
     addresses
   end
@@ -464,16 +465,20 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   end
 
   def hardware_guest_devices(persister_hardware, vm, addresses)
-    unless addresses.to_a.empty?
+    networks = {}
+    addresses.each do |mac, address|
       network = persister.networks.lazy_find_by(
-        :hardware  => persister_hardware,
-        :ipaddress => addresses[0]
+        :hardware    => persister_hardware,
+        :ipaddress   => address[:ipaddress],
+        :ipv6address => address[:ipv6address]
       )
+      networks[mac] = network if network
     end
 
     collector.collect_nics(vm).each do |nic|
       next if nic.blank?
-
+      mac = nic.mac && nic.mac.address ? nic.mac.address : nil
+      network = mac && networks.present? ? networks[mac] : nil
       persister.guest_devices.find_or_build_by(
         :hardware => persister_hardware,
         :uid_ems  => nic.id
@@ -592,5 +597,24 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
   def extract_host_os_full_version(host_os)
     host_os.dig(:version, :full_version)
+  end
+
+  def ipaddresses(addresses, device, nets)
+    ipv4addresses = []
+    ipv6addresses = []
+    nets.to_miq_a.each do |net|
+      (net.version == "v4" ? ipv4addresses : ipv6addresses) << net.address
+    end
+
+    ipv4addresses = ipv4addresses.sort
+    ipv6addresses = ipv6addresses.sort
+    if device&.mac&.address
+      addresses[device.mac.address] = {
+        :ipaddress   => ipv4addresses.blank? ? nil : ipv4addresses.first,
+        :ipv6address => ipv6addresses.blank? ? nil : ipv6addresses.first
+      }
+    end
+
+    ipv4addresses.zip_stretched(ipv6addresses)
   end
 end
