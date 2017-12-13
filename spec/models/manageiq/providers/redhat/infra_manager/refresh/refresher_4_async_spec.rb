@@ -67,7 +67,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(Lan.count).to eq(3)
     expect(MiqScsiLun.count).to eq(0)
     expect(MiqScsiTarget.count).to eq(0)
-    expect(Network.count).to eq(7)
+    expect(Network.count).to eq(6)
     expect(OperatingSystem.count).to eq(20)
     expect(Snapshot.count).to eq(17)
     # the old code expects 3 and new 2
@@ -390,6 +390,22 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
         :address         => "00:1a:4a:16:01:51"
       )
       # nic.lan.should == @lan # TODO: Hook up this connection
+
+      guest_device = v.hardware.guest_devices.find_by(:device_name => "nic1")
+      expect(guest_device.network).not_to be_nil
+      expect(guest_device.network).to have_attributes(
+        :ipaddress   => "10.35.18.141",
+        :ipv6address => "2620:52:0:2310:21a:4aff:fe16:151",
+        :hostname    => "vm-18-82.eng.lab.tlv.redhat.com"
+      )
+
+      expect(v.hardware.networks.size).to eq(2)
+      network = v.hardware.networks.find_by(:ipv6address => "fe80::21a:4aff:fe16:151")
+      expect(network).not_to be_nil
+      expect(network).to have_attributes(
+        :ipaddress => nil,
+        :hostname  => "vm-18-82.eng.lab.tlv.redhat.com"
+      )
 
       expect(v.parent_datacenter).to have_attributes(
         :ems_ref     => "/api/datacenters/b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1",
