@@ -400,8 +400,8 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
         :insecure        => options[:verify_ssl] == OpenSSL::SSL::VERIFY_NONE,
         :ca_certs        => ca_certs,
         :log             => $rhevm_log,
-        :connections     => options[:connections] || ::Settings.ems.ems_redhat.connections,
-        :pipeline        => options[:pipeline] || ::Settings.ems.ems_redhat.pipeline
+        :connections     => options[:connections] || ::Settings.ems_refresh.rhevm.connections,
+        :pipeline        => options[:pipeline] || ::Settings.ems_refresh.rhevm.pipeline
       )
     end
 
