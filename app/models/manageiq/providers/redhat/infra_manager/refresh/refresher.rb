@@ -34,6 +34,8 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
           end
         end
 
+        empty_hash_when_target_not_found!(target, data) if targeted_refresh?(target)
+
         case ems.highest_allowed_api_version
         when '3'
           data[:ems_api_version] = {:api_version => inventory.service.version_string}
@@ -92,6 +94,32 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
 
     def inventory_from_ovirt(ems)
       ems.rhevm_inventory
+    end
+
+    private
+
+    def empty_hash_when_target_not_found!(target, data)
+      empty_the_hash!(data) if corresponding_hashes_empty?(target, data)
+    end
+
+    def targeted_refresh?(target)
+      target.kind_of?(VmOrTemplate) || target.kind_of?(Host)
+    end
+
+    def empty_the_hash!(data)
+      data.each_key { |k| data[k] = nil }
+    end
+
+    def corresponding_hashes_empty?(target, data)
+      case target
+      when VmOrTemplate
+        return data[:template].blank? if target.template?
+        data[:vm].blank?
+      when Host
+        data[:host].blank?
+      else
+        false
+      end
     end
   end
 end
