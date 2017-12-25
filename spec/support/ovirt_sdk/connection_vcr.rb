@@ -17,8 +17,10 @@ module Spec::Support::OvirtSDK
     def wait(request)
       req_key = "#{request.url}#{request.query}#{request.method}#{request.body}"
       @all_req_hash[req_key] ||= []
-      res = @all_req_hash[req_key].shift
-      return http_response_hash_to_obj(res) if res
+      unless @is_recording
+        res = @all_req_hash[req_key].shift
+        return http_response_hash_to_obj(res) if res
+      end
       res = super(request)
       @all_req_hash[req_key] << http_response_to_hash(res)
       File.write(path_to_recording, @all_req_hash.to_yaml)
