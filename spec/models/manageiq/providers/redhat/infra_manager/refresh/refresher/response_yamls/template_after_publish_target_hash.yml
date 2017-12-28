@@ -1,0 +1,54 @@
+---
+:vms:
+- &1
+  :type: ManageIQ::Providers::Redhat::InfraManager::Template
+  :ems_ref: "/api/templates/7d97cc6a-5c96-40f7-950b-a89c316cc377"
+  :ems_ref_obj: "/api/templates/7d97cc6a-5c96-40f7-950b-a89c316cc377"
+  :uid_ems: 7d97cc6a-5c96-40f7-950b-a89c316cc377
+  :vendor: redhat
+  :name: ubu_pab11
+  :location: 7d97cc6a-5c96-40f7-950b-a89c316cc377.ovf
+  :template: true
+  :ems_cluster: &2
+    :ems_ref: "/api/clusters/5a0d6225-019b-0089-0098-00000000027e"
+    :ems_ref_obj: "/api/clusters/5a0d6225-019b-0089-0098-00000000027e"
+    :uid_ems: 5a0d6225-019b-0089-0098-00000000027e
+    :name: Default
+    :ems_children:
+      :resource_pools:
+      - &3
+        :name: Default for Cluster Default
+        :uid_ems: 5a0d6225-019b-0089-0098-00000000027e_respool
+        :is_default: true
+        :ems_children:
+          :vms:
+          - *1
+:clusters:
+- *2
+:resource_pools:
+- *3
+:folders:
+- :type: Datacenter
+  :ems_ref: "/api/datacenters/5a0d6225-0202-038c-0259-0000000001b7"
+  :ems_ref_obj: "/api/datacenters/5a0d6225-0202-038c-0259-0000000001b7"
+  :uid_ems: 5a0d6225-0202-038c-0259-0000000001b7
+  :ems_children:
+    :folders:
+    - &4
+      :type: EmsFolder
+      :name: vm
+      :uid_ems: 5a0d6225-0202-038c-0259-0000000001b7_vm
+      :hidden: true
+      :ems_children:
+        :vms:
+        - *1
+    - &5
+      :type: EmsFolder
+      :name: host
+      :uid_ems: 5a0d6225-0202-038c-0259-0000000001b7_host
+      :hidden: true
+      :ems_children:
+        :clusters:
+        - *2
+- *4
+- *5
