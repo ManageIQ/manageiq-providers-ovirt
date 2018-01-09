@@ -107,30 +107,8 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
   def verify_credentials_for_rhevm(options = {})
     with_provider_connection(options) { |connection| connection.test(true) }
-  rescue SocketError, Errno::EHOSTUNREACH, Errno::ENETUNREACH
-    _log.warn($ERROR_INFO)
-    raise MiqException::MiqUnreachableError, $ERROR_INFO
-  rescue MiqException::MiqUnreachableError => e
-    raise e
-  rescue RestClient::Unauthorized
-    raise MiqException::MiqInvalidCredentialsError, "Incorrect user name or password."
-  rescue OvirtSDK4::Error => e
-    rethrow_as_a_miq_error(e)
-  rescue
-    _log.error("Error while verifying credentials #{$ERROR_INFO}")
-    raise MiqException::MiqEVMLoginError, $ERROR_INFO
-  end
-
-  def rethrow_as_a_miq_error(e)
-    case e.message
-    when /The username or password is incorrect/
-      raise MiqException::MiqInvalidCredentialsError
-    when /Couldn't connect to server/, /Couldn't resolve host name/
-      raise MiqException::MiqUnreachableError, $ERROR_INFO
-    else
-      _log.error("Error while verifying credentials #{$ERROR_INFO}")
-      raise MiqException::MiqEVMLoginError, $ERROR_INFO
-    end
+  rescue Exception => e
+    self.class.handle_credentials_verification_error(e)
   end
 
   def rhevm_metrics_connect_options(options = {})
@@ -237,6 +215,35 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       end
     end
 
+    def rethrow_as_a_miq_error(ovirt_sdk_4_error)
+      case ovirt_sdk_4_error.message
+      when /The username or password is incorrect/
+        raise MiqException::MiqInvalidCredentialsError
+      when /Couldn't connect to server/, /Couldn't resolve host name/
+        raise MiqException::MiqUnreachableError, $ERROR_INFO
+      else
+        _log.error("Error while verifying credentials #{$ERROR_INFO}")
+        raise MiqException::MiqEVMLoginError, $ERROR_INFO
+      end
+    end
+
+    def handle_credentials_verification_error(e)
+      case e
+      when SocketError, Errno::EHOSTUNREACH, Errno::ENETUNREACH
+        _log.warn($ERROR_INFO)
+        raise MiqException::MiqUnreachableError, $ERROR_INFO
+      when MiqException::MiqUnreachableError
+        raise e
+      when RestClient::Unauthorized
+        raise MiqException::MiqInvalidCredentialsError, "Incorrect user name or password."
+      when OvirtSDK4::Error
+        rethrow_as_a_miq_error(e)
+      else
+        _log.error("Error while verifying credentials #{$ERROR_INFO}")
+        raise MiqException::MiqEVMLoginError, $ERROR_INFO
+      end
+    end
+
     #
     # This method is called only when the UI button to verify the connection details is clicked. It isn't used create
     # the connections actually used by the provider.
@@ -264,6 +271,8 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     def raw_connect(opts = {})
       check_connect_api(opts)
       check_connect_metrics(opts)
+    rescue Exception => e
+      handle_credentials_verification_error(e)
     end
 
     #
