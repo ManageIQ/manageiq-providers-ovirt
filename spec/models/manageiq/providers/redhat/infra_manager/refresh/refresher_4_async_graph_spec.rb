@@ -48,6 +48,42 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     assert_relationship_tree
   end
 
+  it "will perform a refresh and reconnect a host" do
+    FactoryGirl.create(:host_redhat,
+                       :ext_management_system => nil,
+                       :ems_ref               => "/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a",
+                       :ems_ref_obj           => "/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a",
+                       :name                  => "bodh1",
+                       :hostname              => "bodh1.usersys.redhat.com",
+                       :ipaddress             => "10.35.19.12",
+                       :uid_ems               => "5bf6b336-f86d-4551-ac08-d34621ec5f0a")
+
+    EmsRefresh.refresh(@ems)
+    @ems.reload
+
+    host = Host.find_by(:name => "bodh1")
+    expect(host.ext_management_system).to eq(@ems)
+    expect(Host.where(:uid_ems => "5bf6b336-f86d-4551-ac08-d34621ec5f0a").count).to eq 1
+  end
+
+  it "will perform a refresh and reconnect a vm" do
+    @vm = FactoryGirl.create(:vm_redhat,
+                             :ext_management_system => nil,
+                             :ems_ref               => "/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f",
+                             :ems_ref_obj           => "/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f",
+                             :uid_ems               => "3a9401a0-bf3d-4496-8acf-edd3e903511f",
+                             :vendor                => "redhat",
+                             :raw_power_state       => "up",
+                             :location              => "3a9401a0-bf3d-4496-8acf-edd3e903511f.ovf")
+
+    EmsRefresh.refresh(@ems)
+    @ems.reload
+
+    vm = VmOrTemplate.find_by(:uid_ems => "3a9401a0-bf3d-4496-8acf-edd3e903511f")
+    expect(vm.ext_management_system).to eq(@ems)
+    expect(VmOrTemplate.where(:uid_ems => "3a9401a0-bf3d-4496-8acf-edd3e903511f").count).to eq 1
+  end
+
   def assert_table_counts(_lan_number)
     expect(ExtManagementSystem.count).to eq(2)
     expect(EmsFolder.count).to eq(7)
