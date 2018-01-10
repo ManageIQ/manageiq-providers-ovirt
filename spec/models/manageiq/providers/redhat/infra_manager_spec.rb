@@ -459,6 +459,22 @@ describe ManageIQ::Providers::Redhat::InfraManager do
         expect(@ems.network_manager.security_protocol).to eq("ssl")
       end
     end
+
+    it "removes network manager" do
+      allow(@ems).to receive(:ovirt_services).and_return(double(:collect_external_network_providers => {}))
+      allow(Zone).to receive_messages(:determine_queue_zone => "defaultzone")
+      expect(ExtManagementSystem.count).to eq(2)
+      @ems.ensure_managers
+      deliver_queue_messages
+      expect(ExtManagementSystem.count).to eq(1)
+    end
+
+    def deliver_queue_messages
+      MiqQueue.order(:id).each do |queue_message|
+        status, message, result = queue_message.deliver
+        queue_message.delivered(status, message, result)
+      end
+    end
   end
 
   context 'catalog types' do

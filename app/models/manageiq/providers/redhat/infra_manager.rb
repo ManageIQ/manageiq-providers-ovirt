@@ -70,7 +70,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
         populate_network_manager_connectivity(auth_url)
       end
     elsif network_manager
-      network_manager.orchestrate_destroy
+      network_manager.destroy_queue
     end
   end
 
