@@ -35,7 +35,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Netw
 
   def configure_dialog_nic
     vlan = get_option(:vlan)
-    return if vlan.blank?
+    return if vlan.blank? || vlan == '<Template>'
     options[:networks] ||= []
     options[:networks][0] ||= begin
       _log.info("vlan: #{vlan.inspect}")

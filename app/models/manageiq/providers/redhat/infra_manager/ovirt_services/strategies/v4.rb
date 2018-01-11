@@ -117,6 +117,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       end
 
       vlans['<Empty>'] = _('<No Profile>')
+      vlans['<Template>'] = _('<Use template nics>')
     end
 
     def filter_allowed_hosts(_workflow, all_hosts)
