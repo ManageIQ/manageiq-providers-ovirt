@@ -218,7 +218,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     def rethrow_as_a_miq_error(ovirt_sdk_4_error)
       case ovirt_sdk_4_error.message
       when /The username or password is incorrect/
-        raise MiqException::MiqInvalidCredentialsError
+        raise MiqException::MiqInvalidCredentialsError, "Incorrect user name or password."
       when /Couldn't connect to server/, /Couldn't resolve host name/
         raise MiqException::MiqUnreachableError, $ERROR_INFO
       else
