@@ -54,4 +54,8 @@ class ManageIQ::Providers::Redhat::InfraManager::Host < ::Host
   def exit_maint_mode
     ext_management_system.ovirt_services.host_activate(self)
   end
+
+  def self.display_name(number = 1)
+    n_('Host (Redhat)', 'Hosts (Redhat)', number)
+  end
 end

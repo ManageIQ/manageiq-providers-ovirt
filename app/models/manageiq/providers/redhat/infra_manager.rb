@@ -243,4 +243,8 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
     ems_version = api_version[/\d+\.\d+\.?\d*/x]
     Gem::Version.new(ems_version) >= Gem::Version.new(version)
   end
+
+  def self.display_name(number = 1)
+    n_('Infrastructure Provider (Red Hat)', 'Infrastructure Providers (Red Hat)', number)
+  end
 end
