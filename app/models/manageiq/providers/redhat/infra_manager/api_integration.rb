@@ -78,8 +78,10 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     @rhevm_service ||= connect(:service => "Service")
   end
 
-  def rhevm_inventory
-    @rhevm_inventory ||= connect(:service => "Inventory")
+  def rhevm_inventory(opts = {})
+    connect_options = { :service => "Inventory" }
+    connect_options[:version] = 3 if opts[:force_v3]
+    @rhevm_inventory ||= connect(connect_options)
   end
 
   def ovirt_services(args = {})
