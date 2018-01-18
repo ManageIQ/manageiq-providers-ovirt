@@ -102,4 +102,8 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm < ManageIQ::Providers::Infra
   def self.calculate_power_state(raw_power_state)
     POWER_STATES[raw_power_state] || super
   end
+
+  def self.display_name(number = 1)
+    n_('Virtual Machine (Red Hat)', 'Virtual Machines (Red Hat)', number)
+  end
 end
