@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 77 ending 2018-01-15
+
+### Fixed
+- Fix message for credentials validation [(#195)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/195)
+- Fix wrong call to 'orchestrate_destroy' with no parameters [(#192)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/192)
+- Reconnect host on provider add [(#189)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/189)
+- Credential verification errors for new provider [(#188)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/188)
+- Block migration call [(#182)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/182)
+- Set '<Use template nics>' as the default vnic profile option [(#150)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/150)
+
 ## Unreleased as of Sprint 76 ending 2018-01-01
 
 ### Fixed
