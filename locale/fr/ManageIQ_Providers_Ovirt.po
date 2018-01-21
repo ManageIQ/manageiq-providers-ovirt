@@ -1,12 +1,13 @@
 # Laurence Ganseman <laurence.ganseman@stoquart.com>, 2017. #zanata
 # Nathalie Stoquart <nateltrad@gmail.com>, 2017. #zanata
+# croe <croe@redhat.com>, 2017. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_Providers_Ovirt 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-31 17:02+0100\n"
-"PO-Revision-Date: 2017-11-14 05:29-0500\n"
-"Last-Translator: Nathalie Stoquart <nateltrad@gmail.com>\n"
+"PO-Revision-Date: 2017-11-28 07:04-0500\n"
+"Last-Translator: croe <croe@redhat.com>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -61,7 +62,7 @@ msgid ""
 "':use_ovirt_engine_sdk: true' in settings.yml)."
 msgstr ""
 "La limite de mémoire est prise en charge uniquement lorsque ovirt-engine-sdk"
-" est utilisé (Pour activer, définissez : ':use_ovirt_engine_sdk: true' dans "
+" est utilisé (pour activer, définissez : ':use_ovirt_engine_sdk: true' dans "
 "settings.yml)."
 
 #: ../app/models/manageiq/providers/redhat/infra_manager/vm_or_template_shared/scanning.rb:50
@@ -88,8 +89,8 @@ msgstr "Cliché de VM demandé introuvable, impossible de supprimer le cliché"
 #: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:74
 msgid "Revert is allowed only when vm is down. Current state is %{state}"
 msgstr ""
-"L''annulation n''est autorisée que lorsque la VM est indisponible. "
-"Actuellement, l''état est %{state}"
+"L'annulation n'est autorisée que lorsque la VM est indisponible. "
+"Actuellement, l'état est %{state}"
 
 #: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:60
 msgid "Revert is not allowed for a snapshot that is the active one"
