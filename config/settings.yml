@@ -14,9 +14,6 @@
       :open_timeout: 1.minute
     :blacklisted_event_names: []
   :ems_ovirt:
-    :ems_network:
-      :refresh:
-        :inventory_object_refresh: true
     :event_handling:
       :event_groups:
         :console:
@@ -61,6 +58,9 @@
     :inventory_object_refresh: false
     :pipeline: 40
     :connections: 10
+  :redhat_network:
+    :is_admin: false
+    :inventory_object_refresh: true
 :log:
   :level_rhevm: info
 :workers:
