@@ -666,12 +666,12 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
     end
 
     #
-    # Adjusts the guaranteed memory of a virtual machie so that it satisfies the constraints imposed by the
+    # Adjusts the guaranteed memory of a virtual machine so that it satisfies the constraints imposed by the
     # engine.
     #
     # @param vm [OvirtSDK4::Vm] The current representation of the virtual machine.
     # @param memory [Integer] The new amount of memory requested by the user (and maybe already adjusted).
-    # @return [Integer] The amount of guarantted memory to request so that it satisfies the constraints imposed by
+    # @return [Integer] The amount of guaranteed memory to request so that it satisfies the constraints imposed by
     #   the engine.
     #
     def calculate_adjusted_guaranteed_memory(vm, memory)
