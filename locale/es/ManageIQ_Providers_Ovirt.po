@@ -1,11 +1,12 @@
 # Gisela Leal <giselaleal21@gmail.com>, 2017. #zanata
+# sreedevisamudrala <sreedevi.samudrala@welocalize.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_Providers_Ovirt 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-31 17:02+0100\n"
-"PO-Revision-Date: 2017-11-09 09:34-0500\n"
-"Last-Translator: Gisela Leal <giselaleal21@gmail.com>\n"
+"PO-Revision-Date: 2018-01-17 04:04-0500\n"
+"Last-Translator: sreedevisamudrala <sreedevi.samudrala@welocalize.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,7 +29,7 @@ msgstr "%{description} La memoria de la MV es mayor al límite de memoria"
 
 #: ../app/models/manageiq/providers/redhat/infra_manager/ovirt_services/strategies/v4.rb:119
 msgid "<Empty>"
-msgstr "<Empty>"
+msgstr "<Vacío>"
 
 #: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:78
 msgid "Cannot import archived VMs"
@@ -60,7 +61,7 @@ msgid ""
 "':use_ovirt_engine_sdk: true' in settings.yml)."
 msgstr ""
 "El límite de memoria solo se admite cuando se utiliza ovirt-engine-sdk (Para"
-" activarlo se debe configurar: ':use_ovirt_engine_sdk: true' in "
+" activarlo se debe configurar: ':use_ovirt_engine_sdk: true' en "
 "settings.yml)."
 
 #: ../app/models/manageiq/providers/redhat/infra_manager/vm_or_template_shared/scanning.rb:50
@@ -103,7 +104,9 @@ msgstr "El proveedor de origen debe ser de tipo Vmware"
 
 #: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:159
 msgid "Template sealing is supported only for non-Windows OS."
-msgstr "El sello de la plantilla se admite solo para SO que no son Windows."
+msgstr ""
+"El sello de la plantilla se admite solo para Sistemas Operativos que no son "
+"Windows."
 
 #: ../app/models/manageiq/providers/redhat/infra_manager/host.rb:47
 msgid "The Host is not connected to an active provider"
