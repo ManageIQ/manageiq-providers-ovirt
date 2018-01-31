@@ -1,3 +1,5 @@
+require 'fog/openstack'
+
 describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   before(:each) do
     stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
@@ -34,6 +36,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
   it "will perform a full refresh on v4.1" do
     EmsRefresh.refresh(@ems)
+    VCR.use_cassette("#{described_class.name.underscore}_ovn_provider") do
+      Fog::OpenStack.instance_variable_set(:@version, nil)
+      EmsRefresh.refresh(@ems.network_manager)
+    end
     @ems.reload
 
     assert_table_counts(3)
@@ -112,6 +118,11 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
     expect(Relationship.count).to eq(45)
     expect(MiqQueue.count).to eq(21)
+
+    expect(CloudNetwork.count).to eq(6)
+    expect(CloudSubnet.count).to eq(2)
+    expect(NetworkRouter.count).to eq(1)
+    expect(NetworkPort.count).to eq(1)
   end
 
   def assert_ems
@@ -141,6 +152,109 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :api_version       => "v2",
       :security_protocol => "non-ssl",
       :zone_id           => @ems.zone_id
+    )
+
+    assert_specific_cloud_network
+    assert_specific_network_router
+    assert_specific_network_port
+  end
+
+  def assert_specific_cloud_network
+    @cloud_network = CloudNetwork.find_by(:name => "net1")
+    expect(@cloud_network).to have_attributes(
+      :ems_id                    => @ems.network_manager.id,
+      :type                      => "ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Private",
+      :name                      => "net1",
+      :ems_ref                   => "3bd87e3d-f66a-4e9c-ab56-62f98db791db",
+      :shared                    => nil,
+      :status                    => "active",
+      :enabled                   => nil,
+      :external_facing           => nil,
+      :orchestration_stack       => nil,
+      :provider_physical_network => nil,
+      :provider_network_type     => nil,
+      :provider_segmentation_id  => nil,
+      :port_security_enabled     => nil,
+      :qos_policy_id             => nil,
+      :vlan_transparent          => nil,
+      :maximum_transmission_unit => nil
+    )
+
+    @cloud_tenant = @cloud_network.cloud_tenant
+
+    expect(@cloud_tenant).to have_attributes(
+      :ems_id      => @ems.id,
+      :type        => "ManageIQ::Providers::Openstack::CloudManager::CloudTenant",
+      :name        => "tenant",
+      :description => "tenant",
+      :enabled     => true,
+      :ems_ref     => "00000000000000000000000000000001",
+      :parent_id   => nil,
+    )
+
+    expect(@cloud_network.cloud_subnets.count).to eq(1)
+    @cloud_subnet = @cloud_network.cloud_subnets.first
+    expect(@cloud_subnet).to have_attributes(
+      :ems_id                         => @ems.network_manager.id,
+      :type                           => "ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet",
+      :name                           => "sub_net1",
+      :ems_ref                        => "5bcefbad-cde7-4410-943d-0b5c168c1c3c",
+      :cidr                           => "11.0.0.0/24",
+      :status                         => "active",
+      :network_protocol               => "ipv4",
+      :gateway                        => "11.0.0.0",
+      :dhcp_enabled                   => nil,
+      :dns_nameservers                => nil,
+      :ipv6_router_advertisement_mode => nil,
+      :ipv6_address_mode              => nil,
+      :allocation_pools               => nil,
+      :host_routes                    => nil,
+      :ip_version                     => 4,
+      :cloud_tenant_id                => @cloud_tenant.id,
+      :parent_cloud_subnet            => nil
+    )
+
+    # TODO: test a port connected to a subnet, currently there is a bug in the provider avoids testing it
+  end
+
+  def assert_specific_network_router
+    @router = NetworkRouter.find_by(:name => "router1")
+    expect(@router).to have_attributes(
+      :ems_id                => @ems.network_manager.id,
+      :type                  => "ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter",
+      :name                  => "router1",
+      :ems_ref               => "1a12e744-ee50-4fee-a8d5-f6636e27470d",
+      :admin_state_up        => "[true]",
+      :status                => "ACTIVE",
+      :external_gateway_info => nil,
+      :distributed           => nil,
+      :routes                => [],
+      :high_availability     => nil,
+      :cloud_tenant_id       => @cloud_tenant.id,
+      :cloud_network         => nil
+    )
+  end
+
+  def assert_specific_network_port
+    @port = NetworkPort.find_by(:name => "nic2")
+    expect(@port).to have_attributes(
+      :ems_id                            => @ems.network_manager.id,
+      :type                              => "ManageIQ::Providers::Openstack::NetworkManager::NetworkPort",
+      :name                              => "nic2",
+      :ems_ref                           => "2ca0b52d-9af5-4968-82e8-226cec6e6db7",
+      :admin_state_up                    => false,
+      :status                            => nil,
+      :mac_address                       => "00:1a:4a:16:01:01",
+      :device_owner                      => "oVirt",
+      :device_ref                        => "d1a9b8ed-6d6c-4299-a9bb-a5277ce5b513",
+      :device                            => nil,
+      :cloud_tenant_id                   => @cloud_tenant.id,
+      :binding_host_id                   => nil,
+      :binding_virtual_interface_type    => nil,
+      :binding_virtual_interface_details => nil,
+      :binding_profile                   => nil,
+      :extra_dhcp_opts                   => nil,
+      :allowed_address_pairs             => nil
     )
   end
 
