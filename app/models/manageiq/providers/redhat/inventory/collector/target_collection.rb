@@ -98,10 +98,10 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
   def vms
     v = []
-    return v if references(:vms).blank?
+    return v if select_vms(references(:vms)).blank?
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
-      references(:vms).each do |ems_ref|
+      select_vms(references(:vms)).each do |ems_ref|
         begin
           v << connection.system_service.vms_service.vm_service(uuid_from_ems_ref(ems_ref)).get
         rescue OvirtSDK4::Error # when 404
@@ -113,22 +113,30 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     v
   end
 
+  def select_vms(references_lst)
+    references_lst.select { |ref| ref.include?('vms') }
+  end
+
+  def select_templates(references_lst)
+    references_lst.select { |ref| ref.include?('templates') }
+  end
+
   def templates
-    temp = []
-    return temp if references(:templates).blank?
+    t = []
+    return t if select_templates(references(:vms)).blank?
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
-      references(:templates).each do |ems_ref|
+      select_templates(references(:vms)).each do |ems_ref|
         begin
           # returns OvirtSDK4::List
-          temp + connection.system_service.templates_service.list(:search => "vm.id=#{uuid_from_ems_ref(ems_ref)}")
+          t << connection.system_service.templates_service.template_service(uuid_from_ems_ref(ems_ref)).get
         rescue OvirtSDK4::Error # when 404
           nil
         end
       end
     end
 
-    temp
+    t
   end
 
   def references(collection)
@@ -171,7 +179,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   end
 
   def infer_related_vm_ems_refs_db!
-    changed_vms = manager.vms.where(:ems_ref => references(:vms))
+    changed_vms = manager.vms_and_templates.where(:ems_ref => references(:vms))
 
     changed_vms.each do |vm|
       unless vm.ems_cluster.nil?
@@ -186,11 +194,12 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   end
 
   def infer_related_vm_ems_refs_api!
-    vms.each do |vm|
+    vms_and_templates = Array(vms) + Array(templates)
+    vms_and_templates.each do |vm|
       clusters = collect_ems_clusters
       clusters.each do |c|
         add_simple_target!(:ems_clusters, ems_ref_from_sdk(c))
-        if c.id == vm.cluster.id
+        if c.id == vm.cluster&.id
           add_simple_target!(:datacenters, ems_ref_from_sdk(c.data_center))
         end
       end
