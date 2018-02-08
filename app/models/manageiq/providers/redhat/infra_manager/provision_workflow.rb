@@ -137,6 +137,7 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
     return nil if limited.nil? || limited.zero?
 
     ems = source_ems
+    return nil if ems.blank?
     unless ems.use_ovirt_sdk?
       return _("Memory Limit is supported only when using ovirt-engine-sdk (To enable, set: ':use_ovirt_engine_sdk: true' in settings.yml).")
     end
