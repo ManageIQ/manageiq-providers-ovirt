@@ -37,8 +37,10 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing::Strategies
 
       uid_ems = ManageIQ::Providers::Redhat::InfraManager.extract_ems_ref_id(vm_ref)
       location = "#{uid_ems}.ovf"
-      return location if dc.blank?
-
+      if dc.blank?
+        hash[:vm_location] = location
+        return hash
+      end
       dc_ref = ems_ref_from_object_in_event(dc)
       dc_uid = ManageIQ::Providers::Redhat::InfraManager.extract_ems_ref_id(dc_ref)
 
