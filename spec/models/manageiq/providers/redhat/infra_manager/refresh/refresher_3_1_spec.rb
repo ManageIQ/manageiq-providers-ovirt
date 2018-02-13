@@ -20,6 +20,24 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(described_class.ems_type).to eq(:rhevm)
   end
 
+  it 'works correctly even if graph refresh is turned on' do
+    stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
+    VCR.use_cassette("#{described_class.name.underscore}_3_1") do
+      EmsRefresh.refresh(@ems)
+    end
+    @ems.reload
+
+    assert_table_counts
+    assert_ems
+    assert_specific_cluster
+    assert_specific_storage
+    assert_specific_host
+    assert_specific_vm_powered_on
+    assert_specific_vm_powered_off
+    assert_specific_template
+    assert_relationship_tree
+  end
+
   it "will perform a full refresh on v3.1" do
     VCR.use_cassette("#{described_class.name.underscore}_3_1") do
       EmsRefresh.refresh(@ems)
