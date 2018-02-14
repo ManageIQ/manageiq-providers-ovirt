@@ -1,4 +1,4 @@
-require 'manageiq/network/port'
+require 'manageiq/network_discovery/port'
 require 'ovirt'
 
 module ManageIQ
