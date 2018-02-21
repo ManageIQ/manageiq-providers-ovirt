@@ -5,7 +5,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_Providers_Ovirt 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-31 17:02+0100\n"
 "PO-Revision-Date: 2017-11-28 07:04-0500\n"
 "Last-Translator: croe <croe@redhat.com>\n"
 "Language-Team: French\n"
@@ -16,126 +15,84 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Generator: Zanata 3.9.6\n"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:145
-msgid ""
-"\"Memory Limit is supported for RHV 4.1 and above. Current provider version "
-"is #{ems.api_version}.\""
-msgstr ""
-"\"La limite de mémoire est prise en charge pour les versions RHV 4.1 et "
-"supérieures. La version du fournisseur actuelle est #{ems.api_version}.\""
-
-#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:150
 msgid "%{description} VM Memory is larger than Memory Limit"
 msgstr "La mémoire de la VM %{description} est supérieure à la limite"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/ovirt_services/strategies/v4.rb:119
-msgid "<Empty>"
-msgstr "<Vide>"
+msgid "<No Profile>"
+msgstr ""
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:78
+msgid "<Use template nics>"
+msgstr ""
+
 msgid "Cannot import archived VMs"
 msgstr "Impossible d'importer les VM archivées"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:80
-msgid "Cannot import to a RHEV provider of version < 4.1.5"
-msgstr "Impossible d'importer vers un fournisseur RHEV de version < 4.1.5"
+msgid "Cannot import to a RHV provider of version < 4.1.5"
+msgstr ""
 
-#: ../app/models/manageiq/providers/redhat/infra_manager.rb:167
 msgid "Datastore does not exist, unable to add disk"
 msgstr "Le magasin de données n'existe pas ; impossible d'ajouter le disque"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:64
 msgid "Delete is not allowed for a snapshot that is the active one"
 msgstr "La suppression n'est pas autorisée sur un cliché actif"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:70
 msgid "Error while configuring VM network."
 msgstr "Une erreur s'est produite lors de la configuration du réseau de la VM"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:56
 msgid "Error while importing the VM."
 msgstr "Une erreur s'est produite lors de l'importation de la VM."
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:141
-msgid ""
-"Memory Limit is supported only when using ovirt-engine-sdk (To enable, set: "
-"':use_ovirt_engine_sdk: true' in settings.yml)."
+msgid "Memory Limit is supported for RHV 4.1 and above. Current provider version is #{ems.api_version}."
 msgstr ""
-"La limite de mémoire est prise en charge uniquement lorsque ovirt-engine-sdk"
-" est utilisé (pour activer, définissez : ':use_ovirt_engine_sdk: true' dans "
-"settings.yml)."
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_or_template_shared/scanning.rb:50
+msgid "Memory Limit is supported only when using ovirt-engine-sdk (To enable, set: ':use_ovirt_engine_sdk: true' in settings.yml)."
+msgstr "La limite de mémoire est prise en charge uniquement lorsque ovirt-engine-sdk est utilisé (pour activer, définissez : ':use_ovirt_engine_sdk: true' dans settings.yml)."
+
 msgid "Perform SmartState Analysis on this VM"
 msgstr "Effectuer une analyse SmartState sur cette VM"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:28
 msgid "Publish operation in not supported"
 msgstr "La publication n'est pas prise en charge"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:21
 msgid "Removing all snapshots is currently not supported"
-msgstr ""
-"La suppression de tous les clichés n'est pas prise en charge actuellement"
+msgstr "La suppression de tous les clichés n'est pas prise en charge actuellement"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:40
 msgid "Requested VM snapshot not found, unable to RevertTo snapshot"
 msgstr "Cliché de VM demandé introuvable, impossible de revenir au cliché"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:32
 msgid "Requested VM snapshot not found, unable to remove snapshot"
 msgstr "Cliché de VM demandé introuvable, impossible de supprimer le cliché"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:74
 msgid "Revert is allowed only when vm is down. Current state is %{state}"
-msgstr ""
-"L'annulation n'est autorisée que lorsque la VM est indisponible. "
-"Actuellement, l'état est %{state}"
+msgstr "L'annulation n'est autorisée que lorsque la VM est indisponible. Actuellement, l'état est %{state}"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:60
 msgid "Revert is not allowed for a snapshot that is the active one"
 msgstr "L'annulation n'est pas autorisée sur un cliché actif"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:82
 msgid "Source provider must be of type Vmware"
 msgstr "Le fournisseur de la source doit être de type Vmware"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:159
 msgid "Template sealing is supported only for non-Windows OS."
-msgstr ""
-"La généralisation de modèle est prise en charge uniquement sur les systèmes "
-"d'exploitation non Windows."
+msgstr "La généralisation de modèle est prise en charge uniquement sur les systèmes d'exploitation non Windows."
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/host.rb:47
 msgid "The Host is not connected to an active provider"
 msgstr "L'hôte n'est pas associé à un fournisseur actif"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/guest.rb:7
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/guest.rb:12
 msgid "The VM is not powered on"
 msgstr "La VM n'est pas activée"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:21
 msgid "The provider does not support reconfigure disks"
 msgstr "Le fournisseur ne prend pas en charge la reconfiguration de disques"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:19
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:30
 msgid "The virtual machine is not associated with a provider"
 msgstr "La VM sélectionnée n'est pas associée à un fournisseur."
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:34
 msgid "The virtual machine must be down"
 msgstr "La VM doit être indisponible"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/api_integration.rb:231
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:32
 msgid "This feature is not supported by the api version of the provider"
-msgstr ""
-"Cette fonctionnalité n'est pas prise en charge par la version d'API de ce "
-"fournisseur"
+msgstr "Cette fonctionnalité n'est pas prise en charge par la version d'API de ce fournisseur"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_or_template_shared/scanning.rb:42
 msgid ""
 "VMs must be scanned from an EVM server whose host is attached to the same\n"
 "  storage as the VM unless overridden via SmartProxy affinity.\n"
@@ -149,10 +106,8 @@ msgstr ""
 " 1) Des LUN directes sont attachées à ManageIQ\n"
 " 2) La relation de gestion est définie pour ManageIQ"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/template.rb:8
 msgid "not connected to ems"
 msgstr "non connecté à EMS"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:17
 msgid "storage is missing"
 msgstr "stockage manquant"

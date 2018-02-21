@@ -3,7 +3,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_Providers_Ovirt 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-31 17:02+0100\n"
 "PO-Revision-Date: 2017-11-13 05:46-0500\n"
 "Last-Translator: asasaki <asasaki@redhat.com>\n"
 "Language-Team: Japanese\n"
@@ -14,116 +13,84 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: Zanata 3.9.6\n"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:145
-msgid ""
-"\"Memory Limit is supported for RHV 4.1 and above. Current provider version "
-"is #{ems.api_version}.\""
-msgstr "\"メモリー制限が RHV 4.1 以上でサポートされています。プロバイダーの現行バージョンは #{ems.api_version} です。\""
-
-#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:150
 msgid "%{description} VM Memory is larger than Memory Limit"
 msgstr "%{description} 仮想マシンのメモリーはメモリー制限より大きくなっています"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/ovirt_services/strategies/v4.rb:119
-msgid "<Empty>"
-msgstr "<Empty>"
+msgid "<No Profile>"
+msgstr ""
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:78
+msgid "<Use template nics>"
+msgstr ""
+
 msgid "Cannot import archived VMs"
 msgstr "アーカイブ済みの仮想マシンをインポートできません"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:80
-msgid "Cannot import to a RHEV provider of version < 4.1.5"
-msgstr "バージョン < 4.1.5 の RHEV プロバイダーにインポートできません"
+msgid "Cannot import to a RHV provider of version < 4.1.5"
+msgstr ""
 
-#: ../app/models/manageiq/providers/redhat/infra_manager.rb:167
 msgid "Datastore does not exist, unable to add disk"
 msgstr "データストアは存在せず、ディスクを追加できません"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:64
 msgid "Delete is not allowed for a snapshot that is the active one"
 msgstr "スナップショットがアクティブな場合に削除は許可されません"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:70
 msgid "Error while configuring VM network."
 msgstr "仮想マシンネットワークの構成中のエラー。"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:56
 msgid "Error while importing the VM."
 msgstr "仮想マシンのインポート中のエラー。"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:141
-msgid ""
-"Memory Limit is supported only when using ovirt-engine-sdk (To enable, set: "
-"':use_ovirt_engine_sdk: true' in settings.yml)."
+msgid "Memory Limit is supported for RHV 4.1 and above. Current provider version is #{ems.api_version}."
 msgstr ""
-"メモリー制限は ovirt-engine-sdk の使用時にのみサポートされます (有効にするには、 settings.yml に "
-"':use_ovirt_engine_sdk: true' を設定します)。"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_or_template_shared/scanning.rb:50
+msgid "Memory Limit is supported only when using ovirt-engine-sdk (To enable, set: ':use_ovirt_engine_sdk: true' in settings.yml)."
+msgstr "メモリー制限は ovirt-engine-sdk の使用時にのみサポートされます (有効にするには、 settings.yml に ':use_ovirt_engine_sdk: true' を設定します)。"
+
 msgid "Perform SmartState Analysis on this VM"
 msgstr "この仮想マシンの SmartState 分析の実行"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:28
 msgid "Publish operation in not supported"
 msgstr "公開操作がサポートされていません"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:21
 msgid "Removing all snapshots is currently not supported"
 msgstr "すべてのスナップショットの削除は現在サポートされていません。"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:40
 msgid "Requested VM snapshot not found, unable to RevertTo snapshot"
 msgstr "要求された仮想マシンのスナップショットが見つかりません。スナップショットに復元できません"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:32
 msgid "Requested VM snapshot not found, unable to remove snapshot"
 msgstr "要求された仮想マシンのスナップショットが見つかりません。スナップショットに削除できません"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:74
 msgid "Revert is allowed only when vm is down. Current state is %{state}"
 msgstr "仮想マシンがダウンしている場合にのみ元に戻すことができます。現在の状態は %{state} です。"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:60
 msgid "Revert is not allowed for a snapshot that is the active one"
 msgstr "スナップショットがアクティブな場合に元に戻すことができません。"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:82
 msgid "Source provider must be of type Vmware"
 msgstr "ソースプロバイダーのタイプを Vmware にする必要があります"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:159
 msgid "Template sealing is supported only for non-Windows OS."
 msgstr "テンプレートのシーリングは Windows 以外の OS でのみサポートされています。"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/host.rb:47
 msgid "The Host is not connected to an active provider"
 msgstr "ホストはアクティブなプロバイダーに接続されていません"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/guest.rb:7
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/guest.rb:12
 msgid "The VM is not powered on"
 msgstr "仮想マシンの電源がオンになっていません"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:21
 msgid "The provider does not support reconfigure disks"
 msgstr "プロバイダーは再構成ディスクをサポートしません"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:19
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:30
 msgid "The virtual machine is not associated with a provider"
 msgstr "仮想マシンがプロバイダーに関連付けられていません"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:34
 msgid "The virtual machine must be down"
 msgstr "仮想マシンは停止中である必要があります"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/api_integration.rb:231
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:32
 msgid "This feature is not supported by the api version of the provider"
 msgstr "この機能はプロバイダーの API バージョンでサポートされていません"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_or_template_shared/scanning.rb:42
 msgid ""
 "VMs must be scanned from an EVM server whose host is attached to the same\n"
 "  storage as the VM unless overridden via SmartProxy affinity.\n"
@@ -136,10 +103,8 @@ msgstr ""
 "  1) ダイレクト LUN が ManageIQ アプライアンスに割り当てられている\n"
 "  2) 管理リレーションシップが ManageIQ アプライアンスに設定されている"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/template.rb:8
 msgid "not connected to ems"
 msgstr "EMS に接続されていません"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:17
 msgid "storage is missing"
 msgstr "ストレージがありません"
