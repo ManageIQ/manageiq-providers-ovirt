@@ -5,6 +5,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::NetworkManager < ManageIQ:
   end
 
   def cloud_tenants
+    #comment
     collector.tenants.each do |t|
       tenant = persister.cloud_tenants.find_or_build(t.id)
       tenant.name = t.name
