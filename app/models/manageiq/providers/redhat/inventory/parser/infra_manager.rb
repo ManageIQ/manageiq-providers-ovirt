@@ -534,14 +534,15 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     custom_attrs = vm.try(:custom_properties)
 
     custom_attrs.to_a.each do |ca|
-      persister.custom_attributes.find_or_build(
+      persister.vm_and_template_ems_custom_fields.find_or_build(
         :resource => persister_vm,
         :name     => ca.name,
       ).assign_attributes(
-        :section => 'custom_field',
-        :name    => ca.name,
-        :value   => ca.value.try(:truncate, 255),
-        :source  => "VC",
+        :section  => 'custom_field',
+        :name     => ca.name,
+        :value    => ca.value.try(:truncate, 255),
+        :source   => "VC",
+        :resource => persister_vm
       )
     end
   end

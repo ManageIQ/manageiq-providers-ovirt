@@ -20,6 +20,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       stub_const("OvirtSDK4::Connection", Spec::Support::OvirtSDK::ConnectionVCR)
     end
 
+    COUNTED_MODELS = [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze
+
     before(:each) do
       @inventory_wrapper_class = ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
 
@@ -41,10 +43,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       vm = VmOrTemplate.where(:name => "my-cirros-vm").first
       expect(vm.ems_id).to eq(@ems.id)
       saved_vm = vm_to_comparable_hash(vm)
-      ENV["deb"] = "true"
+      saved_counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
       EmsRefresh.refresh(vm)
       vm.reload
+      counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
       expect(saved_vm).to eq(vm_to_comparable_hash(vm))
+      expect(saved_counted_models).to eq(counted_models)
     end
 
     def vm_to_comparable_hash(vm)

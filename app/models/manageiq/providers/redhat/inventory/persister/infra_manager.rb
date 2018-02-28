@@ -3,7 +3,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
     add_inventory_collections(
       infra,
       %i(ems_clusters hosts resource_pools vms miq_templates
-         storages custom_attributes disks guest_devices hardwares
+         storages vm_and_template_ems_custom_fields disks guest_devices hardwares
          host_hardwares host_networks host_operating_systems host_storages
          host_switches lans networks operating_systems snapshots switches)
     )
