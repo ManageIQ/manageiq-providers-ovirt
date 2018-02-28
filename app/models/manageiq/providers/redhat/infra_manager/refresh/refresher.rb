@@ -12,7 +12,8 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
       targets_with_data = targets.collect do |target|
         _log.info "Filtering inventory for #{target.class} [#{target.name}] id: [#{target.id}]..."
 
-        if ems.use_graph_refresh?
+        # TODO: make sure not to use with api v3
+        if refresher_options.try(:[], :inventory_object_refresh)
           data = ManageIQ::Providers::Redhat::Builder.build_inventory(ems, target)
 
           # TODO: remove when graph refresh supports ems updates
@@ -61,7 +62,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
           targets.clear << ems
         end
 
-        next unless ems.use_graph_refresh?
+        next unless refresher_options.try(:[], :inventory_object_refresh)
         all_targets, sub_ems_targets = targets.partition { |x| x.kind_of?(ExtManagementSystem) }
         unless sub_ems_targets.blank?
           ems_event_collection = ManagerRefresh::TargetCollection.new(:targets    => sub_ems_targets,
@@ -76,7 +77,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
       log_header = format_ems_for_logging(ems)
       _log.debug "#{log_header} Parsing inventory..."
       hashes, = Benchmark.realtime_block(:parse_inventory) do
-        if ems.use_graph_refresh?
+        if refresher_options.try(:[], :inventory_object_refresh)
           inventory.inventory_collections
         else
           Parse::ParserBuilder.new(ems).build.ems_inv_to_hashes(inventory)

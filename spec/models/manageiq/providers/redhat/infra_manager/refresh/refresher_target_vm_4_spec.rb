@@ -11,7 +11,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       .to receive(:collect_external_network_providers).and_return(load_response_mock_for('external_network_providers'))
     @ems.update_authentication(:default => {:userid => "admin@internal", :password => "engine"})
     @ems.default_endpoint.path = "/ovirt-engine/api"
-    allow(@ems).to receive(:supported_api_versions).and_return(%w(3 4))
+    allow(@ems).to receive(:supported_api_versions).and_return([3, 4])
     allow(@ems).to receive(:resolve_ip_address).with(ip_address).and_return(ip_address)
     stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
   end
