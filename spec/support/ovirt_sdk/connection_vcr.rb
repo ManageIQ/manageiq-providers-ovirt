@@ -7,11 +7,20 @@ module Spec::Support::OvirtSDK
     def initialize(opts = {}, path_to_recording = DEFAULT_REC_PATH, is_recording = false)
       @all_req_hash = {}
       @path_to_recording = path_to_recording
+      if opts[:loaded_yml]
+        @all_req_hash = opts[:loaded_yml]
+      end
       @is_recording = is_recording
-      if File.file?(path_to_recording) && !opts[:force_recording]
+      if !opts[:loaded_yml] && File.file?(path_to_recording) && !opts[:force_recording]
         @all_req_hash = YAML.load_file(path_to_recording)
       end
       super(opts)
+    end
+
+    def load_new_cassete(opts)
+      @all_req_hash = nil
+      @all_req_hash ||= opts[:loaded_yml]
+      @all_req_hash ||= YAML.load_file(opts[:path_to_recording]) if opts[:path_to_recording] && File.file?(opts[:path_to_recording])
     end
 
     def wait(request)
@@ -20,6 +29,7 @@ module Spec::Support::OvirtSDK
       unless @is_recording
         res = @all_req_hash[req_key].shift
         return http_response_hash_to_obj(res) if res
+        raise "connection_vcr could not find a response for: #{req_key}"
       end
       res = super(request)
       @all_req_hash[req_key] << http_response_to_hash(res)

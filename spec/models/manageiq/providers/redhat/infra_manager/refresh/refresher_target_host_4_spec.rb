@@ -36,7 +36,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       .and_return(OpenStruct.new(:version_string => '4.2.0_master.')))
 
     @cluster = FactoryGirl.create(:ems_cluster,
-                                  :ems_ref               => "/ovirt-engine/api/clusters/11acc1a0-66c7-4aba-a00f-fa2648c9b51f",
+                                  :ems_ref               => "/ovirt-engine/api/clusters/59c8cd2d-01d6-0367-037e-0000000002f7",
                                   :uid_ems               => "11acc1a0-66c7-4aba-a00f-fa2648c9b51f",
                                   :ext_management_system => @ems,
                                   :name                  => "Default")

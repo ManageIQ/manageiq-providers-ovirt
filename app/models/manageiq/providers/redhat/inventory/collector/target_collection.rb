@@ -80,20 +80,15 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   end
 
   def hosts
-    h = []
-    return h if references(:hosts).blank?
-
-    manager.with_provider_connection(VERSION_HASH) do |connection|
-      references(:hosts).each do |ems_ref|
+    @hosts ||= manager.with_provider_connection(VERSION_HASH) do |connection|
+      references(:hosts).map do |ems_ref|
         begin
-          h << connection.system_service.hosts_service.host_service(uuid_from_ems_ref(ems_ref)).get
+          connection.system_service.hosts_service.host_service(uuid_from_ems_ref(ems_ref)).get
         rescue OvirtSDK4::Error # when 404
           nil
         end
-      end
+      end.compact
     end
-
-    h
   end
 
   def vms
