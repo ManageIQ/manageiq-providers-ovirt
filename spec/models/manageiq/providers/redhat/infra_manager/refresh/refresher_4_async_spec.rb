@@ -11,6 +11,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     @ems.update_authentication(:default => {:userid => "admin@internal", :password => "123456"})
     @ems.default_endpoint.verify_ssl = OpenSSL::SSL::VERIFY_NONE
     allow(@ems).to(receive(:supported_api_versions).and_return(%w(3 4)))
+    stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => false }})
     stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
     allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).and_call_original
     allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).with(kind_of(Hash)) do |opts|
