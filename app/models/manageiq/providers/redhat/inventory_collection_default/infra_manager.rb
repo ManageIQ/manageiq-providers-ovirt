@@ -131,6 +131,23 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       attributes.merge!(extra_attributes)
     end
 
+    def vm_and_template_ems_custom_fields(extra_attributes = {})
+      attributes = {
+        :model_class                 => ::CustomAttribute,
+        :manager_ref                 => [:name],
+        :association                 => :vm_and_template_ems_custom_fields,
+        :inventory_object_attributes => %i(
+          section
+          name
+          value
+          source
+          resource
+        ),
+      }
+
+      attributes.merge!(extra_attributes)
+    end
+
     def ems_folder_children(extra_attributes = {})
       folder_children_save_block = lambda do |ems, inventory_collection|
         cluster_collection = inventory_collection.dependency_attributes[:clusters].try(:first)

@@ -856,6 +856,12 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms{}GET:
             <cpu_shares>0</cpu_shares>
             <creation_time>2018-01-11T07:26:49.704+02:00</creation_time>
             <delete_protected>false</delete_protected>
+            <custom_properties>
+                 <custom_property>
+                     <name>sap_agent</name>
+                     <value>false</value>
+                 </custom_property>
+            </custom_properties>
             <display>
                 <address>10.35.18.88</address>
                 <allow_override>false</allow_override>
@@ -3585,6 +3591,12 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/0d37ca3b-cdbc
                 <threads>1</threads>
             </topology>
         </cpu>
+        <custom_properties>
+             <custom_property>
+                 <name>sap_agent</name>
+                 <value>false</value>
+             </custom_property>
+        </custom_properties>
         <cpu_shares>0</cpu_shares>
         <creation_time>2018-01-11T07:26:49.704+02:00</creation_time>
         <delete_protected>false</delete_protected>
@@ -3735,6 +3747,12 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/0d37ca3b-cdbc
         </cpu>
         <cpu_shares>0</cpu_shares>
         <creation_time>2018-01-11T07:26:49.704+02:00</creation_time>
+        <custom_properties>
+             <custom_property>
+                 <name>sap_agent</name>
+                 <value>false</value>
+             </custom_property>
+        </custom_properties>
         <delete_protected>false</delete_protected>
         <display>
             <address>10.35.18.88</address>
