@@ -39,7 +39,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
       VCR.use_cassette("#{described_class.name.underscore}_parse_event", :allow_unused_http_interactions => true, :allow_playback_repeats => true, :record => :new_episodes) do
         parser = ManageIQ::Providers::Redhat::InfraManager::EventParsing::Builder.new(@ems).build
         parsed = parser.event_to_hash(event, @ems.id)
-        expect(parsed).to have_attributes(
+        expect(parsed).to include(
           :event_type => "USER_UPDATE_VM",
           :source     => 'RHEVM',
           :message    => "VM new configuration was updated by admin@internal-authz.",
@@ -112,7 +112,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
           expect(parsed.keys).to include(:vms, :clusters, :folders, :resource_pools)
 
           expect(parsed[:vms].count).to eq(1)
-          expect(parsed[:vms].first).to have_attributes(
+          expect(parsed[:vms].first).to include(
             :type        => "ManageIQ::Providers::Redhat::InfraManager::Vm",
             :ems_ref     => "/api/vms/22f18a6b-fc44-43ae-976f-993ad5f1d648",
             :ems_ref_obj => "/api/vms/22f18a6b-fc44-43ae-976f-993ad5f1d648",
@@ -124,7 +124,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
           )
 
           expect(parsed[:clusters].count).to eq(1)
-          expect(parsed[:clusters].first).to have_attributes(
+          expect(parsed[:clusters].first).to include(
             :ems_ref     => "/api/clusters/00000002-0002-0002-0002-00000000017a",
             :ems_ref_obj => "/api/clusters/00000002-0002-0002-0002-00000000017a",
             :uid_ems     => "00000002-0002-0002-0002-00000000017a",
@@ -132,14 +132,14 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
           )
 
           expect(parsed[:resource_pools].count).to eq(1)
-          expect(parsed[:resource_pools].first).to have_attributes(
+          expect(parsed[:resource_pools].first).to include(
             :name       => "Default for Cluster Default",
             :uid_ems    => "00000002-0002-0002-0002-00000000017a_respool",
             :is_default => true
           )
 
           expect(parsed[:folders].count).to eq(3)
-          expect(parsed[:folders].detect { |f| f[:type] == 'Datacenter' }).to have_attributes(
+          expect(parsed[:folders].detect { |f| f[:type] == 'Datacenter' }).to include(
             :ems_ref     => "/api/datacenters/00000001-0001-0001-0001-000000000311",
             :ems_ref_obj => "/api/datacenters/00000001-0001-0001-0001-000000000311",
             :uid_ems     => "00000001-0001-0001-0001-000000000311"
@@ -208,11 +208,11 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
       parser = ManageIQ::Providers::Redhat::InfraManager::EventParsing::Builder.new(@ems).build
       ManageIQ::Providers::Redhat::InfraManager::EventFetcher.new(@ems).set_event_name!(event)
       parsed = parser.event_to_hash(event, @ems.id)
-      expect(parsed).to have_attributes(
+      expect(parsed).to include(
         :event_type => "USER_UPDATE_VM",
         :source     => 'RHEVM',
         :message    => "VM new_vm configuration was updated by admin@internal-authz.",
-        :timestamp  => "2017-05-07T15:45:05.485+03:00",
+        :timestamp  => Time.zone.parse("2017-05-07T15:45:05.485+03:00"),
         :username   => "admin@internal-authz",
         :full_data  => event,
         :ems_id     => @ems.id,
