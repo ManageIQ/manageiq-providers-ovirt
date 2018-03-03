@@ -85,6 +85,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   end
 
   it "should refresh a vm" do
+    stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => false }})
     allow_any_instance_of(@inventory_wrapper_class)
       .to receive(:collect_clusters).and_return(load_response_mock_for('clusters'))
     allow_any_instance_of(@inventory_wrapper_class)
