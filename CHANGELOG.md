@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Gaprindashvili-1
+## Gaprindashvili-2
+
+### Fixed
+- Fix target host [(#155)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/155)
+- Move refresh settings for the Network Manager [(#198)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/198)
+- Fix adding vm_location to vm event hash [(#205)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/205)
+- Fix updating catalog item when provider missing [(#206)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/206)
+
+## Gaprindashvili-1 - Released 2018-02-01
 
 ### Added
 - Reload provider when api_version available [(#157)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/157)
