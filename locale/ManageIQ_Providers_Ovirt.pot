@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_Providers_Ovirt 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-31 17:02+0100\n"
-"PO-Revision-Date: 2017-10-31 17:02+0100\n"
+"POT-Creation-Date: 2018-02-21 13:13+0100\n"
+"PO-Revision-Date: 2018-02-21 13:13+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,27 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:145
-msgid "\"Memory Limit is supported for RHV 4.1 and above. Current provider version is #{ems.api_version}.\""
-msgstr ""
-
-#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:150
+#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:151
 msgid "%{description} VM Memory is larger than Memory Limit"
 msgstr ""
 
 #: ../app/models/manageiq/providers/redhat/infra_manager/ovirt_services/strategies/v4.rb:119
-msgid "<Empty>"
+msgid "<No Profile>"
 msgstr ""
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:78
+#: ../app/models/manageiq/providers/redhat/infra_manager/ovirt_services/strategies/v4.rb:120
+msgid "<Use template nics>"
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:73
 msgid "Cannot import archived VMs"
 msgstr ""
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:80
-msgid "Cannot import to a RHEV provider of version < 4.1.5"
+#: ../app/models/manageiq/providers/redhat/infra_manager.rb:27
+msgid "Cannot import to a RHV provider of version < 4.1.5"
 msgstr ""
 
-#: ../app/models/manageiq/providers/redhat/infra_manager.rb:167
+#: ../app/models/manageiq/providers/redhat/infra_manager.rb:182
 msgid "Datastore does not exist, unable to add disk"
 msgstr ""
 
@@ -46,7 +46,7 @@ msgstr ""
 msgid "Delete is not allowed for a snapshot that is the active one"
 msgstr ""
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:70
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:65
 msgid "Error while configuring VM network."
 msgstr ""
 
@@ -54,7 +54,11 @@ msgstr ""
 msgid "Error while importing the VM."
 msgstr ""
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:141
+#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:146
+msgid "Memory Limit is supported for RHV 4.1 and above. Current provider version is #{ems.api_version}."
+msgstr ""
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:142
 msgid "Memory Limit is supported only when using ovirt-engine-sdk (To enable, set: ':use_ovirt_engine_sdk: true' in settings.yml)."
 msgstr ""
 
@@ -86,11 +90,11 @@ msgstr ""
 msgid "Revert is not allowed for a snapshot that is the active one"
 msgstr ""
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:82
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:77
 msgid "Source provider must be of type Vmware"
 msgstr ""
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:159
+#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:160
 msgid "Template sealing is supported only for non-Windows OS."
 msgstr ""
 
@@ -114,7 +118,7 @@ msgstr ""
 msgid "The virtual machine must be down"
 msgstr ""
 
-#: ../app/models/manageiq/providers/redhat/infra_manager/api_integration.rb:231 ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:32
+#: ../app/models/manageiq/providers/redhat/infra_manager/api_integration.rb:214 ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:32
 msgid "This feature is not supported by the api version of the provider"
 msgstr ""
 
