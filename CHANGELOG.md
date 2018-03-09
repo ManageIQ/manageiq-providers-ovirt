@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+### Unreleased as of Sprint 79 - 2018-02-12
+
+### Fixed
+- Fix updating catalog item when provider missing [(#206)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/206)
+- Fix adding vm_location to vm event hash [(#205)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/205)
+- Add fix and add specs for graph targeted refresh [(#203)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/203)
+
 ## Gaprindashvili-1 - Released 2018-01-31
 
 ### Added
