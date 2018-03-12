@@ -366,32 +366,6 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       super(attributes.merge!(extra_attributes))
     end
 
-    def hosts(extra_attributes = {})
-      attributes = {
-        :model_class                 => ::ManageIQ::Providers::Redhat::InfraManager::Host,
-        :inventory_object_attributes => [
-          :type,
-          :ems_ref,
-          :ems_ref_obj,
-          :name,
-          :hostname,
-          :ipaddress,
-          :uid_ems,
-          :vmm_vendor,
-          :vmm_product,
-          :vmm_version,
-          :vmm_buildnumber,
-          :connection_state,
-          :power_state,
-          :ems_cluster,
-          :ipmi_address,
-          :maintenance
-        ]
-      }
-
-      super(attributes.merge!(extra_attributes))
-    end
-
     def host_storages(extra_attributes = {})
       attributes = {
         :model_class                 => ::HostStorage,
