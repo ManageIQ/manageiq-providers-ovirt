@@ -551,10 +551,24 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
     end
 
     def find_mac_address_on_network(nics, vnic_profile_id)
-      nic = nics.detect do |n|
-        n.vnic_profile.id == vnic_profile_id
+      nic = if vnic_profile_id == '<Empty>'
+              nics.detect do |n|
+                n.vnic_profile.nil?
+              end
+            elsif vnic_profile_id == '<Template>'
+              nics.first
+            else
+              nics.detect do |n|
+                n.vnic_profile.id == vnic_profile_id
+              end
+            end
+
+      if nics.empty?
+        _log.warn("Cannot find a MAC address, there are no NICs")
+      elsif nic.nil?
+        _log.warn("Cannot find a MAC address based on vnic_profile=#{vnic_profile_id}, there is no NIC with this profile")
       end
-      _log.warn "Cannot find NIC with vnic_profile=#{vnic_profile_id}" if nic.nil?
+
       nic && nic.mac && nic.mac.address
     end
 
