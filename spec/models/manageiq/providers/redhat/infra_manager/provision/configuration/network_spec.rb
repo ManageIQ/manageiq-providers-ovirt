@@ -155,7 +155,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
       let(:vnic_profile_1) { double("vnic_prof1", :id => vnic_profile_id) }
       let(:vnic_profile_2) { double("vnic_prof2", :id => "vnic_profile_id_2") }
       let(:vnic_profile_name) { "vnic_profile_name" }
-      let(:set_vnic_profile) { @task.options[:vlan] = [vnic_profile_id, vnic_profile_name + " (" + network_name + ")"] }
       let(:network_profile) { double(:id => vnic_profile_id, :name => vnic_profile_name, :network => double(:id => network_id)) }
       let(:ovirtSDK4_mac) { OvirtSDK4::Mac.new(:address => mac_address) }
 
@@ -185,7 +184,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
         end
 
         it "first NIC from dialog" do
-          set_vnic_profile
+          assign_vnic_profile(vnic_profile_id)
 
           expect(nic1_service).to receive(:update)
           expect(nic2_service).to receive(:update)
@@ -207,7 +206,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
       end
 
       it "dialog NIC only" do
-        set_vnic_profile
+        assign_vnic_profile(vnic_profile_id)
 
         expect(nic1_service).to receive(:update)
         expect(nic2_service).to receive(:remove)
@@ -268,18 +267,69 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
 
       context "#get_mac_address_of_nic_on_requested_vlan" do
         before do
-          set_vnic_profile
           allow(ems.ovirt_services).to receive(:nics_for_vm).with(target_vm).and_return([rhevm_nic1, rhevm_nic2])
         end
-        it "NIC found" do
-          expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(mac_address)
+
+        context "profile_id is <Template>" do
+          before do
+            assign_vnic_profile('<Template>')
+          end
+
+          it 'nics list is empty' do
+            test_empty_nic_list
+          end
+
+          it 'nics list is not empty' do
+            expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(mac_address)
+          end
         end
 
-        it "NIC not found" do
-          allow(rhevm_nic1).to receive(:vnic_profile).and_return(vnic_profile_2)
+        context "profile_id is <Empty>" do
+          before do
+            assign_vnic_profile('<Empty>')
+          end
 
-          expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(nil)
+          it 'nics list is empty' do
+            test_empty_nic_list
+          end
+
+          it 'nics list contains a nic with no profile' do
+            allow(rhevm_nic1).to receive(:vnic_profile).and_return(nil)
+            expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(mac_address)
+          end
+
+          it 'nics list does not contain a nic with no profile' do
+            expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(nil)
+          end
         end
+
+        context "profile_id is specified" do
+          before do
+            assign_vnic_profile(vnic_profile_id)
+          end
+
+          it 'nics list is empty' do
+            test_empty_nic_list
+          end
+
+          it 'nics list contains a nic with the specified profile_id' do
+            expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(mac_address)
+          end
+
+          it 'nics list does not contain a nic with the specified profile_id' do
+            allow(rhevm_nic1).to receive(:vnic_profile).and_return(vnic_profile_2)
+            expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(nil)
+          end
+        end
+      end
+
+      def assign_vnic_profile(vnic_profile_id)
+        @task.options[:vlan] = [vnic_profile_id, vnic_profile_name + " (" + network_name + ")"]
+      end
+
+      def test_empty_nic_list
+        allow(ems.ovirt_services).to receive(:nics_for_vm).with(target_vm).and_return([])
+        expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(nil)
       end
     end
   end
