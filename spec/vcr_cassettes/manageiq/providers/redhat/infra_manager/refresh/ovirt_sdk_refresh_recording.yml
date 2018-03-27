@@ -5223,7 +5223,7 @@ https://localhost:8443/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f
             <date>2016-07-05T13:14:08.116+03:00</date>
             <persist_memorystate>false</persist_memorystate>
             <snapshot_status>ok</snapshot_status>
-            <snapshot_type>active</snapshot_type>
+            <snapshot_type>regular</snapshot_type>
         </snapshot>
         <snapshot href="/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f/snapshots/05ff445a-0bfc-44c3-90d1-a338e9095510" id="05ff445a-0bfc-44c3-90d1-a338e9095510">
             <actions>
@@ -5236,7 +5236,7 @@ https://localhost:8443/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f
             <date>2016-12-15T09:51:43.247+02:00</date>
             <persist_memorystate>true</persist_memorystate>
             <snapshot_status>ok</snapshot_status>
-            <snapshot_type>regular</snapshot_type>
+            <snapshot_type>active</snapshot_type>
             <vm id="3a9401a0-bf3d-4496-8acf-edd3e903511f">
                 <name>vm1</name>
                 <bios>
