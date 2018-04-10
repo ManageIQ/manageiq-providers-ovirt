@@ -483,19 +483,20 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       expect(v.snapshots.size).to eq(3)
 
       # TODO: Fix this boolean column
-      snapshot = v.snapshots.detect { |s| s.current == 1 } # TODO: Fix this boolean column
+      snapshot = v.snapshots.detect { |s| s.name = "Active VM" } # TODO: Fix this boolean column
       expect(snapshot).to have_attributes(
         :uid         => "6e3e547f-9544-42cf-842d-9104828d8511",
         :parent_uid  => "05ff445a-0bfc-44c3-90d1-a338e9095510",
         :uid_ems     => "6e3e547f-9544-42cf-842d-9104828d8511",
         :name        => "Active VM",
         :description => "Active VM",
-        :current     => 1,
+        :current     => 0,
         :total_size  => nil,
         :filename    => nil
       )
       snapshot_parent = ::Snapshot.find_by(:name => "vm1_snap")
       expect(snapshot.parent).to eq(snapshot_parent)
+      expect(snapshot_parent.current).to eq(1)
 
       expect(v.hardware).to have_attributes(
         :guest_os             => "other",
