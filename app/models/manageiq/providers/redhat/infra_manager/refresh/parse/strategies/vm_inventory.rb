@@ -260,8 +260,9 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
       return result if inv.nil?
 
       parent_id = nil
-      inv.each_with_index do |snapshot, idx|
-        result << snapshot_inv_to_snapshot_hashes(snapshot, idx == inv.length - 1, parent_id)
+      inv.each do |snapshot|
+        current = snapshot.snapshot_type == "active"
+        result << snapshot_inv_to_snapshot_hashes(snapshot, current, parent_id)
         parent_id = snapshot.id
       end
       result
@@ -274,7 +275,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
       name = description = inv.description
       name = "Active Image" if name[0, 13] == '_ActiveImage_'
 
-      result = {
+      {
         :uid_ems     => inv.id,
         :uid         => inv.id,
         :parent_uid  => parent_uid,
@@ -283,8 +284,6 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
         :create_time => create_time,
         :current     => current,
       }
-
-      result
     end
 
     def vm_inv_to_custom_attribute_hashes(inv)

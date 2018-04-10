@@ -502,7 +502,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     snapshots = snapshots.sort_by(&:date).reverse
 
     parent_id = nil
-    snapshots.each_with_index do |snapshot, idx|
+    snapshots.each do |snapshot|
       name = description = snapshot.description
       name = "Active Image" if name[0, 13] == '_ActiveImage_'
 
@@ -513,8 +513,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :name           => name,
         :description    => description,
         :create_time    => snapshot.date.getutc,
-        :current        => idx == snapshots.length - 1,
-        :vm_or_template => persister_vm
+        :current        => snapshot.snapshot_type == "active",
+        :vm_or_template => persister_vm,
       )
       parent_id = snapshot.id
     end
