@@ -5,11 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+### Unreleased as of Sprint 82 - 2018-03-26
+
+### Fixed
+- Get mac addr if the selected profile is '<Empty>' or '<Template>' [(#227)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/227)
+
+## Gaprindashvili-2 released 2018-03-06
+
+### Fixed
+- Fix target host [(#155)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/155)
+- Move refresh settings for the Network Manager [(#198)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/198)
+- Fix adding vm_location to vm event hash [(#205)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/205)
+- Fix updating catalog item when provider missing [(#206)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/206)
+
+### Unreleased as of Sprint 80 - 2018-02-26
+
+### Fixed
+- Fix graph targeted host refresh spec [(#213)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/213)
+- Discovery namespace change [(#209)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/209)
+- Update client to use renamed NetworkDiscovery [(#208)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/208)
+- Use correct refresh for older providers [(#207)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/207)
+
 ### Unreleased as of Sprint 79 - 2018-02-12
 
 ### Fixed
-- Fix updating catalog item when provider missing [(#206)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/206)
-- Fix adding vm_location to vm event hash [(#205)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/205)
 - Add fix and add specs for graph targeted refresh [(#203)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/203)
 
 ## Gaprindashvili-1 - Released 2018-01-31
