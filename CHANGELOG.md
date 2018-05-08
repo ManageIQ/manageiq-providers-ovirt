@@ -5,7 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Gaprindashvili-2
+## Gaprindashvili-3
+
+### Added
+- Support Unregister VM [(#223)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/223)
+- Update client to use renamed NetworkDiscovery [(#208)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/208)
+- Discovery namespace change [(#209)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/209)
+- Make graph refresh enabled by default [(#219)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/219)
+
+### Fixed
+- Add fix and add specs for graph targeted refresh [(#203)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/203)
+- Provide max memory on VM reconfigure [(#224)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/224)
+- Use correct refresh for older providers [(#207)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/207)
+- Fix graph refresh fetching custom attributes [(#211)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/211)
+- Get mac addr if the selected profile is '<Empty>' or '<Template>' [(#227)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/227)
+- Fix provider discovery [(#232)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/232)
+- Use old refresh as default [(#233)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/233)
+
+## Gaprindashvili-2 - Released 2018-03-07
 
 ### Fixed
 - Fix target host [(#155)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/155)
