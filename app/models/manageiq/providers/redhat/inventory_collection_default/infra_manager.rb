@@ -154,6 +154,8 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
         vm_collection = inventory_collection.dependency_attributes[:vms].try(:first)
         template_collection = inventory_collection.dependency_attributes[:templates].try(:first)
         datacenter_collection = inventory_collection.dependency_attributes[:datacenters].try(:first)
+        indexed_vms = vm_collection.data.each_with_object({}) { |vm, obj| (obj[vm.ems_cluster.ems_ref] ||= []) << vm }
+        indexed_templates = template_collection.data.each_with_object({}) { |vm, obj| (obj[vm.ems_cluster.ems_ref] ||= []) << vm }
 
         datacenter_collection.data.each do |dc|
           uid = dc.uid_ems
@@ -161,8 +163,8 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
           clusters = cluster_collection.data.select { |cluster| cluster.datacenter_id == uid }
           cluster_refs = clusters.map(&:ems_ref)
 
-          vms = vm_collection.data.select { |vm| cluster_refs.include? vm.ems_cluster.ems_ref }
-          templates = template_collection.data.select { |t| cluster_refs.include? t.ems_cluster.ems_ref }
+          vms = cluster_refs.map { |x| indexed_vms[x] }.flatten.compact
+          templates = cluster_refs.map { |x| indexed_templates[x] }.flatten.compact
 
           ActiveRecord::Base.transaction do
             host_folder = EmsFolder.find_by(:uid_ems => "#{uid}_host")
