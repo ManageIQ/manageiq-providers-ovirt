@@ -204,9 +204,7 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
           ActiveRecord::Base.transaction do
             vs = VmOrTemplate.find(vms.map(&:id))
             rp = ResourcePool.find_by(:uid_ems => "#{cluster.uid_ems}_respool")
-            vs.each do |v|
-              rp.with_relationship_type("ems_metadata") { rp.add_child v }
-            end
+            rp.with_relationship_type("ems_metadata") { rp.add_child vs }
             c = EmsCluster.find(cluster.id)
             c.with_relationship_type("ems_metadata") { c.add_child rp }
           end
