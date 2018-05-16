@@ -154,8 +154,9 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
         vm_collection = inventory_collection.dependency_attributes[:vms].try(:first)
         template_collection = inventory_collection.dependency_attributes[:templates].try(:first)
         datacenter_collection = inventory_collection.dependency_attributes[:datacenters].try(:first)
-        indexed_vms = vm_collection.data.each_with_object({}) { |vm, obj| (obj[vm.ems_cluster.ems_ref] ||= []) << vm }
-        indexed_templates = template_collection.data.each_with_object({}) { |vm, obj| (obj[vm.ems_cluster.ems_ref] ||= []) << vm }
+
+        vms_and_templates = vm_collection.data + template_collection.data
+        indexed_vms_and_templates = vms_and_templates.each_with_object({}) { |vm, obj| (obj[vm.ems_cluster.ems_ref] ||= []) << vm }
 
         datacenter_collection.data.each do |dc|
           uid = dc.uid_ems
@@ -163,26 +164,16 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
           clusters = cluster_collection.data.select { |cluster| cluster.datacenter_id == uid }
           cluster_refs = clusters.map(&:ems_ref)
 
-          vms = cluster_refs.map { |x| indexed_vms[x] }.flatten.compact
-          templates = cluster_refs.map { |x| indexed_templates[x] }.flatten.compact
+          vms = cluster_refs.map { |x| indexed_vms_and_templates[x] }.flatten.compact
 
           ActiveRecord::Base.transaction do
             host_folder = EmsFolder.find_by(:uid_ems => "#{uid}_host")
             cs = EmsCluster.find(clusters.map(&:id))
-            cs.each do |c|
-              host_folder.with_relationship_type("ems_metadata") { host_folder.add_child c }
-            end
+            host_folder.with_relationship_type("ems_metadata") { host_folder.add_child cs }
 
             vm_folder = EmsFolder.find_by(:uid_ems => "#{uid}_vm")
             vs = VmOrTemplate.find(vms.map(&:id))
-            vs.each do |v|
-              vm_folder.with_relationship_type("ems_metadata") { vm_folder.add_child v }
-            end
-
-            ts = MiqTemplate.find(templates.map(&:id))
-            ts.each do |t|
-              vm_folder.with_relationship_type("ems_metadata") { vm_folder.add_child t }
-            end
+            vm_folder.with_relationship_type("ems_metadata") { vm_folder.add_child vs }
 
             datacenter = EmsFolder.find(dc.id)
             datacenter.with_relationship_type("ems_metadata") { datacenter.add_child host_folder }
@@ -213,9 +204,7 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
           ActiveRecord::Base.transaction do
             vs = VmOrTemplate.find(vms.map(&:id))
             rp = ResourcePool.find_by(:uid_ems => "#{cluster.uid_ems}_respool")
-            vs.each do |v|
-              rp.with_relationship_type("ems_metadata") { rp.add_child v }
-            end
+            rp.with_relationship_type("ems_metadata") { rp.add_child vs }
             c = EmsCluster.find(cluster.id)
             c.with_relationship_type("ems_metadata") { c.add_child rp }
           end
