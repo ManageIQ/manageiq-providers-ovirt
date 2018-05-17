@@ -16,46 +16,6 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       super(attributes.merge!(extra_attributes))
     end
 
-    def vm_folders(extra_attributes = {})
-      attributes = {
-        :model_class                 => ::EmsFolder,
-        :inventory_object_attributes => [
-          :name,
-          :type,
-          :uid_ems,
-          :hidden
-        ],
-        :association                 => :vm_folders,
-        :manager_ref                 => [:uid_ems],
-        :attributes_blacklist        => [:ems_children],
-        :builder_params              => {
-          :ems_id => ->(persister) { persister.manager.id },
-        },
-      }
-
-      attributes.merge!(extra_attributes)
-    end
-
-    def host_folders(extra_attributes = {})
-      attributes = {
-        :model_class                 => ::EmsFolder,
-        :inventory_object_attributes => [
-          :name,
-          :type,
-          :uid_ems,
-          :hidden
-        ],
-        :association                 => :host_folders,
-        :manager_ref                 => [:uid_ems],
-        :attributes_blacklist        => [:ems_children],
-        :builder_params              => {
-          :ems_id => ->(persister) { persister.manager.id },
-        },
-      }
-
-      attributes.merge!(extra_attributes)
-    end
-
     def hosts(extra_attributes = {})
       attributes = {
         :model_class                 => ::Host,
@@ -106,26 +66,6 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
             end
           end
         end
-      }
-
-      attributes.merge!(extra_attributes)
-    end
-
-    def root_folders(extra_attributes = {})
-      attributes = {
-        :model_class                 => ::EmsFolder,
-        :inventory_object_attributes => [
-          :name,
-          :type,
-          :uid_ems,
-          :hidden
-        ],
-        :association                 => :root_folders,
-        :manager_ref                 => [:uid_ems],
-        :attributes_blacklist        => [:ems_children],
-        :builder_params              => {
-          :ems_id => ->(persister) { persister.manager.id },
-        },
       }
 
       attributes.merge!(extra_attributes)
