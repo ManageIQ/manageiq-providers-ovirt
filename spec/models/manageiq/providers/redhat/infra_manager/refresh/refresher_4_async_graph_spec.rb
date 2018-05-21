@@ -482,8 +482,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
       expect(v.snapshots.size).to eq(3)
 
-      # TODO: Fix this boolean column
-      snapshot = v.snapshots.detect { |s| s.name = "Active VM" } # TODO: Fix this boolean column
+      snapshot = v.snapshots.detect { |s| s.uid == "6e3e547f-9544-42cf-842d-9104828d8511" }
       expect(snapshot).to have_attributes(
         :uid         => "6e3e547f-9544-42cf-842d-9104828d8511",
         :parent_uid  => "05ff445a-0bfc-44c3-90d1-a338e9095510",
