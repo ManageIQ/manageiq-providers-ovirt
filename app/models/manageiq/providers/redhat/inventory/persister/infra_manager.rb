@@ -2,7 +2,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
   def initialize_inventory_collections
     add_inventory_collections(
       infra,
-      %i(ems_clusters hosts resource_pools vms miq_templates
+      %i(ems_clusters ems_folders hosts resource_pools vms miq_templates
          storages vm_and_template_ems_custom_fields disks guest_devices hardwares
          host_hardwares host_networks host_operating_systems host_storages
          host_switches lans networks operating_systems snapshots switches)
@@ -40,25 +40,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
         :dependency_attributes => {
           :snapshots => [collections[:snapshots]]
         }
-      )
-    )
-
-    add_inventory_collection(
-      infra.vm_folders(
-        :arel     => manager.ems_folders.where(:name => 'vm'),
-        :strategy => :local_db_find_missing_references
-      )
-    )
-    add_inventory_collection(
-      infra.host_folders(
-        :arel     => manager.ems_folders.where(:name => 'host'),
-        :strategy => :local_db_find_missing_references
-      )
-    )
-    add_inventory_collection(
-      infra.root_folders(
-        :arel     => manager.ems_folders.where(:uid_ems => 'root_dc'),
-        :strategy => :local_db_find_missing_references
       )
     )
   end

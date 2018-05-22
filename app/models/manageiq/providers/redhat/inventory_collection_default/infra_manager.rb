@@ -16,46 +16,6 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
       super(attributes.merge!(extra_attributes))
     end
 
-    def vm_folders(extra_attributes = {})
-      attributes = {
-        :model_class                 => ::EmsFolder,
-        :inventory_object_attributes => [
-          :name,
-          :type,
-          :uid_ems,
-          :hidden
-        ],
-        :association                 => :vm_folders,
-        :manager_ref                 => [:uid_ems],
-        :attributes_blacklist        => [:ems_children],
-        :builder_params              => {
-          :ems_id => ->(persister) { persister.manager.id },
-        },
-      }
-
-      attributes.merge!(extra_attributes)
-    end
-
-    def host_folders(extra_attributes = {})
-      attributes = {
-        :model_class                 => ::EmsFolder,
-        :inventory_object_attributes => [
-          :name,
-          :type,
-          :uid_ems,
-          :hidden
-        ],
-        :association                 => :host_folders,
-        :manager_ref                 => [:uid_ems],
-        :attributes_blacklist        => [:ems_children],
-        :builder_params              => {
-          :ems_id => ->(persister) { persister.manager.id },
-        },
-      }
-
-      attributes.merge!(extra_attributes)
-    end
-
     def hosts(extra_attributes = {})
       attributes = {
         :model_class                 => ::Host,
@@ -106,26 +66,6 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
             end
           end
         end
-      }
-
-      attributes.merge!(extra_attributes)
-    end
-
-    def root_folders(extra_attributes = {})
-      attributes = {
-        :model_class                 => ::EmsFolder,
-        :inventory_object_attributes => [
-          :name,
-          :type,
-          :uid_ems,
-          :hidden
-        ],
-        :association                 => :root_folders,
-        :manager_ref                 => [:uid_ems],
-        :attributes_blacklist        => [:ems_children],
-        :builder_params              => {
-          :ems_id => ->(persister) { persister.manager.id },
-        },
       }
 
       attributes.merge!(extra_attributes)
@@ -196,17 +136,24 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
     def ems_clusters_children(extra_attributes = {})
       ems_cluster_children_save_block = lambda do |_ems, inventory_collection|
         cluster_collection = inventory_collection.dependency_attributes[:clusters].try(:first)
+        cluster_model      = cluster_collection.model_class
+
         vm_collection = inventory_collection.dependency_attributes[:vms].try(:first)
+        vm_model      = vm_collection.model_class
 
-        cluster_collection.each do |cluster|
-          vms = vm_collection.data.select { |vm| cluster.ems_ref == vm.ems_cluster.ems_ref }
+        vms_by_cluster = Hash.new { |h, k| h[k] = []}
+        vm_collection.data.each { |vm| vms_by_cluster[vm.ems_cluster&.id] << vm }
 
-          ActiveRecord::Base.transaction do
-            vs = VmOrTemplate.find(vms.map(&:id))
+        ActiveRecord::Base.transaction do
+          clusters_by_id = cluster_model.find(cluster_collection.data.map(&:id)).index_by(&:id)
+          vms_by_id      = vm_model.find(vm_collection.data.map(&:id)).index_by(&:id)
+
+          clusters_by_id.each do |cluster_id, cluster|
             rp = ResourcePool.find_by(:uid_ems => "#{cluster.uid_ems}_respool")
-            rp.with_relationship_type("ems_metadata") { rp.add_child vs }
-            c = EmsCluster.find(cluster.id)
-            c.with_relationship_type("ems_metadata") { c.add_child rp }
+            cluster.with_relationship_type("ems_metadata") { cluster.add_child(rp) }
+
+            vms = vms_by_id.values_at(*vms_by_cluster[cluster_id]&.map(&:id) || [])
+            rp.with_relationship_type("ems_metadata") { rp.add_children(vms) }
           end
         end
       end

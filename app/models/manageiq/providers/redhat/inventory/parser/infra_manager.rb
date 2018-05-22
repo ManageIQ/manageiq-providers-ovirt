@@ -73,7 +73,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     collector.datacenters.each do |datacenter|
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(datacenter.href)
 
-      persister.root_folders.find_or_build('root_dc').assign_attributes(
+      persister.ems_folders.find_or_build('root_dc').assign_attributes(
         :name    => 'Datacenters',
         :type    => 'EmsFolder',
         :uid_ems => 'root_dc',
@@ -90,7 +90,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       )
 
       host_folder_uid = "#{uid}_host"
-      persister.host_folders.find_or_build(host_folder_uid).assign_attributes(
+      persister.ems_folders.find_or_build(host_folder_uid).assign_attributes(
         :name    => 'host',
         :type    => 'EmsFolder',
         :uid_ems => host_folder_uid,
@@ -98,7 +98,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       )
 
       vm_folder_uid = "#{uid}_vm"
-      persister.vm_folders.find_or_build(vm_folder_uid).assign_attributes(
+      persister.ems_folders.find_or_build(vm_folder_uid).assign_attributes(
         :name    => 'vm',
         :type    => 'EmsFolder',
         :uid_ems => vm_folder_uid,

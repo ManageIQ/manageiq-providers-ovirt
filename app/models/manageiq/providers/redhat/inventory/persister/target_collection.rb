@@ -150,24 +150,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
         :strategy => :local_db_find_missing_references
       )
     )
-    add_inventory_collection(
-      infra.vm_folders(
-        :arel     => manager.ems_folders.where(:uid_ems => manager_refs.collect { |ref| "#{URI(ref).path.split('/').last}_vm" }),
-        :strategy => :local_db_find_missing_references
-      )
-    )
-    add_inventory_collection(
-      infra.host_folders(
-        :arel     => manager.ems_folders.where(:uid_ems => manager_refs.collect { |ref| "#{URI(ref).path.split('/').last}_host" }),
-        :strategy => :local_db_find_missing_references
-      )
-    )
-    add_inventory_collection(
-      infra.root_folders(
-        :arel     => manager.ems_folders.where(:uid_ems => 'root_dc'),
-        :strategy => :local_db_find_missing_references
-      )
-    )
   end
 
   def add_storages_inventory_collcetions(manager_refs)
