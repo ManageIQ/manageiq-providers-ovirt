@@ -14,7 +14,8 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration
     return unless content = customization_template_content
     with_provider_destination { |d| d.update_cloud_init!(content) }
 
-    if source.ext_management_system.api_version && Gem::Version.new(source.ext_management_system.api_version) >= Gem::Version.new("3.5.5.0")
+    ems_api_version = source.ext_management_system.api_version
+    if ems_api_version && Gem::Version.new(ems_api_version) >= Gem::Version.new("3.5.5.0")
       phase_context[:boot_with_cloud_init] = true
     end
   end
