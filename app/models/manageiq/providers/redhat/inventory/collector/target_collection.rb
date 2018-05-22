@@ -97,20 +97,16 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   end
 
   def vms
-    v = []
-    return v if select_vms(references(:vms)).blank?
-
-    manager.with_provider_connection(VERSION_HASH) do |connection|
-      select_vms(references(:vms)).each do |ems_ref|
+    @vms = manager.with_provider_connection(VERSION_HASH) do |connection|
+      select_vms(references(:vms)).map do |ems_ref|
         begin
-          v << connection.system_service.vms_service.vm_service(uuid_from_ems_ref(ems_ref)).get
+          connection.system_service.vms_service.vm_service(uuid_from_ems_ref(ems_ref)).get
         rescue OvirtSDK4::Error # when 404
           nil
         end
       end
-    end
-
-    v
+    end if @vms.blank?
+    @vms
   end
 
   def select_vms(references_lst)
