@@ -9,10 +9,6 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraCollectio
   include ::ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::NetworksCollections
   include ::ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::VmsDependencyCollections
 
-  def infra
-    ::ManagerRefresh::InventoryCollection::Builder::InfraManager
-  end
-
   def initialize_infra_inventory_collections
     @collection_group = nil
 

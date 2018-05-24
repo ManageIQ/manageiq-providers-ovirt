@@ -1,10 +1,6 @@
 module ManageIQ::Providers::Redhat::Inventory::Persister::Shared::NetworkCollections
   extend ActiveSupport::Concern
 
-  def network
-    ::ManagerRefresh::InventoryCollection::Builder::NetworkManager
-  end
-
   # ------ IC provider specific definitions -------------------------
 
   def add_cloud_tenants
