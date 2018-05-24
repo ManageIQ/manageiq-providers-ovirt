@@ -72,7 +72,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   end
 
   def supported_auth_types
-    %w(default metrics)
+    %w(default metrics ssh_keypair)
   end
 
   def supports_authentication?(authtype)
