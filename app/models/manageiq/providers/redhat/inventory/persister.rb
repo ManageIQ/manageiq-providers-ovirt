@@ -10,13 +10,31 @@ class ManageIQ::Providers::Redhat::Inventory::Persister < ManagerRefresh::Invent
     @collector = collector
 
     @collections = {}
+    @collection_group = nil
 
     initialize_inventory_collections
   end
 
   protected
 
-  def infra
-    ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager
+  # should be overriden by subclasses
+  def strategy
+    nil
+  end
+
+  def parent
+    manager.presence
+  end
+
+  # Shared properties for InventoryCollections
+  def shared_options
+    {
+      :parent   => parent,
+      :strategy => strategy
+    }
+  end
+
+  def manager_refs
+    references(@collection_group)
   end
 end
