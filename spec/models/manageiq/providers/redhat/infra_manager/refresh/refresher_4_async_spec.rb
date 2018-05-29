@@ -504,7 +504,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
         :start_connected => true,
         :address         => "00:1a:4a:16:01:51"
       )
-      # nic.lan.should == @lan # TODO: Hook up this connection
+      nic.lan == @lan
 
       guest_device = v.hardware.guest_devices.find_by(:device_name => "nic1")
       expect(guest_device.network).not_to be_nil
@@ -647,7 +647,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
         :start_connected => true,
         :address         => "00:1a:4a:16:01:53"
       )
-      # nic.lan.should == @lan # TODO: Hook up this connection
+      nic.lan == @lan
 
       expect(v.parent_datacenter).to have_attributes(
         :ems_ref     => "/api/datacenters/b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1",

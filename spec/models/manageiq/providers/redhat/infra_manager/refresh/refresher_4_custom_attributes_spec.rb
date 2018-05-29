@@ -9,6 +9,9 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     @ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4
     allow_any_instance_of(@ovirt_service)
       .to receive(:collect_external_network_providers).and_return(load_response_mock_for('external_network_providers'))
+    @collector = ManageIQ::Providers::Redhat::Inventory::Collector
+    allow_any_instance_of(@collector)
+      .to receive(:collect_vnic_profiles).and_return([])
     @ems.update_authentication(:default => {:userid => "admin@internal", :password => "123456"})
     @ems.default_endpoint.verify_ssl = OpenSSL::SSL::VERIFY_NONE
     allow(@ems).to(receive(:supported_api_versions).and_return(%w(3 4)))
