@@ -215,18 +215,18 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   def host_guest_devices(persister_hardware, host, nics, networks)
     nics.to_miq_a.each do |nic|
       network = network_from_nic(nic, host, networks)
-      ip = nic.ip.presence || {}
+      ip = nic.ip.presence || nil
 
       location = nil
       location = $1 if nic.name =~ /(\d+)$/
 
       persister_nic = persister.host_networks.find_or_build_by(
         :hardware  => persister_hardware,
-        :ipaddress => ip.address
+        :ipaddress => ip&.address
       ).assign_attributes(
         :description => nic.name,
-        :ipaddress   => ip.address,
-        :subnet_mask => ip.netmask,
+        :ipaddress   => ip&.address,
+        :subnet_mask => ip&.netmask,
       )
 
       attributes = {
@@ -479,6 +479,13 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       next if nic.blank?
       mac = nic.mac && nic.mac.address ? nic.mac.address : nil
       network = mac && networks.present? ? networks[mac] : nil
+
+      profile_id = nic.dig(:vnic_profile, :id)
+      profiles = collector.collect_vnic_profiles
+      vnic_profile = profiles.detect { |p| p.id == profile_id } if profile_id && profiles
+      network_id = vnic_profile.dig(:network, :id) if vnic_profile
+      lan = persister.lans.find_by(network_id)
+
       persister.guest_devices.find_or_build_by(
         :hardware => persister_hardware,
         :uid_ems  => nic.id
@@ -488,7 +495,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :device_type     => 'ethernet',
         :controller_type => 'ethernet',
         :address         => nic.dig(:mac, :address),
-        :lan             => nic.dig(:network, :id),
+        :lan             => lan,
         :network         => network
       )
     end

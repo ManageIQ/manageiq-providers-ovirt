@@ -74,6 +74,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
         preloaded_disks = collect_disks_as_hash(res[:disk])
         collect_disks_from_attachments(res[:vm], preloaded_disks)
         collect_disks_from_attachments(res[:template], preloaded_disks)
+        collect_vnic_profiles(res)
         res
       end
     end
@@ -253,6 +254,10 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
 
     def collect_networks
       connection.system_service.networks_service.list
+    end
+
+    def collect_vnic_profiles(inv)
+      inv[:vnic_profiles] = connection.system_service.vnic_profiles_service.list
     end
 
     def collect_datacenters

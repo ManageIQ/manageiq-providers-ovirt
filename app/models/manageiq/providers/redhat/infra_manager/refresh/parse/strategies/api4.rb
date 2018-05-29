@@ -94,8 +94,8 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
       HostInventory.new(:inv => inv, :logger => _log).host_inv_to_hashes(inv, ems_inv, cluster_uids, storage_uids)
     end
 
-    def self.vm_inv_to_hashes(inv, storage_inv, storage_uids, cluster_uids, host_uids, lan_uids)
-      VmInventory.new(:inv => inv, :logger => _log).vm_inv_to_hashes(inv, storage_inv, storage_uids, cluster_uids, host_uids, lan_uids)
+    def self.vm_inv_to_hashes(inv, storage_inv, storage_uids, cluster_uids, host_uids, lan_uids, vnic_profiles)
+      VmInventory.new(:inv => inv, :logger => _log).vm_inv_to_hashes(inv, storage_inv, storage_uids, cluster_uids, host_uids, lan_uids, vnic_profiles)
     end
 
     def self.datacenter_inv_to_hashes(inv, cluster_uids, vm_uids, storage_uids, host_uids)
