@@ -12,7 +12,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Parser
     result[:hosts], uids[:hosts], uids[:lans], uids[:switches], uids[:guest_devices], uids[:scsi_luns] = host_inv_to_hashes(inv[:host], inv, uids[:clusters], uids[:storages])
     vms_inv = Array(inv[:vm]) + Array(inv[:template])
     result[:vms], uids[:vms], added_hosts_from_vms =
-      vm_inv_to_hashes(vms_inv, inv[:storage], uids[:storages], uids[:clusters], uids[:hosts], uids[:lans])
+      vm_inv_to_hashes(vms_inv, inv[:storage], uids[:storages], uids[:clusters], uids[:hosts], uids[:lans], inv[:vnic_profiles])
     result[:folders] = datacenter_inv_to_hashes(inv[:datacenter], uids[:clusters], uids[:vms], uids[:storages], uids[:hosts])
 
     # Link up the root folder
@@ -371,7 +371,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Parser
     host_os && host_os[:type] || host_inv[:type]
   end
 
-  def self.vm_inv_to_hashes(inv, _storage_inv, storage_uids, cluster_uids, host_uids, lan_uids)
+  def self.vm_inv_to_hashes(inv, _storage_inv, storage_uids, cluster_uids, host_uids, lan_uids, vnic_profiles)
     result = []
     result_uids = {}
     guest_device_uids = {}
@@ -418,7 +418,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Parser
       host_mor = host_id
       hardware = vm_inv_to_hardware_hash(vm_inv)
       hardware[:disks] = vm_inv_to_disk_hashes(vm_inv, storage_uids)
-      hardware[:guest_devices], guest_device_uids[mor] = vm_inv_to_guest_device_hashes(vm_inv, lan_uids[host_mor])
+      hardware[:guest_devices], guest_device_uids[mor] = vm_inv_to_guest_device_hashes(vm_inv, lan_uids[host_mor], vnic_profiles)
       hardware[:networks] = vm_inv_to_network_hashes(vm_inv, guest_device_uids[mor])
 
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm_inv[:href])
@@ -490,7 +490,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Parser
     result
   end
 
-  def self.vm_inv_to_guest_device_hashes(inv, lan_uids)
+  def self.vm_inv_to_guest_device_hashes(inv, lan_uids, _vnic_profiles)
     inv = inv[:nics]
 
     result = []
