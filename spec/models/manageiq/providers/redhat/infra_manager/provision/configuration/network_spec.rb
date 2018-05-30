@@ -228,6 +228,15 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
           @task.configure_network_adapters
         end
 
+        it "should update an existing adapter's network using 'profile_id (network_name)'" do
+          @task.options[:networks] = [{:network => get_profile_description(vnic_profile_name, network.name)}]
+
+          expect(rhevm_vm).to receive(:nics).and_return([rhevm_nic1])
+          expect(nic1_service).to receive(:update).with(:name => "nic1", :vnic_profile => {:id => vnic_profile_id})
+
+          @task.configure_network_adapters
+        end
+
         it "should update an existing adapter's network with 'Empty' profile" do
           @task.options[:networks] = [{:network => '<Empty>'}]
 
@@ -321,10 +330,29 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
             expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(nil)
           end
         end
+
+        context "'profile_id (network_name)' is specified" do
+          before do
+            assign_vnic_profile(get_profile_description(vnic_profile_name, network.name))
+          end
+
+          it 'returns mac address since nics list contains a nic with the specified profile description' do
+            expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(mac_address)
+          end
+
+          it 'returns nil since nics list does not contain a nic with the specified profile description' do
+            allow(rhevm_nic1).to receive(:vnic_profile).and_return(vnic_profile_2)
+            expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(nil)
+          end
+        end
       end
 
       def assign_vnic_profile(vnic_profile_id)
-        @task.options[:vlan] = [vnic_profile_id, vnic_profile_name + " (" + network_name + ")"]
+        @task.options[:vlan] = [vnic_profile_id, get_profile_description(vnic_profile_name, network_name)]
+      end
+
+      def get_profile_description(vnic_profile_name, network_name)
+        "#{vnic_profile_name} (#{network_name})"
       end
 
       def test_empty_nic_list

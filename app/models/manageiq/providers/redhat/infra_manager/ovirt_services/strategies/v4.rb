@@ -110,14 +110,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
     end
 
     def load_allowed_networks(_hosts, vlans, workflow)
-      uid_ems_cluster = VmOrTemplate.find(workflow.get_source_vm.id).ems_cluster.uid_ems
-      profiles = get_vnic_profiles_in_cluster(uid_ems_cluster)
-      profiles.each do |profile, profile_network|
-        vlans[profile.id] = "#{profile.name} (#{profile_network.name})"
-      end
-
-      vlans['<Empty>'] = _('<No Profile>')
-      vlans['<Template>'] = _('<Use template nics>')
+      private_load_allowed_networks(vlans, VmOrTemplate.find(workflow.get_source_vm.id).ems_cluster.uid_ems)
     end
 
     def filter_allowed_hosts(_workflow, all_hosts)
@@ -550,11 +543,13 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
     end
 
     def get_mac_address_of_nic_on_requested_vlan(args)
-      nics = nics_for_vm(args[:destination])
-      find_mac_address_on_network(nics, args[:value_of_vlan_option])
+      vm = args[:destination]
+      nics = nics_for_vm(vm)
+      find_mac_address_on_network(nics, args[:value_of_vlan_option], vm.uid_ems)
     end
 
-    def find_mac_address_on_network(nics, vnic_profile_id)
+    def find_mac_address_on_network(nics, vnic_profile_id, uid_ems)
+      vnic_profile_id = parse_vnic_profile_id(vnic_profile_id, uid_ems)
       nic = if vnic_profile_id == '<Empty>'
               nics.detect do |n|
                 n.vnic_profile.nil?
@@ -792,7 +787,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
     end
 
     def configure_vnic_with_requested_data(name, requested_vnic, destination_vnic, nics_service, destination_cluster)
-      requested_profile_id = requested_vnic[:network]
+      requested_profile_id = parse_vnic_profile_id(requested_vnic[:network], destination_cluster.uid_ems)
       if requested_profile_id == '<Empty>'
         profile_id = nil
       else
@@ -813,6 +808,27 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
         :nics_service => nics_service,
         :logger       => _log
       )
+    end
+
+    def private_load_allowed_networks(vlans, uid_ems_cluster)
+      profiles = get_vnic_profiles_in_cluster(uid_ems_cluster)
+      profiles.each do |profile, profile_network|
+        vlans[profile.id] = "#{profile.name} (#{profile_network.name})"
+      end
+
+      vlans['<Empty>'] = _('<No Profile>')
+      vlans['<Template>'] = _('<Use template nics>')
+    end
+
+    def parse_vnic_profile_id(requested_profile, uid_ems_cluster)
+      if requested_profile.include?('(')
+        vlans = {}
+        private_load_allowed_networks(vlans, uid_ems_cluster)
+        matches = vlans.select { |_profile_id, profile_description| profile_description == requested_profile }
+        return matches.keys[0] unless matches.empty?
+      end
+
+      requested_profile
     end
 
     def configure_vnic(args)
