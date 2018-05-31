@@ -9,7 +9,7 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Shared::NetworkCollect
         :model_class => ManageIQ::Providers::Openstack::CloudManager::CloudTenant
       )
       builder.add_builder_params(
-        :ext_management_system => manager.parent_manager
+        :ems_id => manager.parent_manager.try(:id) # changed from :ext_management_system
       )
     end
   end
