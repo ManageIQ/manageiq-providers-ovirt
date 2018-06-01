@@ -10,10 +10,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Added
 - Performance improvements for graph refresh [(#237)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/237)
 
-### Unreleased as of Sprint 82 - 2018-03-26
+## Gaprindashvili-3 released 2018-05-15
+
+### Added
+- Support Unregister VM [(#223)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/223)
+- Update client to use renamed NetworkDiscovery [(#208)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/208)
+- Discovery namespace change [(#209)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/209)
+- Make graph refresh enabled by default [(#219)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/219)
 
 ### Fixed
+- Add fix and add specs for graph targeted refresh [(#203)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/203)
+- Provide max memory on VM reconfigure [(#224)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/224)
+- Use correct refresh for older providers [(#207)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/207)
+- Fix graph refresh fetching custom attributes [(#211)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/211)
 - Get mac addr if the selected profile is '<Empty>' or '<Template>' [(#227)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/227)
+- Fix provider discovery [(#232)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/232)
+- Use old refresh as default [(#233)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/233)
 
 ## Gaprindashvili-2 released 2018-03-06
 
@@ -27,14 +39,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 - Fix graph targeted host refresh spec [(#213)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/213)
-- Discovery namespace change [(#209)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/209)
-- Update client to use renamed NetworkDiscovery [(#208)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/208)
-- Use correct refresh for older providers [(#207)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/207)
-
-### Unreleased as of Sprint 79 - 2018-02-12
-
-### Fixed
-- Add fix and add specs for graph targeted refresh [(#203)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/203)
 
 ## Gaprindashvili-1 - Released 2018-01-31
 
