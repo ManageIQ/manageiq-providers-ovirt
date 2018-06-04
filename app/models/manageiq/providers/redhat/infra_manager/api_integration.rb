@@ -18,6 +18,11 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     @supported_features ||= supported_api_versions.collect { |version| self.class.api_features[version.to_s] }.flatten.uniq
   end
 
+  def authentication_status_ok?(type = nil)
+    return true if type == :ssh_keypair
+    super
+  end
+
   def use_graph_refresh?
     Settings.ems_refresh.rhevm.try(:[], :inventory_object_refresh) &&
       use_ovirt_sdk? && supported_api_versions.include?('4')
