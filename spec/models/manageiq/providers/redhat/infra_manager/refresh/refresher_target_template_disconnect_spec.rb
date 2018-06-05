@@ -17,6 +17,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
                                                    'spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_target_template_disconnect.yml',
                                                    false)
       end
+      stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => false }})
       stub_const("OvirtSDK4::Connection", Spec::Support::OvirtSDK::ConnectionVCR)
     end
 
