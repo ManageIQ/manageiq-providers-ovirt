@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+### Unreleased as of Sprint 87 - 2018-06-04
+
+### Fixed
+- Fix logging oVirt event in debug level [(#255)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/255)
+- Set EMS api_version to a variable for readability [(#250)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/250)
+- Don't call Gem::Version.new() with a nil version [(#247)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/247)
+
 ### Unreleased as of Sprint 86 - 2018-05-21
 
 ### Added
