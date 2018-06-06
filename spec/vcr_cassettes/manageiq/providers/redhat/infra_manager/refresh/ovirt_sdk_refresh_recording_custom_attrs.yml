@@ -2743,18 +2743,6 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/networks{}GET:
     content-length: '313'
     correlation-id: 0fb84808-a1db-4c32-95b5-07dbac8410c7
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vnicprofiles{}GET:
-- :body: |
-    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-    <vnic_profiles/>
-  :code: 200
-  :headers:
-    content-encoding: gzip
-    connection: keep-alive
-    content-type: application/xml
-    content-length: '93'
-    correlation-id: df567c87-e710-4955-8457-74a5d6418fe1
-  :message:
 https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>

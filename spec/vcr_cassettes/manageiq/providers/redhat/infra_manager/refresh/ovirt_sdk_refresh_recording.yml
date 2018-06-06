@@ -6157,30 +6157,6 @@ https://localhost:8443/ovirt-engine/api/networks{}GET:
     correlation-id: a42fa1c3-640d-4ac7-a79a-87e1822c7fe5
     date: Thu, 03 Aug 2017 10:38:48 GMT
   :message: 
-https://localhost:8443/ovirt-engine/api/vnicprofiles{}GET:
-- :body: |
-    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-    <vnic_profiles>
-       <vnic_profile href="/ovirt-engine/api/vnicprofiles/ce947d91-1a6f-47c1-b722-5dd45869ea3f" id="ce947d91-1a6f-47c1-b722-5dd45869ea3f">
-           <name>ovirtmgmt</name>
-           <link href="/ovirt-engine/api/vnicprofiles/ce947d91-1a6f-47c1-b722-5dd45869ea3f/permissions" rel="permissions"/>
-           <pass_through>
-                <mode>disabled</mode>
-           </pass_through>
-           <port_mirroring>false</port_mirroring>
-           <network href="/ovirt-engine/api/networks/6ad90f38-5496-47fb-9882-5aa55e1314ef" id="6ad90f38-5496-47fb-9882-5aa55e1314ef"/>
-           <network_filter href="/ovirt-engine/api/networkfilters/dcedb4d0-3c16-11e8-afa4-54e1ad8f7407" id="dcedb4d0-3c16-11e8-afa4-54e1ad8f7407"/>
-       </vnic_profile>
-    </vnic_profiles>
-  :code: 200
-  :headers:
-    content-encoding: gzip
-    connection: keep-alive
-    content-type: application/xml
-    content-length: '347'
-    correlation-id: cc78dfe6-da13-475c-aee8-31e9cc1ae17f
-    date: Thu, 03 Aug 2017 10:38:48 GMT
-  :message:
 https://localhost:8443/ovirt-engine/api/datacenters{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>

@@ -162,7 +162,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
           :uid_ems => uid,
           :name    => name,
 
-          :lans    => [lan]
+          :lans    => [{:name => name, :uid_ems => uid, :tag => tag_value}]
         }
 
         result << new_result
@@ -279,12 +279,12 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
         guest_device = guest_device_uids.fetch_path(:pnic, uid)
 
         # Get the ip section
-        ip = vnic.ip.presence || nil
+        ip = vnic.ip.presence || {}
 
         new_result = {
           :description => vnic.name,
-          :ipaddress   => ip&.address,
-          :subnet_mask => ip&.netmask,
+          :ipaddress   => ip.address,
+          :subnet_mask => ip.netmask,
         }
 
         result << new_result

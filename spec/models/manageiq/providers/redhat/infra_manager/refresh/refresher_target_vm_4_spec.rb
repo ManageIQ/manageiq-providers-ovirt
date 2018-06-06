@@ -125,7 +125,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     collector_class = ManageIQ::Providers::Redhat::Inventory::Collector
     allow_any_instance_of(collector_class).to receive(:collect_attached_disks).and_return(load_response_mock_for('disks'))
     allow_any_instance_of(collector_class).to receive(:collect_vm_devices).and_return([])
-    allow_any_instance_of(collector_class).to receive(:collect_vnic_profiles).and_return([])
     allow_any_instance_of(collector_class).to receive(:collect_nics).and_return(load_response_mock_for('nics'))
     allow_any_instance_of(collector_class).to receive(:collect_snapshots).and_return(load_response_mock_for('snapshots'))
     target_collector_class = ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection

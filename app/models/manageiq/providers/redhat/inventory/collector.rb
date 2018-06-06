@@ -41,12 +41,6 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManagerRefresh::Invent
     end
   end
 
-  def collect_vnic_profiles
-    manager.with_provider_connection(VERSION_HASH) do |connection|
-      connection.system_service.vnic_profiles_service.list
-    end
-  end
-
   def collect_storagedomains
     manager.with_provider_connection(VERSION_HASH) do |connection|
       connection.system_service.storage_domains_service.list

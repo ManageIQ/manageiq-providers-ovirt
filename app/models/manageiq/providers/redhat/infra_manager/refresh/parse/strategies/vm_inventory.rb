@@ -7,7 +7,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
       @_log = args[:logger]
     end
 
-    def vm_inv_to_hashes(inv, _storage_inv, storage_uids, cluster_uids, host_uids, lan_uids, vnic_profiles)
+    def vm_inv_to_hashes(inv, _storage_inv, storage_uids, cluster_uids, host_uids, lan_uids)
       result = []
       result_uids = {}
       guest_device_uids = {}
@@ -53,7 +53,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
         host_mor = host_id
         hardware = vm_inv_to_hardware_hash(vm_inv)
         hardware[:disks] = vm_inv_to_disk_hashes(vm_inv, storage_uids)
-        hardware[:guest_devices], guest_device_uids[vm_id] = vm_inv_to_guest_device_hashes(vm_inv, lan_uids[host_mor], vnic_profiles)
+        hardware[:guest_devices], guest_device_uids[vm_id] = vm_inv_to_guest_device_hashes(vm_inv, lan_uids[host_mor])
         hardware[:networks] = vm_inv_to_network_hashes(vm_inv, guest_device_uids[vm_id])
 
         ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm_inv.href)
@@ -123,7 +123,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
       result
     end
 
-    def vm_inv_to_guest_device_hashes(inv, lan_uids, vnic_profiles)
+    def vm_inv_to_guest_device_hashes(inv, lan_uids)
       inv = inv.nics
 
       result = []
@@ -135,10 +135,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
         address = data.dig(:mac, :address)
         name = data.name
 
-        profile_id = data.dig(:vnic_profile, :id)
-        vnic_profile = vnic_profiles.detect { |p| p.id == profile_id } if profile_id && vnic_profiles
-        network_id = vnic_profile.dig(:network, :id) if vnic_profile
-        lan = lan_uids[network_id] unless lan_uids.nil? || network_id.nil?
+        lan = lan_uids[data.dig(:network, :id)] unless lan_uids.nil?
 
         new_result = {
           :uid_ems         => uid,
