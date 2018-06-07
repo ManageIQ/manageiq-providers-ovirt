@@ -240,7 +240,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       unless network.nil?
         switch_uid = network.try(:id) || network.name
-        attributes[:switch] = persister.switches.lazy_find(switch_uid)
+        persister_host = persister.hosts.lazy_find(ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(host.href))
+        attributes[:switch] = persister.host_virtual_switches.lazy_find(:host => persister_host, :uid_ems => switch_uid)
         attributes[:network] = persister_nic
       end
 
@@ -260,7 +261,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       uid = network.try(:id) || network.name
       name = network.name
 
-      persister_switch = persister.switches.find_or_build(uid).assign_attributes(
+      persister_switch = persister.host_virtual_switches.find_or_build_by(:host => persister_host, :uid_ems => uid).assign_attributes(
+        :host    => persister_host,
         :uid_ems => uid,
         :name    => name,
         :lans    => [lans(network)]

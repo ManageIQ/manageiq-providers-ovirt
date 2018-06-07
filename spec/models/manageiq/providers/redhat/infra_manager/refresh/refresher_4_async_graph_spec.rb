@@ -112,8 +112,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(Network.count).to eq(6)
     expect(OperatingSystem.count).to eq(20)
     expect(Snapshot.count).to eq(17)
-    # the old code expects 3 and new 2
-    expect(Switch.count).to eq(2)
+    expect(Switch.count).to eq(3)
     expect(SystemService.count).to eq(0)
 
     expect(Relationship.count).to eq(45)
