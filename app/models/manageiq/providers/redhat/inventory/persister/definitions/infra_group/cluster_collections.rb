@@ -1,4 +1,4 @@
-module ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::ClusterCollections
+module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::ClusterCollections
   extend ActiveSupport::Concern
 
   # group :ems_clusters

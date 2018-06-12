@@ -1,4 +1,4 @@
-module ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::VmsCollections
+module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::VmsCollections
   extend ActiveSupport::Concern
 
   # group :vms

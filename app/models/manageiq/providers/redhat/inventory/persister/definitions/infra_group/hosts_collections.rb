@@ -1,4 +1,4 @@
-module ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::HostsCollections
+module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::HostsCollections
   extend ActiveSupport::Concern
 
   # group :hosts

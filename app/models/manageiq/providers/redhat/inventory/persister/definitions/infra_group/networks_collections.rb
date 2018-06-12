@@ -1,4 +1,4 @@
-module ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::NetworksCollections
+module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::NetworksCollections
   extend ActiveSupport::Concern
 
   # group :networks

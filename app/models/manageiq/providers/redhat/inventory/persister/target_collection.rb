@@ -1,14 +1,12 @@
 class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < ManageIQ::Providers::Redhat::Inventory::Persister
-  include ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraCollections
+  include ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraCollections
 
   def initialize_inventory_collections
     initialize_infra_inventory_collections
 
     @collection_group = nil
-    %i(custom_attributes).each do |name|
 
-      add_collection(infra, name)
-    end
+    add_collection(infra, :custom_attributes)
   end
 
   # not added to IC properties

@@ -1,6 +1,6 @@
 # !! Inherited from OpenStack
 class ManageIQ::Providers::Redhat::Inventory::Persister::NetworkManager < ManageIQ::Providers::Openstack::Inventory::Persister::NetworkManager
-  include ManageIQ::Providers::Redhat::Inventory::Persister::Shared::NetworkCollections
+  include ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::NetworkCollections
 
   def initialize_inventory_collections
     super

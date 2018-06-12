@@ -1,4 +1,4 @@
-module ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::StoragedomainsCollections
+module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::StoragedomainsCollections
   extend ActiveSupport::Concern
 
   # group :storagedomains

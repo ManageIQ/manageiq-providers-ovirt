@@ -1,16 +1,18 @@
-module ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraCollections
+module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraCollections
   extend ActiveSupport::Concern
 
-  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::ClusterCollections
-  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::VmsCollections
-  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::HostsCollections
-  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::DatacentersCollections
-  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::StoragedomainsCollections
-  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::NetworksCollections
-  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::VmsDependencyCollections
+  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::ClusterCollections
+  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::VmsCollections
+  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::HostsCollections
+  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::DatacentersCollections
+  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::StoragedomainsCollections
+  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::NetworksCollections
+  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::VmsDependencyCollections
 
   def initialize_infra_inventory_collections
     @collection_group = nil
+
+    add_collection(infra, :ems_folders)
 
     add_clusters_group
     add_vms_group
@@ -57,7 +59,6 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraCollectio
     @collection_group = :datacenters
 
     add_datacenters
-    add_ems_folders
   end
 
   def add_hosts_group

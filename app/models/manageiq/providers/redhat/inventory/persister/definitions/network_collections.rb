@@ -1,4 +1,4 @@
-module ManageIQ::Providers::Redhat::Inventory::Persister::Shared::NetworkCollections
+module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::NetworkCollections
   extend ActiveSupport::Concern
 
   # ------ IC provider specific definitions -------------------------

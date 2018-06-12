@@ -1,4 +1,4 @@
-module ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::VmsDependencyCollections
+module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::VmsDependencyCollections
   extend ActiveSupport::Concern
 
   # group :vms_dependency
@@ -105,7 +105,7 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::Vm
       vm_collection = inventory_collection.dependency_attributes[:vms].try(:first)
       vm_model      = vm_collection.model_class
 
-      vms_by_cluster = Hash.new { |h, k| h[k] = []}
+      vms_by_cluster = Hash.new { |h, k| h[k] = [] }
       vm_collection.data.each { |vm| vms_by_cluster[vm.ems_cluster&.id] << vm }
 
       ActiveRecord::Base.transaction do
@@ -115,6 +115,7 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Shared::InfraGroup::Vm
         clusters_by_id.each do |cluster_id, cluster|
           rp = ResourcePool.find_by(:uid_ems => "#{cluster.uid_ems}_respool")
           cluster.with_relationship_type("ems_metadata") { cluster.add_child(rp) }
+
           vms = vms_by_id.values_at(*vms_by_cluster[cluster_id]&.map(&:id) || [])
           rp.with_relationship_type("ems_metadata") { rp.add_children(vms) }
         end
