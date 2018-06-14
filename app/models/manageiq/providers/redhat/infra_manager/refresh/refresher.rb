@@ -1,7 +1,5 @@
 module ManageIQ::Providers::Redhat::InfraManager::Refresh
   class Refresher < ManageIQ::Providers::BaseManager::Refresher
-    include ::EmsRefresh::Refreshers::EmsRefresherMixin
-
     def collect_inventory_for_targets(ems, targets)
       inventory = inventory_from_ovirt(ems)
       raise "Invalid RHEV server ip address." if inventory.api.nil?
