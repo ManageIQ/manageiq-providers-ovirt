@@ -21,8 +21,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration
   end
 
   def configure_sysprep
-    content = get_option(:sysprep_upload_text)
-
+    content = sysprep_specification_selected? ? customization_template_content : get_option(:sysprep_upload_text)
     return unless content
     with_provider_destination { |d| d.update_sysprep!(content) }
 
@@ -37,9 +36,8 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration
       configure_cpu(rhevm_vm)
       configure_host_affinity(rhevm_vm)
       configure_network_adapters
-
       sysprep_option = get_option(:sysprep_enabled)
-      if sysprep_option == 'file'
+      if sysprep_option == 'file' || sysprep_specification_selected?
         configure_sysprep
       elsif sysprep_option == 'fields'
         configure_cloud_init
@@ -48,6 +46,22 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration
   end
 
   private
+
+  def sysprep_specification_selected?
+    options.dig(:sysprep_enabled, 1) == "Sysprep Specification"
+  end
+
+  def prepare_customization_template_substitution_options
+    super.tap do |substitution_options|
+      substitution_options[:sysprep_timezone] = extract_timezone(substitution_options[:sysprep_timezone])
+    end
+  end
+
+  def extract_timezone(timezone_option_from_ui)
+    timezone = timezone_option_from_ui[1] if timezone_option_from_ui.present?
+    return unless timezone
+    /\) (.*)/.match(timezone)[1]
+  end
 
   def customization_template_content
     return unless customization_template
