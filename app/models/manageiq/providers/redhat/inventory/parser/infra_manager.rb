@@ -484,7 +484,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       profiles = collector.collect_vnic_profiles
       vnic_profile = profiles.detect { |p| p.id == profile_id } if profile_id && profiles
       network_id = vnic_profile.dig(:network, :id) if vnic_profile
-      lan = persister.lans.find_by(network_id) if network_id
+      lan = persister.lans.find_by(:uid_ems => network_id) if network_id
 
       persister.guest_devices.find_or_build_by(
         :hardware => persister_hardware,
