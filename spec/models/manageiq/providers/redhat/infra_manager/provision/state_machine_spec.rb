@@ -1,7 +1,10 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine do
   include MiqProvision::StateMachineSpecHelper
   let(:cluster)  { FactoryGirl.create(:ems_cluster, :ext_management_system => ems) }
-  let(:ems)      { FactoryGirl.create(:ems_redhat_with_authentication) }
+  let(:ems)      do
+    _, _, zone = EvmSpecHelper.create_guid_miq_server_zone
+    FactoryGirl.create(:ems_redhat_with_authentication, :zone => zone)
+  end
   let(:disk_attachments_service) { double("disk_attachments_service", :add => nil) }
   let(:rhevm_vm) { double("RHEVM VM") }
   let(:task)     { request.tap(&:create_request_tasks).miq_request_tasks.first }
