@@ -324,7 +324,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
   def vms
     vms = Array(collector.vms) + Array(collector.templates)
-    vms.each do |vm|
+    vms.compact.each do |vm|
       # Skip the place holder template
       next if vm.id == '00000000-0000-0000-0000-000000000000'
 
