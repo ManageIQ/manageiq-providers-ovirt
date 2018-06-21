@@ -50,4 +50,21 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     vm.reload
     expect(vm.custom_attributes.count).to eq(1)
   end
+
+  it "does not clear miq_custom_attributes for full and targeted refresh" do
+    EmsRefresh.refresh(@ems)
+    VCR.use_cassette("#{described_class.name.underscore}_ovn_provider") do
+      Fog::OpenStack.instance_variable_set(:@version, nil)
+      EmsRefresh.refresh(@ems.network_manager)
+    end
+
+    vm = Vm.where(:name => 'my-cirros-vm').first
+    vm.miq_custom_set('test-key', 'test-val')
+
+    @ems.reload
+    expect(vm.reload.miq_custom_attributes.count).to eq(1)
+    EmsRefresh.refresh(vm)
+    vm.reload
+    expect(vm.miq_custom_attributes.count).to eq(1)
+  end
 end
