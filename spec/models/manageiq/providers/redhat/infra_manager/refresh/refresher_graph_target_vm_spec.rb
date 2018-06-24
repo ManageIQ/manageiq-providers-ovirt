@@ -67,6 +67,21 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       expect(vm.reload.snapshots.count).to eq(1)
     end
 
+    it 'refreshes successfuly after vm removal' do
+      allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).with(kind_of(Hash)) do |opts|
+        Spec::Support::OvirtSDK::ConnectionVCR.new(opts,
+                                                   'spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_graph_target_vm_removal.yml',
+                                                   false)
+      end
+      stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
+      EmsRefresh.refresh(@ems)
+      @ems.reload
+      vm = VmOrTemplate.where(:name => "vm3").first
+      expect(VmOrTemplate.where(:name => "vm3").first.ems_id).not_to be_nil
+      EmsRefresh.refresh(vm)
+      expect(VmOrTemplate.where(:name => "vm3").first.ems_id).to be_nil
+    end
+
     def vm_to_comparable_hash(vm)
       h = vm.attributes
       h.delete("updated_on")

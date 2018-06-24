@@ -186,7 +186,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
   def infer_related_vm_ems_refs_api!
     vms_and_templates = Array(vms) + Array(templates)
-    vms_and_templates.each do |vm|
+    vms_and_templates.compact.each do |vm|
       clusters = collect_ems_clusters
       clusters.each do |c|
         add_simple_target!(:ems_clusters, ems_ref_from_sdk(c))
