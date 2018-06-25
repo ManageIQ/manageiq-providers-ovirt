@@ -117,8 +117,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
     )
     add_inventory_collection(
       infra.vm_and_template_ems_custom_fields(
-        :arel     => CustomAttribute.joins("INNER JOIN vms ON vms.id = custom_attributes.resource_id")
-         .where(:vms => { :ems_ref => manager_refs }),
         :strategy => :local_db_find_missing_references
       )
     )
