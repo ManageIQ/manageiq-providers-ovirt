@@ -67,4 +67,22 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     vm.reload
     expect(vm.miq_custom_attributes.count).to eq(1)
   end
+
+  it "does not clear ems_custom_attributes for other vms" do
+    EmsRefresh.refresh(@ems)
+    VCR.use_cassette("#{described_class.name.underscore}_ovn_provider") do
+      Fog::OpenStack.instance_variable_set(:@version, nil)
+      EmsRefresh.refresh(@ems.network_manager)
+    end
+
+    vm = Vm.where(:name => 'my-cirros-vm').first
+    other_vm = Vm.find_by(:name => 'vm2323')
+
+    expect(other_vm.ems_custom_attributes.count).to eq(1)
+
+    @ems.reload
+    EmsRefresh.refresh(vm)
+
+    expect(other_vm.reload.ems_custom_attributes.count).to eq(1)
+  end
 end
