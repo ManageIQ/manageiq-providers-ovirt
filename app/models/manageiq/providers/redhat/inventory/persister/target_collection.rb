@@ -11,6 +11,9 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
         :model_class => ::CustomAttribute,
         :manager_ref => %i(name),
       )
+      builder.add_properties(:arel => CustomAttribute.joins("INNER JOIN vms ON vms.id = custom_attributes.resource_id")
+                                        .where(:vms => { :ems_ref => references(:vms) })
+                                        .where(:source => "VC"))
       builder.add_inventory_attributes(%i(section name value source resource))
     end
   end
