@@ -59,13 +59,20 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     end
 
     vm = Vm.where(:name => 'my-cirros-vm').first
+    vm.ems_custom_attributes.first.destroy # This should be recreated
+    vm.ems_custom_attributes.create(:section  => 'custom_field', :name => "delete_me", :value => "please") # This should be deleted
     vm.miq_custom_set('test-key', 'test-val')
 
     @ems.reload
-    expect(vm.reload.miq_custom_attributes.count).to eq(1)
+    vm.reload
+    expect(vm.miq_custom_attributes.count).to eq(1)
+    expect(vm.ems_custom_attributes.count).to eq(1)
+    expect(vm.ems_custom_attributes.first.name).to eq("delete_me")
     EmsRefresh.refresh(vm)
     vm.reload
     expect(vm.miq_custom_attributes.count).to eq(1)
+    expect(vm.ems_custom_attributes.count).to eq(1)
+    expect(vm.ems_custom_attributes.first.name).not_to eq("delete_me")
   end
 
   it "does not clear ems_custom_attributes for other vms" do
