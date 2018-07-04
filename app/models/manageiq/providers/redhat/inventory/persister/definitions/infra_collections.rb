@@ -30,8 +30,6 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
   end
 
   def add_vms_group
-    @collection_group = :vms
-
     add_miq_templates
     add_vm_and_template_ems_custom_fields # TODO we should be able to infer the targeted_arel query
 
@@ -48,8 +46,6 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
   end
 
   def add_vms_dependency_collections_group
-    @collection_group = :vms_dependency
-
     add_ems_folder_children
     add_ems_cluster_children
     add_snapshot_parent
