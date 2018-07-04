@@ -263,8 +263,9 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       persister_switch = persister.switches.find_or_build(uid).assign_attributes(
         :uid_ems => uid,
         :name    => name,
-        :lans    => [lans(network)]
       )
+
+      lans(network, persister_switch)
 
       persister.host_switches.find_or_build_by(
         :host   => persister_host,
@@ -292,7 +293,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     network
   end
 
-  def lans(network)
+  def lans(network, persister_switch)
     tag_value = nil
     if network
       uid = network.id
@@ -309,7 +310,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     persister.lans.find_or_build(uid).assign_attributes(
       :name    => name,
       :uid_ems => uid,
-      :tag     => tag_value
+      :tag     => tag_value,
+      :switch  => persister_switch,
     )
   end
 
