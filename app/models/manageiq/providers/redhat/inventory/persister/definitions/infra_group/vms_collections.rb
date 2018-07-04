@@ -2,13 +2,6 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
   extend ActiveSupport::Concern
 
   # group :vms
-  def add_vms
-    add_collection(infra, :vms) do |builder|
-      builder.add_properties(:manager_uuids => references(:vms)) if targeted?
-    end
-  end
-
-  # group :vms
   def add_miq_templates
     add_collection(infra, :miq_templates) do |builder|
       builder.add_properties(:model_class => ::ManageIQ::Providers::Redhat::InfraManager::Template)
