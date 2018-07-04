@@ -22,6 +22,10 @@ class ManageIQ::Providers::Redhat::Inventory::Persister < ManagerRefresh::Invent
     nil
   end
 
+  def targeted?
+    false
+  end
+
   def parent
     manager.presence
   end
@@ -30,11 +34,8 @@ class ManageIQ::Providers::Redhat::Inventory::Persister < ManagerRefresh::Invent
   def shared_options
     {
       :parent   => parent,
-      :strategy => strategy
+      :strategy => strategy,
+      :targeted => targeted?
     }
-  end
-
-  def manager_refs
-    references(@collection_group)
   end
 end
