@@ -5,9 +5,12 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
   def add_switches
     add_collection(infra, :switches) do |builder|
       if targeted?
-        arel = ::Switch.where(:uid_ems => manager_refs) if manager_refs.present?
-
-        builder.add_properties(:arel => arel) unless arel.nil?
+        # TODO are switches shared across emses? Seems like we weren't filling ems_id
+        builder.add_targeted_arel(
+          lambda do |_inventory_collection|
+            ::Switch.where(:uid_ems => references(:networks))
+          end
+        )
       end
     end
   end

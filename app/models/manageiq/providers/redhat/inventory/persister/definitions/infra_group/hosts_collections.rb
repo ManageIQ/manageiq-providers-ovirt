@@ -10,55 +10,14 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
       )
 
       if targeted?
-        builder.add_properties(:arel => manager.hosts.where(:ems_ref => manager_refs)) if manager_refs.present?
+        builder.add_targeted_arel(
+          lambda do |_inventory_collection|
+            manager.hosts.where(:ems_ref => references(:hosts)) # TODO why are we using ems_ref instead of uid_ems?
+          end
+        )
       end
 
       builder.add_builder_params(:ems_id => ->(persister) { persister.manager.id })
-    end
-  end
-
-  # group :hosts
-  def add_host_hardwares
-    add_collection(infra, :host_hardwares) do |builder|
-      if targeted? && manager_refs.present?
-        builder.add_properties(:arel => manager.host_hardwares.joins(:host).where('hosts' => {:ems_ref => manager_refs}))
-      end
-    end
-  end
-
-  # group :hosts
-  def add_host_networks
-    add_collection(infra, :host_networks) do |builder|
-      if targeted? && manager_refs.present?
-        builder.add_properties(:arel => manager.networks.joins(:hardware => :host).where(:hardware => {'hosts' => {:ems_ref => manager_refs}}))
-      end
-    end
-  end
-
-  # group :hosts
-  def add_host_operating_systems
-    add_collection(infra, :host_operating_systems) do |builder|
-      if targeted? && manager_refs.present?
-        builder.add_properties(:arel => ::OperatingSystem.joins(:host).where('hosts' => {:ems_ref => manager_refs}))
-      end
-    end
-  end
-
-  # group :hosts
-  def add_host_storages
-    add_collection(infra, :host_storages) do |builder|
-      if targeted? && manager_refs.present?
-        builder.add_properties(:arel => manager.host_storages.where(:ems_ref => manager_refs))
-      end
-    end
-  end
-
-  # group :hosts
-  def add_host_switches
-    add_collection(infra, :host_switches) do |builder|
-      if targeted? && manager_refs.present?
-        builder.add_properties(:arel => HostSwitch.joins(:host).where('hosts' => {:ems_ref => manager_refs}))
-      end
     end
   end
 
