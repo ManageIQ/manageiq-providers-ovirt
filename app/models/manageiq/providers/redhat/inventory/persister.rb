@@ -22,10 +22,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister < ManagerRefresh::Invent
     nil
   end
 
-  def targeted?
-    false
-  end
-
   def parent
     manager.presence
   end
