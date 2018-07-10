@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Gaprindashvili-4
+
+### Added
+- Don't call Gem::Version.new() with a nil version [(#247)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/247)
+
+### Fixed
+- Performance improvements for graph refresh [(#237)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/237)
+- Improve performance of EmsFolders and EmsClusters child save blocks [(#240)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/240)
+- Fix refreshing targeted vm after snapshot removal [(#241)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/241)
+- Profile description [(#254)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/254)
+- Fix logging oVirt event in debug level [(#255)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/255)
+- Add support for ssh_keypair authentication [(#251)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/251)
+- RHEV SSH Keypair auth always returns true [(#256)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/256)
+- Use Graph refresh by default [(#259)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/259)
+- Properly fetch snapshot current state [(#230)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/230)
+- vm.hardware.nics[i].lan should return the network attached to the vm [(#238)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/238)
+- Fix refresh failing on guest device lan collection [(#262)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/262)
+- Fix vm targeted refresh on removal [(#264)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/264)
+- Use the same assoc for targeted and full refresh [(#265)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/265)
+- fix miq custom attributes deleted [(#269)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/269)
+- Fix targeted refresh clearing other VMs ems_custom_attrs [(#271)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/271)
+
 ## Gaprindashvili-3
 
 ### Added
