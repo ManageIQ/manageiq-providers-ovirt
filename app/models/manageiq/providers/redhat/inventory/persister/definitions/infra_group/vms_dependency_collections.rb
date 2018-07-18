@@ -11,14 +11,12 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
 
       builder.add_properties(:custom_save_block => ems_folder_children_custom_save_block)
 
-      if !targeted? || references(:vms).present? # correct condition?
-        builder.add_dependency_attributes(
-          :clusters    => [collections[:ems_clusters]],
-          :datacenters => [collections[:datacenters]],
-          :vms         => [collections[:vms]],
-          :templates   => [collections[:miq_templates]]
-        )
-      end
+      builder.add_dependency_attributes(
+        :clusters    => [collections[:ems_clusters]],
+        :datacenters => [collections[:datacenters]],
+        :vms         => [collections[:vms]],
+        :templates   => [collections[:miq_templates]]
+      )
     end
   end
 
@@ -32,12 +30,10 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
 
       builder.add_properties(:custom_save_block => ems_cluster_children_save_block)
 
-      if !targeted? || references(:vms).present? # correct condition?
-        builder.add_dependency_attributes(
-          :vms      => [collections[:vms]],
-          :clusters => [collections[:ems_clusters]]
-        )
-      end
+      builder.add_dependency_attributes(
+        :vms      => [collections[:vms]],
+        :clusters => [collections[:ems_clusters]]
+      )
     end
   end
 
@@ -49,9 +45,7 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
                      :without_model_class       => true
                    }) do |builder|
 
-      if !targeted? || references(:vms).present? # correct condition?
-        builder.add_dependency_attributes(:snapshots => [collections[:snapshots]])
-      end
+      builder.add_dependency_attributes(:snapshots => [collections[:snapshots]])
     end
   end
 

@@ -11,6 +11,9 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
         :model_class => ::CustomAttribute,
         :manager_ref => %i(name),
       )
+      builder.add_properties(:arel => CustomAttribute.joins("INNER JOIN vms ON vms.id = custom_attributes.resource_id")
+                                        .where(:vms => { :ems_ref => references(:vms) })
+                                        .where(:source => "VC"))
       builder.add_inventory_attributes(%i(section name value source resource))
     end
   end
@@ -22,16 +25,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::TargetCollection < Mana
   end
 
   def strategy
-    ems_ref = if @collection_group == :vms_dependency
-                references(:vms)
-              else
-                references(@collection_group)
-              end
-
-    if ems_ref.blank?
-      :local_db_find_references
-    else
-      :local_db_find_missing_references unless @collection_group == :vms_dependency
-    end
+    :local_db_find_missing_references
   end
 end

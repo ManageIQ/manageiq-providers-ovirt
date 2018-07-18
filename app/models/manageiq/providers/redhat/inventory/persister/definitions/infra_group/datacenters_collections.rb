@@ -5,7 +5,7 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
   def add_datacenters
     add_collection(infra, :datacenters) do |builder|
       arel = if targeted?
-               manager.ems_folders.where(:type => 'Datacenter').where(:ems_ref => manager_refs) if manager_refs.present?
+               manager.ems_folders.where(:type => 'Datacenter').where(:ems_ref => manager_refs)
              else
                manager.ems_folders.where(:type => 'Datacenter')
              end
