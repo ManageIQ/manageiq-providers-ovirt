@@ -3,7 +3,6 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
 
   include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::ClusterCollections
   include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::VmsCollections
-  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::HostsCollections
   include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::DatacentersCollections
   include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::StoragedomainsCollections
   include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::NetworksCollections
@@ -56,9 +55,8 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
   end
 
   def add_hosts_group
-    add_hosts
-
-    %i(host_hardwares
+    %i(hosts
+       host_hardwares
        host_networks
        host_operating_systems
        host_storages
