@@ -31,7 +31,6 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
 
   def add_vms_group
     add_miq_templates
-    add_vm_and_template_ems_custom_fields # TODO we should be able to infer the targeted_arel query
 
     %i(vms
        disks
@@ -39,7 +38,8 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
        hardwares
        guest_devices
        snapshots
-       operating_systems).each do |name|
+       operating_systems
+       vm_and_template_ems_custom_fields).each do |name|
 
       add_collection(infra, name)
     end
