@@ -4,13 +4,15 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
   # group :datacenters
   def add_datacenters
     add_collection(infra, :datacenters) do |builder|
-      arel = if targeted?
-               manager.ems_folders.where(:type => 'Datacenter').where(:ems_ref => manager_refs)
-             else
-               manager.ems_folders.where(:type => 'Datacenter')
-             end
+      builder.add_properties(:arel => manager.ems_folders.where(:type => 'Datacenter'))
 
-      builder.add_properties(:arel => arel) unless arel.nil?
+      if targeted?
+        builder.add_targeted_arel(
+          lambda do |_inventory_collection|
+            manager.ems_folders.where(:type => 'Datacenter').where(:ems_ref => references(:datacenters))
+          end
+        )
+      end
     end
   end
 end

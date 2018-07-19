@@ -5,9 +5,11 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
   def add_storages
     add_collection(infra, :storages) do |builder|
       if targeted?
-        arel = ::Storage.where(:ems_ref => manager_refs) if manager_refs.present?
-
-        builder.add_properties(:arel => arel) unless arel.nil?
+        builder.add_targeted_arel(
+          lambda do |_inventory_collection|
+            ::Storage.where(:ems_ref => references(:storagedomains))
+          end
+        )
       end
     end
   end
