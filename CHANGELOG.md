@@ -5,10 +5,51 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-### Unreleased as of Sprint 82 - 2018-03-26
+### Unreleased as of Sprint 91 - 2018-07-30
+
+### Added
+- Persister: optimized InventoryCollection definitions [(#268)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/268)
+
+### Unreleased as of Sprint 89 - 2018-07-02
 
 ### Fixed
+- Use the same assoc for targeted and full refresh [(#265)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/265)
+- Fix vm targeted refresh on removal [(#264)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/264)
+- Fix refresh failing on guest device lan collection [(#262)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/262)
+
+### Unreleased as of Sprint 88 - 2018-06-18
+
+### Fixed
+- Use Graph refresh by default [(#259)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/259)
+
+### Unreleased as of Sprint 87 - 2018-06-04
+
+### Fixed
+- Fix logging oVirt event in debug level [(#255)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/255)
+- Set EMS api_version to a variable for readability [(#250)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/250)
+- Don't call Gem::Version.new() with a nil version [(#247)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/247)
+
+### Unreleased as of Sprint 86 - 2018-05-21
+
+### Added
+- Performance improvements for graph refresh [(#237)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/237)
+
+## Gaprindashvili-3 released 2018-05-15
+
+### Added
+- Support Unregister VM [(#223)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/223)
+- Update client to use renamed NetworkDiscovery [(#208)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/208)
+- Discovery namespace change [(#209)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/209)
+- Make graph refresh enabled by default [(#219)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/219)
+
+### Fixed
+- Add fix and add specs for graph targeted refresh [(#203)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/203)
+- Provide max memory on VM reconfigure [(#224)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/224)
+- Use correct refresh for older providers [(#207)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/207)
+- Fix graph refresh fetching custom attributes [(#211)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/211)
 - Get mac addr if the selected profile is '<Empty>' or '<Template>' [(#227)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/227)
+- Fix provider discovery [(#232)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/232)
+- Use old refresh as default [(#233)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/233)
 
 ## Gaprindashvili-2 released 2018-03-06
 
@@ -22,14 +63,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 - Fix graph targeted host refresh spec [(#213)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/213)
-- Discovery namespace change [(#209)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/209)
-- Update client to use renamed NetworkDiscovery [(#208)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/208)
-- Use correct refresh for older providers [(#207)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/207)
-
-### Unreleased as of Sprint 79 - 2018-02-12
-
-### Fixed
-- Add fix and add specs for graph targeted refresh [(#203)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/203)
 
 ## Gaprindashvili-1 - Released 2018-01-31
 
