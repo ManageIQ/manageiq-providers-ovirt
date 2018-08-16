@@ -629,7 +629,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
         :size            => 6_442_450_944,
         :size_on_disk    => 0,
         :mode            => "persistent",
-        :disk_type       => "thin",
+        :disk_type       => "thick",
         :start_connected => true
       )
       expect(disk.storage).to eq(@storage) ## CHECK MANUALLY
@@ -742,7 +742,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
         :size            => 6_442_450_944,
         :size_on_disk    => 1_838_448_640,
         :mode            => "persistent",
-        :disk_type       => "thin",
+        :disk_type       => "thick",
         :start_connected => true
       )
       expect(disk.storage).to eq(@storage) ## CHECK MANUALLY
