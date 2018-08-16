@@ -40,4 +40,25 @@ class ManageIQ::Providers::Redhat::InfraManager::EventCatcher::Runner < ManageIQ
   def filtered?(event)
     filtered_events.include?(event.name)
   end
+
+  def event_dedup_key(event)
+    # referred to https://www.rubydoc.info/gems/ovirt-engine-sdk/4.0.0/OvirtSDK4/EventReader
+    {
+      :description    => event.description,
+      :code           => event.code,
+      :correlation_id => event.correlation_id,
+      :custom_id      => event.custom_id,
+      :origin         => event.origin,
+      :severity       => event.severity,
+      :cluster        => event.cluster,
+      :data_center    => event.data_center,
+      :host           => event.host,
+      :storage_domain => event.storage_domain,
+      :template       => event.template,
+      :user           => event.user,
+      :vm             => event.vm
+    }
+  end
+
+  alias_method :event_dedup_descriptor, :event_dedup_key
 end
