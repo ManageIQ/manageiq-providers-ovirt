@@ -520,7 +520,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
         vm = build_vm_from_hash(:name     => options[:name],
                                 :template => template,
                                 :cluster  => cluster)
-        vms_service.add(vm)
+        vms_service.add(vm, :clone => options[:clone_type] == :full)
       end
 
       def build_vm_from_hash(args)
