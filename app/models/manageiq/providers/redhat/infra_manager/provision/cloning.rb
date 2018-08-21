@@ -38,11 +38,23 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Cloning
     clone_options = {
       :name       => dest_name,
       :cluster    => dest_cluster.ems_ref,
-      :clone_type => get_option(:linked_clone) ? :linked : :full,
+      :clone_type => clone_type,
       :sparse     => sparse_disk_value
     }
     clone_options[:storage] = dest_datastore.ems_ref unless dest_datastore.nil?
     clone_options
+  end
+
+  def clone_type
+    get_option(:linked_clone).nil? ? clone_type_by_disk_format : clone_type_by_linked_clone
+  end
+
+  def clone_type_by_linked_clone
+    get_option(:linked_clone) ? :linked : :full
+  end
+
+  def clone_type_by_disk_format
+    get_option(:disk_format) == 'preallocated' ? :full : :linked
   end
 
   def template_clone_options
