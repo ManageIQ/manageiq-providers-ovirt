@@ -72,7 +72,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
           clone_options = @vm_prov.prepare_for_clone_task
 
           expect(clone_options[:name]).to eq(@target_vm_name)
-          expect(clone_options[:clone_type]).to eq(:full)
+          expect(clone_options[:clone_type]).to eq(:linked)
           expect(clone_options[:cluster]).to eq(@ems_cluster.ems_ref)
         end
 
@@ -88,6 +88,23 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
           clone_options = @vm_prov.prepare_for_clone_task
 
           expect(clone_options[:clone_type]).to eq(:full)
+        end
+
+        context "no liked_clone defined" do
+          before { @vm_prov.options[:linked_clone] = nil }
+          it "with disk_format preallocated" do
+            @vm_prov.options[:disk_format] = "preallocated"
+            clone_options = @vm_prov.prepare_for_clone_task
+
+            expect(clone_options[:clone_type]).to eq(:full)
+          end
+
+          it "with disk format thin" do
+            @vm_prov.options[:disk_format] = "thin"
+            clone_options = @vm_prov.prepare_for_clone_task
+
+            expect(clone_options[:clone_type]).to eq(:linked)
+          end
         end
       end
 
