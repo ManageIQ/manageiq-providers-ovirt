@@ -156,12 +156,15 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   end
 
   def vm_set_memory(vm, options = {})
-    spec = { 'memoryMB' => options['value'] }
+    spec = { 'memoryMB' => options[:value] }
     vm_reconfigure(vm, :spec => spec)
   end
 
   def vm_set_num_cpus(vm, options = {})
-    spec = { 'numCPUs' => options[:value] }
+    cpu_total = options[:value]
+    spec = { 'numCPUs' => cpu_total }
+    cpu_sockets = cpu_total / vm.cpu_cores_per_socket
+    spec['numCoresPerSocket'] = cpu_total if cpu_sockets < 1
     vm_reconfigure(vm, :spec => spec)
   end
 
