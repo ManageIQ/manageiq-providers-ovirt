@@ -174,14 +174,14 @@ describe ManageIQ::Providers::Redhat::InfraManager do
       it 'cpu_topology from set_number_of_cpus with number of sockets >= 1' do
         allow(@vm).to receive(:cpu_cores_per_socket).and_return(2)
         options = { :user_event => "Console Request Action [vm_set_number_of_cpus], VM [#{@vm.name}]", :value => 2 }
-        expect(@rhevm_vm).to receive(:cpu_topology=).with({:sockets => 1})
+        expect(@rhevm_vm).to receive(:cpu_topology=).with(:sockets => 1)
         @ems.vm_set_num_cpus(@vm, options)
       end
 
       it 'cpu_topology from set_number_of_cpus with number of sockets < 1' do
         allow(@vm).to receive(:cpu_cores_per_socket).and_return(2)
         options = { :user_event => "Console Request Action [vm_set_number_of_cpus], VM [#{@vm.name}]", :value => 1 }
-        expect(@rhevm_vm).to receive(:cpu_topology=).with({:cores => 1, :sockets => 1})
+        expect(@rhevm_vm).to receive(:cpu_topology=).with(:cores => 1, :sockets => 1)
         @ems.vm_set_num_cpus(@vm, options)
       end
 
