@@ -155,6 +155,16 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
     ovirt_services_for_reconfigure.vm_reconfigure(vm, options)
   end
 
+  def vm_set_memory(vm, options = {})
+    spec = { 'memoryMB' => options['value'] }
+    vm_reconfigure(vm, :spec => spec)
+  end
+
+  def vm_set_num_cpus(vm, options = {})
+    spec = { 'numCPUs' => options[:value] }
+    vm_reconfigure(vm, :spec => spec)
+  end
+
   def add_disks(add_disks_spec, vm)
     storage = add_disks_spec[:storage]
     with_disk_attachments_service(vm) do |service|
