@@ -9,4 +9,12 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
       builder.add_properties(:manager_uuids => references(:vms)) if targeted?
     end
   end
+
+  def add_snapshots
+    add_collection(infra, :snapshots) do |builder|
+      builder.add_properties(
+        :manager_ref => %i(uid),
+      )
+    end
+  end
 end

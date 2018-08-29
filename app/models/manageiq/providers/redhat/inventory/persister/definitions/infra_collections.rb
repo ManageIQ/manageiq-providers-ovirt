@@ -30,13 +30,13 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
 
   def add_vms_group
     add_miq_templates
+    add_snapshots
 
     %i(vms
        disks
        networks
        hardwares
        guest_devices
-       snapshots
        operating_systems
        vm_and_template_ems_custom_fields).each do |name|
 
