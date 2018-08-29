@@ -1,3 +1,3 @@
-class ManageIQ::Providers::Redhat::Inventory::Parser < ManagerRefresh::Inventory::Parser
+class ManageIQ::Providers::Redhat::Inventory::Parser < ManageIQ::Providers::Inventory::Parser
   require_nested :InfraManager
 end

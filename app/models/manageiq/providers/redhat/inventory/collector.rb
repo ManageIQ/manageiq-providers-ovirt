@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Redhat::Inventory::Collector < ManagerRefresh::Inventory::Collector
+class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::Inventory::Collector
   # TODO: review the changes here and find common parts with ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
   require_nested :InfraManager
   require_nested :TargetCollection
