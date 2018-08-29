@@ -75,6 +75,10 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
   end
 
   def add_other_collections
-    add_collection(infra, :lans)
+    add_collection(infra, :lans) do |builder|
+      builder.add_properties(
+        :manager_ref => %i(uid_ems)
+      )
+    end
   end
 end
