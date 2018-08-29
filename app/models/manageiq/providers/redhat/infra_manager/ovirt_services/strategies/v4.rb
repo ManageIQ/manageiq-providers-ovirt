@@ -517,16 +517,45 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
         vms_service = connection.system_service.vms_service
         cluster = ovirt_services.cluster_from_href(options[:cluster], connection)
         template = get
-        vm = build_vm_from_hash(:name     => options[:name],
-                                :template => template,
-                                :cluster  => cluster)
-        vms_service.add(vm, :clone => options[:clone_type] == :full)
+        clone = options[:clone_type] == :full
+        disk_attachments = clone ? build_disk_attachments(template, options[:sparse], options[:storage]) : nil
+        vm = build_vm_from_hash(:name             => options[:name],
+                                :template         => template,
+                                :cluster          => cluster,
+                                :disk_attachments => disk_attachments)
+        vms_service.add(vm, :clone => clone)
+      end
+
+      def build_disk_attachments(template, sparse, storage_href)
+        disk_attachments = connection.follow_link(template.disk_attachments)
+        apply_sparsity_on_disk_attachments(disk_attachments, sparse) unless sparse.nil?
+        apply_storage_domain_on_disk_attachments(disk_attachments, storage_href) unless storage_href.nil?
+        disk_attachments
+      end
+
+      def apply_storage_domain_on_disk_attachments(disk_attachments, storage_href)
+        return if storage_href.nil?
+        storage_domain = ovirt_services.storage_from_href(storage_href, connection)
+        disk_attachments.each do |disk_attachment|
+          disk_attachment.disk.storage_domains = [storage_domain]
+        end
+      end
+
+      def apply_sparsity_on_disk_attachments(disk_attachments, sparse)
+        return if sparse.nil?
+        disk_attachments.each do |disk_attachment|
+          disk_attachment.disk.sparse = sparse
+        end
       end
 
       def build_vm_from_hash(args)
-        OvirtSDK4::Vm.new(:name     => args[:name],
-                          :template => args[:template],
-                          :cluster  => args[:cluster])
+        vm_options = {
+          :name             => args[:name],
+          :template         => args[:template],
+          :cluster          => args[:cluster],
+          :disk_attachments => args[:disk_attachments]
+        }.compact
+        OvirtSDK4::Vm.new(vm_options)
       end
     end
 
