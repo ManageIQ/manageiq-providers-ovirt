@@ -240,5 +240,72 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
         end
       end
     end
+
+    RSpec::Matchers.define :vm_with_properly_set_disk_attachments do |opts|
+      sparsity = opts[:sparse]
+      storage_domain_href = opts[:storage]
+      match do |actual|
+        actual.disk_attachments.inject(true) do |res, disk_attachment|
+          res &&= (disk_attachment.disk.sparse == sparsity)
+          res &&= all_storage_domains_match_href?(disk_attachment.disk, storage_domain_href) if storage_domain_href
+          res
+        end
+      end
+    end
+
+    RSpec::Matchers.define :vm_with_disk_attachments_not_set do
+      match { |actual| actual.disk_attachments.blank? }
+    end
+
+    def all_storage_domains_match_href?(disk, href)
+      disk.storage_domains.inject(true) { |res, storage_domain| res && storage_domain.href == href }
+    end
+
+    context "#start_clone" do
+      before do
+        @source_template = double("template")
+        storage_domain = OvirtSDK4::StorageDomain.new(:href => "/api/storagedomains/href")
+        storage_domain_old = OvirtSDK4::StorageDomain.new(:href => "/api/storagedomains/href_old")
+        disk = OvirtSDK4::Disk.new(:storage_domains => [storage_domain_old])
+        disk2 = OvirtSDK4::Disk.new(:storage_domains => [storage_domain_old])
+        @disk_attachments = [OvirtSDK4::DiskAttachment.new(:disk => disk), OvirtSDK4::DiskAttachment.new(:disk => disk2)]
+        @sdk_template = OvirtSDK4::Template.new(:disk_attachments => @disk_attachments)
+        @ems = FactoryGirl.create(:ems_redhat_with_authentication)
+        @ovirt_services = ManageIQ::Providers::Redhat::InfraManager::
+          OvirtServices::Strategies::V4.new(:ems => @ems)
+        connection = double(OvirtSDK4::Connection)
+        template_service = OvirtSDK4::TemplateService
+        cluster = OvirtSDK4::Cluster.new(:cluster => "/api/clusters/href")
+        system_services = OvirtSDK4::SystemService
+        @vms_service = double(OvirtSDK4::VmsService)
+        allow(connection).to receive(:system_service).and_return(system_services)
+        allow(system_services).to receive(:vms_service).and_return(@vms_service)
+        rhevm_template = ManageIQ::Providers::Redhat::InfraManager::
+          OvirtServices::Strategies::V4::TemplateProxyDecorator.new(template_service, connection, @ovirt_services)
+        allow(rhevm_template).to receive(:get).and_return(@sdk_template)
+        allow(@ovirt_services).to receive(:cluster_from_href).with("/api/clusters/href", connection).and_return(cluster)
+        allow(@ovirt_services).to receive(:storage_from_href).with("/api/storagedomains/href", connection).and_return(storage_domain)
+        allow(@source_template).to receive(:with_provider_object).and_yield(rhevm_template)
+        allow(connection).to receive(:follow_link).with(@sdk_template.disk_attachments).and_return(@disk_attachments)
+        allow(@ovirt_services).to receive(:populate_phase_context)
+      end
+
+      context "clone_type is full" do
+        let(:create_options) { { :sparse => true } }
+        it "requests to clone the vm as independant and sets the disk attachments attributes" do
+          opts = {:name => "provision_vm", :cluster => "/api/clusters/href", :clone_type => :full, :sparse => false, :storage => "/api/storagedomains/href"}
+          expect(@vms_service).to receive(:add).with(vm_with_properly_set_disk_attachments(opts), :clone => true)
+          @ovirt_services.start_clone(@source_template, opts, {})
+        end
+      end
+
+      context "clone_type is thin" do
+        it "requests to clone the vm as dependant and does not set the disk attachments attributes" do
+          opts = {:name => "provision_vm", :cluster => "/api/clusters/href", :clone_type => :thin, :sparse => true, :storage => "/api/storagedomains/href"}
+          expect(@vms_service).to receive(:add).with(vm_with_disk_attachments_not_set, :clone => false)
+          @ovirt_services.start_clone(@source_template, opts, {})
+        end
+      end
+    end
   end
 end
