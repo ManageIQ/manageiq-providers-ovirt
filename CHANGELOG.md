@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+### Unreleased as of Sprint 93 - 2018-08-27
+
+### Added
+- Add plugin display name [(#279)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/279)
+
+### Fixed
+- Fix provisioning independent VM [(#277)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/277)
+- Fix disk_type attribute [(#276)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/276)
+
 ### Unreleased as of Sprint 91 - 2018-07-30
 
 ### Added
