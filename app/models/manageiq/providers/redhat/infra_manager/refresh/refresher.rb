@@ -11,7 +11,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
         _log.info "Filtering inventory for #{target.class} [#{target.name}] id: [#{target.id}]..."
 
         if ems.use_graph_refresh?
-          data = ManageIQ::Providers::Redhat::Builder.build_inventory(ems, target)
+          data = ManageIQ::Providers::Redhat::Inventory.build(ems, target)
 
           # TODO: remove when graph refresh supports ems updates
           ems.api_version = inventory.service.version_string
