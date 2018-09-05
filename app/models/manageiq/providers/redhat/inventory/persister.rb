@@ -2,12 +2,9 @@ class ManageIQ::Providers::Redhat::Inventory::Persister < ManageIQ::Providers::I
   require_nested :InfraManager
   require_nested :TargetCollection
 
-  attr_reader :collector
-
-  def initialize(manager, target, collector)
+  def initialize(manager, target)
     @manager   = manager
     @target    = target
-    @collector = collector
 
     @collections = {}
     @collection_group = nil

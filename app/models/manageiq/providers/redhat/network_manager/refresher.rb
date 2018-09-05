@@ -7,7 +7,7 @@ module ManageIQ::Providers
         _log.info("Filtering inventory for #{target.class} [#{target_name}] id: [#{target.id}]...")
 
         if ::Settings.ems_refresh.redhat_network.try(:inventory_object_refresh)
-          inventory = ManageIQ::Providers::Redhat::Builder.build_inventory(ems, target)
+          inventory = ManageIQ::Providers::Redhat::Inventory.build(ems, target)
         end
 
         _log.info("Filtering inventory...Complete")
