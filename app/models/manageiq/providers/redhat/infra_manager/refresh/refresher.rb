@@ -62,7 +62,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
         next unless ems.use_graph_refresh?
         all_targets, sub_ems_targets = targets.partition { |x| x.kind_of?(ExtManagementSystem) }
         unless sub_ems_targets.blank?
-          ems_event_collection = ManagerRefresh::TargetCollection.new(:targets    => sub_ems_targets,
+          ems_event_collection = InventoryRefresh::TargetCollection.new(:targets    => sub_ems_targets,
                                                                       :manager_id => ems_id)
           all_targets << ems_event_collection
         end
