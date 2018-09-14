@@ -101,20 +101,10 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
                         end
   end
 
-  def with_provider_connection(options = {})
-    raise "no block given" unless block_given?
-    _log.info("Connecting through #{self.class.name}: [#{name}]")
-    begin
-      connection = connect(options)
-      yield connection
-    ensure
-      begin
-        self.class.disconnect(connection)
-      rescue => error
-        _log.error("Error while disconnecting #{error}")
-        nil
-      end
-    end
+  def disconnect(connection)
+    self.class.disconnect(connection)
+  rescue StandardError => error
+    _log.error("Error while disconnecting #{error}")
   end
 
   def verify_credentials_for_rhevm(options = {})
