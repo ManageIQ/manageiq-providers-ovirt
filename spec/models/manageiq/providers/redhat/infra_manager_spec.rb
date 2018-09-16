@@ -482,8 +482,9 @@ describe ManageIQ::Providers::Redhat::InfraManager do
     end
 
     it "removes network manager" do
+      zone = FactoryGirl.create(:zone)
+      allow(MiqServer).to receive(:my_zone).and_return(zone.name)
       allow(@ems).to receive(:ovirt_services).and_return(double(:collect_external_network_providers => {}))
-      allow(Zone).to receive_messages(:determine_queue_zone => "defaultzone")
       expect(ExtManagementSystem.count).to eq(2)
       @ems.ensure_managers
       deliver_queue_messages
