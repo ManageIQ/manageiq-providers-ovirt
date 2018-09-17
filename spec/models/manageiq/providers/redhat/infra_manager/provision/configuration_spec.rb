@@ -80,6 +80,57 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration do
 
       expect(task.phase_context[:boot_with_sysprep]).to eq(true)
     end
+
+    let(:cust_template) { FactoryGirl.create(:customization_template_sysprep, :script => "the script: <%= evm[:replace_me] %>") }
+
+    it "provisions sysprep from template with substitutions" do
+      allow(MiqRegion).to receive_message_chain(:my_region, :remote_ui_url => "1.1.1.1")
+      task.options[:sysprep_enabled] = ["fields", "Sysprep Specification"]
+      task.options[:customization_template_id] = cust_template.id
+      task.options[:replace_me] = "replaced!"
+
+      expect(vm_service).to receive(:update).with(OvirtSDK4::Vm.new(
+                                                    :initialization => {
+                                                      :custom_script => "the script: replaced!"
+                                                    }
+      ))
+
+      task.configure_sysprep
+    end
+
+    context "with timezone set" do
+      let(:cust_template) { FactoryGirl.create(:customization_template_sysprep, :script => "timezone: <%= evm[:sysprep_timezone] %>") }
+
+      it "it properly substitutes timezone when it is set" do
+        allow(MiqRegion).to receive_message_chain(:my_region, :remote_ui_url => "1.1.1.1")
+        task.options[:sysprep_enabled] = ["fields", "Sysprep Specification"]
+        task.options[:customization_template_id] = cust_template.id
+        task.options[:sysprep_timezone] = ["300", "(GMT+13:00) Nuku'alofa"]
+
+        expect(vm_service).to receive(:update).with(OvirtSDK4::Vm.new(
+                                                      :initialization => {
+                                                        :custom_script => "timezone: Nuku'alofa"
+                                                      }
+        ))
+
+        task.configure_sysprep
+      end
+
+      it "it properly substitutes timezone when it is not set" do
+        allow(MiqRegion).to receive_message_chain(:my_region, :remote_ui_url => "1.1.1.1")
+        task.options[:sysprep_enabled] = ["fields", "Sysprep Specification"]
+        task.options[:customization_template_id] = cust_template.id
+        task.options[:sysprep_timezone] = nil
+
+        expect(vm_service).to receive(:update).with(OvirtSDK4::Vm.new(
+                                                      :initialization => {
+                                                        :custom_script => "timezone: "
+                                                      }
+        ))
+
+        task.configure_sysprep
+      end
+    end
   end
 
   context "#configure_container" do
