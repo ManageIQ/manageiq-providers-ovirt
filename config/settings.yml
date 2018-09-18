@@ -67,6 +67,7 @@
   :worker_base:
     :event_catcher:
       :event_catcher_redhat:
+        :flooding_monitor_enabled: true
         :poll: 15.seconds
       :event_catcher_redhat_network:
         :poll: 15.seconds
