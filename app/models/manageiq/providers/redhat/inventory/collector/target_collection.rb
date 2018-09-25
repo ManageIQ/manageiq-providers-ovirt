@@ -214,7 +214,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     changed_hosts = manager.hosts.where(:ems_ref => references(:hosts))
 
     changed_hosts.each do |host|
-      add_simple_target!(:ems_clusters, uuid_from_target(host.ems_cluster))
+      add_simple_target!(:ems_clusters, host.ems_cluster.ems_ref)
       host.storages.each do |storage|
         add_simple_target!(:storagedomains, storage.ems_ref)
       end
