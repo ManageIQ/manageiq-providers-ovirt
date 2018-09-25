@@ -408,6 +408,7 @@ class ManageIQ::Providers::Redhat::InventoryCollectionDefault::InfraManager < Ma
         :model_class                 => ::Lan,
         :inventory_object_attributes => [
           :name,
+          :switch,
           :uid_ems,
           :tag
         ]
