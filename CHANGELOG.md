@@ -5,43 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-### Unreleased as of Sprint 93 - 2018-08-27
+### Hammer Beta-1
 
 ### Added
+- Add sysprep support for ovirt [(#275)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/275)
 - Add plugin display name [(#279)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/279)
+- Persister: optimized InventoryCollection definitions [(#268)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/268)
+- Performance improvements for graph refresh [(#237)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/237)
 
 ### Fixed
 - Fix provisioning independent VM [(#277)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/277)
 - Fix disk_type attribute [(#276)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/276)
-
-### Unreleased as of Sprint 91 - 2018-07-30
-
-### Added
-- Persister: optimized InventoryCollection definitions [(#268)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/268)
-
-### Unreleased as of Sprint 89 - 2018-07-02
-
-### Fixed
 - Use the same assoc for targeted and full refresh [(#265)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/265)
 - Fix vm targeted refresh on removal [(#264)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/264)
 - Fix refresh failing on guest device lan collection [(#262)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/262)
-
-### Unreleased as of Sprint 88 - 2018-06-18
-
-### Fixed
 - Use Graph refresh by default [(#259)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/259)
-
-### Unreleased as of Sprint 87 - 2018-06-04
-
-### Fixed
 - Fix logging oVirt event in debug level [(#255)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/255)
 - Set EMS api_version to a variable for readability [(#250)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/250)
 - Don't call Gem::Version.new() with a nil version [(#247)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/247)
-
-### Unreleased as of Sprint 86 - 2018-05-21
-
-### Added
-- Performance improvements for graph refresh [(#237)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/237)
+- Fix graph targeted host refresh spec [(#213)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/213)
 
 ## Gaprindashvili-3 released 2018-05-15
 
@@ -67,11 +49,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Move refresh settings for the Network Manager [(#198)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/198)
 - Fix adding vm_location to vm event hash [(#205)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/205)
 - Fix updating catalog item when provider missing [(#206)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/206)
-
-### Unreleased as of Sprint 80 - 2018-02-26
-
-### Fixed
-- Fix graph targeted host refresh spec [(#213)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/213)
 
 ## Gaprindashvili-1 - Released 2018-01-31
 
