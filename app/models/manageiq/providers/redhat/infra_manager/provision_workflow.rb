@@ -160,7 +160,7 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
 
   def allowed_customization_templates(options = {})
     if supports_native_clone?
-      if get_source_vm.platform == 'windows'
+      if get_source_vm&.platform == 'windows'
         allowed_sysprep_customization_templates(options)
       else
         allowed_cloud_init_customization_templates(options)
