@@ -51,7 +51,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration
     options.dig(:sysprep_enabled, 1) == "Sysprep Specification"
   end
 
-  def prepare_customization_template_substitution_options
+  def prepare_customization_template_substitution_options(mac_address = nil)
     super.tap do |substitution_options|
       substitution_options[:sysprep_timezone] = extract_timezone(substitution_options[:sysprep_timezone])
     end
