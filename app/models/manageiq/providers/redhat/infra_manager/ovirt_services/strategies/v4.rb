@@ -377,6 +377,16 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
         update(vm)
       end
 
+      def attach_floppy(filename_hash)
+        name, content = filename_hash.first
+        file = OvirtSDK4::File.new(:name => name, :content => content)
+        payload = OvirtSDK4::Payload.new(:files => [file])
+        vm = get
+        vm.payloads ||= []
+        vm.payloads << payload
+        update(vm)
+      end
+
       #
       # Updates the `initialization` of the virtual machine using the given custom script.
       #

@@ -13,13 +13,42 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration do
   before { allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager::Provision).to receive(:with_provider_destination).and_yield(provider_object) }
   before(:each) { allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager).to receive(:supported_api_versions).and_return([3]) }
   context "#attach_floppy_payload" do
-    it "should attach floppy if customization template provided" do
-      task.options[:customization_template_id] = cust_template.id
+    context "with ovirt gem" do
+      it "should attach floppy if customization template provided" do
+        task.options[:customization_template_id] = cust_template.id
 
-      expect(task).to     receive(:prepare_customization_template_substitution_options).and_return('key' => 'value')
-      expect(rhevm_vm).to receive(:attach_floppy).with(cust_template.default_filename => '#some_script')
+        expect(task).to     receive(:prepare_customization_template_substitution_options).and_return('key' => 'value')
+        expect(rhevm_vm).to receive(:attach_floppy).with(cust_template.default_filename => '#some_script')
 
-      task.attach_floppy_payload
+        task.attach_floppy_payload
+      end
+    end
+
+    context "with ovirtsdk4" do
+      let(:vm_proxy)        { OvirtSDK4::Vm.new }
+      let(:vm_service)      { double("OvirtSDK4::VmService", :get => vm_proxy) }
+      let(:connection)      { double("OvirtSDK4::Connection") }
+      let(:ovirt_services)  { double("ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4") }
+      let(:provider_object) { ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4::VmProxyDecorator.new(vm_service, connection, ovirt_services) }
+
+      it "updates the vm with the right payload" do
+        task.options[:customization_template_id] = cust_template.id
+        expect(task).to     receive(:prepare_customization_template_substitution_options).and_return('key' => 'value')
+
+        expect(vm_service).to receive(:update) do |vm|
+          expect(vm.payloads.count).to eq(1)
+          payloads = vm.payloads
+          payload = payloads.first
+          files = payload.files
+          file = files.first
+          expect(payloads.count).to eq(1)
+          expect(files.count).to eq(1)
+          expect(file.name).to eq(cust_template.default_filename)
+          expect(file.content).to eq("#some_script")
+        end
+
+        task.attach_floppy_payload
+      end
     end
   end
 
