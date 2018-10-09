@@ -266,7 +266,7 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
     end
 
     unless ems.version_at_least?("4.1")
-      return _("Memory Limit is supported for RHV 4.1 and above. Current provider version is #{ems.api_version}.")
+      return _("Memory Limit is supported for RHV 4.1 and above. Current provider version is %{version}.") % {:version => ems.api_version}
     end
 
     allocated = get_value(values[:vm_memory]).to_i
