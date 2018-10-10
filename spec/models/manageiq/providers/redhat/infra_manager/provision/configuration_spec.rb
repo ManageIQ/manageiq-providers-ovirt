@@ -42,6 +42,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration do
           files = payload.files
           file = files.first
           expect(payloads.count).to eq(1)
+          expect(payload.type).to eq("floppy")
           expect(files.count).to eq(1)
           expect(file.name).to eq(cust_template.default_filename)
           expect(file.content).to eq("#some_script")
