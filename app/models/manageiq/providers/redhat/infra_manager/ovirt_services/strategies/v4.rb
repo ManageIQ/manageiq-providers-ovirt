@@ -380,7 +380,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       def attach_floppy(filename_hash)
         name, content = filename_hash.first
         file = OvirtSDK4::File.new(:name => name, :content => content)
-        payload = OvirtSDK4::Payload.new(:files => [file])
+        payload = OvirtSDK4::Payload.new(:files => [file], type: "floppy")
         vm = get
         vm.payloads ||= []
         vm.payloads << payload
