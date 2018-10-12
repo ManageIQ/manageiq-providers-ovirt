@@ -5,13 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-### Hammer Beta-1
+### Hammer Beta-1 - Released 2018-10-12
 
 ### Added
 - Add sysprep support for ovirt [(#275)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/275)
 - Add plugin display name [(#279)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/279)
 - Persister: optimized InventoryCollection definitions [(#268)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/268)
 - Performance improvements for graph refresh [(#237)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/237)
+- Don't use interpolations in gettext strings [(#297)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/297)
 
 ### Fixed
 - Fix provisioning independent VM [(#277)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/277)
@@ -24,6 +25,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Set EMS api_version to a variable for readability [(#250)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/250)
 - Don't call Gem::Version.new() with a nil version [(#247)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/247)
 - Fix graph targeted host refresh spec [(#213)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/213)
+- Add safe operator for bz 1633540 to protect against empty source_vms [(#292)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/292)
+- Fix PXE provisioning [(#294)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/294)
+- Fix ISO provisioning with kickstart [(#296)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/296)
 
 ## Gaprindashvili-3 released 2018-05-15
 
