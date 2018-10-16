@@ -53,7 +53,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration
 
   def prepare_customization_template_substitution_options(mac_address = nil)
     super.tap do |substitution_options|
-      substitution_options[:sysprep_timezone] = extract_timezone(substitution_options[:sysprep_timezone])
+      substitution_options[:sysprep_timezone] = extract_timezone(substitution_options[:sysprep_timezone]) if substitution_options
     end
   end
 
