@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraManager
+  require_nested  :EmsCluster
   require_nested  :EventCatcher
   require_nested  :EventParser
   require_nested  :RefreshWorker
