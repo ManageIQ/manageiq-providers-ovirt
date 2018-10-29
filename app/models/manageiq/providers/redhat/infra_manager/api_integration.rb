@@ -28,15 +28,8 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       use_ovirt_sdk? && supported_api_versions.include?('4')
   end
 
-  def connect(options = {})
-    raise "no credentials defined" if missing_credentials?(options[:auth_type])
-    version = options[:version] || highest_allowed_api_version
-    unless options[:skip_supported_api_validation] || supports_the_api_version?(version)
-      raise "version #{version} of the api is not supported by the provider"
-    end
-
-    # Prepare the options to call the method that creates the actual connection:
-    connect_options = {
+  def apply_connection_options_defaults(options)
+    {
       :id         => id,
       :scheme     => options[:scheme] || 'https',
       :server     => options[:ip] || address,
@@ -48,7 +41,17 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       :verify_ssl => default_endpoint.verify_ssl,
       :ca_certs   => default_endpoint.certificate_authority
     }
+  end
 
+  def connect(options = {})
+    raise "no credentials defined" if missing_credentials?(options[:auth_type])
+    version = options[:version] || highest_allowed_api_version
+    unless options[:skip_supported_api_validation] || supports_the_api_version?(version)
+      raise "version #{version} of the api is not supported by the provider"
+    end
+
+    # Prepare the options to call the method that creates the actual connection:
+    connect_options = apply_connection_options_defaults(options)
     # Starting with version 4 of oVirt authentication doesn't work when using directly the IP address, it requires
     # the fully qualified host name, so if we received an IP address we try to convert it into the corresponding
     # host name:
