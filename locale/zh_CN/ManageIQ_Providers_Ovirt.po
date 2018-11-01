@@ -1,110 +1,149 @@
-# Chinese translations for ManageIQ_Providers_Ovirt package.
-# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the ManageIQ_Providers_Ovirt package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
-#
+# Joy Cai <joy.sh@linguitronics.com>, 2017. #zanata
+# Tony Fu <tfu@redhat.com>, 2018. #zanata
+# puger dog <ella.cheng.sh@linguitronics.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_Providers_Ovirt 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-04-21 10:14+0200\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Chinese\n"
-"Language: zh_CN\n"
+"POT-Creation-Date: 2018-10-10 09:10+0200\n"
+"PO-Revision-Date: 2018-10-23 07:16+0000\n"
+"Last-Translator: puger dog <ella.cheng.sh@linguitronics.com>\n"
+"Language-Team: Chinese (Simplified, China)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"\n"
+"Language: zh_Hans_CN\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Zanata 4.6.2\n"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:274
 msgid "%{description} VM Memory is larger than Memory Limit"
-msgstr ""
+msgstr "%{description} 虚拟机内存超出内存限制"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/ovirt_services/strategies/v4.rb:858
 msgid "<No Profile>"
-msgstr ""
+msgstr "<No Profile>"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/ovirt_services/strategies/v4.rb:859
 msgid "<Use template nics>"
-msgstr ""
+msgstr "<Use template nics>"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:73
 msgid "Cannot import archived VMs"
-msgstr ""
+msgstr "无法导入已归档的虚拟机"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager.rb:28
 msgid "Cannot import to a RHV provider of version < 4.1.5"
-msgstr ""
+msgstr "无法导入到版本低于 4.1.5 的 RHV 供应商"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager.rb:196
 msgid "Datastore does not exist, unable to add disk"
-msgstr ""
+msgstr "数据存储区不存在，无法添加磁盘"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:64
 msgid "Delete is not allowed for a snapshot that is the active one"
-msgstr ""
+msgstr "不允许删除活动快照"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:65
 msgid "Error while configuring VM network."
-msgstr ""
+msgstr "配置虚拟机网络时出错。"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:56
 msgid "Error while importing the VM."
-msgstr ""
+msgstr "导入虚拟机时出错。"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/host.rb:59
 msgid "Host (Redhat)"
 msgid_plural "Hosts (Redhat)"
 msgstr[0] ""
-msgstr[1] ""
+"主机 (Redhat)\n"
+"主机 (Redhat)"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager.rb:262
 msgid "Infrastructure Provider (Red Hat)"
 msgid_plural "Infrastructure Providers (Red Hat)"
 msgstr[0] ""
-msgstr[1] ""
+"基础架构供应商（Red Hat）\n"
+"基础架构供应商（Red Hat）"
 
-msgid "Memory Limit is supported for RHV 4.1 and above. Current provider version is %{version}."
+#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:269
+msgid ""
+"Memory Limit is supported for RHV 4.1 and above. Current provider version is"
+" %{version}."
+msgstr "内存限制支持 RHV 4.1 和以上版本。当前的供应商版本为 %{version}。"
+
+#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:265
+msgid ""
+"Memory Limit is supported only when using ovirt-engine-sdk (To enable, set: "
+"':use_ovirt_engine_sdk: true' in settings.yml)."
 msgstr ""
+"只有在使用 ovirt-engine-sdk 时才支持内存限制（要启用，在 settings.yml "
+"中设置：':use_ovirt_engine_sdk: true'）。"
 
-msgid "Memory Limit is supported only when using ovirt-engine-sdk (To enable, set: ':use_ovirt_engine_sdk: true' in settings.yml)."
-msgstr ""
-
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm_or_template_shared/scanning.rb:50
 msgid "Perform SmartState Analysis on this VM"
-msgstr ""
+msgstr "在这个虚拟机中执行智能状态分析"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:28
 msgid "Publish operation in not supported"
-msgstr ""
+msgstr "不支持发布操作"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:21
 msgid "Removing all snapshots is currently not supported"
-msgstr ""
+msgstr "目前不支持删除所有快照"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:40
 msgid "Requested VM snapshot not found, unable to RevertTo snapshot"
-msgstr ""
+msgstr "找不到请求的虚拟机快照，无法还原为快照"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:32
 msgid "Requested VM snapshot not found, unable to remove snapshot"
-msgstr ""
+msgstr "找不到请求的虚拟机快照，无法删除快照"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:74
 msgid "Revert is allowed only when vm is down. Current state is %{state}"
-msgstr ""
+msgstr "只有虚拟机已下线时才允许恢复。当前状态为 %{state}"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/snapshot.rb:60
 msgid "Revert is not allowed for a snapshot that is the active one"
-msgstr ""
+msgstr "不允许恢复活动快照"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm_import.rb:77
 msgid "Source provider must be of type Vmware"
-msgstr ""
+msgstr "源供应商类型必须为 VMware"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/provision_workflow.rb:283
 msgid "Template sealing is supported only for non-Windows OS."
-msgstr ""
+msgstr "只有非 Windows 操作系统支持模板签章。"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/host.rb:47
 msgid "The Host is not connected to an active provider"
-msgstr ""
+msgstr "主机未连接至活动的供应商"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/guest.rb:7
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm/operations/guest.rb:12
 msgid "The VM is not powered on"
-msgstr ""
+msgstr "虚拟机未开启"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:21
 msgid "The provider does not support reconfigure disks"
-msgstr ""
+msgstr "供应商不支持重新配置磁盘"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:19
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:30
 msgid "The virtual machine is not associated with a provider"
-msgstr ""
+msgstr "虚拟机未与供应商关联"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:34
 msgid "The virtual machine must be down"
-msgstr ""
+msgstr "虚拟机必须下线"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/api_integration.rb:214
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:32
 msgid "This feature is not supported by the api version of the provider"
-msgstr ""
+msgstr "供应商的 api 版本不支持此功能"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm_or_template_shared/scanning.rb:42
 msgid ""
 "VMs must be scanned from an EVM server whose host is attached to the same\n"
 "  storage as the VM unless overridden via SmartProxy affinity.\n"
@@ -112,17 +151,27 @@ msgid ""
 "  1) Direct LUNs are attached to ManageIQ appliance\n"
 "  2) Management Relationship is set for the ManageIQ appliance"
 msgstr ""
+"虚拟机必须从 EVM 服务器扫描，它的主机附加到\n"
+"  和虚拟机相同的存储上，除非通过 SmartProxy 关联覆盖。\n"
+"  请验证：\n"
+"  1) Direct LUN 附加到 ManageIQ 设备\n"
+"  2) 为 ManageIQ 设备设置了管理关系"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:107
 msgid "Virtual Machine (Red Hat)"
 msgid_plural "Virtual Machines (Red Hat)"
 msgstr[0] ""
-msgstr[1] ""
+"虚拟机 (Red Hat)\n"
+"虚拟机 (Red Hat)"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/template.rb:8
 msgid "not connected to ems"
-msgstr ""
+msgstr "未连接至 EMS"
 
+#: ../lib/manageiq/providers/ovirt/engine.rb:8
 msgid "oVirt Provider"
-msgstr ""
+msgstr "oVirt 供应商"
 
+#: ../app/models/manageiq/providers/redhat/infra_manager/vm.rb:17
 msgid "storage is missing"
-msgstr ""
+msgstr "存储缺失"
