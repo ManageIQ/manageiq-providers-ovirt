@@ -40,7 +40,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       storage_type = storagedomain.dig(:storage, :type).upcase
       location = if storage_type == 'NFS' || storage_type == 'GLUSTERFS'
                    "#{storagedomain.dig(:storage, :address)}:#{storagedomain.dig(:storage, :path)}"
-                 elsif storage_type = 'ISCSI'
+                 elsif storage_type == 'ISCSI'
                    storagedomain.dig(:storage, :volume_group, :id)
                  else
                    logical_units = storagedomain.dig(:storage, :volume_group, :logical_units)
