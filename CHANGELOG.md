@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Gaprindashvili-6
+
+### Added
+- Add support to set VM memory and number of CPUs [(#280)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/280)
+
+### Fixed
+- Fix ISO provisioning with kickstart [(#296)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/296)
+- Fix attach_floppy to pass "floppy" type [(#298)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/298)
+- Fix targeted refresh [(#291)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/291)
+
 ## Gaprindashvili-4
 
 ### Added
