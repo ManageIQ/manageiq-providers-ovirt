@@ -130,7 +130,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :ems_id                    => @ems.network_manager.id,
       :type                      => "ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Private",
       :name                      => "net1",
-      :ems_ref                   => "3bd87e3d-f66a-4e9c-ab56-62f98db791db",
+      :ems_ref                   => "b85981f3-b7d0-4ed1-8b1b-94708b472b17",
       :shared                    => nil,
       :status                    => "active",
       :enabled                   => nil,
@@ -139,10 +139,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :provider_physical_network => nil,
       :provider_network_type     => nil,
       :provider_segmentation_id  => nil,
-      :port_security_enabled     => nil,
+      :port_security_enabled     => false,
       :qos_policy_id             => nil,
       :vlan_transparent          => nil,
-      :maximum_transmission_unit => nil
+      :maximum_transmission_unit => 1442
     )
 
     @cloud_tenant = @cloud_network.cloud_tenant
@@ -163,7 +163,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :ems_id                         => @ems.network_manager.id,
       :type                           => "ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet",
       :name                           => "sub_net1",
-      :ems_ref                        => "5bcefbad-cde7-4410-943d-0b5c168c1c3c",
+      :ems_ref                        => "4c9b5697-8562-420b-972c-d3bbeb10f11e",
       :cidr                           => "11.0.0.0/24",
       :status                         => "active",
       :network_protocol               => "ipv4",
@@ -188,9 +188,9 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :ems_id                => @ems.network_manager.id,
       :type                  => "ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter",
       :name                  => "router1",
-      :ems_ref               => "1a12e744-ee50-4fee-a8d5-f6636e27470d",
+      :ems_ref               => "38dbd81b-bb7c-4fd2-9e7e-a1a8cfeb4312",
       :admin_state_up        => "t",
-      :status                => "ACTIVE",
+      :status                => "INACTIVE",
       :external_gateway_info => nil,
       :distributed           => nil,
       :routes                => [],
@@ -201,17 +201,17 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   end
 
   def assert_specific_network_port
-    @port = NetworkPort.find_by(:name => "nic2")
+    @port = NetworkPort.find_by(:name => "nic1")
     expect(@port).to have_attributes(
       :ems_id                            => @ems.network_manager.id,
       :type                              => "ManageIQ::Providers::Openstack::NetworkManager::NetworkPort",
-      :name                              => "nic2",
-      :ems_ref                           => "2ca0b52d-9af5-4968-82e8-226cec6e6db7",
-      :admin_state_up                    => false,
+      :name                              => "nic1",
+      :ems_ref                           => "2500800a-9dec-4fea-a7ec-a6fdb836da0a",
+      :admin_state_up                    => true,
       :status                            => nil,
-      :mac_address                       => "00:1a:4a:16:01:01",
+      :mac_address                       => "00:1a:4a:16:01:00",
       :device_owner                      => "oVirt",
-      :device_ref                        => "d1a9b8ed-6d6c-4299-a9bb-a5277ce5b513",
+      :device_ref                        => "3b31db55-96cc-4b0b-b820-c693139cbaf9",
       :device                            => nil,
       :cloud_tenant_id                   => @cloud_tenant.id,
       :binding_host_id                   => nil,
@@ -300,7 +300,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
         :ems_ref_obj      => "/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a",
         :name             => "bodh1",
         :hostname         => "bodh1.usersys.redhat.com",
-        :ipaddress        => "10.35.19.12",
+        :ipaddress        => "10.35.18.14",
         :uid_ems          => "5bf6b336-f86d-4551-ac08-d34621ec5f0a",
         :vmm_vendor       => "redhat",
         :vmm_version      => "7",
