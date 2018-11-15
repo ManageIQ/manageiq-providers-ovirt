@@ -186,6 +186,6 @@ class ManageIQ::Providers::Redhat::NetworkManager < ManageIQ::Providers::Network
   end
 
   def tenants
-    @tenants ||= openstack_handle.accessible_tenants
+    @tenants ||= openstack_handle.tenants
   end
 end
