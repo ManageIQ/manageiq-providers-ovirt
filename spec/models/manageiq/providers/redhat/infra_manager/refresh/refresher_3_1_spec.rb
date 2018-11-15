@@ -196,7 +196,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :ems_ref_obj      => "/api/hosts/2f1d11cc-e269-11e2-839c-005056a217db",
       :name             => "per410-rh1",
       :hostname         => "192.168.252.232",
-      :ipaddress        => "192.168.252.232",
+      :ipaddress        => "10.35.18.14",
       :uid_ems          => "2f1d11cc-e269-11e2-839c-005056a217db",
       :vmm_vendor       => "redhat",
       :vmm_version      => nil,

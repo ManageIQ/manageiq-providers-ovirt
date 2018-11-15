@@ -5,7 +5,7 @@ http_interactions:
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -17,32 +17,33 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:45 GMT
+      - Wed, 14 Nov 2018 09:07:14 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:45Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
+      string: '{"access": {"token": {"expires": "2018-11-18T13:07:14Z", "id": "aQwrUF3rAuc0NEgl7VvhZBnJIVyrLaH-y3MspqITzPxLvPZn3I7OC3xEovVETbyJkv98qjRtNh230W8GYAE8lg"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:45 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:14 GMT
 - request:
     method: get
-    uri: http://alkaplan1.usersys.redhat.com:9696/
+    uri: http://localhost:9696/
     body:
       encoding: US-ASCII
       string: ''
@@ -54,30 +55,30 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - '00000000000000000000000000000001'
+      - aQwrUF3rAuc0NEgl7VvhZBnJIVyrLaH-y3MspqITzPxLvPZn3I7OC3xEovVETbyJkv98qjRtNh230W8GYAE8lg
   response:
     status:
       code: 200
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:45 GMT
+      - Wed, 14 Nov 2018 09:07:14 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"versions": [{"status": "CURRENT", "id": "v2.0", "links": [{"href":
-        "http://alkaplan1.usersys.redhat.com:9696/v2.0/", "rel": "self"}]}]}'
+        "http://localhost:9696/v2.0/", "rel": "self"}]}]}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:45 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:14 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -89,32 +90,33 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:15 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
+      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "pPz-bDJb8aO7ITNkTNAtSptE9JvTt91cz5jnQrBFy_YqBdCYVcgkuhQSfHyYJo-kOMJEZAxsoQUBRcQsdeGG0w"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
 - request:
     method: get
-    uri: http://alkaplan1.usersys.redhat.com:9696/
+    uri: http://localhost:9696/v2.0/networks
     body:
       encoding: US-ASCII
       string: ''
@@ -126,70 +128,40 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - '00000000000000000000000000000001'
+      - pPz-bDJb8aO7ITNkTNAtSptE9JvTt91cz5jnQrBFy_YqBdCYVcgkuhQSfHyYJo-kOMJEZAxsoQUBRcQsdeGG0w
   response:
     status:
       code: 200
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:15 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"versions": [{"status": "CURRENT", "id": "v2.0", "links": [{"href":
-        "http://alkaplan1.usersys.redhat.com:9696/v2.0/", "rel": "self"}]}]}'
+      string: '{"networks": [{"status": "ACTIVE", "name": "net5", "tenant_id": "00000000000000000000000000000001",
+        "mtu": 1442, "port_security_enabled": false, "id": "9ae1c713-88d7-4699-a501-f308bf526c26"},
+        {"status": "ACTIVE", "name": "net3", "tenant_id": "00000000000000000000000000000001",
+        "mtu": 1442, "port_security_enabled": false, "id": "1f24c4cb-9f41-4c37-8553-83cd464e62cd"},
+        {"status": "ACTIVE", "name": "net1", "tenant_id": "00000000000000000000000000000001",
+        "mtu": 1442, "port_security_enabled": false, "id": "b85981f3-b7d0-4ed1-8b1b-94708b472b17"},
+        {"status": "ACTIVE", "name": "net2", "tenant_id": "00000000000000000000000000000001",
+        "mtu": 1442, "port_security_enabled": false, "id": "7d678a46-81e9-4482-92e9-25329671a947"},
+        {"status": "ACTIVE", "name": "ext_net", "tenant_id": "00000000000000000000000000000001",
+        "mtu": 1442, "port_security_enabled": false, "id": "298b724d-9f19-4b76-a58f-b737f86768fe"},
+        {"status": "ACTIVE", "name": "net4", "tenant_id": "00000000000000000000000000000001",
+        "mtu": 1442, "port_security_enabled": false, "id": "c643d618-29ca-4dff-8f8a-bac4715577fa"}]}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
-- request:
-    method: get
-    uri: http://alkaplan1.usersys.redhat.com:9696/v2.0/networks
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token:
-      - '00000000000000000000000000000001'
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - BaseHTTP/0.3 Python/2.7.14
-      Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"networks": [{"status": "ACTIVE", "tenant_id": "00000000000000000000000000000001",
-        "id": "02638812-82cf-4579-a4e2-880616ced46a", "name": "net3"}, {"status":
-        "ACTIVE", "tenant_id": "00000000000000000000000000000001", "id": "cbdce7e3-3ccd-47f4-a9e6-3977d3c55651",
-        "name": "net2"}, {"status": "ACTIVE", "tenant_id": "00000000000000000000000000000001",
-        "id": "06be0366-4bee-44a9-a4da-6e4902b34fc3", "name": "net5"}, {"status":
-        "ACTIVE", "tenant_id": "00000000000000000000000000000001", "id": "0de0cdd5-2793-47bb-b842-b8a3f12e80f8",
-        "name": "net4"}, {"status": "ACTIVE", "tenant_id": "00000000000000000000000000000001",
-        "id": "3bd87e3d-f66a-4e9c-ab56-62f98db791db", "name": "net1"}, {"status":
-        "ACTIVE", "tenant_id": "00000000000000000000000000000001", "id": "caf8b9d1-e7f7-4688-b6ec-63646fed08b0",
-        "name": "net6"}]}'
-    http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -201,35 +173,36 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:15 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
+      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "4awFmDazsnBGleYsrg1fPpuIvsnTgBLEmFO3BoHT9265RNWVT_Zxjs3v2YbcNkKrRXUL-I58r61VLJa2dvdFiA"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"token":{"id":"00000000000000000000000000000001"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -241,35 +214,36 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:15 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
+      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "wa_g9OHX8JFJYuk8i36mkPe_cNO0EB5H0XqLmtGZp3cfmOZjeyiTdELE63E4YDOs_s_jnytDIWi21pUI5zE0Mw"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -281,35 +255,36 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:15 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
+      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "g57peM41SkaSleKVrcy1DMKuVExjWd_fJcTHuAeQvAogwExLa18St9pdnsVEzUOJpkSLB6yQa3BXBxiUxsukeQ"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"token":{"id":"00000000000000000000000000000001"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -321,35 +296,36 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:15 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
+      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "f-sdfg-NjWpYPu9JtTW-VkMDvGEKX0mCcOTs3R2Irz6XzIm8JsPPEbW3VMdlCOqGDL8GYep9idcbrxvKsWyGMg"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -361,35 +337,36 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:16 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
+      string: '{"access": {"token": {"expires": "2018-11-18T13:07:16Z", "id": "IxnbPp_w0p_wjvd9sU4m1NL4GCSTWdSr13KQp3ac1XKLC13d4moZV_ZAIKm6aEmg9dVmyDo8najVmOpebLPLIA"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"token":{"id":"00000000000000000000000000000001"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -401,35 +378,36 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:16 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
+      string: '{"access": {"token": {"expires": "2018-11-18T13:07:16Z", "id": "Y09myvKNk9zjG8cuaI_HDnaAlf6sDiSTE8C6Icq9Cx0rKogmFDQMU--sEeG7R8eMMNq2vo2CItJseH8hSWHGuQ"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456}}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -441,309 +419,30 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:16 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
+      string: '{"access": {"token": {"expires": "2018-11-18T13:07:16Z", "id": "HQV7GwV4VUN56shTk-xVk_02exzyxqF_ZZpOZFLLygpekoqRJvZBIspb9MWuQ78XayysIr3AUsCEYp1DGu-m1A"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
-- request:
-    method: post
-    uri: http://localhost:35357/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"token":{"id":"00000000000000000000000000000001"},"tenantName":"admin"}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - BaseHTTP/0.3 Python/2.7.14
-      Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
-        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
-        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
-    http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
-- request:
-    method: post
-    uri: http://localhost:35357/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - BaseHTTP/0.3 Python/2.7.14
-      Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
-        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
-        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
-    http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
-- request:
-    method: post
-    uri: http://localhost:35357/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"token":{"id":"00000000000000000000000000000001"},"tenantName":"admin"}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - BaseHTTP/0.3 Python/2.7.14
-      Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
-        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
-        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
-    http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
-- request:
-    method: post
-    uri: http://localhost:35357/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - BaseHTTP/0.3 Python/2.7.14
-      Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
-        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
-        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
-    http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
-- request:
-    method: post
-    uri: http://localhost:35357/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"token":{"id":"00000000000000000000000000000001"},"tenantName":"admin"}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - BaseHTTP/0.3 Python/2.7.14
-      Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
-        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
-        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
-    http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
-- request:
-    method: post
-    uri: http://localhost:35357/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - BaseHTTP/0.3 Python/2.7.14
-      Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
-        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
-        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
-    http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
-- request:
-    method: post
-    uri: http://localhost:35357/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - BaseHTTP/0.3 Python/2.7.14
-      Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
-        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
-        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
-    http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
 - request:
     method: get
     uri: http://localhost:35357/v2.0/tenants
@@ -758,16 +457,16 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - '00000000000000000000000000000001'
+      - HQV7GwV4VUN56shTk-xVk_02exzyxqF_ZZpOZFLLygpekoqRJvZBIspb9MWuQ78XayysIr3AUsCEYp1DGu-m1A
   response:
     status:
       code: 200
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:16 GMT
       Content-Type:
       - application/json
     body:
@@ -775,13 +474,13 @@ http_interactions:
       string: '{"tenants": [{"id": "00000000000000000000000000000001", "enabled":
         true, "description": "tenant", "name": "tenant"}]}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"tenant"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"tenant"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -793,72 +492,33 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:16 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
+      string: '{"access": {"token": {"expires": "2018-11-18T13:07:16Z", "id": "ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
-- request:
-    method: post
-    uri: http://localhost:35357/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"tenant"}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - BaseHTTP/0.3 Python/2.7.14
-      Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-04-01T18:49:46Z", "id": "00000000000000000000000000000001"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/",
-        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:9696/", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/"}],
-        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:35357/", "region": "RegionOne",
-        "publicURL": "http://alkaplan1.usersys.redhat.com:35357/", "internalURL":
-        "http://alkaplan1.usersys.redhat.com:35357/", "id": "00000000000000000000000000000002"}],
-        "type": "identity", "name": "keystone"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "publicURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/",
-        "internalURL": "http://alkaplan1.usersys.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
-        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
-        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
-    http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
 - request:
     method: get
-    uri: http://alkaplan1.usersys.redhat.com:9696/v2.0/subnets?limit=1000
+    uri: http://localhost:9696/v2.0/subnets?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -870,33 +530,33 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - '00000000000000000000000000000001'
+      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
   response:
     status:
       code: 200
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:16 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"subnets": [{"ip_version": 4, "allocation_pools": [{"start": "12.0.0.2",
-        "stop": "12.0.0.255"}], "gateway_ip": "12.0.0.0", "name": "sub_net2", "enable_dhcp":
-        true, "network_id": "cbdce7e3-3ccd-47f4-a9e6-3977d3c55651", "tenant_id": "00000000000000000000000000000001",
-        "cidr": "12.0.0.0/24", "dns_nameservers": [], "id": "60479563-4e6c-4d88-a909-20684ca9e2d9"},
+      string: '{"subnets": [{"ip_version": 4, "allocation_pools": [{"start": "11.0.0.2",
+        "stop": "11.0.0.255"}], "gateway_ip": "11.0.0.0", "name": "sub_net2", "enable_dhcp":
+        true, "network_id": "7d678a46-81e9-4482-92e9-25329671a947", "tenant_id": "00000000000000000000000000000001",
+        "cidr": "11.0.0.0/24", "dns_nameservers": [], "id": "03b6dee4-b035-491c-8eb1-9b19ea51a665"},
         {"ip_version": 4, "allocation_pools": [{"start": "11.0.0.2", "stop": "11.0.0.255"}],
         "gateway_ip": "11.0.0.0", "name": "sub_net1", "enable_dhcp": true, "network_id":
-        "3bd87e3d-f66a-4e9c-ab56-62f98db791db", "tenant_id": "00000000000000000000000000000001",
-        "cidr": "11.0.0.0/24", "dns_nameservers": [], "id": "5bcefbad-cde7-4410-943d-0b5c168c1c3c"}]}'
+        "b85981f3-b7d0-4ed1-8b1b-94708b472b17", "tenant_id": "00000000000000000000000000000001",
+        "cidr": "11.0.0.0/24", "dns_nameservers": [], "id": "4c9b5697-8562-420b-972c-d3bbeb10f11e"}]}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
 - request:
     method: get
-    uri: http://alkaplan1.usersys.redhat.com:9696/v2.0/subnets?limit=1000&marker=5bcefbad-cde7-4410-943d-0b5c168c1c3c
+    uri: http://localhost:9696/v2.0/subnets?limit=1000&marker=4c9b5697-8562-420b-972c-d3bbeb10f11e
     body:
       encoding: US-ASCII
       string: ''
@@ -908,33 +568,26 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - '00000000000000000000000000000001'
+      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
   response:
     status:
       code: 200
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:16 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"subnets": [{"ip_version": 4, "allocation_pools": [{"start": "12.0.0.2",
-        "stop": "12.0.0.255"}], "gateway_ip": "12.0.0.0", "name": "sub_net2", "enable_dhcp":
-        true, "network_id": "cbdce7e3-3ccd-47f4-a9e6-3977d3c55651", "tenant_id": "00000000000000000000000000000001",
-        "cidr": "12.0.0.0/24", "dns_nameservers": [], "id": "60479563-4e6c-4d88-a909-20684ca9e2d9"},
-        {"ip_version": 4, "allocation_pools": [{"start": "11.0.0.2", "stop": "11.0.0.255"}],
-        "gateway_ip": "11.0.0.0", "name": "sub_net1", "enable_dhcp": true, "network_id":
-        "3bd87e3d-f66a-4e9c-ab56-62f98db791db", "tenant_id": "00000000000000000000000000000001",
-        "cidr": "11.0.0.0/24", "dns_nameservers": [], "id": "5bcefbad-cde7-4410-943d-0b5c168c1c3c"}]}'
+      string: '{"subnets": []}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
 - request:
     method: get
-    uri: http://alkaplan1.usersys.redhat.com:9696/v2.0/floatingips?limit=1000
+    uri: http://localhost:9696/v2.0/floatingips?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -946,26 +599,26 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - '00000000000000000000000000000001'
+      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
   response:
     status:
       code: 200
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:16 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"floatingips": []}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
 - request:
     method: get
-    uri: http://alkaplan1.usersys.redhat.com:9696/v2.0/ports?limit=1000
+    uri: http://localhost:9696/v2.0/ports?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -977,31 +630,31 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - '00000000000000000000000000000001'
+      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
   response:
     status:
       code: 200
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:16 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"ports": [{"device_owner": "oVirt", "port_security_enabled": false,
-        "fixed_ips": [{"subnet_id": "5bcefbad-cde7-4410-943d-0b5c168c1c3c", "ip_address":
-        "11.0.0.2"}], "id": "2ca0b52d-9af5-4968-82e8-226cec6e6db7", "security_groups":
-        [], "device_id": "d1a9b8ed-6d6c-4299-a9bb-a5277ce5b513", "name": "nic2", "admin_state_up":
-        false, "network_id": "3bd87e3d-f66a-4e9c-ab56-62f98db791db", "tenant_id":
-        "00000000000000000000000000000001", "mac_address": "00:1a:4a:16:01:01"}]}'
+        "fixed_ips": [{"subnet_id": "4c9b5697-8562-420b-972c-d3bbeb10f11e", "ip_address":
+        "11.0.0.2"}], "id": "2500800a-9dec-4fea-a7ec-a6fdb836da0a", "security_groups":
+        [], "device_id": "3b31db55-96cc-4b0b-b820-c693139cbaf9", "name": "nic1", "admin_state_up":
+        true, "network_id": "b85981f3-b7d0-4ed1-8b1b-94708b472b17", "tenant_id": "00000000000000000000000000000001",
+        "mac_address": "00:1a:4a:16:01:00"}]}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
 - request:
     method: get
-    uri: http://alkaplan1.usersys.redhat.com:9696/v2.0/ports?limit=1000&marker=2ca0b52d-9af5-4968-82e8-226cec6e6db7
+    uri: http://localhost:9696/v2.0/ports?limit=1000&marker=2500800a-9dec-4fea-a7ec-a6fdb836da0a
     body:
       encoding: US-ASCII
       string: ''
@@ -1013,31 +666,26 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - '00000000000000000000000000000001'
+      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
   response:
     status:
       code: 200
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:17 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"ports": [{"device_owner": "oVirt", "port_security_enabled": false,
-        "fixed_ips": [{"subnet_id": "5bcefbad-cde7-4410-943d-0b5c168c1c3c", "ip_address":
-        "11.0.0.2"}], "id": "2ca0b52d-9af5-4968-82e8-226cec6e6db7", "security_groups":
-        [], "device_id": "d1a9b8ed-6d6c-4299-a9bb-a5277ce5b513", "name": "nic2", "admin_state_up":
-        false, "network_id": "3bd87e3d-f66a-4e9c-ab56-62f98db791db", "tenant_id":
-        "00000000000000000000000000000001", "mac_address": "00:1a:4a:16:01:01"}]}'
+      string: '{"ports": []}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:17 GMT
 - request:
     method: get
-    uri: http://alkaplan1.usersys.redhat.com:9696/v2.0/routers?limit=1000
+    uri: http://localhost:9696/v2.0/routers?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -1049,28 +697,28 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - '00000000000000000000000000000001'
+      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
   response:
     status:
       code: 200
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:17 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"routers": [{"status": "ACTIVE", "name": "router1", "admin_state_up":
-        true, "tenant_id": "00000000000000000000000000000001", "routes": [], "id":
-        "1a12e744-ee50-4fee-a8d5-f6636e27470d"}]}'
+      string: '{"routers": [{"status": "INACTIVE", "external_gateway_info": null,
+        "name": "router1", "admin_state_up": true, "tenant_id": "00000000000000000000000000000001",
+        "routes": [], "id": "38dbd81b-bb7c-4fd2-9e7e-a1a8cfeb4312"}]}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:17 GMT
 - request:
     method: get
-    uri: http://alkaplan1.usersys.redhat.com:9696/v2.0/routers?limit=1000&marker=1a12e744-ee50-4fee-a8d5-f6636e27470d
+    uri: http://localhost:9696/v2.0/routers?limit=1000&marker=38dbd81b-bb7c-4fd2-9e7e-a1a8cfeb4312
     body:
       encoding: US-ASCII
       string: ''
@@ -1082,28 +730,26 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - '00000000000000000000000000000001'
+      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
   response:
     status:
       code: 200
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:17 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"routers": [{"status": "ACTIVE", "name": "router1", "admin_state_up":
-        true, "tenant_id": "00000000000000000000000000000001", "routes": [], "id":
-        "1a12e744-ee50-4fee-a8d5-f6636e27470d"}]}'
+      string: '{"routers": []}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:17 GMT
 - request:
     method: get
-    uri: http://alkaplan1.usersys.redhat.com:9696/v2.0/security-groups?limit=1000
+    uri: http://localhost:9696/v2.0/security-groups?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -1115,21 +761,21 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - '00000000000000000000000000000001'
+      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
   response:
     status:
       code: 200
       message: OK
     headers:
       Server:
-      - BaseHTTP/0.3 Python/2.7.14
+      - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 28 Mar 2018 14:49:46 GMT
+      - Wed, 14 Nov 2018 09:07:17 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"security_groups": []}'
     http_version: 
-  recorded_at: Wed, 28 Mar 2018 14:49:46 GMT
+  recorded_at: Wed, 14 Nov 2018 09:07:17 GMT
 recorded_with: VCR 3.0.3
