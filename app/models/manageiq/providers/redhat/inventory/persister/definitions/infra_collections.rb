@@ -25,7 +25,7 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
 
   def add_clusters_group
     add_collection(infra, :ems_clusters) do |builder|
-      builder.add_properties(:model_class => ::ManageIQ::Providers::Redhat::InfraManager::EmsCluster)
+      builder.add_properties(:model_class => ::EmsCluster)
     end
     add_resource_pools
   end
