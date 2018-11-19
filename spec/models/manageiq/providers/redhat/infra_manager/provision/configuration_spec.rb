@@ -115,6 +115,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration do
 
     it "provisions sysprep from template with substitutions" do
       allow(MiqRegion).to receive_message_chain(:my_region, :remote_ui_url => "1.1.1.1")
+      allow(MiqRegion).to receive_message_chain(:my_region, :maintenance_zone => nil)
+
       task.options[:sysprep_enabled] = ["fields", "Sysprep Specification"]
       task.options[:customization_template_id] = cust_template.id
       task.options[:replace_me] = "replaced!"
@@ -133,6 +135,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration do
 
       it "it properly substitutes timezone when it is set" do
         allow(MiqRegion).to receive_message_chain(:my_region, :remote_ui_url => "1.1.1.1")
+        allow(MiqRegion).to receive_message_chain(:my_region, :maintenance_zone => nil)
+
         task.options[:sysprep_enabled] = ["fields", "Sysprep Specification"]
         task.options[:customization_template_id] = cust_template.id
         task.options[:sysprep_timezone] = ["300", "(GMT+13:00) Nuku'alofa"]
@@ -148,6 +152,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration do
 
       it "it properly substitutes timezone when it is not set" do
         allow(MiqRegion).to receive_message_chain(:my_region, :remote_ui_url => "1.1.1.1")
+        allow(MiqRegion).to receive_message_chain(:my_region, :maintenance_zone => nil)
+
         task.options[:sysprep_enabled] = ["fields", "Sysprep Specification"]
         task.options[:customization_template_id] = cust_template.id
         task.options[:sysprep_timezone] = nil
