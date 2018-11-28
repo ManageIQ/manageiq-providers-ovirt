@@ -5,7 +5,7 @@ http_interactions:
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -19,12 +19,12 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:14 GMT
+      - Wed, 28 Nov 2018 13:44:29 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:14Z", "id": "aQwrUF3rAuc0NEgl7VvhZBnJIVyrLaH-y3MspqITzPxLvPZn3I7OC3xEovVETbyJkv98qjRtNh230W8GYAE8lg"},
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:29Z", "id": "VQcTJV21NcXMB3-YKO_og5fLEZQc_jP9ApCVFXa_yw7HSwUdw76_thPBQ-4ZNeUPFza3T-xbqk6KE2cUphklDw"},
         "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
         "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
@@ -40,7 +40,7 @@ http_interactions:
         "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
         "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:14 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:29 GMT
 - request:
     method: get
     uri: http://localhost:9696/
@@ -55,7 +55,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - aQwrUF3rAuc0NEgl7VvhZBnJIVyrLaH-y3MspqITzPxLvPZn3I7OC3xEovVETbyJkv98qjRtNh230W8GYAE8lg
+      - VQcTJV21NcXMB3-YKO_og5fLEZQc_jP9ApCVFXa_yw7HSwUdw76_thPBQ-4ZNeUPFza3T-xbqk6KE2cUphklDw
   response:
     status:
       code: 200
@@ -64,7 +64,7 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:14 GMT
+      - Wed, 28 Nov 2018 13:44:29 GMT
       Content-Type:
       - application/json
     body:
@@ -72,13 +72,13 @@ http_interactions:
       string: '{"versions": [{"status": "CURRENT", "id": "v2.0", "links": [{"href":
         "http://localhost:9696/v2.0/", "rel": "self"}]}]}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:14 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:29 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -92,12 +92,12 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:15 GMT
+      - Wed, 28 Nov 2018 13:44:29 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "pPz-bDJb8aO7ITNkTNAtSptE9JvTt91cz5jnQrBFy_YqBdCYVcgkuhQSfHyYJo-kOMJEZAxsoQUBRcQsdeGG0w"},
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:29Z", "id": "OCW4N_CFXReythV0t93fllt9HrVE7MJFfgACAJbMPjfIKPrBszkH1eM8Bjwm-YVk193mpJxFJZC8CXPAFmC0vg"},
         "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
         "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
@@ -113,7 +113,39 @@ http_interactions:
         "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
         "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:29 GMT
+- request:
+    method: get
+    uri: http://localhost:9696/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - OCW4N_CFXReythV0t93fllt9HrVE7MJFfgACAJbMPjfIKPrBszkH1eM8Bjwm-YVk193mpJxFJZC8CXPAFmC0vg
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - BaseHTTP/0.3 Python/2.7.5
+      Date:
+      - Wed, 28 Nov 2018 13:44:29 GMT
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"versions": [{"status": "CURRENT", "id": "v2.0", "links": [{"href":
+        "http://localhost:9696/v2.0/", "rel": "self"}]}]}'
+    http_version: 
+  recorded_at: Wed, 28 Nov 2018 13:44:29 GMT
 - request:
     method: get
     uri: http://localhost:9696/v2.0/networks
@@ -128,7 +160,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - pPz-bDJb8aO7ITNkTNAtSptE9JvTt91cz5jnQrBFy_YqBdCYVcgkuhQSfHyYJo-kOMJEZAxsoQUBRcQsdeGG0w
+      - OCW4N_CFXReythV0t93fllt9HrVE7MJFfgACAJbMPjfIKPrBszkH1eM8Bjwm-YVk193mpJxFJZC8CXPAFmC0vg
   response:
     status:
       code: 200
@@ -137,7 +169,7 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:15 GMT
+      - Wed, 28 Nov 2018 13:44:29 GMT
       Content-Type:
       - application/json
     body:
@@ -155,13 +187,13 @@ http_interactions:
         {"status": "ACTIVE", "name": "net4", "tenant_id": "00000000000000000000000000000001",
         "mtu": 1442, "port_security_enabled": false, "id": "c643d618-29ca-4dff-8f8a-bac4715577fa"}]}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:29 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -175,12 +207,12 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:15 GMT
+      - Wed, 28 Nov 2018 13:44:30 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "4awFmDazsnBGleYsrg1fPpuIvsnTgBLEmFO3BoHT9265RNWVT_Zxjs3v2YbcNkKrRXUL-I58r61VLJa2dvdFiA"},
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:30Z", "id": "Yp53TMWFC7SBJ9evVyYGCgTJMOoyku4wao5y9uM-Y4e8WJf_FGoakslD7W3Jnno_Aq-HIw1RJZ9rgE-Eqc-dfA"},
         "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
         "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
@@ -196,13 +228,13 @@ http_interactions:
         "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
         "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:30 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"token":{"id":"Yp53TMWFC7SBJ9evVyYGCgTJMOoyku4wao5y9uM-Y4e8WJf_FGoakslD7W3Jnno_Aq-HIw1RJZ9rgE-Eqc-dfA"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -216,12 +248,12 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:15 GMT
+      - Wed, 28 Nov 2018 13:44:30 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "wa_g9OHX8JFJYuk8i36mkPe_cNO0EB5H0XqLmtGZp3cfmOZjeyiTdELE63E4YDOs_s_jnytDIWi21pUI5zE0Mw"},
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:30Z", "id": "Yp53TMWFC7SBJ9evVyYGCgTJMOoyku4wao5y9uM-Y4e8WJf_FGoakslD7W3Jnno_Aq-HIw1RJZ9rgE-Eqc-dfA"},
         "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
         "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
@@ -237,13 +269,13 @@ http_interactions:
         "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
         "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:30 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -257,12 +289,12 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:15 GMT
+      - Wed, 28 Nov 2018 13:44:30 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "g57peM41SkaSleKVrcy1DMKuVExjWd_fJcTHuAeQvAogwExLa18St9pdnsVEzUOJpkSLB6yQa3BXBxiUxsukeQ"},
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:30Z", "id": "2KS6VGAbbcFEyU4CTi1sIEA6-mDZpp3Nl_336NJpstrQKd1dSINO_mKxUawnb8k67OIg78mBO_F75BbVI46EsA"},
         "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
         "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
@@ -278,13 +310,13 @@ http_interactions:
         "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
         "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:30 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"token":{"id":"2KS6VGAbbcFEyU4CTi1sIEA6-mDZpp3Nl_336NJpstrQKd1dSINO_mKxUawnb8k67OIg78mBO_F75BbVI46EsA"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -298,12 +330,12 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:15 GMT
+      - Wed, 28 Nov 2018 13:44:30 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "f-sdfg-NjWpYPu9JtTW-VkMDvGEKX0mCcOTs3R2Irz6XzIm8JsPPEbW3VMdlCOqGDL8GYep9idcbrxvKsWyGMg"},
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:30Z", "id": "2KS6VGAbbcFEyU4CTi1sIEA6-mDZpp3Nl_336NJpstrQKd1dSINO_mKxUawnb8k67OIg78mBO_F75BbVI46EsA"},
         "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
         "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
@@ -319,13 +351,13 @@ http_interactions:
         "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
         "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:30 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -339,12 +371,12 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Wed, 28 Nov 2018 13:44:30 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:16Z", "id": "IxnbPp_w0p_wjvd9sU4m1NL4GCSTWdSr13KQp3ac1XKLC13d4moZV_ZAIKm6aEmg9dVmyDo8najVmOpebLPLIA"},
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:30Z", "id": "0ntyjblvjYURzPe6aCQIgXNXHm3TrW_UovcIDXNFdxZbCJU5qVL6rmLcNZIXNlzoQYBdGSyUl76Yhh8XLFv72w"},
         "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
         "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
@@ -360,13 +392,13 @@ http_interactions:
         "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
         "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:30 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"token":{"id":"0ntyjblvjYURzPe6aCQIgXNXHm3TrW_UovcIDXNFdxZbCJU5qVL6rmLcNZIXNlzoQYBdGSyUl76Yhh8XLFv72w"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -380,12 +412,12 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Wed, 28 Nov 2018 13:44:30 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:16Z", "id": "Y09myvKNk9zjG8cuaI_HDnaAlf6sDiSTE8C6Icq9Cx0rKogmFDQMU--sEeG7R8eMMNq2vo2CItJseH8hSWHGuQ"},
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:30Z", "id": "0ntyjblvjYURzPe6aCQIgXNXHm3TrW_UovcIDXNFdxZbCJU5qVL6rmLcNZIXNlzoQYBdGSyUl76Yhh8XLFv72w"},
         "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
         "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
@@ -401,13 +433,13 @@ http_interactions:
         "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
         "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:30 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456}}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -421,12 +453,12 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Wed, 28 Nov 2018 13:44:30 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:16Z", "id": "HQV7GwV4VUN56shTk-xVk_02exzyxqF_ZZpOZFLLygpekoqRJvZBIspb9MWuQ78XayysIr3AUsCEYp1DGu-m1A"},
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:30Z", "id": "ZeZ5usoeahLF2AiB4l6ZjJWG-oIWWJGT_3zCJw4EbTeVbXoSrvp4nGkf6SBI2ZQyIF4fQUszedFtL1vVNCve0g"},
         "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
         "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
@@ -442,7 +474,294 @@ http_interactions:
         "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
         "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:30 GMT
+- request:
+    method: post
+    uri: http://localhost:35357/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"token":{"id":"ZeZ5usoeahLF2AiB4l6ZjJWG-oIWWJGT_3zCJw4EbTeVbXoSrvp4nGkf6SBI2ZQyIF4fQUszedFtL1vVNCve0g"},"tenantName":"admin"}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - BaseHTTP/0.3 Python/2.7.5
+      Date:
+      - Wed, 28 Nov 2018 13:44:30 GMT
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:30Z", "id": "ZeZ5usoeahLF2AiB4l6ZjJWG-oIWWJGT_3zCJw4EbTeVbXoSrvp4nGkf6SBI2ZQyIF4fQUszedFtL1vVNCve0g"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
+        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
+        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
+    http_version: 
+  recorded_at: Wed, 28 Nov 2018 13:44:30 GMT
+- request:
+    method: post
+    uri: http://localhost:35357/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - BaseHTTP/0.3 Python/2.7.5
+      Date:
+      - Wed, 28 Nov 2018 13:44:31 GMT
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:31Z", "id": "PSfFZMLWltZa9BrPc7jsvGL2pjJsBLok9c4SkGZYCajxE9rDoawBQ-4BJUg6M8h5FvaQ4G4GnqyNM8J4cIf7yA"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
+        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
+        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
+    http_version: 
+  recorded_at: Wed, 28 Nov 2018 13:44:31 GMT
+- request:
+    method: post
+    uri: http://localhost:35357/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"token":{"id":"PSfFZMLWltZa9BrPc7jsvGL2pjJsBLok9c4SkGZYCajxE9rDoawBQ-4BJUg6M8h5FvaQ4G4GnqyNM8J4cIf7yA"},"tenantName":"admin"}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - BaseHTTP/0.3 Python/2.7.5
+      Date:
+      - Wed, 28 Nov 2018 13:44:31 GMT
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:31Z", "id": "PSfFZMLWltZa9BrPc7jsvGL2pjJsBLok9c4SkGZYCajxE9rDoawBQ-4BJUg6M8h5FvaQ4G4GnqyNM8J4cIf7yA"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
+        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
+        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
+    http_version: 
+  recorded_at: Wed, 28 Nov 2018 13:44:31 GMT
+- request:
+    method: post
+    uri: http://localhost:35357/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"admin"}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - BaseHTTP/0.3 Python/2.7.5
+      Date:
+      - Wed, 28 Nov 2018 13:44:31 GMT
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:31Z", "id": "SUuSbwsGfvvuooNAqBb7lbWQ1nH1NbM_VJwetHHcDiJTRxqQnSpJScKDu0F5y_u5TNyilgS4L2Rjg6fXZw2Xkg"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
+        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
+        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
+    http_version: 
+  recorded_at: Wed, 28 Nov 2018 13:44:31 GMT
+- request:
+    method: post
+    uri: http://localhost:35357/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"token":{"id":"SUuSbwsGfvvuooNAqBb7lbWQ1nH1NbM_VJwetHHcDiJTRxqQnSpJScKDu0F5y_u5TNyilgS4L2Rjg6fXZw2Xkg"},"tenantName":"admin"}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - BaseHTTP/0.3 Python/2.7.5
+      Date:
+      - Wed, 28 Nov 2018 13:44:31 GMT
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:31Z", "id": "SUuSbwsGfvvuooNAqBb7lbWQ1nH1NbM_VJwetHHcDiJTRxqQnSpJScKDu0F5y_u5TNyilgS4L2Rjg6fXZw2Xkg"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
+        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
+        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
+    http_version: 
+  recorded_at: Wed, 28 Nov 2018 13:44:31 GMT
+- request:
+    method: post
+    uri: http://localhost:35357/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":""}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - BaseHTTP/0.3 Python/2.7.5
+      Date:
+      - Wed, 28 Nov 2018 13:44:31 GMT
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:31Z", "id": "O4SHMeoWAVQNEJFy3cXtV5BJ64t4U_xyK6I-LYGPzlZ0psmekNAASS-26oZJZEOZ-FNGvC76GF9buGE7a8cgLA"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
+        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
+        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
+    http_version: 
+  recorded_at: Wed, 28 Nov 2018 13:44:31 GMT
+- request:
+    method: post
+    uri: http://localhost:35357/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":""}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - BaseHTTP/0.3 Python/2.7.5
+      Date:
+      - Wed, 28 Nov 2018 13:44:31 GMT
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:31Z", "id": "N3lp1Ht8EawGOqCtzx517R6U6SLLlnevK76XdsfNxZyGvJJVKDM9SgFjf0EP4Jm_8DGisouE7DwVobmAfP8N7A"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
+        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
+        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
+        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
+        [{"adminURL": "http://localhost:35357/", "region":
+        "RegionOne", "publicURL": "http://localhost:35357/",
+        "internalURL": "http://localhost:35357/", "id":
+        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
+        "internalURL": "http://localhost:9696/v2.1/",
+        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
+        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
+        "admin"}], "name": "admin"}}}'
+    http_version: 
+  recorded_at: Wed, 28 Nov 2018 13:44:31 GMT
 - request:
     method: get
     uri: http://localhost:35357/v2.0/tenants
@@ -457,7 +776,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - HQV7GwV4VUN56shTk-xVk_02exzyxqF_ZZpOZFLLygpekoqRJvZBIspb9MWuQ78XayysIr3AUsCEYp1DGu-m1A
+      - N3lp1Ht8EawGOqCtzx517R6U6SLLlnevK76XdsfNxZyGvJJVKDM9SgFjf0EP4Jm_8DGisouE7DwVobmAfP8N7A
   response:
     status:
       code: 200
@@ -466,7 +785,7 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Wed, 28 Nov 2018 13:44:31 GMT
       Content-Type:
       - application/json
     body:
@@ -474,13 +793,13 @@ http_interactions:
       string: '{"tenants": [{"id": "00000000000000000000000000000001", "enabled":
         true, "description": "tenant", "name": "tenant"}]}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:31 GMT
 - request:
     method: post
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"tenant"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"123456"},"tenantName":"tenant"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -494,12 +813,12 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Wed, 28 Nov 2018 13:44:31 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:16Z", "id": "ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw"},
+      string: '{"access": {"token": {"expires": "2018-12-02T17:44:31Z", "id": "ljJYF-SscBZx8aH2aoTyRuc99uNqOq4Bcsl14CMwinmDAYfr8F1Q7g-MySnYCiLlCiOyOnkBugC5TURXg7mAqg"},
         "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
         "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
@@ -515,7 +834,7 @@ http_interactions:
         "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
         "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:31 GMT
 - request:
     method: get
     uri: http://localhost:9696/v2.0/subnets?limit=1000
@@ -530,7 +849,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - ljJYF-SscBZx8aH2aoTyRuc99uNqOq4Bcsl14CMwinmDAYfr8F1Q7g-MySnYCiLlCiOyOnkBugC5TURXg7mAqg
   response:
     status:
       code: 200
@@ -539,7 +858,7 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Wed, 28 Nov 2018 13:44:31 GMT
       Content-Type:
       - application/json
     body:
@@ -553,7 +872,7 @@ http_interactions:
         "b85981f3-b7d0-4ed1-8b1b-94708b472b17", "tenant_id": "00000000000000000000000000000001",
         "cidr": "11.0.0.0/24", "dns_nameservers": [], "id": "4c9b5697-8562-420b-972c-d3bbeb10f11e"}]}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:31 GMT
 - request:
     method: get
     uri: http://localhost:9696/v2.0/subnets?limit=1000&marker=4c9b5697-8562-420b-972c-d3bbeb10f11e
@@ -568,7 +887,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - ljJYF-SscBZx8aH2aoTyRuc99uNqOq4Bcsl14CMwinmDAYfr8F1Q7g-MySnYCiLlCiOyOnkBugC5TURXg7mAqg
   response:
     status:
       code: 200
@@ -577,14 +896,14 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Wed, 28 Nov 2018 13:44:32 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"subnets": []}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:32 GMT
 - request:
     method: get
     uri: http://localhost:9696/v2.0/floatingips?limit=1000
@@ -599,7 +918,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - ljJYF-SscBZx8aH2aoTyRuc99uNqOq4Bcsl14CMwinmDAYfr8F1Q7g-MySnYCiLlCiOyOnkBugC5TURXg7mAqg
   response:
     status:
       code: 200
@@ -608,14 +927,14 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Wed, 28 Nov 2018 13:44:32 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"floatingips": []}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:32 GMT
 - request:
     method: get
     uri: http://localhost:9696/v2.0/ports?limit=1000
@@ -630,7 +949,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - ljJYF-SscBZx8aH2aoTyRuc99uNqOq4Bcsl14CMwinmDAYfr8F1Q7g-MySnYCiLlCiOyOnkBugC5TURXg7mAqg
   response:
     status:
       code: 200
@@ -639,7 +958,7 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Wed, 28 Nov 2018 13:44:32 GMT
       Content-Type:
       - application/json
     body:
@@ -651,7 +970,7 @@ http_interactions:
         true, "network_id": "b85981f3-b7d0-4ed1-8b1b-94708b472b17", "tenant_id": "00000000000000000000000000000001",
         "mac_address": "00:1a:4a:16:01:00"}]}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:32 GMT
 - request:
     method: get
     uri: http://localhost:9696/v2.0/ports?limit=1000&marker=2500800a-9dec-4fea-a7ec-a6fdb836da0a
@@ -666,7 +985,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - ljJYF-SscBZx8aH2aoTyRuc99uNqOq4Bcsl14CMwinmDAYfr8F1Q7g-MySnYCiLlCiOyOnkBugC5TURXg7mAqg
   response:
     status:
       code: 200
@@ -675,14 +994,14 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:17 GMT
+      - Wed, 28 Nov 2018 13:44:32 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"ports": []}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:17 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:32 GMT
 - request:
     method: get
     uri: http://localhost:9696/v2.0/routers?limit=1000
@@ -697,7 +1016,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - ljJYF-SscBZx8aH2aoTyRuc99uNqOq4Bcsl14CMwinmDAYfr8F1Q7g-MySnYCiLlCiOyOnkBugC5TURXg7mAqg
   response:
     status:
       code: 200
@@ -706,7 +1025,7 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:17 GMT
+      - Wed, 28 Nov 2018 13:44:32 GMT
       Content-Type:
       - application/json
     body:
@@ -715,7 +1034,7 @@ http_interactions:
         "name": "router1", "admin_state_up": true, "tenant_id": "00000000000000000000000000000001",
         "routes": [], "id": "38dbd81b-bb7c-4fd2-9e7e-a1a8cfeb4312"}]}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:17 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:32 GMT
 - request:
     method: get
     uri: http://localhost:9696/v2.0/routers?limit=1000&marker=38dbd81b-bb7c-4fd2-9e7e-a1a8cfeb4312
@@ -730,7 +1049,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - ljJYF-SscBZx8aH2aoTyRuc99uNqOq4Bcsl14CMwinmDAYfr8F1Q7g-MySnYCiLlCiOyOnkBugC5TURXg7mAqg
   response:
     status:
       code: 200
@@ -739,14 +1058,14 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:17 GMT
+      - Wed, 28 Nov 2018 13:44:32 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"routers": []}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:17 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:32 GMT
 - request:
     method: get
     uri: http://localhost:9696/v2.0/security-groups?limit=1000
@@ -761,7 +1080,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - ljJYF-SscBZx8aH2aoTyRuc99uNqOq4Bcsl14CMwinmDAYfr8F1Q7g-MySnYCiLlCiOyOnkBugC5TURXg7mAqg
   response:
     status:
       code: 200
@@ -770,12 +1089,12 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:17 GMT
+      - Wed, 28 Nov 2018 13:44:32 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"security_groups": []}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:17 GMT
+  recorded_at: Wed, 28 Nov 2018 13:44:32 GMT
 recorded_with: VCR 3.0.3
