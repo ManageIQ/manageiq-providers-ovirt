@@ -85,12 +85,6 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm < ManageIQ::Providers::Infra
     ext_management_system.ovirt_services.vm_exists_on_provider?(self)
   end
 
-  def disconnect_inv
-    disconnect_storage
-
-    super
-  end
-
   #
   # UI Button Validation Methods
   #
