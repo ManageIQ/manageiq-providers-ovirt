@@ -1,4 +1,6 @@
 class ManageIQ::Providers::Redhat::InfraManager::Host < ::Host
+  MINIMUM_CONVERSION_HOST_VERSION = '4.2.4'.freeze
+
   def provider_object(connection = nil)
     ovirt_services_class = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Builder
                            .build_from_ems_or_connection(:ems => ext_management_system, :connection => connection)
@@ -22,6 +24,13 @@ class ManageIQ::Providers::Redhat::InfraManager::Host < ::Host
   supports :quick_stats do
     unless ext_management_system.supports_quick_stats?
       unsupported_reason_add(:quick_stats, 'RHV API version does not support quick_stats')
+    end
+  end
+
+  supports :conversion_host do
+    version = ext_management_system.api_version
+    if version.nil? || Gem::Version.new(version) < Gem::Version.new(MINIMUM_CONVERSION_HOST_VERSION)
+      unsupported_reason_add(:conversion_host, 'RHV API version does not support conversion_host')
     end
   end
 
