@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+### Unreleased as of Sprint 100 - 2018-12-03
+
+### Fixed
+- Add support for CA for Ansible role [(#313)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/313)
+- No need to override disconnect_inv from core [(#310)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/310)
+
 ### Unreleased as of Sprint 97 - 2018-10-22
 
 ### Fixed
