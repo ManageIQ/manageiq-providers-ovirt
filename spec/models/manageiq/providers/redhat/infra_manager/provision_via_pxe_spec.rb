@@ -2,7 +2,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionViaPxe do
   context "A new provision request," do
     before(:each) do
       @os = OperatingSystem.new(:product_name => 'Microsoft Windows')
-      @admin = FactoryGirl.create(:user_admin)
+      @admin = FactoryBot.create(:user_admin)
       @target_vm_name = 'clone test'
       @options = {
         :pass           => 1,
@@ -17,17 +17,17 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionViaPxe do
 
     context "RHEV-M provisioning" do
       before(:each) do
-        @ems         = FactoryGirl.create(:ems_redhat_with_authentication)
-        @vm_template = FactoryGirl.create(:template_redhat, :name => "template1", :ext_management_system => @ems, :operating_system => @os, :cpu_limit => -1, :cpu_reserve => 0)
-        @vm          = FactoryGirl.create(:vm_redhat, :name => "vm1",       :location => "abc/def.vmx")
-        @pr          = FactoryGirl.create(:miq_provision_request, :requester => @admin, :src_vm_id => @vm_template.id)
+        @ems         = FactoryBot.create(:ems_redhat_with_authentication)
+        @vm_template = FactoryBot.create(:template_redhat, :name => "template1", :ext_management_system => @ems, :operating_system => @os, :cpu_limit => -1, :cpu_reserve => 0)
+        @vm          = FactoryBot.create(:vm_redhat, :name => "vm1",       :location => "abc/def.vmx")
+        @pr          = FactoryBot.create(:miq_provision_request, :requester => @admin, :src_vm_id => @vm_template.id)
         @options[:src_vm_id] = [@vm_template.id, @vm_template.name]
-        @vm_prov = FactoryGirl.create(:miq_provision_redhat_via_pxe, :userid => @admin.userid, :miq_request => @pr, :source => @vm_template, :request_type => 'template', :state => 'pending', :status => 'Ok', :options => @options)
+        @vm_prov = FactoryBot.create(:miq_provision_redhat_via_pxe, :userid => @admin.userid, :miq_request => @pr, :source => @vm_template, :request_type => 'template', :state => 'pending', :status => 'Ok', :options => @options)
       end
 
       context "#prepare_for_clone_task" do
         before do
-          @ems_cluster = FactoryGirl.create(:ems_cluster, :ems_ref => "test_ref")
+          @ems_cluster = FactoryBot.create(:ems_cluster, :ems_ref => "test_ref")
           allow(@vm_prov).to receive(:dest_cluster).and_return(@ems_cluster)
         end
 

@@ -1,6 +1,6 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Vm::Operations::Snapshot do
   describe 'calling snapshot operations' do
-    let(:vm) { FactoryGirl.create(:vm_redhat) }
+    let(:vm) { FactoryBot.create(:vm_redhat) }
     let!(:snapshot) { double("snapshot", :id => 1, :uid_ems => 'ems_id_111') }
     before(:each) do
       @snapshot_service = double('snapshot_service')
@@ -29,8 +29,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Operations::Snapshot do
   end
 
   describe 'supported above api v4' do
-    let(:ems) { FactoryGirl.create(:ems_redhat_with_authentication) }
-    let(:vm)  { FactoryGirl.create(:vm_redhat, :ext_management_system => ems) }
+    let(:ems) { FactoryBot.create(:ems_redhat_with_authentication) }
+    let(:vm)  { FactoryBot.create(:vm_redhat, :ext_management_system => ems) }
     let(:supported_api_versions) { [] }
     before(:each) do
       allow(ems).to receive(:supported_api_versions).and_return(supported_api_versions)
@@ -48,8 +48,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Operations::Snapshot do
   end
 
   describe "#revert_to_snapshot_denied_message" do
-    let(:ems) { FactoryGirl.create(:ems_redhat_with_authentication) }
-    let(:vm)  { FactoryGirl.create(:vm_redhat, :ext_management_system => ems) }
+    let(:ems) { FactoryBot.create(:ems_redhat_with_authentication) }
+    let(:vm)  { FactoryBot.create(:vm_redhat, :ext_management_system => ems) }
     let(:allowed_to_revert) { true }
     let(:supported_api_versions) { [] }
     let(:active) { true }

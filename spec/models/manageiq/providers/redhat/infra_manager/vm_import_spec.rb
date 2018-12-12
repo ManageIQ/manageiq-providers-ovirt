@@ -1,11 +1,11 @@
 describe ManageIQ::Providers::Redhat::InfraManager::VmImport do
-  let(:target_ems)  { FactoryGirl.create(:ems_redhat_with_authentication) }
-  let(:source_ems)  { FactoryGirl.create(:ems_vmware_with_authentication) }
-  let(:source_vm)   { FactoryGirl.create(:vm_with_ref, :ext_management_system => source_ems) }
-  let(:pool)        { FactoryGirl.create(:resource_pool) }
-  let(:source_host) { FactoryGirl.create(:host) }
-  let(:cluster)     { FactoryGirl.create(:ems_cluster) }
-  let(:storage)     { FactoryGirl.create(:storage_redhat) }
+  let(:target_ems)  { FactoryBot.create(:ems_redhat_with_authentication) }
+  let(:source_ems)  { FactoryBot.create(:ems_vmware_with_authentication) }
+  let(:source_vm)   { FactoryBot.create(:vm_with_ref, :ext_management_system => source_ems) }
+  let(:pool)        { FactoryBot.create(:resource_pool) }
+  let(:source_host) { FactoryBot.create(:host) }
+  let(:cluster)     { FactoryBot.create(:ems_cluster) }
+  let(:storage)     { FactoryBot.create(:storage_redhat) }
 
   let(:cluster_path)          { 'Folder1/Folder @#$*2/Compute 3/Folder4/Cluster 5' }
   let(:cluster_path_escaped)  { 'Folder1%2FFolder%20%40%23%24*2%2FCompute%203%2FFolder4%2FCluster%205' }
@@ -102,7 +102,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::VmImport do
   end
 
   context 'checks version during validation' do
-    let(:ems) { FactoryGirl.create(:ems_redhat) }
+    let(:ems) { FactoryBot.create(:ems_redhat) }
 
     it 'validates successfully' do
       allow(ems).to receive(:api_version).and_return('4.1.5')

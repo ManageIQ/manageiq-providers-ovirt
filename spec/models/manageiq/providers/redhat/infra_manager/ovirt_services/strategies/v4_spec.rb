@@ -1,7 +1,7 @@
 describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4 do
   describe "#advertised_images" do
-    let(:ems) { FactoryGirl.create(:ems_redhat_with_authentication) }
-    let(:vm) { FactoryGirl.create(:vm_redhat, :ext_management_system => ems) }
+    let(:ems) { FactoryBot.create(:ems_redhat_with_authentication) }
+    let(:vm) { FactoryBot.create(:vm_redhat, :ext_management_system => ems) }
     let(:ems_service) { instance_double(OvirtSDK4::Connection) }
     let(:system_service) { instance_double(OvirtSDK4::SystemService) }
     let(:data_centers_service) { instance_double(OvirtSDK4::DataCentersService) }
@@ -74,9 +74,9 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
   describe "#vm_reconfigure" do
     before do
       _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-      @ems  = FactoryGirl.create(:ems_redhat_with_authentication, :zone => zone)
-      @hw   = FactoryGirl.create(:hardware, :memory_mb => 1024, :cpu_sockets => 2, :cpu_cores_per_socket => 1)
-      @vm   = FactoryGirl.create(:vm_redhat, :ext_management_system => @ems)
+      @ems  = FactoryBot.create(:ems_redhat_with_authentication, :zone => zone)
+      @hw   = FactoryBot.create(:hardware, :memory_mb => 1024, :cpu_sockets => 2, :cpu_cores_per_socket => 1)
+      @vm   = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
       @cores_per_socket = 2
       @num_of_sockets   = 3
       @vm_proxy = double("OvirtSDK4::Vm.new")
@@ -270,7 +270,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
         disk2 = OvirtSDK4::Disk.new(:storage_domains => [storage_domain_old])
         @disk_attachments = [OvirtSDK4::DiskAttachment.new(:disk => disk), OvirtSDK4::DiskAttachment.new(:disk => disk2)]
         @sdk_template = OvirtSDK4::Template.new(:disk_attachments => @disk_attachments)
-        @ems = FactoryGirl.create(:ems_redhat_with_authentication)
+        @ems = FactoryBot.create(:ems_redhat_with_authentication)
         @ovirt_services = ManageIQ::Providers::Redhat::InfraManager::
           OvirtServices::Strategies::V4.new(:ems => @ems)
         connection = double(OvirtSDK4::Connection)

@@ -3,7 +3,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
   before(:each) do
     _, _, zone = EvmSpecHelper.create_guid_miq_server_zone
-    @ems = FactoryGirl.create(:ems_redhat, :zone => zone, :hostname => "192.168.1.105", :ipaddress => "192.168.1.105",
+    @ems = FactoryBot.create(:ems_redhat, :zone => zone, :hostname => "192.168.1.105", :ipaddress => "192.168.1.105",
                               :port => 8443)
     @ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4
     allow_any_instance_of(@ovirt_service)
@@ -32,49 +32,49 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     allow_any_instance_of(@inventory_wrapper_class).to receive(:service)
       .and_return(OpenStruct.new(:version_string => '4.2.0_master'))
 
-    @root = FactoryGirl.create(:ems_folder,
+    @root = FactoryBot.create(:ems_folder,
                                :ext_management_system => @ems,
                                :uid_ems               => 'root_dc',
                                :name                  => "Datacenters")
 
-    @host_folder = FactoryGirl.create(:ems_folder,
+    @host_folder = FactoryBot.create(:ems_folder,
                                       :ext_management_system => @ems,
                                       :uid_ems               => "00000001-0001-0001-0001-000000000311_host",
                                       :name                  => "host")
 
-    @vm_folder = FactoryGirl.create(:ems_folder,
+    @vm_folder = FactoryBot.create(:ems_folder,
                                     :ext_management_system => @ems,
                                     :uid_ems               => "00000001-0001-0001-0001-000000000311_vm",
                                     :name                  => "vm")
 
-    @dc = FactoryGirl.create(:datacenter,
+    @dc = FactoryBot.create(:datacenter,
                              :ems_ref               => "/api/datacenters/00000001-0001-0001-0001-000000000311",
                              :ext_management_system => @ems,
                              :name                  => "Default",
                              :uid_ems               => "00000001-0001-0001-0001-000000000311")
 
-    @cluster = FactoryGirl.create(:ems_cluster,
+    @cluster = FactoryBot.create(:ems_cluster,
                                   :ems_ref               => "/api/clusters/00000002-0002-0002-0002-00000000017a",
                                   :uid_ems               => "00000002-0002-0002-0002-00000000017a",
                                   :ext_management_system => @ems,
                                   :name                  => "Default")
 
-    @rp = FactoryGirl.create(:resource_pool,
+    @rp = FactoryBot.create(:resource_pool,
                              :ext_management_system => @ems,
                              :name                  => "Default for Cluster Default",
                              :uid_ems               => "00000002-0002-0002-0002-00000000017a_respool")
 
-    @storage = FactoryGirl.create(:storage,
+    @storage = FactoryBot.create(:storage,
                                   :ems_ref  => "/api/storagedomains/6cc26c9d-e1a7-43ba-95d3-c744442c7500",
                                   :location => "192.168.1.107:/export/data")
 
-    @disk = FactoryGirl.create(:disk,
+    @disk = FactoryBot.create(:disk,
                                :storage  => @storage,
                                :filename => "c413aff6-e988-4830-8b24-f74af66ced5a")
-    @hardware = FactoryGirl.create(:hardware,
+    @hardware = FactoryBot.create(:hardware,
                                    :disks => [@disk])
 
-    @vm = FactoryGirl.create(:vm_redhat,
+    @vm = FactoryBot.create(:vm_redhat,
                              :ext_management_system => @ems,
                              :uid_ems               => "3a697bd0-7cea-42a1-95ef-fd292fcee721",
                              :ems_cluster_id        => @cluster.id,

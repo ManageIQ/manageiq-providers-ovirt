@@ -1,9 +1,9 @@
 describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
   include Spec::Support::WorkflowHelper
 
-  let(:admin)    { FactoryGirl.create(:user_with_group) }
-  let(:ems)      { FactoryGirl.create(:ems_redhat) }
-  let(:template) { FactoryGirl.create(:template_redhat, :ext_management_system => ems) }
+  let(:admin)    { FactoryBot.create(:user_with_group) }
+  let(:ems)      { FactoryBot.create(:ems_redhat) }
+  let(:template) { FactoryBot.create(:template_redhat, :ext_management_system => ems) }
 
   before do
     stub_dialog(:get_dialogs)
@@ -18,11 +18,11 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
 
   context "#allowed_storages" do
     let(:workflow) { described_class.new({:src_vm_id => template.id}, admin) }
-    let(:host)     { FactoryGirl.create(:host, :ext_management_system => ems) }
+    let(:host)     { FactoryBot.create(:host, :ext_management_system => ems) }
 
     before do
       %w(iso data export data).each do |domain_type|
-        host.storages << FactoryGirl.create(:storage, :storage_domain_type => domain_type)
+        host.storages << FactoryBot.create(:storage, :storage_domain_type => domain_type)
       end
       host.reload
       allow(workflow).to receive(:process_filter).and_return(host.storages.to_a)
@@ -50,18 +50,18 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
 
   context "allowed clusters" do
     let(:workflow) { described_class.new({:src_vm_id => template.id}, admin) }
-    let(:datacenter1) { FactoryGirl.create(:ems_folder, :type => "Datacenter") }
-    let(:datacenter2) { FactoryGirl.create(:ems_folder, :type => "Datacenter") }
-    let(:cluster1) { FactoryGirl.create(:ems_cluster, :ems_id => ems.id, :name => 'Cluster1') }
-    let(:cluster2) { FactoryGirl.create(:ems_cluster, :ems_id => ems.id, :name => 'Cluster2') }
-    let(:cluster3) { FactoryGirl.create(:ems_cluster, :ems_id => ems.id, :name => 'Cluster3') }
-    let(:rp1) { FactoryGirl.create(:resource_pool) }
-    let(:rp2) { FactoryGirl.create(:resource_pool) }
-    let(:rp3) { FactoryGirl.create(:resource_pool) }
-    let(:template) { FactoryGirl.create(:template_redhat, :ext_management_system => ems, :ems_cluster => cluster1) }
-    let(:host1) { FactoryGirl.create(:host, :ems_id => ems.id, :ems_cluster => cluster1) }
-    let(:host2) { FactoryGirl.create(:host, :ems_id => ems.id, :ems_cluster => cluster2) }
-    let(:host3) { FactoryGirl.create(:host, :ems_id => ems.id, :ems_cluster => cluster3) }
+    let(:datacenter1) { FactoryBot.create(:ems_folder, :type => "Datacenter") }
+    let(:datacenter2) { FactoryBot.create(:ems_folder, :type => "Datacenter") }
+    let(:cluster1) { FactoryBot.create(:ems_cluster, :ems_id => ems.id, :name => 'Cluster1') }
+    let(:cluster2) { FactoryBot.create(:ems_cluster, :ems_id => ems.id, :name => 'Cluster2') }
+    let(:cluster3) { FactoryBot.create(:ems_cluster, :ems_id => ems.id, :name => 'Cluster3') }
+    let(:rp1) { FactoryBot.create(:resource_pool) }
+    let(:rp2) { FactoryBot.create(:resource_pool) }
+    let(:rp3) { FactoryBot.create(:resource_pool) }
+    let(:template) { FactoryBot.create(:template_redhat, :ext_management_system => ems, :ems_cluster => cluster1) }
+    let(:host1) { FactoryBot.create(:host, :ems_id => ems.id, :ems_cluster => cluster1) }
+    let(:host2) { FactoryBot.create(:host, :ems_id => ems.id, :ems_cluster => cluster2) }
+    let(:host3) { FactoryBot.create(:host, :ems_id => ems.id, :ems_cluster => cluster3) }
     before(:each) do
       allow_any_instance_of(User).to receive(:get_timezone).and_return("UTC")
       allow(workflow).to receive(:get_source_and_targets).and_return(:ems => ems, :vm => template)
@@ -132,12 +132,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
     end
 
     it "should retrieve templates in region" do
-      template = FactoryGirl.create(:customization_template_cloud_init, :name => "test1")
+      template = FactoryBot.create(:customization_template_cloud_init, :name => "test1")
 
       my_region_number = template.my_region_number
       other_region_id  = (my_region_number + 1) * template.class.rails_sequence_factor + 1
-      pxe_image_type   = FactoryGirl.create(:pxe_image_type, :name => "test_image", :id => other_region_id)
-      FactoryGirl.create(:customization_template_cloud_init,
+      pxe_image_type   = FactoryBot.create(:pxe_image_type, :name => "test_image", :id => other_region_id)
+      FactoryBot.create(:customization_template_cloud_init,
                          :name           => "test2",
                          :id             => other_region_id,
                          :pxe_image_type => pxe_image_type)
@@ -151,7 +151,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
   end
 
   describe "#make_request" do
-    let(:alt_user) { FactoryGirl.create(:user_with_group) }
+    let(:alt_user) { FactoryBot.create(:user_with_group) }
     it "creates and update a request" do
       EvmSpecHelper.local_miq_server
       stub_dialog(:get_pre_dialogs)
@@ -200,8 +200,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
   end
 
   context "load allowed vlans" do
-    let(:cluster1) { FactoryGirl.create(:ems_cluster, :uid_ems => "uid_ems", :name => 'Cluster1') }
-    let(:template) { FactoryGirl.create(:template_redhat, :ext_management_system => ems, :ems_cluster => cluster1) }
+    let(:cluster1) { FactoryBot.create(:ems_cluster, :uid_ems => "uid_ems", :name => 'Cluster1') }
+    let(:template) { FactoryBot.create(:template_redhat, :ext_management_system => ems, :ems_cluster => cluster1) }
     let(:workflow) { described_class.new({:src_vm_id => template.id}, admin) }
     let(:hosts) { {} }
     before do

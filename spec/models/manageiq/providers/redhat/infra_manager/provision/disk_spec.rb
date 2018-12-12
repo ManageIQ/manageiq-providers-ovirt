@@ -1,9 +1,9 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Provision::Disk do
-  let(:ems)           { FactoryGirl.create(:ems_redhat_with_authentication) }
-  let(:template)      { FactoryGirl.create(:template_redhat, :ext_management_system => ems) }
-  let(:rhevm_vm)      { FactoryGirl.build(:vm_redhat) }
-  let(:vm)            { FactoryGirl.build(:vm_redhat, :ext_management_system => ems) }
-  let(:storage)       { FactoryGirl.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
+  let(:ems)           { FactoryBot.create(:ems_redhat_with_authentication) }
+  let(:template)      { FactoryBot.create(:template_redhat, :ext_management_system => ems) }
+  let(:rhevm_vm)      { FactoryBot.build(:vm_redhat) }
+  let(:vm)            { FactoryBot.build(:vm_redhat, :ext_management_system => ems) }
+  let(:storage)       { FactoryBot.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
 
   let(:disks_spec) do
     [
@@ -46,7 +46,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Disk do
   end
 
   before do
-    @task = FactoryGirl.build(:miq_provision_redhat,
+    @task = FactoryBot.build(:miq_provision_redhat,
                               :source      => template,
                               :destination => vm,
                               :state       => 'pending',
@@ -178,7 +178,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Disk do
     end
 
     context "when storage exists" do
-      let(:storage) { FactoryGirl.create(:storage_nfs, :name => storage_name) }
+      let(:storage) { FactoryBot.create(:storage_nfs, :name => storage_name) }
 
       # storage = ext_management_system.hosts.detect { |h| h.writable_storages.find_by(:name => storage_name) }
       it "finds a storage by its name" do

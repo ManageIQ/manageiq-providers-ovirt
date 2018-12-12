@@ -4,7 +4,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   before(:each) do
     stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
     _, _, zone = EvmSpecHelper.create_guid_miq_server_zone
-    @ems = FactoryGirl.create(:ems_redhat, :zone => zone, :hostname => "localhost", :ipaddress => "localhost",
+    @ems = FactoryBot.create(:ems_redhat, :zone => zone, :hostname => "localhost", :ipaddress => "localhost",
                               :port => 8443)
     @ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4
     allow_any_instance_of(@ovirt_service)
@@ -35,13 +35,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     allow_any_instance_of(@inventory_wrapper_class).to(receive(:service)
       .and_return(OpenStruct.new(:version_string => '4.2.0_master.')))
 
-    @cluster = FactoryGirl.create(:ems_cluster,
+    @cluster = FactoryBot.create(:ems_cluster,
                                   :ems_ref               => "/ovirt-engine/api/clusters/59c8cd2d-01d6-0367-037e-0000000002f7",
                                   :uid_ems               => "11acc1a0-66c7-4aba-a00f-fa2648c9b51f",
                                   :ext_management_system => @ems,
                                   :name                  => "Default")
 
-    @host = FactoryGirl.create(:host_redhat,
+    @host = FactoryBot.create(:host_redhat,
                                :ext_management_system => @ems,
                                :ems_ref               => "/ovirt-engine/api/hosts/11089411-53a2-4337-8613-7c1d411e8ae8",
                                :name                  => "fake_host",
