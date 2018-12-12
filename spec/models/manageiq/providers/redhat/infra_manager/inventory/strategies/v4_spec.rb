@@ -1,7 +1,7 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4 do
   before(:each) do
     _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-    @ems = FactoryGirl.create(:ems_redhat, :zone => zone, :hostname => "localhost", :ipaddress => "localhost",
+    @ems = FactoryBot.create(:ems_redhat, :zone => zone, :hostname => "localhost", :ipaddress => "localhost",
                               :port => 8443)
     @ems.update_authentication(:default => {:userid => "admin@internal", :password => "123456"})
     @ems.default_endpoint.verify_ssl = OpenSSL::SSL::VERIFY_NONE

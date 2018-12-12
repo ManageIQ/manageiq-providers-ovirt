@@ -2,9 +2,9 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
   let(:ip_address) { '192.168.1.31' }
 
   context "#is_available?" do
-    let(:ems)  { FactoryGirl.create(:ems_redhat) }
-    let(:host) { FactoryGirl.create(:host_redhat, :ext_management_system => ems) }
-    let(:vm)   { FactoryGirl.create(:vm_redhat, :ext_management_system => ems, :host => host) }
+    let(:ems)  { FactoryBot.create(:ems_redhat) }
+    let(:host) { FactoryBot.create(:host_redhat, :ext_management_system => ems) }
+    let(:vm)   { FactoryBot.create(:vm_redhat, :ext_management_system => ems, :host => host) }
     let(:power_state_on)        { "up" }
     let(:power_state_suspended) { "down" }
 
@@ -73,7 +73,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
 
   describe "#supports_reconfigure_disks?" do
     context "when vm has no storage" do
-      let(:vm) { FactoryGirl.create(:vm_redhat, :storage => nil, :ext_management_system => nil) }
+      let(:vm) { FactoryBot.create(:vm_redhat, :storage => nil, :ext_management_system => nil) }
 
       it "does not support reconfigure disks" do
         expect(vm.supports_reconfigure_disks?).to be_falsey
@@ -81,8 +81,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
     end
 
     context "when vm has storage" do
-      let(:storage) { FactoryGirl.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
-      let(:vm) { FactoryGirl.create(:vm_redhat, :storage => storage, :ext_management_system => nil) }
+      let(:storage) { FactoryBot.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
+      let(:vm) { FactoryBot.create(:vm_redhat, :storage => storage, :ext_management_system => nil) }
 
       context "when vm has no provider" do
         it "does not support reconfigure disks" do
@@ -91,9 +91,9 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
       end
 
       context "when vm has provider" do
-        let(:ems_redhat) { FactoryGirl.create(:ems_redhat) }
+        let(:ems_redhat) { FactoryBot.create(:ems_redhat) }
         let(:supported_api_versions) { [3] }
-        let(:vm) { FactoryGirl.create(:vm_redhat, :storage => storage) }
+        let(:vm) { FactoryBot.create(:vm_redhat, :storage => storage) }
 
         before(:each) do
           allow(vm.ext_management_system).to receive(:supported_api_versions).and_return(supported_api_versions)
@@ -117,7 +117,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
 
   describe "#supports_publish?" do
     context "when vm has no storage" do
-      let(:vm) { FactoryGirl.create(:vm_redhat, :storage => nil, :ext_management_system => nil) }
+      let(:vm) { FactoryBot.create(:vm_redhat, :storage => nil, :ext_management_system => nil) }
 
       it "does not support publish" do
         expect(vm.supports_publish?).to be_falsey
@@ -125,8 +125,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
     end
 
     context "when vm has no ems" do
-      let(:storage) { FactoryGirl.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
-      let(:vm) { FactoryGirl.create(:vm_redhat, :storage => storage, :ext_management_system => nil) }
+      let(:storage) { FactoryBot.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
+      let(:vm) { FactoryBot.create(:vm_redhat, :storage => storage, :ext_management_system => nil) }
 
       it "does not support publish" do
         expect(vm.supports_publish?).to be_falsey
@@ -134,9 +134,9 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
     end
 
     context "when vm is not in down state" do
-      let(:storage) { FactoryGirl.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
-      let(:ems) { FactoryGirl.create(:ems_redhat_with_authentication) }
-      let(:vm) { FactoryGirl.create(:vm_redhat, :ext_management_system => ems, :storage => storage) }
+      let(:storage) { FactoryBot.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
+      let(:ems) { FactoryBot.create(:ems_redhat_with_authentication) }
+      let(:vm) { FactoryBot.create(:vm_redhat, :ext_management_system => ems, :storage => storage) }
 
       it "does not support publish" do
         allow(vm).to receive(:power_state).and_return("on")
@@ -146,9 +146,9 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
     end
 
     context "when vm is down" do
-      let(:storage) { FactoryGirl.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
-      let(:ems) { FactoryGirl.create(:ems_redhat_with_authentication) }
-      let(:vm) { FactoryGirl.create(:vm_redhat, :ext_management_system => ems, :storage => storage) }
+      let(:storage) { FactoryBot.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
+      let(:ems) { FactoryBot.create(:ems_redhat_with_authentication) }
+      let(:vm) { FactoryBot.create(:vm_redhat, :ext_management_system => ems, :storage => storage) }
 
       it "does support publish" do
         allow(ems).to receive(:supported_api_versions).and_return([4])
@@ -162,7 +162,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
   describe "#disconnect_storage" do
     before(:each) do
       _, _, zone = EvmSpecHelper.create_guid_miq_server_zone
-      ems = FactoryGirl.create(:ems_redhat, :zone => zone, :hostname => ip_address,
+      ems = FactoryBot.create(:ems_redhat, :zone => zone, :hostname => ip_address,
                                :ipaddress => ip_address, :port => 8443)
       ems.update_authentication(:default => {:userid => "admin@internal", :password => "engine"})
       # TODO: (inventory) resvisit this test and write one for V4
@@ -174,10 +174,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
           }
         }
       )
-      @storage = FactoryGirl.create(:storage, :ems_ref => "/api/storagedomains/ee745353-c069-4de8-8d76-ec2e155e2ca0")
-      disk = FactoryGirl.create(:disk, :storage => @storage, :filename => "da123bb9-095a-4933-95f2-8032dfa332e1")
-      hardware = FactoryGirl.create(:hardware, :disks => [disk])
-      @vm = FactoryGirl.create(:vm_redhat, :storage => @storage, :storages => [@storage], :hardware => hardware, :ext_management_system => ems)
+      @storage = FactoryBot.create(:storage, :ems_ref => "/api/storagedomains/ee745353-c069-4de8-8d76-ec2e155e2ca0")
+      disk = FactoryBot.create(:disk, :storage => @storage, :filename => "da123bb9-095a-4933-95f2-8032dfa332e1")
+      hardware = FactoryBot.create(:hardware, :disks => [disk])
+      @vm = FactoryBot.create(:vm_redhat, :storage => @storage, :storages => [@storage], :hardware => hardware, :ext_management_system => ems)
     end
 
     context "vm removed and" do
@@ -203,8 +203,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
   describe "#unregister" do
     before do
       _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-      @ems  = FactoryGirl.create(:ems_redhat_with_authentication, :zone => zone)
-      @vm   = FactoryGirl.create(:vm_redhat, :ext_management_system => @ems)
+      @ems  = FactoryBot.create(:ems_redhat_with_authentication, :zone => zone)
+      @vm   = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
       @vm_proxy = double("OvirtSDK4::Vm.new")
       @vm_service = double("OvirtSDK4::Vm")
     end

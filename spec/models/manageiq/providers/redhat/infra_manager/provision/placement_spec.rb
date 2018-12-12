@@ -1,13 +1,13 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Provision do
   context "::Placement" do
     before do
-      ems      = FactoryGirl.create(:ems_redhat_with_authentication)
-      template = FactoryGirl.create(:template_redhat, :ext_management_system => ems)
-      vm       = FactoryGirl.create(:vm_redhat)
-      @cluster = FactoryGirl.create(:ems_cluster, :ext_management_system => ems)
+      ems      = FactoryBot.create(:ems_redhat_with_authentication)
+      template = FactoryBot.create(:template_redhat, :ext_management_system => ems)
+      vm       = FactoryBot.create(:vm_redhat)
+      @cluster = FactoryBot.create(:ems_cluster, :ext_management_system => ems)
       options  = {:src_vm_id => template.id}
 
-      @task = FactoryGirl.create(:miq_provision_redhat, :source      => template,
+      @task = FactoryBot.create(:miq_provision_redhat, :source      => template,
                                                         :destination => vm,
                                                         :state       => 'pending',
                                                         :status      => 'Ok',

@@ -1,14 +1,14 @@
 require "ovirt"
 
 describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration do
-  let(:cust_template) { FactoryGirl.create(:customization_template_cloud_init, :script => '#some_script') }
-  let(:ems)           { FactoryGirl.create(:ems_redhat_with_authentication) }
-  let(:host)          { FactoryGirl.create(:host_redhat) }
+  let(:cust_template) { FactoryBot.create(:customization_template_cloud_init, :script => '#some_script') }
+  let(:ems)           { FactoryBot.create(:ems_redhat_with_authentication) }
+  let(:host)          { FactoryBot.create(:host_redhat) }
   let(:rhevm_vm)      { instance_double("Ovirt::Vm") }
   let(:provider_object) { ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V3::GeneralUpdateMethodNamesDecorator.new(rhevm_vm) }
-  let(:task)          { FactoryGirl.create(:miq_provision_redhat, :state => 'pending', :status => 'Ok', :options => {:src_vm_id => template.id}) }
-  let(:template)      { FactoryGirl.create(:template_redhat, :ext_management_system => ems) }
-  let(:vm)            { FactoryGirl.create(:vm_redhat, :ext_management_system => ems) }
+  let(:task)          { FactoryBot.create(:miq_provision_redhat, :state => 'pending', :status => 'Ok', :options => {:src_vm_id => template.id}) }
+  let(:template)      { FactoryBot.create(:template_redhat, :ext_management_system => ems) }
+  let(:vm)            { FactoryBot.create(:vm_redhat, :ext_management_system => ems) }
 
   before { allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager::Provision).to receive(:with_provider_destination).and_yield(provider_object) }
   before(:each) { allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager).to receive(:supported_api_versions).and_return([3]) }
@@ -111,7 +111,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration do
       expect(task.phase_context[:boot_with_sysprep]).to eq(true)
     end
 
-    let(:cust_template) { FactoryGirl.create(:customization_template_sysprep, :script => "the script: <%= evm[:replace_me] %>") }
+    let(:cust_template) { FactoryBot.create(:customization_template_sysprep, :script => "the script: <%= evm[:replace_me] %>") }
 
     it "provisions sysprep from template with substitutions" do
       allow(MiqRegion).to receive_message_chain(:my_region, :remote_ui_url => "1.1.1.1")
@@ -129,7 +129,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration do
     end
 
     context "with timezone set" do
-      let(:cust_template) { FactoryGirl.create(:customization_template_sysprep, :script => "timezone: <%= evm[:sysprep_timezone] %>") }
+      let(:cust_template) { FactoryBot.create(:customization_template_sysprep, :script => "timezone: <%= evm[:sysprep_timezone] %>") }
 
       it "it properly substitutes timezone when it is set" do
         allow(MiqRegion).to receive_message_chain(:my_region, :remote_ui_url => "1.1.1.1")

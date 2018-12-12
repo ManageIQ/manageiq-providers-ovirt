@@ -5,15 +5,15 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
   let(:network_id)    { "network1-id" }
   let(:network_name)  { "network1-name" }
   let(:rhevm_cluster) { double("Ovirt::Cluster") }
-  let(:ems)           { FactoryGirl.create(:ems_redhat_with_authentication) }
-  let(:ems_cluster)   { FactoryGirl.create(:ems_cluster, :ext_management_system => ems, :ems_ref => "ems_ref") }
-  let(:template)      { FactoryGirl.create(:template_redhat, :ext_management_system => ems) }
+  let(:ems)           { FactoryBot.create(:ems_redhat_with_authentication) }
+  let(:ems_cluster)   { FactoryBot.create(:ems_cluster, :ext_management_system => ems, :ems_ref => "ems_ref") }
+  let(:template)      { FactoryBot.create(:template_redhat, :ext_management_system => ems) }
   let(:rhevm_vm)      { double("Ovirt::Vm") }
-  let(:target_vm)     { FactoryGirl.create(:vm_redhat, :ext_management_system => ems) }
+  let(:target_vm)     { FactoryBot.create(:vm_redhat, :ext_management_system => ems) }
   let(:ovirt_service) { double("Ovirt::Service", :api_path => "/api") }
 
   before do
-    @task = FactoryGirl.create(:miq_provision_redhat,
+    @task = FactoryBot.create(:miq_provision_redhat,
                                :source      => template,
                                :destination => target_vm,
                                :state       => 'pending',

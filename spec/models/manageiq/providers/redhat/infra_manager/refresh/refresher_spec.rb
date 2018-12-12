@@ -1,5 +1,5 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
-  let(:ems) { FactoryGirl.build(:ems_redhat) }
+  let(:ems) { FactoryBot.build(:ems_redhat) }
   let(:use_ovirt_engine_sdk) { true }
   describe 'chooses the right refresher strategy' do
     before do

@@ -2,7 +2,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
   context "A new provision request," do
     before(:each) do
       @os = OperatingSystem.new(:product_name => 'Microsoft Windows')
-      @admin = FactoryGirl.create(:user_admin)
+      @admin = FactoryBot.create(:user_admin)
       @target_vm_name = 'clone test'
       @options = {
         :pass           => 1,
@@ -18,12 +18,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
 
     context "RHEV-M provisioning" do
       before(:each) do
-        @ems         = FactoryGirl.create(:ems_redhat_with_authentication)
-        @vm_template = FactoryGirl.create(:template_redhat, :name => "template1", :ext_management_system => @ems, :operating_system => @os, :cpu_limit => -1, :cpu_reserve => 0)
-        @vm          = FactoryGirl.create(:vm_redhat, :name => "vm1",       :location => "abc/def.vmx")
-        @pr          = FactoryGirl.create(:miq_provision_request, :requester => @admin, :src_vm_id => @vm_template.id)
+        @ems         = FactoryBot.create(:ems_redhat_with_authentication)
+        @vm_template = FactoryBot.create(:template_redhat, :name => "template1", :ext_management_system => @ems, :operating_system => @os, :cpu_limit => -1, :cpu_reserve => 0)
+        @vm          = FactoryBot.create(:vm_redhat, :name => "vm1",       :location => "abc/def.vmx")
+        @pr          = FactoryBot.create(:miq_provision_request, :requester => @admin, :src_vm_id => @vm_template.id)
         @options[:src_vm_id] = [@vm_template.id, @vm_template.name]
-        @vm_prov = FactoryGirl.create(:miq_provision_redhat, :userid => @admin.userid, :miq_request => @pr, :source => @vm_template, :request_type => 'template', :state => 'pending', :status => 'Ok', :options => @options)
+        @vm_prov = FactoryBot.create(:miq_provision_redhat, :userid => @admin.userid, :miq_request => @pr, :source => @vm_template, :request_type => 'template', :state => 'pending', :status => 'Ok', :options => @options)
       end
 
       it "#workflow" do
@@ -35,7 +35,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
       end
 
       it "eligible_resources for iso_images" do
-        iso_image = FactoryGirl.create(:iso_image, :name => "Test ISO Image")
+        iso_image = FactoryBot.create(:iso_image, :name => "Test ISO Image")
         iso_image_struct = [MiqHashStruct.new(:id => "IsoImage::#{iso_image.id}", :name => iso_image.name, :evm_object_class => iso_image.class.base_class.name.to_sym)]
         allow_any_instance_of(MiqProvisionWorkflow).to receive(:allowed_iso_images).and_return(iso_image_struct)
         expect(@vm_prov.eligible_resources(:iso_images)).to eq([iso_image])
@@ -64,7 +64,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
 
       context "#prepare_for_clone_task" do
         before do
-          @ems_cluster = FactoryGirl.create(:ems_cluster, :ems_ref => "test_ref")
+          @ems_cluster = FactoryBot.create(:ems_cluster, :ems_ref => "test_ref")
           allow(@vm_prov).to receive(:dest_cluster).and_return(@ems_cluster)
         end
 
@@ -109,7 +109,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
       end
 
       context "#log_clone_options" do
-        let(:ems_cluster) { FactoryGirl.create(:ems_cluster, :ems_ref => "test_ref") }
+        let(:ems_cluster) { FactoryBot.create(:ems_cluster, :ems_ref => "test_ref") }
         before do
           allow(@vm_prov).to receive(:dest_cluster).and_return(ems_cluster)
         end
@@ -125,7 +125,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
       end
 
       context "with a destination vm" do
-        let(:destination_vm) { FactoryGirl.create(:vm_redhat, :ext_management_system => @ems) }
+        let(:destination_vm) { FactoryBot.create(:vm_redhat, :ext_management_system => @ems) }
         before do
           stub_settings_merge(
             :ems => {

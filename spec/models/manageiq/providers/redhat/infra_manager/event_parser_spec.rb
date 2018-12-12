@@ -4,7 +4,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
 
     before(:each) do
       _, _, zone = EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_redhat, :zone => zone, :hostname => ip_address, :ipaddress => ip_address,
+      @ems = FactoryBot.create(:ems_redhat, :zone => zone, :hostname => ip_address, :ipaddress => ip_address,
                                 :port => 8443)
       @ems.update_authentication(:default => {:userid => "admin@internal", :password => "engine"})
       @ems.default_endpoint.verify_ssl = OpenSSL::SSL::VERIFY_NONE
@@ -154,7 +154,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
 
     before(:each) do
       _, _, zone = EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_redhat, :zone => zone, :hostname => "192.168.1.105", :ipaddress => "192.168.1.105",
+      @ems = FactoryBot.create(:ems_redhat, :zone => zone, :hostname => "192.168.1.105", :ipaddress => "192.168.1.105",
                                 :port => 8443)
       @ems.update_authentication(:default => {:userid => "admin@internal", :password => "engine"})
       @ems.default_endpoint.path = "/ovirt-engine/api"

@@ -1,6 +1,6 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure do
-  let(:storage) { FactoryGirl.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
-  let(:vm) { FactoryGirl.create(:vm_redhat, :storage => storage) }
+  let(:storage) { FactoryBot.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
+  let(:vm) { FactoryBot.create(:vm_redhat, :storage => storage) }
 
   it "#reconfigurable?" do
     expect(vm.reconfigurable?).to be_truthy
@@ -37,7 +37,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure do
                                            "delete_backing" => false
                                         }]
       }
-      @vm = FactoryGirl.create(:vm_redhat, :hardware => FactoryGirl.create(:hardware), :storage => storage)
+      @vm = FactoryBot.create(:vm_redhat, :hardware => FactoryBot.create(:hardware), :storage => storage)
     end
     subject { @vm.build_config_spec(@options) }
 

@@ -1,14 +1,14 @@
 describe ManageIQ::Providers::Redhat::InfraManager::ProvisionViaIso do
   context "::StateMachine" do
     before do
-      @ems = FactoryGirl.create(:ems_redhat_with_authentication)
-      template = FactoryGirl.create(:template_redhat, :ext_management_system => @ems)
-      @vm = FactoryGirl.create(:vm_redhat, :ext_management_system => @ems)
+      @ems = FactoryBot.create(:ems_redhat_with_authentication)
+      template = FactoryBot.create(:template_redhat, :ext_management_system => @ems)
+      @vm = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
       options  = {:src_vm_id => template.id}
 
-      @task = FactoryGirl.create(:miq_provision_redhat_via_iso, :source => template, :destination => @vm, :state => 'pending', :status => 'Ok', :options => options)
+      @task = FactoryBot.create(:miq_provision_redhat_via_iso, :source => template, :destination => @vm, :state => 'pending', :status => 'Ok', :options => options)
       allow(@task).to receive(:destination_image_locked?).and_return(false)
-      @iso_image = FactoryGirl.create(:iso_image, :name => "Test ISO Image")
+      @iso_image = FactoryBot.create(:iso_image, :name => "Test ISO Image")
       allow(@task).to receive(:update_and_notify_parent).and_return(nil)
       allow(@task).to receive(:iso_image).and_return(@iso_image)
     end

@@ -4,7 +4,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   before(:each) do
     stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
     _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-    @ems = FactoryGirl.create(:ems_redhat, :zone => zone, :hostname => "localhost", :ipaddress => "localhost",
+    @ems = FactoryBot.create(:ems_redhat, :zone => zone, :hostname => "localhost", :ipaddress => "localhost",
                               :port => 8443)
     @ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4
     allow_any_instance_of(@ovirt_service)
@@ -55,7 +55,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   end
 
   it "will perform a refresh and reconnect a host" do
-    FactoryGirl.create(:host_redhat,
+    FactoryBot.create(:host_redhat,
                        :ext_management_system => nil,
                        :ems_ref               => "/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a",
                        :ems_ref_obj           => "/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a",
@@ -73,7 +73,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   end
 
   it "will perform a refresh and reconnect a vm" do
-    @vm = FactoryGirl.create(:vm_redhat,
+    @vm = FactoryBot.create(:vm_redhat,
                              :ext_management_system => nil,
                              :ems_ref               => "/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f",
                              :ems_ref_obj           => "/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f",

@@ -1,8 +1,8 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Host do
   require 'ovirtsdk4'
   describe '#quickStats' do
-    let(:ems) { FactoryGirl.create(:ems_redhat_with_authentication) }
-    subject { FactoryGirl.create(:host_redhat, :ems_id => ems.id) }
+    let(:ems) { FactoryBot.create(:ems_redhat_with_authentication) }
+    subject { FactoryBot.create(:host_redhat, :ems_id => ems.id) }
     before(:each) do
       allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager)
         .to receive(:supported_api_versions).and_return([4])

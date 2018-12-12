@@ -1,8 +1,8 @@
 describe ManageIQ::Providers::Redhat::InfraManager::MetricsCapture do
   require 'ovirt_metrics'
   context '#perf_collect_metrics' do
-    let(:ems) { FactoryGirl.create(:ems_redhat_with_metrics_authentication) }
-    let(:host) { FactoryGirl.create(:host_redhat, :ems_id => ems.id) }
+    let(:ems) { FactoryBot.create(:ems_redhat_with_metrics_authentication) }
+    let(:host) { FactoryBot.create(:host_redhat, :ems_id => ems.id) }
     let(:start_time) { 4.hours.ago }
     it 'collects historical metric data according to the value of historical_start_time' do
       allow(Metric::Capture).to receive(:historical_start_time).and_return(start_time)
@@ -14,7 +14,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::MetricsCapture do
     end
 
     context 'ems has no metrics authentication' do
-      let(:ems) { FactoryGirl.create(:ems_redhat) }
+      let(:ems) { FactoryBot.create(:ems_redhat) }
       it 'returns empty results when no credentials are defined' do
         expect(host.perf_collect_metrics("realtime")).to eq([{}, {}])
       end

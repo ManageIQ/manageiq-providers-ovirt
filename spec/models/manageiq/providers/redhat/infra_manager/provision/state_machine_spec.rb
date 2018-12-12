@@ -1,20 +1,20 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine do
   include MiqProvision::StateMachineSpecHelper
-  let(:cluster)  { FactoryGirl.create(:ems_cluster, :ext_management_system => ems) }
+  let(:cluster)  { FactoryBot.create(:ems_cluster, :ext_management_system => ems) }
   let(:ems)      do
     _, _, zone = EvmSpecHelper.create_guid_miq_server_zone
-    FactoryGirl.create(:ems_redhat_with_authentication, :zone => zone)
+    FactoryBot.create(:ems_redhat_with_authentication, :zone => zone)
   end
   let(:disk_attachments_service) { double("disk_attachments_service", :add => nil) }
   let(:rhevm_vm) { double("RHEVM VM") }
   let(:task)     { request.tap(&:create_request_tasks).miq_request_tasks.first }
-  let(:template) { FactoryGirl.create(:template_redhat, :ext_management_system => ems) }
+  let(:template) { FactoryBot.create(:template_redhat, :ext_management_system => ems) }
   let(:storages) { double("storages") }
   let(:storage_name) { "abc" }
   let(:host) { double("hostgig", :writable_storages => storages) }
   let(:hosts) { [host] }
   let(:vm) do
-    FactoryGirl.create(:vm_redhat, :ext_management_system => ems, :raw_power_state => "on").tap do |v|
+    FactoryBot.create(:vm_redhat, :ext_management_system => ems, :raw_power_state => "on").tap do |v|
       allow(v).to receive(:with_provider_object).and_yield(rhevm_vm)
       allow(ems).to receive(:with_disk_attachments_service).with(v).and_return(disk_attachments_service)
       allow(ems).to receive(:with_provider_connection).and_return(false)
@@ -26,11 +26,11 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine do
   end
 
   let(:storage) do
-    FactoryGirl.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ", :name => storage_name)
+    FactoryBot.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ", :name => storage_name)
   end
 
   let(:storage) do
-    FactoryGirl.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ", :name => storage_name)
+    FactoryBot.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ", :name => storage_name)
   end
 
   let(:options) do
@@ -56,7 +56,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine do
   end
 
   let(:request) do
-    FactoryGirl.create(:miq_provision_request, :requester => FactoryGirl.create(:user_with_group), :src_vm_id => template.id, :options => options).tap do |request|
+    FactoryBot.create(:miq_provision_request, :requester => FactoryBot.create(:user_with_group), :src_vm_id => template.id, :options => options).tap do |request|
       allow(request).to receive(:automate_event_failed?).and_return(false)
     end
   end

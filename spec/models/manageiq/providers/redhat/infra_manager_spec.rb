@@ -15,7 +15,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
   end
 
   describe "rhevm_metrics_connect_options" do
-    let(:ems) { FactoryGirl.create(:ems_redhat, :hostname => "some.thing.tld") }
+    let(:ems) { FactoryBot.create(:ems_redhat, :hostname => "some.thing.tld") }
 
     it "rhevm_metrics_connect_options fetches configuration and allows overrides" do
       expect(ems.rhevm_metrics_connect_options[:host]).to eq("some.thing.tld")
@@ -30,7 +30,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
 
     context "non default metrics database name" do
       let(:ems) do
-        FactoryGirl.create(:ems_redhat,
+        FactoryBot.create(:ems_redhat,
                            :hostname                  => "some.thing.tld",
                            :connection_configurations => [{:endpoint => {:role => :metrics,
                                                                          :path => "some.database"}}])
@@ -47,8 +47,8 @@ describe ManageIQ::Providers::Redhat::InfraManager do
       context "#vm_reconfigure" do
         before do
           _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-          @ems  = FactoryGirl.create(:ems_redhat_with_authentication, :zone => zone)
-          @vm   = FactoryGirl.create(:vm_redhat, :ext_management_system => @ems)
+          @ems  = FactoryBot.create(:ems_redhat_with_authentication, :zone => zone)
+          @vm   = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
 
           @rhevm_vm_attrs = double('rhevm_vm_attrs')
           allow(@ems).to receive(:highest_supported_api_version).and_return(4)
@@ -80,9 +80,9 @@ describe ManageIQ::Providers::Redhat::InfraManager do
     context "version 3" do
       before do
         _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-        @ems  = FactoryGirl.create(:ems_redhat_with_authentication, :zone => zone)
-        @hw   = FactoryGirl.create(:hardware, :memory_mb => 1024, :cpu_sockets => 2, :cpu_cores_per_socket => 1)
-        @vm   = FactoryGirl.create(:vm_redhat, :ext_management_system => @ems)
+        @ems  = FactoryBot.create(:ems_redhat_with_authentication, :zone => zone)
+        @hw   = FactoryBot.create(:hardware, :memory_mb => 1024, :cpu_sockets => 2, :cpu_cores_per_socket => 1)
+        @vm   = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
 
         @cores_per_socket = 2
         @num_of_sockets   = 3
@@ -213,9 +213,9 @@ describe ManageIQ::Providers::Redhat::InfraManager do
   context "api versions" do
     require 'ovirtsdk4'
 
-    let(:ems) { FactoryGirl.create(:ems_redhat_with_authentication) }
+    let(:ems) { FactoryBot.create(:ems_redhat_with_authentication) }
     context 'when parsing database api_version' do
-      let(:ems) { FactoryGirl.create(:ems_redhat, :api_version => api_version) }
+      let(:ems) { FactoryBot.create(:ems_redhat, :api_version => api_version) }
       subject(:supported_api_versions) { ems.supported_api_versions }
       context "version 4.2" do
         let(:api_version) { "4.2.0" }
@@ -294,7 +294,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
   end
 
   context "supported features" do
-    let(:ems) { FactoryGirl.create(:ems_redhat) }
+    let(:ems) { FactoryBot.create(:ems_redhat) }
     let(:supported_api_versions) { [3, 4] }
     context "#process_api_features_support" do
       before(:each) do
@@ -345,7 +345,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
 
   context "#version_at_least?" do
     let(:api_version) { "4.2" }
-    let(:ems) { FactoryGirl.create(:ems_redhat, :api_version => api_version) }
+    let(:ems) { FactoryBot.create(:ems_redhat, :api_version => api_version) }
 
     context "api version is higher or equal than checked version" do
       it 'supports the right features' do
@@ -446,7 +446,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
     let(:api_version) { "4.2" }
 
     before do
-      @ems = FactoryGirl.create(:ems_redhat, :api_version => api_version)
+      @ems = FactoryBot.create(:ems_redhat, :api_version => api_version)
       @provider = double(:authentication_url => 'https://hostname.usersys.redhat.com:35357/v2.0')
       @providers = double("providers", :sort_by => [@provider], :first => @provider)
       allow(@ems).to receive(:ovirt_services).and_return(double(:collect_external_network_providers => @providers))
@@ -482,7 +482,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
     end
 
     it "removes network manager" do
-      zone = FactoryGirl.create(:zone)
+      zone = FactoryBot.create(:zone)
       allow(MiqServer).to receive(:my_zone).and_return(zone.name)
       allow(@ems).to receive(:ovirt_services).and_return(double(:collect_external_network_providers => {}))
       expect(ExtManagementSystem.count).to eq(2)
@@ -500,7 +500,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
   end
 
   context 'catalog types' do
-    let(:ems) { FactoryGirl.create(:ems_redhat) }
+    let(:ems) { FactoryBot.create(:ems_redhat) }
 
     it "#supported_catalog_types" do
       expect(ems.supported_catalog_types).to eq(%w(redhat))
@@ -509,8 +509,8 @@ describe ManageIQ::Providers::Redhat::InfraManager do
 
   context 'vm_migration' do
     before do
-      @ems = FactoryGirl.create(:ems_redhat)
-      @vm = FactoryGirl.create(:vm_redhat, :ext_management_system => @ems)
+      @ems = FactoryBot.create(:ems_redhat)
+      @vm = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
 
       service = double
       allow(service).to receive(:migrate).with(:host => {:id => "11089411-53a2-4337-8613-7c1d411e8ae8"})
@@ -518,14 +518,14 @@ describe ManageIQ::Providers::Redhat::InfraManager do
     end
 
     it "succeeds migration" do
-      ems_event = FactoryGirl.create(:ems_event, :event_type => "VM_MIGRATION_DONE", :message => "migration done", :ext_management_system => @ems, :vm => @vm, :timestamp => Time.zone.now + 1)
+      ems_event = FactoryBot.create(:ems_event, :event_type => "VM_MIGRATION_DONE", :message => "migration done", :ext_management_system => @ems, :vm => @vm, :timestamp => Time.zone.now + 1)
       @vm.ems_events << ems_event
 
       expect { @ems.vm_migrate(@vm, {:host => "/ovirt-engine/api/hosts/11089411-53a2-4337-8613-7c1d411e8ae8"}, 1) }.to_not raise_error
     end
 
     it "fails migration" do
-      ems_event = FactoryGirl.create(:ems_event, :event_type => "VM_MIGRATION_FAILED_FROM_TO", :message => "migration failed", :ext_management_system => @ems, :vm => @vm, :timestamp => Time.zone.now + 1)
+      ems_event = FactoryBot.create(:ems_event, :event_type => "VM_MIGRATION_FAILED_FROM_TO", :message => "migration failed", :ext_management_system => @ems, :vm => @vm, :timestamp => Time.zone.now + 1)
       @vm.ems_events << ems_event
 
       expect { @ems.vm_migrate(@vm, {:host => "/ovirt-engine/api/hosts/11089411-53a2-4337-8613-7c1d411e8ae8"}, 1) }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error)

@@ -1,5 +1,5 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::ParserBuilder do
-  let(:ems) { FactoryGirl.build(:ems_redhat) }
+  let(:ems) { FactoryBot.build(:ems_redhat) }
   let(:use_ovirt_engine_sdk) { true }
   let(:options) { {} }
   subject { described_class.new(ems, options).build }
