@@ -71,18 +71,18 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
         vms = cluster_refs.map { |x| indexed_vms_and_templates[x] }.flatten.compact
 
         ActiveRecord::Base.transaction do
-          host_folder = EmsFolder.find_by(:uid_ems => "#{uid}_host")
+          host_folder = ems.ems_folders.find_by(:uid_ems => "#{uid}_host")
           cs = EmsCluster.find(clusters.map(&:id))
           host_folder.with_relationship_type("ems_metadata") { host_folder.add_child(cs) }
 
-          vm_folder = EmsFolder.find_by(:uid_ems => "#{uid}_vm")
+          vm_folder = ems.ems_folders.find_by(:uid_ems => "#{uid}_vm")
           vs = VmOrTemplate.find(vms.map(&:id))
           vm_folder.with_relationship_type("ems_metadata") { vm_folder.add_child(vs) }
 
           datacenter = EmsFolder.find(dc.id)
           datacenter.with_relationship_type("ems_metadata") { datacenter.add_child(host_folder) }
           datacenter.with_relationship_type("ems_metadata") { datacenter.add_child(vm_folder) }
-          root_dc = EmsFolder.find_by(:uid_ems => 'root_dc', :ems_id => ems.id)
+          root_dc = ems.ems_folders.find_by(:uid_ems => 'root_dc')
           root_dc.with_relationship_type("ems_metadata") { root_dc.add_child(datacenter) }
           ems.with_relationship_type("ems_metadata") { ems.add_child(root_dc) }
         end
@@ -92,7 +92,7 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
 
   # Custom save block for ems_cluster_children IC
   def ems_cluster_children_save_block
-    lambda do |_ems, inventory_collection|
+    lambda do |ems, inventory_collection|
       cluster_collection = inventory_collection.dependency_attributes[:clusters].try(:first)
       cluster_model      = cluster_collection.model_class
 
@@ -107,7 +107,7 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
         vms_by_id      = vm_model.find(vm_collection.data.map(&:id)).index_by(&:id)
 
         clusters_by_id.each do |cluster_id, cluster|
-          rp = ResourcePool.find_by(:uid_ems => "#{cluster.uid_ems}_respool")
+          rp = ems.resource_pools.find_by(:uid_ems => "#{cluster.uid_ems}_respool")
           cluster.with_relationship_type("ems_metadata") { cluster.add_child(rp) }
 
           vms = vms_by_id.values_at(*vms_by_cluster[cluster_id]&.map(&:id) || [])
