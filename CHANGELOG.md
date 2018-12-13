@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Gaprindashvili-6
+## Gaprindashvili-7
+
+### Fixed
+- No need to override disconnect_inv from core [(#310)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/310)
+
+## Gaprindashvili-6 - Released 2018-11-06
 
 ### Added
 - Add support to set VM memory and number of CPUs [(#280)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/280)
@@ -15,7 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Fix attach_floppy to pass "floppy" type [(#298)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/298)
 - Fix targeted refresh [(#291)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/291)
 
-## Gaprindashvili-4
+## Gaprindashvili-4 - Released 2018-07-16
 
 ### Added
 - Don't call Gem::Version.new() with a nil version [(#247)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/247)
@@ -37,7 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - fix miq custom attributes deleted [(#269)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/269)
 - Fix targeted refresh clearing other VMs ems_custom_attrs [(#271)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/271)
 
-## Gaprindashvili-3
+## Gaprindashvili-3 - Released 2018-05-15
 
 ### Added
 - Support Unregister VM [(#223)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/223)
