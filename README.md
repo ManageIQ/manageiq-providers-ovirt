@@ -1,7 +1,7 @@
 # manageiq-providers-ovirt
 
 [![Gem Version](https://badge.fury.io/rb/manageiq-providers-ovirt.svg)](http://badge.fury.io/rb/manageiq-providers-ovirt)
-[![Build Status](https://travis-ci.org/ManageIQ/manageiq-providers-ovirt.svg)](https://travis-ci.org/ManageIQ/manageiq-providers-ovirt)
+[![Build Status](https://travis-ci.org/ManageIQ/manageiq-providers-ovirt.svg?branch=master)](https://travis-ci.org/ManageIQ/manageiq-providers-ovirt)
 [![Code Climate](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt.svg)](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt)
 [![Test Coverage](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt/badges/coverage.svg)](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt/coverage)
 [![Dependency Status](https://gemnasium.com/ManageIQ/manageiq-providers-ovirt.svg)](https://gemnasium.com/ManageIQ/manageiq-providers-ovirt)
