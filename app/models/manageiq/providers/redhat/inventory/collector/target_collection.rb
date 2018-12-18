@@ -80,7 +80,9 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   end
 
   def hosts
-    @hosts ||= manager.with_provider_connection(VERSION_HASH) do |connection|
+    return @hosts unless @hosts.empty?
+
+    @hosts = manager.with_provider_connection(VERSION_HASH) do |connection|
       references(:hosts).map do |ems_ref|
         begin
           connection.system_service.hosts_service.host_service(uuid_from_ems_ref(ems_ref)).get
@@ -212,9 +214,6 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
       add_simple_target!(:ems_clusters, uuid_from_target(host.ems_cluster))
       host.storages.each do |storage|
         add_simple_target!(:storagedomains, uuid_from_target(storage))
-      end
-      host.switches.each do |switch|
-        add_simple_target!(:networks, switch.uid_ems)
       end
     end
   end
