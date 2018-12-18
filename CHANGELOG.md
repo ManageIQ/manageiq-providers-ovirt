@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+### Unreleased as of Sprint 101 - 2018-12-17
+
+### Fixed
+- Scope EmsFolder and ResourcePool queries by ems_id [(#322)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/322)
+
 ### Unreleased as of Sprint 100 - 2018-12-03
 
 ### Fixed
