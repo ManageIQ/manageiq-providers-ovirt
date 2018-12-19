@@ -106,3 +106,13 @@ https://localhost:8443/ovirt-engine/api/hosts/11089411-53a2-4337-8613-7c1d411e8a
     correlation-id: c0f14676-f4f7-4d7f-ae98-57a238810859
     date: Thu, 02 Nov 2017 15:45:50 GMT
   :message:
+- :body:
+  :code: 404
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '0'
+    correlation-id: c0f14676-f4f7-4d7f-ae98-57a238810859
+    date: Thu, 02 Nov 2017 15:45:50 GMT
+  :message:

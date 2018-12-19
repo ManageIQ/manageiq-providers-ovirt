@@ -23,7 +23,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     )
     allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).and_call_original
     allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).with(kind_of(Hash)) do |opts|
-      Spec::Support::OvirtSDK::ConnectionVCR.new(opts, 'spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/refresher_target_host.yml')
+      Spec::Support::OvirtSDK::ConnectionVCR.new(opts, 'spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/refresher_target_host.yml', false)
     end
     stub_const("OvirtSDK4::Connection", Spec::Support::OvirtSDK::ConnectionVCR)
   end
