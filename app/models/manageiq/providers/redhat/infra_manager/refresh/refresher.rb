@@ -75,7 +75,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
       _log.debug "#{log_header} Parsing inventory..."
       hashes, = Benchmark.realtime_block(:parse_inventory) do
         if ems.use_graph_refresh?
-          inventory.inventory_collections
+          inventory.parse
         else
           Parse::ParserBuilder.new(ems).build.ems_inv_to_hashes(inventory)
         end
