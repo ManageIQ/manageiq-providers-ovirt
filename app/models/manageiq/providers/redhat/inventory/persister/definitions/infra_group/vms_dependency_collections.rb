@@ -37,18 +37,6 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
     end
   end
 
-  # group :vms_dependency
-  def add_snapshot_parent
-    add_collection(infra, :snapshot_parent, {},
-                   {
-                     :auto_inventory_attributes => false,
-                     :without_model_class       => true
-                   }) do |builder|
-
-      builder.add_dependency_attributes(:snapshots => [collections[:snapshots]])
-    end
-  end
-
   # ---
 
   # Custom save block for ems_folder_children IC

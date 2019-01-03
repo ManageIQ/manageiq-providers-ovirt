@@ -519,6 +519,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :uid_ems        => snapshot.id,
         :uid            => snapshot.id,
         :parent_uid     => parent_id,
+        :parent         => persister.snapshots.lazy_find(parent_id),
         :name           => name,
         :description    => description,
         :create_time    => snapshot.date.getutc,
