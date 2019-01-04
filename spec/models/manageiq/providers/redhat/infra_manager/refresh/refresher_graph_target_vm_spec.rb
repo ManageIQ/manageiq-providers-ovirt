@@ -57,6 +57,29 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       expect(saved_counted_models).to eq(counted_models)
     end
 
+    it 'refreshes vm hosts properly' do
+      allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).with(kind_of(Hash)) do |opts|
+        Spec::Support::OvirtSDK::ConnectionVCR.new(opts,
+                                                   'spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_graph_target_vm_with_host.yml',
+                                                   false)
+      end
+      stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
+      EmsRefresh.refresh(@ems)
+      @ems.reload
+      vm = VmOrTemplate.where(:name => "vm1").first
+      expect(vm.ems_id).to eq(@ems.id)
+      expect(vm.host_id).to be_present
+      saved_vm = vm_to_comparable_hash(vm)
+      saved_counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
+      vm.host = nil
+      vm.save
+      EmsRefresh.refresh(vm)
+      vm.reload
+      counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
+      expect(saved_vm).to eq(vm_to_comparable_hash(vm))
+      expect(saved_counted_models).to eq(counted_models)
+    end
+
     it 'refreshes successfuly after snapshot removal' do
       stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
       EmsRefresh.refresh(@ems)
