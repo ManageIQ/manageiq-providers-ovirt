@@ -14,6 +14,7 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
     add_collection(infra, :snapshots) do |builder|
       builder.add_properties(
         :manager_ref => %i(uid),
+        :strategy    => :local_db_find_missing_references,
       )
     end
   end

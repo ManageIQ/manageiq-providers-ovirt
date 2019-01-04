@@ -47,7 +47,6 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
   def add_vms_dependency_collections_group
     add_ems_folder_children
     add_ems_cluster_children
-    add_snapshot_parent
   end
 
   def add_datacenters_group
