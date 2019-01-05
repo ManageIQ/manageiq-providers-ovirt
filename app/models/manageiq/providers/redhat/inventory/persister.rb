@@ -11,24 +11,4 @@ class ManageIQ::Providers::Redhat::Inventory::Persister < ManageIQ::Providers::I
 
     initialize_inventory_collections
   end
-
-  protected
-
-  # should be overriden by subclasses
-  def strategy
-    nil
-  end
-
-  def parent
-    manager.presence
-  end
-
-  # Shared properties for InventoryCollections
-  def shared_options
-    {
-      :parent   => parent,
-      :strategy => strategy,
-      :targeted => targeted?
-    }
-  end
 end
