@@ -136,8 +136,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       cluster = collector.collect_cluster_for_host(host)
       dc = collector.collect_datacenter_for_cluster(cluster)
-
-      persister_host = persister.hosts.find_or_build(host.id).assign_attributes(
+      persister_host = persister.hosts.find_or_build(ems_ref).assign_attributes(
         :type             => 'ManageIQ::Providers::Redhat::InfraManager::Host',
         :ems_ref          => ems_ref,
         :ems_ref_obj      => ems_ref,
@@ -334,8 +333,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm.href)
 
-      host_id = vm.try(:host).try(:id)
-      host_id = vm.try(:placement_policy).try(:hosts).try(:id) if host_id.blank?
+      host = vm.try(:host) || vm.try(:placement_policy).try(:hosts).try(:first)
+      host_ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(host.href) if host.present?
 
       storages, disks = storages(vm)
 
@@ -344,7 +343,6 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
                              else
                                persister.vms
                              end
-
       persister_vm = collection_persister.find_or_build(vm.id).assign_attributes(
         :type             => template ? "ManageIQ::Providers::Redhat::InfraManager::Template" : "ManageIQ::Providers::Redhat::InfraManager::Vm",
         :ems_ref          => ems_ref,
@@ -359,7 +357,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :memory_reserve   => vm_memory_reserve(vm),
         :raw_power_state  => template ? "never" : vm.status,
         :boot_time        => vm.try(:start_time),
-        :host             => persister.hosts.lazy_find(host_id),
+        :host             => persister.hosts.lazy_find(host_ems_ref),
         :ems_cluster      => persister.ems_clusters.lazy_find(ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm.cluster.href)),
         :storages         => storages,
         :storage          => storages.first,
