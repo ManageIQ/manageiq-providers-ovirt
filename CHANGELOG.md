@@ -5,23 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-### Unreleased as of Sprint 101 - 2018-12-17
-
-### Fixed
-- Scope EmsFolder and ResourcePool queries by ems_id [(#322)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/322)
-
-### Unreleased as of Sprint 100 - 2018-12-03
-
-### Fixed
-- Add support for CA for Ansible role [(#313)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/313)
-- No need to override disconnect_inv from core [(#310)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/310)
-
-### Unreleased as of Sprint 97 - 2018-10-22
-
-### Fixed
-- Don't use interpolations in gettext strings [(#297)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/297)
-
-### Hammer Beta-1 - Released 2018-10-12
+## Hammer-1
 
 ### Added
 - Add sysprep support for ovirt [(#275)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/275)
@@ -29,8 +13,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Persister: optimized InventoryCollection definitions [(#268)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/268)
 - Performance improvements for graph refresh [(#237)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/237)
 - Don't use interpolations in gettext strings [(#297)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/297)
+- Add support for CA for Ansible role [(#313)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/313)
+- No need to override disconnect_inv from core [(#310)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/310)
 
 ### Fixed
+- Fix targeted host refresh [(#316)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/316)
+- Scope EmsFolder and ResourcePool queries by ems_id [(#322)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/322)
+- Fix attach_floppy to pass "floppy" type [(#298)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/298)
+- Fix pxe provisioning [(#300)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/300)
 - Fix provisioning independent VM [(#277)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/277)
 - Fix disk_type attribute [(#276)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/276)
 - Use the same assoc for targeted and full refresh [(#265)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/265)
