@@ -20,6 +20,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       stub_const("OvirtSDK4::Connection", Spec::Support::OvirtSDK::ConnectionVCR)
     end
 
+    COUNTED_MODELS = [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze
+
     before(:each) do
       @inventory_wrapper_class = ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
 
@@ -32,6 +34,29 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     def load_response_mock_for(filename)
       prefix = described_class.name.underscore
       YAML.load_file(File.join('spec', 'models', prefix, 'response_yamls', filename + '.yml'))
+    end
+
+    it 'refreshes template host properly when placement_policy defined' do
+      allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).with(kind_of(Hash)) do |opts|
+        Spec::Support::OvirtSDK::ConnectionVCR.new(opts,
+                                                   'spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_graph_target_template_with_host.yml',
+                                                   false)
+      end
+      stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
+      EmsRefresh.refresh(@ems)
+      @ems.reload
+      template = VmOrTemplate.where(:name => "temp1").first
+      expect(template.ems_id).to eq(@ems.id)
+      expect(template.host_id).to be_present
+      saved_template = template_to_comparable_hash(template)
+      saved_counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
+      template.host = nil
+      template.save
+      EmsRefresh.refresh(template)
+      template.reload
+      counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
+      expect(saved_template).to eq(template_to_comparable_hash(template))
+      expect(saved_counted_models).to eq(counted_models)
     end
 
     it 'does not change the template when target refresh after full refresh' do
