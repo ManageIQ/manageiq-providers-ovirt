@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 102 ending 2019-01-07
+
+### Fixed
+- Fix bug in vm targeted refresh [(#331)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/331)
+- Fix parse_targeted_inventory to call inv.parse [(#328)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/328)
+- Fix targeted host refresh [(#316)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/316)
+- EMS validation with maintenance zone specs fix [(#311)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/311)
+
 ## Hammer-1
 
 ### Added
