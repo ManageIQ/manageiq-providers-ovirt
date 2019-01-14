@@ -292,6 +292,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
           res &&= (disk_attachment.disk.sparse == sparsity)
           res &&= all_storage_domains_match_href?(disk_attachment.disk, storage_domain_href) if storage_domain_href
           res &&= (disk_attachment.disk.format == disk_format)
+          res &&= (disk_attachment.disk.name =~ /#{opts[:name]}_Disk\d/)
           res
         end
       end
