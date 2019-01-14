@@ -528,7 +528,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
         cluster = ovirt_services.cluster_from_href(options[:cluster], connection)
         template = get
         clone = options[:clone_type] == :full
-        disk_attachments = clone ? build_disk_attachments(template, options[:sparse], options[:storage]) : nil
+        disk_attachments = clone ? build_disk_attachments(template, options[:sparse], options[:storage], options[:name]) : nil
         vm = build_vm_from_hash(:name             => options[:name],
                                 :template         => template,
                                 :cluster          => cluster,
@@ -536,11 +536,16 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
         vms_service.add(vm, :clone => clone)
       end
 
-      def build_disk_attachments(template, sparse, storage_href)
+      def build_disk_attachments(template, sparse, storage_href, vm_name)
         disk_attachments = connection.follow_link(template.disk_attachments)
         apply_sparsity_on_disk_attachments(disk_attachments, sparse) unless sparse.nil?
         apply_storage_domain_on_disk_attachments(disk_attachments, storage_href) unless storage_href.nil?
+        apply_name_on_disk_attachments(disk_attachments, vm_name)
         disk_attachments
+      end
+
+      def apply_name_on_disk_attachments(disk_attachments, vm_name)
+        disk_attachments.each_with_index { |disk_attachment, index| disk_attachment.disk.name = "#{vm_name}_Disk#{index + 1}" }
       end
 
       def apply_storage_domain_on_disk_attachments(disk_attachments, storage_href)
