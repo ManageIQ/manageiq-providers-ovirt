@@ -49,12 +49,16 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       host = @ems.hosts.find_by(:ems_ref => "/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba")
       saved_host = host_to_comparable_hash(host)
       saved_counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
-      saved_switches = host.switches.map { |switch| [switch.uid_ems, switch.name] }
+      saved_storages = host.storages.map { |storage| [storage.id, storage.location, storage.name] }
+      saved_switches = host.switches.map { |switch| [switch.id, switch.uid_ems, switch.name] }
+      saved_lans     = host.lans.map     { |lan| [lan.id, lan.uid_ems, lan.name] }
       expect(host.networks.count).to eq(2)
       EmsRefresh.refresh(host)
       host.reload
       expect(host.networks.count).to eq(2)
-      expect(saved_switches).to contain_exactly(*host.switches.map { |switch| a_collection_containing_exactly(switch.uid_ems, switch.name) })
+      expect(saved_storages).to contain_exactly(*host.storages.map { |storage| a_collection_containing_exactly(storage.id, storage.location, storage.name) })
+      expect(saved_switches).to contain_exactly(*host.switches.map { |switch| a_collection_containing_exactly(switch.id, switch.uid_ems, switch.name) })
+      expect(saved_lans).to contain_exactly(*host.lans.map { |lan| a_collection_containing_exactly(lan.id, lan.uid_ems, lan.name) })
       EmsRefresh.refresh(host)
       host.reload
       expect(host.switches.map { |switch| [switch.uid_ems, switch.name] }).to contain_exactly(
