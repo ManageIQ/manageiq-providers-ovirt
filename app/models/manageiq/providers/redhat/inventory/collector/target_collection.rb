@@ -213,7 +213,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     changed_hosts.each do |host|
       add_simple_target!(:ems_clusters, uuid_from_target(host.ems_cluster))
       host.storages.each do |storage|
-        add_simple_target!(:storagedomains, uuid_from_target(storage))
+        add_simple_target!(:storagedomains, storage.ems_ref)
       end
     end
   end
