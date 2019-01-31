@@ -215,6 +215,9 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
       host.storages.each do |storage|
         add_simple_target!(:storagedomains, storage.ems_ref)
       end
+      host.switches.each do |switch|
+        add_simple_target!(:networks, switch.uid_ems)
+      end
     end
   end
 
