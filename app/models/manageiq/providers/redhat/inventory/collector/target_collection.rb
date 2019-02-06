@@ -216,7 +216,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
         add_simple_target!(:storagedomains, storage.ems_ref)
       end
       host.switches.each do |switch|
-        add_simple_target!(:networks, switch.uid_ems)
+        add_simple_target!(:switches, switch.uid_ems)
       end
     end
   end
@@ -225,8 +225,8 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     hosts.each do |host|
       add_simple_target!(:ems_clusters, host.cluster.id)
       manager.with_provider_connection(VERSION_HASH) do |connection|
-        connection.follow_link(host.network_attachments).each do |attachement|
-          add_simple_target!(:networks, attachement.network.id)
+        connection.follow_link(host.network_attachments).each do |attachment|
+          add_simple_target!(:switches, attachment.network.id)
         end
       end
     end
