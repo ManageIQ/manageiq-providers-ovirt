@@ -96,12 +96,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/clusters{}GE
     </clusters>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:52 GMT
+    date: Wed, 06 Feb 2019 17:53:51 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '1265'
-    correlation-id: d6277458-23f8-4bed-a73a-03f325ea08c8
+    correlation-id: 59f43572-d399-431f-89e6-31e61db635bd
   :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/storagedomains{}GET:
 - :body: |
@@ -181,12 +181,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/storagedomai
     </storage_domains>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '867'
-    correlation-id: f2c753ed-4bd4-4f20-82fa-30abbf91c2a5
+    correlation-id: e0cb5400-6f80-4f0f-bd0c-e90f3cb1c97b
   :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts{}GET:
 - :body: |
@@ -459,12 +459,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts{}GET:
     </hosts>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '2307'
-    correlation-id: a58a21e1-cb12-4723-ac49-ca3bb49af65a
+    correlation-id: 200bdcbd-94c5-49d8-ad10-f369dc39dd96
   :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms{}GET:
 - :body: |
@@ -1266,12 +1266,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms{}GET:
     </vms>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '3350'
-    correlation-id: c7d6d4ea-5c49-4476-bc6e-481b412bbdc0
+    correlation-id: f63057af-1e95-4319-8267-bad1fdcfb24f
   :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/templates{}GET:
 - :body: |
@@ -1472,12 +1472,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/templates{}G
     </templates>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '1460'
-    correlation-id: a8091064-c4b2-443d-8a46-9ea8703fbae6
+    correlation-id: 7a7630a4-3449-422a-9d37-2b1dec67db43
   :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/networks{}GET:
 - :body: |
@@ -1619,12 +1619,304 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/networks{}GE
     </networks>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '840'
-    correlation-id: d7b4091e-cf3d-4a1f-8199-c6af292cba44
+    correlation-id: 7dbfa5e4-614a-420a-aa84-6276b2865f9f
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <networks>
+        <network href="/ovirt-engine/api/networks/576846ef-9c45-4c8d-a6c4-afb55d1791fc" id="576846ef-9c45-4c8d-a6c4-afb55d1791fc">
+            <name>ext_net</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/576846ef-9c45-4c8d-a6c4-afb55d1791fc/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/576846ef-9c45-4c8d-a6c4-afb55d1791fc/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/576846ef-9c45-4c8d-a6c4-afb55d1791fc/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+            <external_provider href="/ovirt-engine/api/openstacknetworkproviders/d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d" id="d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/944bb4cf-a2ad-4f4b-a423-788c48a768a9" id="944bb4cf-a2ad-4f4b-a423-788c48a768a9">
+            <name>net1</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/944bb4cf-a2ad-4f4b-a423-788c48a768a9/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/944bb4cf-a2ad-4f4b-a423-788c48a768a9/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/944bb4cf-a2ad-4f4b-a423-788c48a768a9/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+            <external_provider href="/ovirt-engine/api/openstacknetworkproviders/d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d" id="d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/f8884c37-ab1b-46e5-ad66-827030a17850" id="f8884c37-ab1b-46e5-ad66-827030a17850">
+            <name>net2</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/f8884c37-ab1b-46e5-ad66-827030a17850/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/f8884c37-ab1b-46e5-ad66-827030a17850/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/f8884c37-ab1b-46e5-ad66-827030a17850/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+            <external_provider href="/ovirt-engine/api/openstacknetworkproviders/d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d" id="d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/8a5b9be0-1372-470f-ac8b-de4aa857eab2" id="8a5b9be0-1372-470f-ac8b-de4aa857eab2">
+            <name>net3</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/8a5b9be0-1372-470f-ac8b-de4aa857eab2/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/8a5b9be0-1372-470f-ac8b-de4aa857eab2/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/8a5b9be0-1372-470f-ac8b-de4aa857eab2/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+            <external_provider href="/ovirt-engine/api/openstacknetworkproviders/d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d" id="d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/24b8636b-62e7-409d-9e60-47a5c863bd3a" id="24b8636b-62e7-409d-9e60-47a5c863bd3a">
+            <name>net4</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/24b8636b-62e7-409d-9e60-47a5c863bd3a/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/24b8636b-62e7-409d-9e60-47a5c863bd3a/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/24b8636b-62e7-409d-9e60-47a5c863bd3a/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+            <external_provider href="/ovirt-engine/api/openstacknetworkproviders/d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d" id="d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/2fa74ee1-b69e-474b-99bb-bfa36380acba" id="2fa74ee1-b69e-474b-99bb-bfa36380acba">
+            <name>net5</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/2fa74ee1-b69e-474b-99bb-bfa36380acba/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/2fa74ee1-b69e-474b-99bb-bfa36380acba/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/2fa74ee1-b69e-474b-99bb-bfa36380acba/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+            <external_provider href="/ovirt-engine/api/openstacknetworkproviders/d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d" id="d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/c423c3ee-147a-45a9-99a7-62eee3e1228a" id="c423c3ee-147a-45a9-99a7-62eee3e1228a">
+            <name>nvlan333</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/c423c3ee-147a-45a9-99a7-62eee3e1228a/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/c423c3ee-147a-45a9-99a7-62eee3e1228a/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/c423c3ee-147a-45a9-99a7-62eee3e1228a/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/00000000-0000-0000-0000-000000000009" id="00000000-0000-0000-0000-000000000009">
+            <name>ovirtmgmt</name>
+            <description>Management Network</description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/00000000-0000-0000-0000-000000000009/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/00000000-0000-0000-0000-000000000009/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/00000000-0000-0000-0000-000000000009/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/5c42817f-03fb-460e-a3ab-a8770553aeee" id="5c42817f-03fb-460e-a3ab-a8770553aeee">
+            <name>vlan123t</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/5c42817f-03fb-460e-a3ab-a8770553aeee/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/5c42817f-03fb-460e-a3ab-a8770553aeee/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/5c42817f-03fb-460e-a3ab-a8770553aeee/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <vlan id="123"/>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+        </network>
+    </networks>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:56 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '840'
+    correlation-id: d6efd6fa-ea56-4097-9a16-3a7e066ab8da
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <networks>
+        <network href="/ovirt-engine/api/networks/576846ef-9c45-4c8d-a6c4-afb55d1791fc" id="576846ef-9c45-4c8d-a6c4-afb55d1791fc">
+            <name>ext_net</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/576846ef-9c45-4c8d-a6c4-afb55d1791fc/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/576846ef-9c45-4c8d-a6c4-afb55d1791fc/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/576846ef-9c45-4c8d-a6c4-afb55d1791fc/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+            <external_provider href="/ovirt-engine/api/openstacknetworkproviders/d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d" id="d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/944bb4cf-a2ad-4f4b-a423-788c48a768a9" id="944bb4cf-a2ad-4f4b-a423-788c48a768a9">
+            <name>net1</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/944bb4cf-a2ad-4f4b-a423-788c48a768a9/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/944bb4cf-a2ad-4f4b-a423-788c48a768a9/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/944bb4cf-a2ad-4f4b-a423-788c48a768a9/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+            <external_provider href="/ovirt-engine/api/openstacknetworkproviders/d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d" id="d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/f8884c37-ab1b-46e5-ad66-827030a17850" id="f8884c37-ab1b-46e5-ad66-827030a17850">
+            <name>net2</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/f8884c37-ab1b-46e5-ad66-827030a17850/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/f8884c37-ab1b-46e5-ad66-827030a17850/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/f8884c37-ab1b-46e5-ad66-827030a17850/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+            <external_provider href="/ovirt-engine/api/openstacknetworkproviders/d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d" id="d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/8a5b9be0-1372-470f-ac8b-de4aa857eab2" id="8a5b9be0-1372-470f-ac8b-de4aa857eab2">
+            <name>net3</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/8a5b9be0-1372-470f-ac8b-de4aa857eab2/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/8a5b9be0-1372-470f-ac8b-de4aa857eab2/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/8a5b9be0-1372-470f-ac8b-de4aa857eab2/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+            <external_provider href="/ovirt-engine/api/openstacknetworkproviders/d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d" id="d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/24b8636b-62e7-409d-9e60-47a5c863bd3a" id="24b8636b-62e7-409d-9e60-47a5c863bd3a">
+            <name>net4</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/24b8636b-62e7-409d-9e60-47a5c863bd3a/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/24b8636b-62e7-409d-9e60-47a5c863bd3a/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/24b8636b-62e7-409d-9e60-47a5c863bd3a/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+            <external_provider href="/ovirt-engine/api/openstacknetworkproviders/d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d" id="d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/2fa74ee1-b69e-474b-99bb-bfa36380acba" id="2fa74ee1-b69e-474b-99bb-bfa36380acba">
+            <name>net5</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/2fa74ee1-b69e-474b-99bb-bfa36380acba/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/2fa74ee1-b69e-474b-99bb-bfa36380acba/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/2fa74ee1-b69e-474b-99bb-bfa36380acba/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+            <external_provider href="/ovirt-engine/api/openstacknetworkproviders/d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d" id="d1ab85f1-4e65-4e92-b1d6-ad712e9cb28d"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/c423c3ee-147a-45a9-99a7-62eee3e1228a" id="c423c3ee-147a-45a9-99a7-62eee3e1228a">
+            <name>nvlan333</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/c423c3ee-147a-45a9-99a7-62eee3e1228a/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/c423c3ee-147a-45a9-99a7-62eee3e1228a/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/c423c3ee-147a-45a9-99a7-62eee3e1228a/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/00000000-0000-0000-0000-000000000009" id="00000000-0000-0000-0000-000000000009">
+            <name>ovirtmgmt</name>
+            <description>Management Network</description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/00000000-0000-0000-0000-000000000009/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/00000000-0000-0000-0000-000000000009/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/00000000-0000-0000-0000-000000000009/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/5c42817f-03fb-460e-a3ab-a8770553aeee" id="5c42817f-03fb-460e-a3ab-a8770553aeee">
+            <name>vlan123t</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/5c42817f-03fb-460e-a3ab-a8770553aeee/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/5c42817f-03fb-460e-a3ab-a8770553aeee/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/5c42817f-03fb-460e-a3ab-a8770553aeee/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <vlan id="123"/>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+        </network>
+    </networks>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:58 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '840'
+    correlation-id: 4bb9d0f5-844e-45ff-a415-0f2ea09c95d1
   :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters{}GET:
 - :body: |
@@ -1659,12 +1951,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters{
     </data_centers>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '461'
-    correlation-id: 748f2a41-acbb-4948-bfc6-dc2cd2f8e9fe
+    correlation-id: 716cb47d-b3ef-4056-aa5a-97449a4cf050
   :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/disks{}GET:
 - :body: |
@@ -2025,12 +2317,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/disks{}GET:
     </disks>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '1989'
-    correlation-id: d5c1d765-889c-4864-9f2e-a6801fbef9e6
+    correlation-id: 6a7379ac-0d21-4e02-9e3c-789d23aa1c50
   :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics{}GET:
 - :body: |
@@ -2094,12 +2386,148 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/f9dbfd
     </host_nics>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '720'
-    correlation-id: e1b68b2a-f29e-409a-9ad3-0da15e070987
+    correlation-id: b38fa1e9-48bd-415c-bce4-f384fec66de7
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <host_nics>
+        <host_nic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/ae1664f9-15cb-46de-b2d9-5c5bd5aff8fc" id="ae1664f9-15cb-46de-b2d9-5c5bd5aff8fc">
+            <actions/>
+            <name>eth0.123</name>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/ae1664f9-15cb-46de-b2d9-5c5bd5aff8fc/networkattachments" rel="networkattachments"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/ae1664f9-15cb-46de-b2d9-5c5bd5aff8fc/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/ae1664f9-15cb-46de-b2d9-5c5bd5aff8fc/linklayerdiscoveryprotocolelements" rel="linklayerdiscoveryprotocolelements"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/ae1664f9-15cb-46de-b2d9-5c5bd5aff8fc/statistics" rel="statistics"/>
+            <base_interface>eth0</base_interface>
+            <boot_protocol>none</boot_protocol>
+            <bridged>true</bridged>
+            <custom_configuration>false</custom_configuration>
+            <ipv6>
+                <gateway>::</gateway>
+                <version>v6</version>
+            </ipv6>
+            <ipv6_boot_protocol>none</ipv6_boot_protocol>
+            <mtu>1500</mtu>
+            <properties/>
+            <status>up</status>
+            <vlan id="123"/>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+            <network href="/ovirt-engine/api/networks/5c42817f-03fb-460e-a3ab-a8770553aeee" id="5c42817f-03fb-460e-a3ab-a8770553aeee"/>
+        </host_nic>
+        <host_nic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/c3d7a40b-6784-4f1c-a71b-925ff4925922" id="c3d7a40b-6784-4f1c-a71b-925ff4925922">
+            <actions/>
+            <name>eth0</name>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/c3d7a40b-6784-4f1c-a71b-925ff4925922/networkattachments" rel="networkattachments"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/c3d7a40b-6784-4f1c-a71b-925ff4925922/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/c3d7a40b-6784-4f1c-a71b-925ff4925922/linklayerdiscoveryprotocolelements" rel="linklayerdiscoveryprotocolelements"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/c3d7a40b-6784-4f1c-a71b-925ff4925922/statistics" rel="statistics"/>
+            <boot_protocol>dhcp</boot_protocol>
+            <bridged>true</bridged>
+            <custom_configuration>false</custom_configuration>
+            <ip>
+                <address>10.35.17.52</address>
+                <gateway>10.35.19.254</gateway>
+                <netmask>255.255.252.0</netmask>
+                <version>v4</version>
+            </ip>
+            <ipv6>
+                <address>2620:52:0:2310:21a:4aff:fe23:1491</address>
+                <gateway>fe80:52:0:2310::3fe</gateway>
+                <netmask>64</netmask>
+                <version>v6</version>
+            </ipv6>
+            <ipv6_boot_protocol>autoconf</ipv6_boot_protocol>
+            <mac>
+                <address>00:1a:4a:23:14:91</address>
+            </mac>
+            <mtu>1500</mtu>
+            <properties/>
+            <status>up</status>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+            <network href="/ovirt-engine/api/networks/00000000-0000-0000-0000-000000000009" id="00000000-0000-0000-0000-000000000009"/>
+        </host_nic>
+    </host_nics>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:56 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '720'
+    correlation-id: eb16d083-1ef7-4ab6-97b4-10169c859369
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <host_nics>
+        <host_nic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/ae1664f9-15cb-46de-b2d9-5c5bd5aff8fc" id="ae1664f9-15cb-46de-b2d9-5c5bd5aff8fc">
+            <actions/>
+            <name>eth0.123</name>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/ae1664f9-15cb-46de-b2d9-5c5bd5aff8fc/networkattachments" rel="networkattachments"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/ae1664f9-15cb-46de-b2d9-5c5bd5aff8fc/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/ae1664f9-15cb-46de-b2d9-5c5bd5aff8fc/linklayerdiscoveryprotocolelements" rel="linklayerdiscoveryprotocolelements"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/ae1664f9-15cb-46de-b2d9-5c5bd5aff8fc/statistics" rel="statistics"/>
+            <base_interface>eth0</base_interface>
+            <boot_protocol>none</boot_protocol>
+            <bridged>true</bridged>
+            <custom_configuration>false</custom_configuration>
+            <ipv6>
+                <gateway>::</gateway>
+                <version>v6</version>
+            </ipv6>
+            <ipv6_boot_protocol>none</ipv6_boot_protocol>
+            <mtu>1500</mtu>
+            <properties/>
+            <status>up</status>
+            <vlan id="123"/>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+            <network href="/ovirt-engine/api/networks/5c42817f-03fb-460e-a3ab-a8770553aeee" id="5c42817f-03fb-460e-a3ab-a8770553aeee"/>
+        </host_nic>
+        <host_nic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/c3d7a40b-6784-4f1c-a71b-925ff4925922" id="c3d7a40b-6784-4f1c-a71b-925ff4925922">
+            <actions/>
+            <name>eth0</name>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/c3d7a40b-6784-4f1c-a71b-925ff4925922/networkattachments" rel="networkattachments"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/c3d7a40b-6784-4f1c-a71b-925ff4925922/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/c3d7a40b-6784-4f1c-a71b-925ff4925922/linklayerdiscoveryprotocolelements" rel="linklayerdiscoveryprotocolelements"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/c3d7a40b-6784-4f1c-a71b-925ff4925922/statistics" rel="statistics"/>
+            <boot_protocol>dhcp</boot_protocol>
+            <bridged>true</bridged>
+            <custom_configuration>false</custom_configuration>
+            <ip>
+                <address>10.35.17.52</address>
+                <gateway>10.35.19.254</gateway>
+                <netmask>255.255.252.0</netmask>
+                <version>v4</version>
+            </ip>
+            <ipv6>
+                <address>2620:52:0:2310:21a:4aff:fe23:1491</address>
+                <gateway>fe80:52:0:2310::3fe</gateway>
+                <netmask>64</netmask>
+                <version>v6</version>
+            </ipv6>
+            <ipv6_boot_protocol>autoconf</ipv6_boot_protocol>
+            <mac>
+                <address>00:1a:4a:23:14:91</address>
+            </mac>
+            <mtu>1500</mtu>
+            <properties/>
+            <status>up</status>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+            <network href="/ovirt-engine/api/networks/00000000-0000-0000-0000-000000000009" id="00000000-0000-0000-0000-000000000009"/>
+        </host_nic>
+    </host_nics>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:57 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '720'
+    correlation-id: 78061e17-bb77-478d-a69f-fb3ca4d1be61
   :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics{}GET:
 - :body: |
@@ -2256,7 +2684,7 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/f9dbfd
             <unit>percent</unit>
             <values>
                 <value>
-                    <datum>3</datum>
+                    <datum>2</datum>
                 </value>
             </values>
             <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
@@ -2282,7 +2710,7 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/f9dbfd
             <unit>percent</unit>
             <values>
                 <value>
-                    <datum>96</datum>
+                    <datum>97</datum>
                 </value>
             </values>
             <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
@@ -2295,7 +2723,7 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/f9dbfd
             <unit>percent</unit>
             <values>
                 <value>
-                    <datum>0.13</datum>
+                    <datum>0.070</datum>
                 </value>
             </values>
             <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
@@ -2328,12 +2756,478 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/f9dbfd
     </statistics>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
-    content-length: '1190'
-    correlation-id: 6f963526-96b5-4d08-82f3-98ee5aabf650
+    content-length: '1191'
+    correlation-id: 202ba77c-697c-4cde-8bab-2d5af8bd52c0
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <statistics>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/7816602b-c05c-3db7-a4da-3769f7ad8896" id="7816602b-c05c-3db7-a4da-3769f7ad8896">
+            <name>memory.total</name>
+            <description>Total memory</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>8199864320</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/b7499508-c1c3-32f0-8174-c1783e57bb08" id="b7499508-c1c3-32f0-8174-c1783e57bb08">
+            <name>memory.used</name>
+            <description>Used memory</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>2295962009</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/5a0fba9d-33d7-3cbf-addd-ba462040c946" id="5a0fba9d-33d7-3cbf-addd-ba462040c946">
+            <name>memory.free</name>
+            <description>Free memory</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>5903902311</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/ffc0e1fd-fa34-3f85-9862-8a841c1658bc" id="ffc0e1fd-fa34-3f85-9862-8a841c1658bc">
+            <name>memory.shared</name>
+            <description>Shared memory</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>0</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/c81c86f0-bc61-3c78-a543-898b8339d03f" id="c81c86f0-bc61-3c78-a543-898b8339d03f">
+            <name>memory.buffers</name>
+            <description>IO buffers</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>0</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/1b6244ee-8dbd-365d-8762-482ddc05ee11" id="1b6244ee-8dbd-365d-8762-482ddc05ee11">
+            <name>memory.cached</name>
+            <description>OS caches</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>0</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/c43847d7-3bc1-3aaf-b92c-902e64bbdb5b" id="c43847d7-3bc1-3aaf-b92c-902e64bbdb5b">
+            <name>swap.total</name>
+            <description>Total swap</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>4864344064</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/1a4c1c9b-f3cc-301e-82ce-47d4b9fb5a46" id="1a4c1c9b-f3cc-301e-82ce-47d4b9fb5a46">
+            <name>swap.free</name>
+            <description>Free swap</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>4864344064</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/27686b4e-ba8d-3576-bc70-d68cbd8a2ba9" id="27686b4e-ba8d-3576-bc70-d68cbd8a2ba9">
+            <name>swap.used</name>
+            <description>Used swap</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>0</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/ea00da15-de2d-3393-a7cb-810c4b19ed07" id="ea00da15-de2d-3393-a7cb-810c4b19ed07">
+            <name>swap.cached</name>
+            <description>Swap also in memory</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>0</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/f740b9ad-14a7-3f6c-9b80-efff44777169" id="f740b9ad-14a7-3f6c-9b80-efff44777169">
+            <name>ksm.cpu.current</name>
+            <description>KSM CPU usage</description>
+            <kind>gauge</kind>
+            <type>decimal</type>
+            <unit>percent</unit>
+            <values>
+                <value>
+                    <datum>0</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/a1fab379-66e2-3b1d-9914-81a9e79cb719" id="a1fab379-66e2-3b1d-9914-81a9e79cb719">
+            <name>cpu.current.user</name>
+            <description>User CPU usage</description>
+            <kind>gauge</kind>
+            <type>decimal</type>
+            <unit>percent</unit>
+            <values>
+                <value>
+                    <datum>2</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/a98c1e11-078c-3593-a57e-4b12c1ce9815" id="a98c1e11-078c-3593-a57e-4b12c1ce9815">
+            <name>cpu.current.system</name>
+            <description>System CPU usage</description>
+            <kind>gauge</kind>
+            <type>decimal</type>
+            <unit>percent</unit>
+            <values>
+                <value>
+                    <datum>1</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/4ae97794-f56d-3f05-a9e7-8798887cd1ac" id="4ae97794-f56d-3f05-a9e7-8798887cd1ac">
+            <name>cpu.current.idle</name>
+            <description>Idle CPU usage</description>
+            <kind>gauge</kind>
+            <type>decimal</type>
+            <unit>percent</unit>
+            <values>
+                <value>
+                    <datum>97</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/65860dae-c890-312e-9314-5c01f31225ab" id="65860dae-c890-312e-9314-5c01f31225ab">
+            <name>cpu.load.avg.5m</name>
+            <description>CPU 5 minute load average</description>
+            <kind>gauge</kind>
+            <type>decimal</type>
+            <unit>percent</unit>
+            <values>
+                <value>
+                    <datum>0.070</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/3ceb2072-a5a5-3b21-9bb2-e966471fd81c" id="3ceb2072-a5a5-3b21-9bb2-e966471fd81c">
+            <name>boot.time</name>
+            <description>Boot time of the machine</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>none</unit>
+            <values>
+                <value>
+                    <datum>1540799779</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic id="6c5d91a5-6077-3f4e-8390-4023c6178729">
+            <name>hugepages.2048.free</name>
+            <description>Amount of free huge pages of the given size</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>none</unit>
+            <values>
+                <value>
+                    <datum>0</datum>
+                </value>
+            </values>
+        </statistic>
+    </statistics>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:56 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '1191'
+    correlation-id: bc56f480-2b19-4ba1-9afc-2c97db8b42ed
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <statistics>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/7816602b-c05c-3db7-a4da-3769f7ad8896" id="7816602b-c05c-3db7-a4da-3769f7ad8896">
+            <name>memory.total</name>
+            <description>Total memory</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>8199864320</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/b7499508-c1c3-32f0-8174-c1783e57bb08" id="b7499508-c1c3-32f0-8174-c1783e57bb08">
+            <name>memory.used</name>
+            <description>Used memory</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>2295962009</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/5a0fba9d-33d7-3cbf-addd-ba462040c946" id="5a0fba9d-33d7-3cbf-addd-ba462040c946">
+            <name>memory.free</name>
+            <description>Free memory</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>5903902311</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/ffc0e1fd-fa34-3f85-9862-8a841c1658bc" id="ffc0e1fd-fa34-3f85-9862-8a841c1658bc">
+            <name>memory.shared</name>
+            <description>Shared memory</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>0</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/c81c86f0-bc61-3c78-a543-898b8339d03f" id="c81c86f0-bc61-3c78-a543-898b8339d03f">
+            <name>memory.buffers</name>
+            <description>IO buffers</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>0</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/1b6244ee-8dbd-365d-8762-482ddc05ee11" id="1b6244ee-8dbd-365d-8762-482ddc05ee11">
+            <name>memory.cached</name>
+            <description>OS caches</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>0</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/c43847d7-3bc1-3aaf-b92c-902e64bbdb5b" id="c43847d7-3bc1-3aaf-b92c-902e64bbdb5b">
+            <name>swap.total</name>
+            <description>Total swap</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>4864344064</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/1a4c1c9b-f3cc-301e-82ce-47d4b9fb5a46" id="1a4c1c9b-f3cc-301e-82ce-47d4b9fb5a46">
+            <name>swap.free</name>
+            <description>Free swap</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>4864344064</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/27686b4e-ba8d-3576-bc70-d68cbd8a2ba9" id="27686b4e-ba8d-3576-bc70-d68cbd8a2ba9">
+            <name>swap.used</name>
+            <description>Used swap</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>0</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/ea00da15-de2d-3393-a7cb-810c4b19ed07" id="ea00da15-de2d-3393-a7cb-810c4b19ed07">
+            <name>swap.cached</name>
+            <description>Swap also in memory</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>bytes</unit>
+            <values>
+                <value>
+                    <datum>0</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/f740b9ad-14a7-3f6c-9b80-efff44777169" id="f740b9ad-14a7-3f6c-9b80-efff44777169">
+            <name>ksm.cpu.current</name>
+            <description>KSM CPU usage</description>
+            <kind>gauge</kind>
+            <type>decimal</type>
+            <unit>percent</unit>
+            <values>
+                <value>
+                    <datum>0</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/a1fab379-66e2-3b1d-9914-81a9e79cb719" id="a1fab379-66e2-3b1d-9914-81a9e79cb719">
+            <name>cpu.current.user</name>
+            <description>User CPU usage</description>
+            <kind>gauge</kind>
+            <type>decimal</type>
+            <unit>percent</unit>
+            <values>
+                <value>
+                    <datum>2</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/a98c1e11-078c-3593-a57e-4b12c1ce9815" id="a98c1e11-078c-3593-a57e-4b12c1ce9815">
+            <name>cpu.current.system</name>
+            <description>System CPU usage</description>
+            <kind>gauge</kind>
+            <type>decimal</type>
+            <unit>percent</unit>
+            <values>
+                <value>
+                    <datum>1</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/4ae97794-f56d-3f05-a9e7-8798887cd1ac" id="4ae97794-f56d-3f05-a9e7-8798887cd1ac">
+            <name>cpu.current.idle</name>
+            <description>Idle CPU usage</description>
+            <kind>gauge</kind>
+            <type>decimal</type>
+            <unit>percent</unit>
+            <values>
+                <value>
+                    <datum>97</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/65860dae-c890-312e-9314-5c01f31225ab" id="65860dae-c890-312e-9314-5c01f31225ab">
+            <name>cpu.load.avg.5m</name>
+            <description>CPU 5 minute load average</description>
+            <kind>gauge</kind>
+            <type>decimal</type>
+            <unit>percent</unit>
+            <values>
+                <value>
+                    <datum>0.070</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics/3ceb2072-a5a5-3b21-9bb2-e966471fd81c" id="3ceb2072-a5a5-3b21-9bb2-e966471fd81c">
+            <name>boot.time</name>
+            <description>Boot time of the machine</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>none</unit>
+            <values>
+                <value>
+                    <datum>1540799779</datum>
+                </value>
+            </values>
+            <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+        </statistic>
+        <statistic id="6c5d91a5-6077-3f4e-8390-4023c6178729">
+            <name>hugepages.2048.free</name>
+            <description>Amount of free huge pages of the given size</description>
+            <kind>gauge</kind>
+            <type>integer</type>
+            <unit>none</unit>
+            <values>
+                <value>
+                    <datum>0</datum>
+                </value>
+            </values>
+        </statistic>
+    </statistics>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:59 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '1191'
+    correlation-id: aedb1674-1210-4bf4-880d-fede80721d3a
   :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/e6f2048a-364e-4b2c-af81-214d42c35de4/nics{}GET:
 - :body: |
@@ -2374,12 +3268,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/e6f204
     </host_nics>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '570'
-    correlation-id: dc26247c-4658-4ac4-9ceb-0a8456a8f852
+    correlation-id: c04f595d-bc90-45ed-9fb0-1369ad08ca48
   :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/e6f2048a-364e-4b2c-af81-214d42c35de4/statistics{}GET:
 - :body: |
@@ -2549,7 +3443,7 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/e6f204
             <unit>percent</unit>
             <values>
                 <value>
-                    <datum>2</datum>
+                    <datum>1</datum>
                 </value>
             </values>
             <host href="/ovirt-engine/api/hosts/e6f2048a-364e-4b2c-af81-214d42c35de4" id="e6f2048a-364e-4b2c-af81-214d42c35de4"/>
@@ -2562,7 +3456,7 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/e6f204
             <unit>percent</unit>
             <values>
                 <value>
-                    <datum>96</datum>
+                    <datum>97</datum>
                 </value>
             </values>
             <host href="/ovirt-engine/api/hosts/e6f2048a-364e-4b2c-af81-214d42c35de4" id="e6f2048a-364e-4b2c-af81-214d42c35de4"/>
@@ -2575,7 +3469,7 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/e6f204
             <unit>percent</unit>
             <values>
                 <value>
-                    <datum>0.24</datum>
+                    <datum>0.070</datum>
                 </value>
             </values>
             <host href="/ovirt-engine/api/hosts/e6f2048a-364e-4b2c-af81-214d42c35de4" id="e6f2048a-364e-4b2c-af81-214d42c35de4"/>
@@ -2608,12 +3502,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/e6f204
     </statistics>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
-    content-length: '1186'
-    correlation-id: d7ea64dc-239f-446c-b20a-a4ef755e3c70
+    content-length: '1188'
+    correlation-id: 227b3abd-0910-4d6c-8985-de4ddd32b597
   :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d232bb7-7141-4e25-9990-caa2808e4d0c/nics{}GET:
 - :body: |
@@ -2640,12 +3534,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d232bb7
     </nics>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '432'
-    correlation-id: 9f1577ec-c17e-4df0-a752-d566709889f9
+    correlation-id: 655f1372-1192-49ee-8cf0-1d28bca57f96
   :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d232bb7-7141-4e25-9990-caa2808e4d0c/reporteddevices{}GET
 : - :body: |
@@ -2653,12 +3547,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d232bb7
       <reported_devices/>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:53 GMT
+      date: Wed, 06 Feb 2019 17:53:52 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '96'
-      correlation-id: b276af16-2438-4534-8849-bdee13eccf85
+      correlation-id: fdc4c120-6f93-432c-b6c4-71d103bb7dab
     :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d232bb7-7141-4e25-9990-caa2808e4d0c/snapshots{}GET:
 - :body: |
@@ -2677,12 +3571,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d232bb7
     </snapshots>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '333'
-    correlation-id: 8bb12392-3d00-4985-9471-7df8fc83f6af
+    correlation-id: 5c4c1320-5bb8-4356-96d4-6ce01967205d
   :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d232bb7-7141-4e25-9990-caa2808e4d0c/diskattachments{}GET
 : - :body: |
@@ -2701,12 +3595,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d232bb7
       </disk_attachments>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:53 GMT
+      date: Wed, 06 Feb 2019 17:53:52 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '322'
-      correlation-id: f82efe33-f876-43ec-a4e3-b4fcf343dc20
+      correlation-id: 29f0670f-896f-4837-b358-f43125d4b382
     :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/32a1de1a-7233-4e38-892b-c17b461a7c93/nics{}GET:
 - :body: |
@@ -2733,12 +3627,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/32a1de1a
     </nics>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '433'
-    correlation-id: 03a267f1-c8b2-4996-a59b-f869e815d4e7
+    correlation-id: 9632662b-b1db-4396-80ac-1856c0eb7667
   :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/32a1de1a-7233-4e38-892b-c17b461a7c93/reporteddevices{}GET
 : - :body: |
@@ -2746,12 +3640,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/32a1de1a
       <reported_devices/>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:53 GMT
+      date: Wed, 06 Feb 2019 17:53:52 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '96'
-      correlation-id: f2d0d091-b3e1-427d-a63b-49966d768388
+      correlation-id: 2ac47f84-b6a5-4d0e-abe4-d0322d4abde9
     :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/32a1de1a-7233-4e38-892b-c17b461a7c93/snapshots{}GET:
 - :body: |
@@ -2770,12 +3664,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/32a1de1a
     </snapshots>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '331'
-    correlation-id: 78c34d81-2d7f-4047-b23a-b8e10e7071f7
+    correlation-id: b5a4436a-8323-45b5-9d47-49930cb669ca
   :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/32a1de1a-7233-4e38-892b-c17b461a7c93/diskattachments{}GET
 : - :body: |
@@ -2794,12 +3688,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/32a1de1a
       </disk_attachments>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:53 GMT
+      date: Wed, 06 Feb 2019 17:53:52 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '322'
-      correlation-id: dc7c17b8-edbd-49f5-81c8-5fff3f040f5b
+      correlation-id: 9e39ebe3-df37-4c1c-811a-85a63648a300
     :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/7e4b076a-2895-4d60-8e9e-1cf6339b5704/nics{}GET:
 - :body: |
@@ -2826,12 +3720,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/7e4b076a
     </nics>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:53 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '432'
-    correlation-id: 5850a424-8307-4a43-84ae-c1931361dacd
+    correlation-id: 0ca921e6-b530-4704-aa90-42a2e7ff4b5b
   :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/7e4b076a-2895-4d60-8e9e-1cf6339b5704/reporteddevices{}GET
 : - :body: |
@@ -2839,12 +3733,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/7e4b076a
       <reported_devices/>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:54 GMT
+      date: Wed, 06 Feb 2019 17:53:53 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '96'
-      correlation-id: 6263a607-e23f-420a-8b55-66ddef104331
+      correlation-id: 8add7f6c-4be0-4b68-b7c7-f34867f8b7a7
     :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/7e4b076a-2895-4d60-8e9e-1cf6339b5704/snapshots{}GET:
 - :body: |
@@ -2863,12 +3757,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/7e4b076a
     </snapshots>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '333'
-    correlation-id: 0da94d4e-3e80-4856-b005-9ee069447b2a
+    correlation-id: d93b8ca9-738c-4a2c-ae78-6241cf22308c
   :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/7e4b076a-2895-4d60-8e9e-1cf6339b5704/diskattachments{}GET
 : - :body: |
@@ -2887,12 +3781,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/7e4b076a
       </disk_attachments>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:53 GMT
+      date: Wed, 06 Feb 2019 17:53:52 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '322'
-      correlation-id: d3fa101b-1e0d-4363-bdfa-23cd4b55447b
+      correlation-id: b13522b7-a775-4d42-98f6-8953753605ba
     :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/95a6c871-9ec2-4c18-8005-3e0ada5e73b2/nics{}GET:
 - :body: |
@@ -2919,12 +3813,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/95a6c871
     </nics>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '431'
-    correlation-id: 2647ea1c-e772-458a-96d1-8a48d82d2730
+    correlation-id: 27cc0f72-e453-447b-9dd2-7d210c36fbdf
   :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/95a6c871-9ec2-4c18-8005-3e0ada5e73b2/reporteddevices{}GET
 : - :body: |
@@ -2932,12 +3826,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/95a6c871
       <reported_devices/>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:53 GMT
+      date: Wed, 06 Feb 2019 17:53:52 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '96'
-      correlation-id: b9b56766-16f0-4ad4-9ca7-5ca19d884750
+      correlation-id: 86b4bc37-5bd7-4c6e-b729-3bffcfa6578c
     :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/95a6c871-9ec2-4c18-8005-3e0ada5e73b2/snapshots{}GET:
 - :body: |
@@ -2956,12 +3850,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/95a6c871
     </snapshots>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '332'
-    correlation-id: b63addfa-2030-4bdc-9751-ad2fde1758be
+    correlation-id: e6e1c66f-ee08-4b05-98c5-78c9c60ef424
   :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/95a6c871-9ec2-4c18-8005-3e0ada5e73b2/diskattachments{}GET
 : - :body: |
@@ -2980,12 +3874,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/95a6c871
       </disk_attachments>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:53 GMT
+      date: Wed, 06 Feb 2019 17:53:52 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '322'
-      correlation-id: b7c83b17-7d0d-4b95-9002-7655bab2f620
+      correlation-id: f56ca272-4a80-4d85-9c25-f4e27c95788c
     :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/491e933e-d829-47e1-8d1a-73945e73371d/nics{}GET:
 - :body: |
@@ -3012,12 +3906,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/491e933e
     </nics>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '431'
-    correlation-id: 3da36114-ebcf-4d53-a298-39e0f73d298f
+    correlation-id: b30efddd-1d11-416e-bfbe-d52258873aa3
   :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/491e933e-d829-47e1-8d1a-73945e73371d/reporteddevices{}GET
 : - :body: |
@@ -3025,12 +3919,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/491e933e
       <reported_devices/>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:53 GMT
+      date: Wed, 06 Feb 2019 17:53:52 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '96'
-      correlation-id: 1f177857-b20e-4b52-a854-cc62c09a78ca
+      correlation-id: 7c233c52-f6bf-410c-8dc8-42ddf4e51a63
     :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/491e933e-d829-47e1-8d1a-73945e73371d/snapshots{}GET:
 - :body: |
@@ -3049,12 +3943,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/491e933e
     </snapshots>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '331'
-    correlation-id: ecd44f46-9a67-4d18-81f0-37d0e76b7c67
+    correlation-id: 9e2f1798-24cb-4fb8-8d8e-c3cd1d615322
   :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/491e933e-d829-47e1-8d1a-73945e73371d/diskattachments{}GET
 : - :body: |
@@ -3073,12 +3967,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/491e933e
       </disk_attachments>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:53 GMT
+      date: Wed, 06 Feb 2019 17:53:52 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '322'
-      correlation-id: 5dcabda0-a889-4022-9e92-af5e0f3ba64b
+      correlation-id: ec8a4eb9-b987-4dcb-867c-822d86fa7e75
     :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d2b3ded-7529-483f-8268-f3f17ff9be1e/nics{}GET:
 - :body: |
@@ -3105,12 +3999,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d2b3ded
     </nics>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '430'
-    correlation-id: 2739a81a-e7c4-48e8-bc18-d3769cb0b7e1
+    correlation-id: ba7cebd2-155c-4f61-807c-479f26ec3292
   :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d2b3ded-7529-483f-8268-f3f17ff9be1e/reporteddevices{}GET
 : - :body: |
@@ -3118,12 +4012,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d2b3ded
       <reported_devices/>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:53 GMT
+      date: Wed, 06 Feb 2019 17:53:52 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '96'
-      correlation-id: 8b932a9d-d899-42ca-ad66-1b8da95a2dac
+      correlation-id: d4dde7ee-c7eb-47e3-ad3f-394d550b24dc
     :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d2b3ded-7529-483f-8268-f3f17ff9be1e/snapshots{}GET:
 - :body: |
@@ -3142,12 +4036,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d2b3ded
     </snapshots>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:53 GMT
+    date: Wed, 06 Feb 2019 17:53:52 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '333'
-    correlation-id: 534decee-75a8-490b-b646-17052d70a445
+    correlation-id: 42d83c00-97ab-43fa-8a73-1cf20bbebc20
   :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d2b3ded-7529-483f-8268-f3f17ff9be1e/diskattachments{}GET
 : - :body: |
@@ -3166,12 +4060,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d2b3ded
       </disk_attachments>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:53 GMT
+      date: Wed, 06 Feb 2019 17:53:52 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '321'
-      correlation-id: 161b2460-c50d-4b64-9a6c-0f904a46d75e
+      correlation-id: 34c4d942-0b2d-49dc-bd95-29892faeae34
     :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/templates/00000000-0000-0000-0000-000000000000/diskattachments{}GET
 : - :body: |
@@ -3179,12 +4073,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d2b3ded
       <disk_attachments/>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:54 GMT
+      date: Wed, 06 Feb 2019 17:53:53 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '96'
-      correlation-id: 1bde1930-d6e3-409c-8018-f3e66660792d
+      correlation-id: efbc1fff-8403-4898-ae4c-673a9f55f835
     :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/templates/4c9e7aa1-a69d-4fa3-8096-0279ffafefe7/diskattachments{}GET
 : - :body: |
@@ -3204,12 +4098,12 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d2b3ded
       </disk_attachments>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:54 GMT
+      date: Wed, 06 Feb 2019 17:53:53 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '336'
-      correlation-id: 5ac7f085-3b96-4fd3-8816-52892901ef39
+      correlation-id: ffa278c7-e0b8-44ee-b4f3-3929f9a6a2b2
     :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/storagedomains{}GET
 : - :body: |
@@ -3252,12 +4146,106 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/1d2b3ded
       </storage_domains>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:54 GMT
+      date: Wed, 06 Feb 2019 17:53:53 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '630'
-      correlation-id: b1105176-bde5-41e1-aec5-a4df61782e34
+      correlation-id: af8e42d9-ef28-44f7-b661-b31d35de1ca8
+    :message: 
+  - :body: |
+      <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+      <storage_domains>
+          <storage_domain href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031" id="cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031">
+              <actions>
+                  <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/deactivate" rel="deactivate"/>
+                  <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/activate" rel="activate"/>
+              </actions>
+              <name>storage_main</name>
+              <description></description>
+              <comment></comment>
+              <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/disks" rel="disks"/>
+              <available>42949672960</available>
+              <backup>false</backup>
+              <committed>8589934592</committed>
+              <critical_space_action_blocker>5</critical_space_action_blocker>
+              <discard_after_delete>false</discard_after_delete>
+              <external_status>ok</external_status>
+              <master>true</master>
+              <status>active</status>
+              <storage>
+                  <address>spider.eng.lab.tlv.redhat.com</address>
+                  <path>/vol/vol_bodnopoz/data2</path>
+                  <type>nfs</type>
+              </storage>
+              <storage_format>v4</storage_format>
+              <supports_discard>false</supports_discard>
+              <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+              <type>data</type>
+              <used>10737418240</used>
+              <warning_low_space_indicator>10</warning_low_space_indicator>
+              <wipe_after_delete>false</wipe_after_delete>
+              <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+              <data_centers>
+                  <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+              </data_centers>
+          </storage_domain>
+      </storage_domains>
+    :code: 200
+    :headers:
+      date: Wed, 06 Feb 2019 17:53:56 GMT
+      server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+      content-encoding: gzip
+      content-type: application/xml;charset=UTF-8
+      content-length: '630'
+      correlation-id: 942d3ea6-2393-423c-89ae-ff1e233b97e7
+    :message: 
+  - :body: |
+      <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+      <storage_domains>
+          <storage_domain href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031" id="cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031">
+              <actions>
+                  <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/deactivate" rel="deactivate"/>
+                  <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/activate" rel="activate"/>
+              </actions>
+              <name>storage_main</name>
+              <description></description>
+              <comment></comment>
+              <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/disks" rel="disks"/>
+              <available>42949672960</available>
+              <backup>false</backup>
+              <committed>8589934592</committed>
+              <critical_space_action_blocker>5</critical_space_action_blocker>
+              <discard_after_delete>false</discard_after_delete>
+              <external_status>ok</external_status>
+              <master>true</master>
+              <status>active</status>
+              <storage>
+                  <address>spider.eng.lab.tlv.redhat.com</address>
+                  <path>/vol/vol_bodnopoz/data2</path>
+                  <type>nfs</type>
+              </storage>
+              <storage_format>v4</storage_format>
+              <supports_discard>false</supports_discard>
+              <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+              <type>data</type>
+              <used>10737418240</used>
+              <warning_low_space_indicator>10</warning_low_space_indicator>
+              <wipe_after_delete>false</wipe_after_delete>
+              <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+              <data_centers>
+                  <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+              </data_centers>
+          </storage_domain>
+      </storage_domains>
+    :code: 200
+    :headers:
+      date: Wed, 06 Feb 2019 17:53:58 GMT
+      server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+      content-encoding: gzip
+      content-type: application/xml;charset=UTF-8
+      content-length: '630'
+      correlation-id: 9ecec7c3-a861-4352-86bb-534bcc77941a
     :message: 
 https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba{}GET:
 - :body: |
@@ -3396,12 +4384,155 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/f9dbfd
     </host>
   :code: 200
   :headers:
-    date: Wed, 06 Feb 2019 09:40:56 GMT
+    date: Wed, 06 Feb 2019 17:53:55 GMT
     server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
     content-encoding: gzip
     content-type: application/xml;charset=UTF-8
     content-length: '1854'
-    correlation-id: 6caa68eb-a73b-4897-9ca6-3c294a3fbc5d
+    correlation-id: 4d7d13c3-a4ff-4dbd-837e-72a809674078
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba">
+        <actions>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/refresh" rel="refresh"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/install" rel="install"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/deactivate" rel="deactivate"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/activate" rel="activate"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/forceselectspm" rel="forceselectspm"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/iscsidiscover" rel="iscsidiscover"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/enrollcertificate" rel="enrollcertificate"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/iscsilogin" rel="iscsilogin"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/unregisteredstoragedomainsdiscover" rel="unregisteredstoragedomainsdiscover"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/upgradecheck" rel="upgradecheck"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/setupnetworks" rel="setupnetworks"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/upgrade" rel="upgrade"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/fence" rel="fence"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/approve" rel="approve"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/commitnetconfig" rel="commitnetconfig"/>
+            <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/syncallnetworks" rel="syncallnetworks"/>
+        </actions>
+        <name>host1</name>
+        <comment></comment>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/fenceagents" rel="fenceagents"/>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/devices" rel="devices"/>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/hooks" rel="hooks"/>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/storage" rel="storage"/>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/networkattachments" rel="networkattachments"/>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/storageconnectionextensions" rel="storageconnectionextensions"/>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/unmanagednetworks" rel="unmanagednetworks"/>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/externalnetworkproviderconfigurations" rel="externalnetworkproviderconfigurations"/>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/numanodes" rel="numanodes"/>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics" rel="nics"/>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/katelloerrata" rel="katelloerrata"/>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/permissions" rel="permissions"/>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/tags" rel="tags"/>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/affinitylabels" rel="affinitylabels"/>
+        <link href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/statistics" rel="statistics"/>
+        <address>bodnopoz-node01.eng.lab.tlv.redhat.com</address>
+        <auto_numa_status>disable</auto_numa_status>
+        <certificate>
+            <organization>eng.lab.tlv.redhat.com</organization>
+            <subject>O=eng.lab.tlv.redhat.com,CN=bodnopoz-node01.eng.lab.tlv.redhat.com</subject>
+        </certificate>
+        <cpu>
+            <name>Westmere E56xx/L56xx/X56xx (Nehalem-C)</name>
+            <speed>2400</speed>
+            <topology>
+                <cores>1</cores>
+                <sockets>2</sockets>
+                <threads>1</threads>
+            </topology>
+        </cpu>
+        <device_passthrough>
+            <enabled>false</enabled>
+        </device_passthrough>
+        <external_status>ok</external_status>
+        <hardware_information>
+            <family>Red Hat Enterprise Linux</family>
+            <manufacturer>oVirt</manufacturer>
+            <product_name>RHEV Hypervisor</product_name>
+            <serial_number>30353036-3837-4247-3831-303946353235</serial_number>
+            <supported_rng_sources>
+                <supported_rng_source>hwrng</supported_rng_source>
+                <supported_rng_source>random</supported_rng_source>
+            </supported_rng_sources>
+            <uuid>7005F57F-68A0-4FD5-A20D-176D695AAB41</uuid>
+            <version>7.5-8.el7</version>
+        </hardware_information>
+        <iscsi>
+            <initiator>iqn.1994-05.com.redhat:65f5e9a38f82</initiator>
+        </iscsi>
+        <kdump_status>disabled</kdump_status>
+        <ksm>
+            <enabled>false</enabled>
+        </ksm>
+        <libvirt_version>
+            <build>0</build>
+            <full_version>libvirt-4.3.0-1.el7</full_version>
+            <major>4</major>
+            <minor>3</minor>
+            <revision>0</revision>
+        </libvirt_version>
+        <max_scheduling_memory>2854223872</max_scheduling_memory>
+        <memory>8199864320</memory>
+        <numa_supported>false</numa_supported>
+        <os>
+            <custom_kernel_cmdline></custom_kernel_cmdline>
+            <reported_kernel_cmdline>BOOT_IMAGE=/vmlinuz-3.10.0-862.14.4.el7.x86_64 root=/dev/mapper/vg0-lv_root ro rhgb quiet console=tty0 console=ttyS0,115200n8 crashkernel=auto rd.lvm.lv=vg0/lv_root rd.lvm.lv=vg0/lv_swap console=ttyS1,115200n8 LANG=en_US.UTF-8</reported_kernel_cmdline>
+            <type>RHEL</type>
+            <version>
+                <full_version>7 - 5.1804.5.el7.centos</full_version>
+                <major>7</major>
+            </version>
+        </os>
+        <port>54321</port>
+        <power_management>
+            <automatic_pm_enabled>true</automatic_pm_enabled>
+            <enabled>false</enabled>
+            <kdump_detection>true</kdump_detection>
+            <pm_proxies/>
+        </power_management>
+        <protocol>stomp</protocol>
+        <se_linux>
+            <mode>enforcing</mode>
+        </se_linux>
+        <spm>
+            <priority>5</priority>
+            <status>none</status>
+        </spm>
+        <ssh>
+            <fingerprint>SHA256:1r5kgEU5MCrHneSLv6xU0bTxpvccP6PNKefs87ib3Rk</fingerprint>
+            <port>22</port>
+        </ssh>
+        <status>up</status>
+        <summary>
+            <active>4</active>
+            <migrating>0</migrating>
+            <total>4</total>
+        </summary>
+        <transparent_hugepages>
+            <enabled>true</enabled>
+        </transparent_hugepages>
+        <type>rhel</type>
+        <update_available>true</update_available>
+        <version>
+            <build>1</build>
+            <full_version>vdsm-4.30.1-29.gitcbdbee9.el7</full_version>
+            <major>4</major>
+            <minor>30</minor>
+            <revision>0</revision>
+        </version>
+        <cluster href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490" id="cb363284-bd8b-11e8-9109-001a4a231490"/>
+    </host>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:57 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '1854'
+    correlation-id: cd80a430-17d0-419d-aa2a-cfe6cc5472f2
   :message: 
 ? https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/networkattachments{}GET
 : - :body: |
@@ -3529,10 +4660,725 @@ https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/f9dbfd
       </network_attachments>
     :code: 200
     :headers:
-      date: Wed, 06 Feb 2019 09:40:56 GMT
+      date: Wed, 06 Feb 2019 17:53:55 GMT
       server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
       content-encoding: gzip
       content-type: application/xml;charset=UTF-8
       content-length: '716'
-      correlation-id: b5ccf7f9-9d94-4e96-a8ae-376e4fb46701
+      correlation-id: 87439828-b92e-4794-adf4-53e5b5b32b6c
     :message: 
+  - :body: |
+      <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+      <network_attachments>
+          <network_attachment href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/networkattachments/4decb6a7-5e9b-481c-95a2-e0bcdafe9a07" id="4decb6a7-5e9b-481c-95a2-e0bcdafe9a07">
+              <in_sync>true</in_sync>
+              <ip_address_assignments>
+                  <ip_address_assignment>
+                      <assignment_method>dhcp</assignment_method>
+                      <ip>
+                          <version>v4</version>
+                      </ip>
+                  </ip_address_assignment>
+                  <ip_address_assignment>
+                      <assignment_method>autoconf</assignment_method>
+                      <ip>
+                          <version>v6</version>
+                      </ip>
+                  </ip_address_assignment>
+              </ip_address_assignments>
+              <reported_configurations>
+                  <reported_configuration>
+                      <actual_value>1500</actual_value>
+                      <expected_value>1500</expected_value>
+                      <in_sync>true</in_sync>
+                      <name>mtu</name>
+                  </reported_configuration>
+                  <reported_configuration>
+                      <actual_value>true</actual_value>
+                      <expected_value>true</expected_value>
+                      <in_sync>true</in_sync>
+                      <name>bridged</name>
+                  </reported_configuration>
+                  <reported_configuration>
+                      <in_sync>true</in_sync>
+                      <name>vlan</name>
+                  </reported_configuration>
+                  <reported_configuration>
+                      <actual_value>LEGACY</actual_value>
+                      <expected_value>LEGACY</expected_value>
+                      <in_sync>true</in_sync>
+                      <name>switchType</name>
+                  </reported_configuration>
+                  <reported_configuration>
+                      <actual_value>DHCP</actual_value>
+                      <expected_value>DHCP</expected_value>
+                      <in_sync>true</in_sync>
+                      <name>ipv4_boot_protocol</name>
+                  </reported_configuration>
+                  <reported_configuration>
+                      <actual_value>10.44.6.1,10.46.0.31,10.46.0.32</actual_value>
+                      <in_sync>true</in_sync>
+                      <name>dns_configuration</name>
+                  </reported_configuration>
+                  <reported_configuration>
+                      <actual_value>true</actual_value>
+                      <expected_value>true</expected_value>
+                      <in_sync>true</in_sync>
+                      <name>default_route</name>
+                  </reported_configuration>
+              </reported_configurations>
+              <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+              <host_nic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/c3d7a40b-6784-4f1c-a71b-925ff4925922" id="c3d7a40b-6784-4f1c-a71b-925ff4925922"/>
+              <network href="/ovirt-engine/api/networks/00000000-0000-0000-0000-000000000009" id="00000000-0000-0000-0000-000000000009"/>
+          </network_attachment>
+          <network_attachment href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/networkattachments/77ba88ee-5111-477a-9f10-0b79931754f8" id="77ba88ee-5111-477a-9f10-0b79931754f8">
+              <in_sync>true</in_sync>
+              <ip_address_assignments>
+                  <ip_address_assignment>
+                      <assignment_method>none</assignment_method>
+                      <ip>
+                          <version>v4</version>
+                      </ip>
+                  </ip_address_assignment>
+                  <ip_address_assignment>
+                      <assignment_method>none</assignment_method>
+                      <ip>
+                          <version>v6</version>
+                      </ip>
+                  </ip_address_assignment>
+              </ip_address_assignments>
+              <reported_configurations>
+                  <reported_configuration>
+                      <actual_value>1500</actual_value>
+                      <expected_value>1500</expected_value>
+                      <in_sync>true</in_sync>
+                      <name>mtu</name>
+                  </reported_configuration>
+                  <reported_configuration>
+                      <actual_value>true</actual_value>
+                      <expected_value>true</expected_value>
+                      <in_sync>true</in_sync>
+                      <name>bridged</name>
+                  </reported_configuration>
+                  <reported_configuration>
+                      <actual_value>123</actual_value>
+                      <expected_value>123</expected_value>
+                      <in_sync>true</in_sync>
+                      <name>vlan</name>
+                  </reported_configuration>
+                  <reported_configuration>
+                      <actual_value>LEGACY</actual_value>
+                      <expected_value>LEGACY</expected_value>
+                      <in_sync>true</in_sync>
+                      <name>switchType</name>
+                  </reported_configuration>
+                  <reported_configuration>
+                      <actual_value>NONE</actual_value>
+                      <expected_value>NONE</expected_value>
+                      <in_sync>true</in_sync>
+                      <name>ipv4_boot_protocol</name>
+                  </reported_configuration>
+                  <reported_configuration>
+                      <actual_value>false</actual_value>
+                      <expected_value>false</expected_value>
+                      <in_sync>true</in_sync>
+                      <name>default_route</name>
+                  </reported_configuration>
+              </reported_configurations>
+              <host href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba" id="f9dbfd16-3c79-4028-9304-9acf3b8857ba"/>
+              <host_nic href="/ovirt-engine/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba/nics/c3d7a40b-6784-4f1c-a71b-925ff4925922" id="c3d7a40b-6784-4f1c-a71b-925ff4925922"/>
+              <network href="/ovirt-engine/api/networks/5c42817f-03fb-460e-a3ab-a8770553aeee" id="5c42817f-03fb-460e-a3ab-a8770553aeee"/>
+          </network_attachment>
+      </network_attachments>
+    :code: 200
+    :headers:
+      date: Wed, 06 Feb 2019 17:53:57 GMT
+      server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+      content-encoding: gzip
+      content-type: application/xml;charset=UTF-8
+      content-length: '716'
+      correlation-id: 72e03434-891b-4807-81cb-7c46494d3f3a
+    :message: 
+https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <cluster href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490" id="cb363284-bd8b-11e8-9109-001a4a231490">
+        <actions>
+            <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/resetemulatedmachine" rel="resetemulatedmachine"/>
+            <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/syncallnetworks" rel="syncallnetworks"/>
+        </actions>
+        <name>Default</name>
+        <description>The default server cluster</description>
+        <comment></comment>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/affinitygroups" rel="affinitygroups"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/glusterhooks" rel="glusterhooks"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/glustervolumes" rel="glustervolumes"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/enabledfeatures" rel="enabledfeatures"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/externalnetworkproviders" rel="externalnetworkproviders"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/cpuprofiles" rel="cpuprofiles"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/permissions" rel="permissions"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/networkfilters" rel="networkfilters"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/networks" rel="networks"/>
+        <ballooning_enabled>false</ballooning_enabled>
+        <cpu>
+            <architecture>x86_64</architecture>
+            <type>Intel Westmere Family</type>
+        </cpu>
+        <custom_scheduling_policy_properties>
+            <property>
+                <name>HighUtilization</name>
+                <value>80</value>
+            </property>
+            <property>
+                <name>CpuOverCommitDurationMinutes</name>
+                <value>2</value>
+            </property>
+        </custom_scheduling_policy_properties>
+        <error_handling>
+            <on_error>migrate</on_error>
+        </error_handling>
+        <fencing_policy>
+            <enabled>true</enabled>
+            <skip_if_connectivity_broken>
+                <enabled>false</enabled>
+                <threshold>50</threshold>
+            </skip_if_connectivity_broken>
+            <skip_if_gluster_bricks_up>false</skip_if_gluster_bricks_up>
+            <skip_if_gluster_quorum_not_met>false</skip_if_gluster_quorum_not_met>
+            <skip_if_sd_active>
+                <enabled>false</enabled>
+            </skip_if_sd_active>
+        </fencing_policy>
+        <firewall_type>firewalld</firewall_type>
+        <gluster_service>false</gluster_service>
+        <ha_reservation>false</ha_reservation>
+        <ksm>
+            <enabled>true</enabled>
+            <merge_across_nodes>true</merge_across_nodes>
+        </ksm>
+        <log_max_memory_used_threshold>95</log_max_memory_used_threshold>
+        <log_max_memory_used_threshold_type>percentage</log_max_memory_used_threshold_type>
+        <maintenance_reason_required>false</maintenance_reason_required>
+        <memory_policy>
+            <over_commit>
+                <percent>100</percent>
+            </over_commit>
+            <transparent_hugepages>
+                <enabled>true</enabled>
+            </transparent_hugepages>
+        </memory_policy>
+        <migration>
+            <auto_converge>inherit</auto_converge>
+            <bandwidth>
+                <assignment_method>auto</assignment_method>
+            </bandwidth>
+            <compressed>inherit</compressed>
+            <policy id="80554327-0569-496b-bdeb-fcbbf52b827b"/>
+        </migration>
+        <optional_reason>false</optional_reason>
+        <required_rng_sources>
+            <required_rng_source>urandom</required_rng_source>
+        </required_rng_sources>
+        <switch_type>legacy</switch_type>
+        <threads_as_cores>false</threads_as_cores>
+        <trusted_service>false</trusted_service>
+        <tunnel_migration>false</tunnel_migration>
+        <version>
+            <major>4</major>
+            <minor>2</minor>
+        </version>
+        <virt_service>true</virt_service>
+        <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+        <mac_pool href="/ovirt-engine/api/macpools/58ca604b-017d-0374-0220-00000000014e" id="58ca604b-017d-0374-0220-00000000014e"/>
+        <scheduling_policy href="/ovirt-engine/api/schedulingpolicies/b4ed2332-a7ac-4d5f-9596-99a439cb2812" id="b4ed2332-a7ac-4d5f-9596-99a439cb2812"/>
+    </cluster>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:55 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '1240'
+    correlation-id: fbaa4a48-1f56-4d5d-9219-932367e60557
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <cluster href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490" id="cb363284-bd8b-11e8-9109-001a4a231490">
+        <actions>
+            <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/resetemulatedmachine" rel="resetemulatedmachine"/>
+            <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/syncallnetworks" rel="syncallnetworks"/>
+        </actions>
+        <name>Default</name>
+        <description>The default server cluster</description>
+        <comment></comment>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/affinitygroups" rel="affinitygroups"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/glusterhooks" rel="glusterhooks"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/glustervolumes" rel="glustervolumes"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/enabledfeatures" rel="enabledfeatures"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/externalnetworkproviders" rel="externalnetworkproviders"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/cpuprofiles" rel="cpuprofiles"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/permissions" rel="permissions"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/networkfilters" rel="networkfilters"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/networks" rel="networks"/>
+        <ballooning_enabled>false</ballooning_enabled>
+        <cpu>
+            <architecture>x86_64</architecture>
+            <type>Intel Westmere Family</type>
+        </cpu>
+        <custom_scheduling_policy_properties>
+            <property>
+                <name>HighUtilization</name>
+                <value>80</value>
+            </property>
+            <property>
+                <name>CpuOverCommitDurationMinutes</name>
+                <value>2</value>
+            </property>
+        </custom_scheduling_policy_properties>
+        <error_handling>
+            <on_error>migrate</on_error>
+        </error_handling>
+        <fencing_policy>
+            <enabled>true</enabled>
+            <skip_if_connectivity_broken>
+                <enabled>false</enabled>
+                <threshold>50</threshold>
+            </skip_if_connectivity_broken>
+            <skip_if_gluster_bricks_up>false</skip_if_gluster_bricks_up>
+            <skip_if_gluster_quorum_not_met>false</skip_if_gluster_quorum_not_met>
+            <skip_if_sd_active>
+                <enabled>false</enabled>
+            </skip_if_sd_active>
+        </fencing_policy>
+        <firewall_type>firewalld</firewall_type>
+        <gluster_service>false</gluster_service>
+        <ha_reservation>false</ha_reservation>
+        <ksm>
+            <enabled>true</enabled>
+            <merge_across_nodes>true</merge_across_nodes>
+        </ksm>
+        <log_max_memory_used_threshold>95</log_max_memory_used_threshold>
+        <log_max_memory_used_threshold_type>percentage</log_max_memory_used_threshold_type>
+        <maintenance_reason_required>false</maintenance_reason_required>
+        <memory_policy>
+            <over_commit>
+                <percent>100</percent>
+            </over_commit>
+            <transparent_hugepages>
+                <enabled>true</enabled>
+            </transparent_hugepages>
+        </memory_policy>
+        <migration>
+            <auto_converge>inherit</auto_converge>
+            <bandwidth>
+                <assignment_method>auto</assignment_method>
+            </bandwidth>
+            <compressed>inherit</compressed>
+            <policy id="80554327-0569-496b-bdeb-fcbbf52b827b"/>
+        </migration>
+        <optional_reason>false</optional_reason>
+        <required_rng_sources>
+            <required_rng_source>urandom</required_rng_source>
+        </required_rng_sources>
+        <switch_type>legacy</switch_type>
+        <threads_as_cores>false</threads_as_cores>
+        <trusted_service>false</trusted_service>
+        <tunnel_migration>false</tunnel_migration>
+        <version>
+            <major>4</major>
+            <minor>2</minor>
+        </version>
+        <virt_service>true</virt_service>
+        <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+        <mac_pool href="/ovirt-engine/api/macpools/58ca604b-017d-0374-0220-00000000014e" id="58ca604b-017d-0374-0220-00000000014e"/>
+        <scheduling_policy href="/ovirt-engine/api/schedulingpolicies/b4ed2332-a7ac-4d5f-9596-99a439cb2812" id="b4ed2332-a7ac-4d5f-9596-99a439cb2812"/>
+    </cluster>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:56 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '1240'
+    correlation-id: b9cfa5f2-fc26-4907-bd60-04c964ec8ea1
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <cluster href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490" id="cb363284-bd8b-11e8-9109-001a4a231490">
+        <actions>
+            <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/resetemulatedmachine" rel="resetemulatedmachine"/>
+            <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/syncallnetworks" rel="syncallnetworks"/>
+        </actions>
+        <name>Default</name>
+        <description>The default server cluster</description>
+        <comment></comment>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/affinitygroups" rel="affinitygroups"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/glusterhooks" rel="glusterhooks"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/glustervolumes" rel="glustervolumes"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/enabledfeatures" rel="enabledfeatures"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/externalnetworkproviders" rel="externalnetworkproviders"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/cpuprofiles" rel="cpuprofiles"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/permissions" rel="permissions"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/networkfilters" rel="networkfilters"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/networks" rel="networks"/>
+        <ballooning_enabled>false</ballooning_enabled>
+        <cpu>
+            <architecture>x86_64</architecture>
+            <type>Intel Westmere Family</type>
+        </cpu>
+        <custom_scheduling_policy_properties>
+            <property>
+                <name>HighUtilization</name>
+                <value>80</value>
+            </property>
+            <property>
+                <name>CpuOverCommitDurationMinutes</name>
+                <value>2</value>
+            </property>
+        </custom_scheduling_policy_properties>
+        <error_handling>
+            <on_error>migrate</on_error>
+        </error_handling>
+        <fencing_policy>
+            <enabled>true</enabled>
+            <skip_if_connectivity_broken>
+                <enabled>false</enabled>
+                <threshold>50</threshold>
+            </skip_if_connectivity_broken>
+            <skip_if_gluster_bricks_up>false</skip_if_gluster_bricks_up>
+            <skip_if_gluster_quorum_not_met>false</skip_if_gluster_quorum_not_met>
+            <skip_if_sd_active>
+                <enabled>false</enabled>
+            </skip_if_sd_active>
+        </fencing_policy>
+        <firewall_type>firewalld</firewall_type>
+        <gluster_service>false</gluster_service>
+        <ha_reservation>false</ha_reservation>
+        <ksm>
+            <enabled>true</enabled>
+            <merge_across_nodes>true</merge_across_nodes>
+        </ksm>
+        <log_max_memory_used_threshold>95</log_max_memory_used_threshold>
+        <log_max_memory_used_threshold_type>percentage</log_max_memory_used_threshold_type>
+        <maintenance_reason_required>false</maintenance_reason_required>
+        <memory_policy>
+            <over_commit>
+                <percent>100</percent>
+            </over_commit>
+            <transparent_hugepages>
+                <enabled>true</enabled>
+            </transparent_hugepages>
+        </memory_policy>
+        <migration>
+            <auto_converge>inherit</auto_converge>
+            <bandwidth>
+                <assignment_method>auto</assignment_method>
+            </bandwidth>
+            <compressed>inherit</compressed>
+            <policy id="80554327-0569-496b-bdeb-fcbbf52b827b"/>
+        </migration>
+        <optional_reason>false</optional_reason>
+        <required_rng_sources>
+            <required_rng_source>urandom</required_rng_source>
+        </required_rng_sources>
+        <switch_type>legacy</switch_type>
+        <threads_as_cores>false</threads_as_cores>
+        <trusted_service>false</trusted_service>
+        <tunnel_migration>false</tunnel_migration>
+        <version>
+            <major>4</major>
+            <minor>2</minor>
+        </version>
+        <virt_service>true</virt_service>
+        <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+        <mac_pool href="/ovirt-engine/api/macpools/58ca604b-017d-0374-0220-00000000014e" id="58ca604b-017d-0374-0220-00000000014e"/>
+        <scheduling_policy href="/ovirt-engine/api/schedulingpolicies/b4ed2332-a7ac-4d5f-9596-99a439cb2812" id="b4ed2332-a7ac-4d5f-9596-99a439cb2812"/>
+    </cluster>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:57 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '1240'
+    correlation-id: 73798dcf-be39-4267-aaf6-f306afd3787a
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <cluster href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490" id="cb363284-bd8b-11e8-9109-001a4a231490">
+        <actions>
+            <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/resetemulatedmachine" rel="resetemulatedmachine"/>
+            <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/syncallnetworks" rel="syncallnetworks"/>
+        </actions>
+        <name>Default</name>
+        <description>The default server cluster</description>
+        <comment></comment>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/affinitygroups" rel="affinitygroups"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/glusterhooks" rel="glusterhooks"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/glustervolumes" rel="glustervolumes"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/enabledfeatures" rel="enabledfeatures"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/externalnetworkproviders" rel="externalnetworkproviders"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/cpuprofiles" rel="cpuprofiles"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/permissions" rel="permissions"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/networkfilters" rel="networkfilters"/>
+        <link href="/ovirt-engine/api/clusters/cb363284-bd8b-11e8-9109-001a4a231490/networks" rel="networks"/>
+        <ballooning_enabled>false</ballooning_enabled>
+        <cpu>
+            <architecture>x86_64</architecture>
+            <type>Intel Westmere Family</type>
+        </cpu>
+        <custom_scheduling_policy_properties>
+            <property>
+                <name>HighUtilization</name>
+                <value>80</value>
+            </property>
+            <property>
+                <name>CpuOverCommitDurationMinutes</name>
+                <value>2</value>
+            </property>
+        </custom_scheduling_policy_properties>
+        <error_handling>
+            <on_error>migrate</on_error>
+        </error_handling>
+        <fencing_policy>
+            <enabled>true</enabled>
+            <skip_if_connectivity_broken>
+                <enabled>false</enabled>
+                <threshold>50</threshold>
+            </skip_if_connectivity_broken>
+            <skip_if_gluster_bricks_up>false</skip_if_gluster_bricks_up>
+            <skip_if_gluster_quorum_not_met>false</skip_if_gluster_quorum_not_met>
+            <skip_if_sd_active>
+                <enabled>false</enabled>
+            </skip_if_sd_active>
+        </fencing_policy>
+        <firewall_type>firewalld</firewall_type>
+        <gluster_service>false</gluster_service>
+        <ha_reservation>false</ha_reservation>
+        <ksm>
+            <enabled>true</enabled>
+            <merge_across_nodes>true</merge_across_nodes>
+        </ksm>
+        <log_max_memory_used_threshold>95</log_max_memory_used_threshold>
+        <log_max_memory_used_threshold_type>percentage</log_max_memory_used_threshold_type>
+        <maintenance_reason_required>false</maintenance_reason_required>
+        <memory_policy>
+            <over_commit>
+                <percent>100</percent>
+            </over_commit>
+            <transparent_hugepages>
+                <enabled>true</enabled>
+            </transparent_hugepages>
+        </memory_policy>
+        <migration>
+            <auto_converge>inherit</auto_converge>
+            <bandwidth>
+                <assignment_method>auto</assignment_method>
+            </bandwidth>
+            <compressed>inherit</compressed>
+            <policy id="80554327-0569-496b-bdeb-fcbbf52b827b"/>
+        </migration>
+        <optional_reason>false</optional_reason>
+        <required_rng_sources>
+            <required_rng_source>urandom</required_rng_source>
+        </required_rng_sources>
+        <switch_type>legacy</switch_type>
+        <threads_as_cores>false</threads_as_cores>
+        <trusted_service>false</trusted_service>
+        <tunnel_migration>false</tunnel_migration>
+        <version>
+            <major>4</major>
+            <minor>2</minor>
+        </version>
+        <virt_service>true</virt_service>
+        <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+        <mac_pool href="/ovirt-engine/api/macpools/58ca604b-017d-0374-0220-00000000014e" id="58ca604b-017d-0374-0220-00000000014e"/>
+        <scheduling_policy href="/ovirt-engine/api/schedulingpolicies/b4ed2332-a7ac-4d5f-9596-99a439cb2812" id="b4ed2332-a7ac-4d5f-9596-99a439cb2812"/>
+    </cluster>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:57 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '1240'
+    correlation-id: 6531325e-ee29-4c4b-94c9-76218e16574e
+  :message: 
+https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <storage_domain href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031" id="cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031">
+        <actions>
+            <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/updateovfstore" rel="updateovfstore"/>
+            <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/refreshluns" rel="refreshluns"/>
+            <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/reduceluns" rel="reduceluns"/>
+            <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/isattached" rel="isattached"/>
+        </actions>
+        <name>storage_main</name>
+        <description></description>
+        <comment></comment>
+        <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/disksnapshots" rel="disksnapshots"/>
+        <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/disks" rel="disks"/>
+        <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/diskprofiles" rel="diskprofiles"/>
+        <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/storageconnections" rel="storageconnections"/>
+        <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/permissions" rel="permissions"/>
+        <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/templates" rel="templates"/>
+        <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/vms" rel="vms"/>
+        <available>42949672960</available>
+        <backup>false</backup>
+        <committed>8589934592</committed>
+        <critical_space_action_blocker>5</critical_space_action_blocker>
+        <discard_after_delete>false</discard_after_delete>
+        <external_status>ok</external_status>
+        <master>true</master>
+        <storage>
+            <address>spider.eng.lab.tlv.redhat.com</address>
+            <path>/vol/vol_bodnopoz/data2</path>
+            <type>nfs</type>
+        </storage>
+        <storage_format>v4</storage_format>
+        <supports_discard>false</supports_discard>
+        <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+        <type>data</type>
+        <used>10737418240</used>
+        <warning_low_space_indicator>10</warning_low_space_indicator>
+        <wipe_after_delete>false</wipe_after_delete>
+        <data_centers>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+        </data_centers>
+    </storage_domain>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:55 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '703'
+    correlation-id: 0f3d6116-4056-4014-a967-47240908b233
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <storage_domain href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031" id="cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031">
+        <actions>
+            <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/updateovfstore" rel="updateovfstore"/>
+            <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/refreshluns" rel="refreshluns"/>
+            <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/reduceluns" rel="reduceluns"/>
+            <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/isattached" rel="isattached"/>
+        </actions>
+        <name>storage_main</name>
+        <description></description>
+        <comment></comment>
+        <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/disksnapshots" rel="disksnapshots"/>
+        <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/disks" rel="disks"/>
+        <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/diskprofiles" rel="diskprofiles"/>
+        <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/storageconnections" rel="storageconnections"/>
+        <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/permissions" rel="permissions"/>
+        <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/templates" rel="templates"/>
+        <link href="/ovirt-engine/api/storagedomains/cd4cf9b7-e1d4-4ef6-a3ed-06adf72c8031/vms" rel="vms"/>
+        <available>42949672960</available>
+        <backup>false</backup>
+        <committed>8589934592</committed>
+        <critical_space_action_blocker>5</critical_space_action_blocker>
+        <discard_after_delete>false</discard_after_delete>
+        <external_status>ok</external_status>
+        <master>true</master>
+        <storage>
+            <address>spider.eng.lab.tlv.redhat.com</address>
+            <path>/vol/vol_bodnopoz/data2</path>
+            <type>nfs</type>
+        </storage>
+        <storage_format>v4</storage_format>
+        <supports_discard>false</supports_discard>
+        <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+        <type>data</type>
+        <used>10737418240</used>
+        <warning_low_space_indicator>10</warning_low_space_indicator>
+        <wipe_after_delete>false</wipe_after_delete>
+        <data_centers>
+            <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490"/>
+        </data_centers>
+    </storage_domain>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:57 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '703'
+    correlation-id: '097cce5c-8f61-413c-8ada-d32202a82b5e'
+  :message: 
+https://bodnopoz-engine.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490">
+        <name>Default</name>
+        <description>The default Data Center</description>
+        <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/clusters" rel="clusters"/>
+        <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/storagedomains" rel="storagedomains"/>
+        <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/permissions" rel="permissions"/>
+        <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/networks" rel="networks"/>
+        <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/quotas" rel="quotas"/>
+        <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/iscsibonds" rel="iscsibonds"/>
+        <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/qoss" rel="qoss"/>
+        <local>false</local>
+        <quota_mode>disabled</quota_mode>
+        <status>up</status>
+        <storage_format>v4</storage_format>
+        <supported_versions>
+            <version>
+                <major>4</major>
+                <minor>2</minor>
+            </version>
+        </supported_versions>
+        <version>
+            <major>4</major>
+            <minor>2</minor>
+        </version>
+        <mac_pool href="/ovirt-engine/api/macpools/58ca604b-017d-0374-0220-00000000014e" id="58ca604b-017d-0374-0220-00000000014e"/>
+    </data_center>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:56 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '447'
+    correlation-id: 5d02c89d-dd4b-4a9c-af9e-5dec3f5c3ba8
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <data_center href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490" id="cb342778-bd8b-11e8-981a-001a4a231490">
+        <name>Default</name>
+        <description>The default Data Center</description>
+        <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/clusters" rel="clusters"/>
+        <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/storagedomains" rel="storagedomains"/>
+        <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/permissions" rel="permissions"/>
+        <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/networks" rel="networks"/>
+        <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/quotas" rel="quotas"/>
+        <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/iscsibonds" rel="iscsibonds"/>
+        <link href="/ovirt-engine/api/datacenters/cb342778-bd8b-11e8-981a-001a4a231490/qoss" rel="qoss"/>
+        <local>false</local>
+        <quota_mode>disabled</quota_mode>
+        <status>up</status>
+        <storage_format>v4</storage_format>
+        <supported_versions>
+            <version>
+                <major>4</major>
+                <minor>2</minor>
+            </version>
+        </supported_versions>
+        <version>
+            <major>4</major>
+            <minor>2</minor>
+        </version>
+        <mac_pool href="/ovirt-engine/api/macpools/58ca604b-017d-0374-0220-00000000014e" id="58ca604b-017d-0374-0220-00000000014e"/>
+    </data_center>
+  :code: 200
+  :headers:
+    date: Wed, 06 Feb 2019 17:53:58 GMT
+    server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '447'
+    correlation-id: 12546870-d7a4-402e-92b4-e103cdeafd4d
+  :message: 
