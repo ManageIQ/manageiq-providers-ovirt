@@ -213,7 +213,10 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     changed_hosts.each do |host|
       add_simple_target!(:ems_clusters, uuid_from_target(host.ems_cluster))
       host.storages.each do |storage|
-        add_simple_target!(:storagedomains, uuid_from_target(storage))
+        add_simple_target!(:storagedomains, storage.ems_ref)
+      end
+      host.switches.each do |switch|
+        add_simple_target!(:switches, switch.uid_ems)
       end
     end
   end
@@ -221,8 +224,10 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   def infer_related_host_ems_refs_api!
     hosts.each do |host|
       add_simple_target!(:ems_clusters, host.cluster.id)
-      host.network_attachments.each do |attachement|
-        add_simple_target!(:networks, attachement.network.id)
+      manager.with_provider_connection(VERSION_HASH) do |connection|
+        connection.follow_link(host.network_attachments).each do |attachment|
+          add_simple_target!(:switches, attachment.network.id)
+        end
       end
     end
   end

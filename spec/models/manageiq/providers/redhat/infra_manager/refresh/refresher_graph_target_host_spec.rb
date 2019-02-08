@@ -1,4 +1,8 @@
+require_relative 'ovirt_refresher_spec_common'
+
 describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
+  include OvirtRefresherSpecCommon
+
   describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     before(:each) do
       _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
@@ -26,8 +30,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       stub_const("OvirtSDK4::Connection", Spec::Support::OvirtSDK::ConnectionVCR)
     end
 
-    COUNTED_MODELS = [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze
-
     before(:each) do
       @inventory_wrapper_class = ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
 
@@ -42,29 +44,29 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       YAML.load_file(File.join('spec', 'models', prefix, 'response_yamls', filename + '.yml'))
     end
 
+    let(:models_for_host_target) { [ExtManagementSystem, EmsFolder, EmsCluster, Storage, HostStorage, Switch, HostSwitch, Lan, CustomAttribute] }
+
     it 'does not change the host when target refresh after full refresh' do
       stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
+
       EmsRefresh.refresh(@ems)
       @ems.reload
+
+      saved_inventory = serialize_inventory(models_for_host_target)
+
       host = @ems.hosts.find_by(:ems_ref => "/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba")
-      saved_host = host_to_comparable_hash(host)
-      saved_counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
-      saved_switches = host.switches.map { |switch| [switch.uid_ems, switch.name] }
-      expect(host.networks.count).to eq(2)
       EmsRefresh.refresh(host)
       host.reload
-      expect(host.networks.count).to eq(2)
-      expect(saved_switches).to contain_exactly(*host.switches.map { |switch| a_collection_containing_exactly(switch.uid_ems, switch.name) })
+
+      expect(serialize_inventory(models_for_host_target)).to eq(saved_inventory)
+
       EmsRefresh.refresh(host)
       host.reload
+
       expect(host.switches.map { |switch| [switch.uid_ems, switch.name] }).to contain_exactly(
         a_collection_containing_exactly("00000000-0000-0000-0000-000000000009", "ovirtmgmt"),
         a_collection_containing_exactly("5c42817f-03fb-460e-a3ab-a8770553aeee", "vlan123t")
       )
-      expect(host.networks.count).to eq(2)
-      counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
-      expect(saved_host).to eq(host_to_comparable_hash(host))
-      expect(saved_counted_models).to eq(counted_models)
     end
 
     def host_to_comparable_hash(host)

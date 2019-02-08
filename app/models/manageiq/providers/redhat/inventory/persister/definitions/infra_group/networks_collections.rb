@@ -8,7 +8,7 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
         # TODO are switches shared across emses? Seems like we weren't filling ems_id
         builder.add_targeted_arel(
           lambda do |_inventory_collection|
-            ::Switch.where(:uid_ems => references(:networks))
+            ::Switch.where(:uid_ems => references(:switches))
           end
         )
       end
