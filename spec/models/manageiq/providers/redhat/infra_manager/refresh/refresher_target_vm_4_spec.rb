@@ -316,7 +316,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :present            => true,
       :start_connected    => true,
       :auto_detect        => nil,
-      :disk_type          => "thick",
+      :disk_type          => "thin",
       :storage_id         => storage.id,
       :backing_id         => nil,
       :backing_type       => nil,
