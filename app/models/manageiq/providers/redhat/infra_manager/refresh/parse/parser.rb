@@ -577,7 +577,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Parser
           :location        => index.to_s,
           :size            => (device[:provisioned_size] || device[:size]).to_i,
           :size_on_disk    => device[:actual_size] ? device[:actual_size].to_i : 0,
-          :disk_type       => device[:format] == 'raw' ? 'thick' : 'thin',
+          :disk_type       => device[:sparse] == true ? 'thin' : 'thick',
           :mode            => 'persistent',
           :bootable        => device[:bootable]
         }
