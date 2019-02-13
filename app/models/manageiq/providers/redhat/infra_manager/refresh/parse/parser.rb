@@ -145,6 +145,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Parser
         :ems_cluster      => cluster_uids[host_inv.attributes.fetch_path(:cluster, :id)],
         :hardware         => hardware,
         :switches         => switches,
+        :host_switches    => switches,
 
       }
       new_result[:ipmi_address] = ipmi_address unless ipmi_address.blank?
