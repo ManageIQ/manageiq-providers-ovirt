@@ -212,6 +212,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   end
 
   def host_guest_devices(persister_hardware, host, nics, networks)
+    persister_host = persister_hardware.host
+
     nics.to_miq_a.each do |nic|
       network = network_from_nic(nic, host, networks)
       ip = nic.ip.presence || nil
@@ -239,7 +241,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       unless network.nil?
         switch_uid = network.try(:id) || network.name
-        attributes[:switch] = persister.switches.lazy_find(switch_uid)
+        attributes[:switch] = persister.host_virtual_switches.lazy_find(:host => persister_host, :uid_ems => switch_uid)
         attributes[:network] = persister_nic
       end
 
@@ -259,7 +261,10 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       uid = network.try(:id) || network.name
       name = network.name
 
-      persister_switch = persister.switches.find_or_build(uid).assign_attributes(
+      persister_switch = persister.host_virtual_switches.find_or_build_by(
+        :host => persister_host, :uid_ems => uid
+      ).assign_attributes(
+        :host    => persister_host,
         :uid_ems => uid,
         :name    => name,
       )
@@ -306,7 +311,9 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       return
     end
 
-    persister.lans.find_or_build(uid).assign_attributes(
+    persister.lans.find_or_build_by(
+      :switch => persister_switch, :uid_ems => uid
+    ).assign_attributes(
       :name    => name,
       :uid_ems => uid,
       :tag     => tag_value,
@@ -403,7 +410,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
     hardware_disks(persister_hardware, disks)
     addresses = hardware_networks(persister_hardware, vm) unless template
-    hardware_guest_devices(persister_hardware, vm, addresses) unless template
+    vm_hardware_guest_devices(persister_hardware, vm, addresses) unless template
   end
 
   def hardware_networks(persister_hardware, vm)
@@ -464,7 +471,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     end
   end
 
-  def hardware_guest_devices(persister_hardware, vm, addresses)
+  def vm_hardware_guest_devices(persister_hardware, vm, addresses)
     networks = {}
     addresses.each do |mac, address|
       network = persister.networks.lazy_find_by(
@@ -484,7 +491,14 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       profiles = collector.collect_vnic_profiles
       vnic_profile = profiles.detect { |p| p.id == profile_id } if profile_id && profiles
       network_id = vnic_profile.dig(:network, :id) if vnic_profile
-      lan = persister.lans.find_by(:uid_ems => network_id) if network_id
+      lan = if network_id
+              switch = persister.host_virtual_switches.lazy_find(
+                :host    => persister_hardware.vm_or_template&.host,
+                :uid_ems => network_id
+              )
+
+              persister.lans.lazy_find(:switch => switch, :uid_ems => network_id)
+            end
 
       persister.guest_devices.find_or_build_by(
         :hardware => persister_hardware,
