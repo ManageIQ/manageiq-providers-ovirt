@@ -73,6 +73,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
           :ems_cluster      => cluster_uids[host_inv.dig(:cluster, :id)],
           :hardware         => hardware,
           :switches         => switches,
+          :host_switches    => switches,
         }
         new_result[:ipmi_address] = ipmi_address unless ipmi_address.blank?
 

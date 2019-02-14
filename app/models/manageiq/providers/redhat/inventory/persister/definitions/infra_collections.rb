@@ -5,7 +5,6 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
   include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::VmsCollections
   include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::DatacentersCollections
   include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::StoragedomainsCollections
-  include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::NetworksCollections
   include ::ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::VmsDependencyCollections
 
   def initialize_infra_inventory_collections
@@ -16,9 +15,7 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
     add_hosts_group
     add_datacenters_group
     add_storagedomains_group
-    add_networks_group
     add_vms_dependency_collections_group
-    add_other_collections
   end
 
   # --- IC groups definitions ---
@@ -59,7 +56,9 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
        host_networks
        host_operating_systems
        host_storages
-       host_switches).each do |name|
+       host_switches
+       host_virtual_switches
+       lans).each do |name|
 
       add_collection(infra, name)
     end
@@ -67,17 +66,5 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
 
   def add_storagedomains_group
     add_storages
-  end
-
-  def add_networks_group
-    add_switches
-  end
-
-  def add_other_collections
-    add_collection(infra, :lans) do |builder|
-      builder.add_properties(
-        :manager_ref => %i(uid_ems)
-      )
-    end
   end
 end

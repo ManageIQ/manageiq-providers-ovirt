@@ -106,14 +106,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(Disk.count).to eq(15)
     expect(GuestDevice.count).to eq(18)
     expect(Hardware.count).to eq(20)
-    expect(Lan.count).to eq(2)
+    expect(Lan.count).to eq(3)
     expect(MiqScsiLun.count).to eq(0)
     expect(MiqScsiTarget.count).to eq(0)
     expect(Network.count).to eq(6)
     expect(OperatingSystem.count).to eq(20)
     expect(Snapshot.count).to eq(17)
-    # the old code expects 3 and new 2
-    expect(Switch.count).to eq(2)
+    expect(Switch.count).to eq(3)
     expect(SystemService.count).to eq(0)
 
     expect(Relationship.count).to eq(45)
