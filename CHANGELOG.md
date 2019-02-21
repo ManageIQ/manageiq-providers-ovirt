@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 105 ending 2019-02-18
+
+### Added
+- Add ConversionHost and ServiceTemplateTransformationPlan subclasses [(#339)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/339)
+
+### Fixed
+- Fixes for host_switches [(#338)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/338)
+
 ## Unreleased as of Sprint 102 ending 2019-01-07
 
 ### Fixed
@@ -13,7 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Fix targeted host refresh [(#316)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/316)
 - EMS validation with maintenance zone specs fix [(#311)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/311)
 
-## Hammer-1
+## Hammer-1 - Released 2019-01-15
 
 ### Added
 - Add sysprep support for ovirt [(#275)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/275)
