@@ -6,7 +6,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     before(:each) do
       _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_redhat, :zone => zone, :hostname => "bodnopoz-engine.eng.lab.tlv.redhat.com", :ipaddress => "10.35.19.13",
+      @ems = FactoryBot.create(:ems_redhat, :zone => zone, :hostname => "bodnopoz-engine.eng.lab.tlv.redhat.com", :ipaddress => "10.35.19.13",
                                 :port => 443)
       @ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4
       allow_any_instance_of(@ovirt_service)
