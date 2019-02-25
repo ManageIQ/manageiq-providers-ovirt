@@ -7,7 +7,7 @@ module OvirtRefresherSpecCommon
     models.each do |model|
       inventory[model.name] = model.all.collect do |rec|
         rec.attributes.except(*skip_attributes)
-      end.sort { |rec| rec["id"] }
+      end.sort_by { |rec| rec["id"] }
     end
     inventory
   end
