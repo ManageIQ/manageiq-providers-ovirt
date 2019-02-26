@@ -47,7 +47,7 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGrou
       template_collection = inventory_collection.dependency_attributes[:templates].try(:first)
       datacenter_collection = inventory_collection.dependency_attributes[:datacenters].try(:first)
 
-      vms_and_templates = vm_collection.data + template_collection.data
+      vms_and_templates         = (vm_collection.data + template_collection.data).reject { |vm| vm.ems_cluster.nil? }
       indexed_vms_and_templates = vms_and_templates.each_with_object({}) { |vm, obj| (obj[vm.ems_cluster.ems_ref] ||= []) << vm }
 
       datacenter_collection.data.each do |dc|
