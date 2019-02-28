@@ -1,6 +1,14 @@
 module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraGroup::ClusterCollections
   extend ActiveSupport::Concern
 
+  def add_ems_clusters
+    add_collection(infra, :ems_clusters) do |builder|
+      builder.add_properties(
+        :secondary_refs => {:by_uid_ems => %i(uid_ems)}
+      )
+    end
+  end
+
   # group :ems_clusters
   def add_resource_pools
     add_collection(infra, :resource_pools) do |builder|
