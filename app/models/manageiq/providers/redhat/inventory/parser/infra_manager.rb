@@ -25,7 +25,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(cluster.href)
 
-      persister.ems_clusters.find_or_build(ems_ref).assign_attributes(
+      persister.ems_clusters.build(
         :ems_ref       => ems_ref,
         :ems_ref_obj   => ems_ref,
         :uid_ems       => cluster.id,
@@ -151,7 +151,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :connection_state => connection_state,
         :power_state      => power_state,
         :maintenance      => power_state == 'maintenance',
-        :ems_cluster      => persister.ems_clusters.lazy_find(ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(cluster.href)),
+        :ems_cluster      => persister.ems_clusters.lazy_find({:uid_ems => cluster.id}, :ref => :by_uid_ems),
         :ipmi_address     => ipmi_address,
       )
 
@@ -365,7 +365,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :raw_power_state  => template ? "never" : vm.status,
         :boot_time        => vm.try(:start_time),
         :host             => persister.hosts.lazy_find(host_ems_ref),
-        :ems_cluster      => persister.ems_clusters.lazy_find(ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm.cluster.href)),
+        :ems_cluster      => persister.ems_clusters.lazy_find({:uid_ems => vm.cluster.id}, :ref => :by_uid_ems),
         :storages         => storages,
         :storage          => storages.first,
       )
