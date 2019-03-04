@@ -36,9 +36,10 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm < ManageIQ::Providers::Infra
   end
 
   POWER_STATES = {
-    'up'        => 'on',
-    'down'      => 'off',
-    'suspended' => 'suspended',
+    'up'           => 'on',
+    'powering_up'  => 'on',
+    'down'         => 'off',
+    'suspended'    => 'suspended',
   }.freeze
 
   def provider_object(connection = nil)
