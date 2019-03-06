@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 106 ending 2019-03-04
+
+### Fixed
+- mapping from "powering_up" to "on" [(#346)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/346)
+- Skip VMs missing a cluster when saving relats [(#343)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/343)
+
 ## Hammer-3
 
 ### Fixed
