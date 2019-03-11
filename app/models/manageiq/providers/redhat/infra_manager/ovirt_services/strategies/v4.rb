@@ -819,8 +819,18 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
     #
     def remove_vm_disks(vm_service, disk_specs)
       attachments_service = vm_service.disk_attachments_service
+
+      disk_attachment_by_disk_name_hash = attachments_service.list.collect do |attachment_service_obj|
+        attachment_service = attachments_service.attachment_service(attachment_service_obj.id)
+        [vm_service.connection.follow_link(attachment_service_obj.disk).name, attachment_service]
+      end.to_h
+
       disk_specs.each do |disk_spec|
-        attachment_service = attachments_service.attachment_service(disk_spec['disk_name'])
+        disk_spec = disk_spec.with_indifferent_access
+        attachment_service = disk_attachment_by_disk_name_hash[disk_spec['disk_name']]
+        unless attachment_service
+          raise "no disk with the name #{disk_spec['disk_name']} is attached to the vm: #{vm_service.get.name}"
+        end
         attachment_service.remove(:detach_only => !disk_spec['delete_backing'])
       end
     end
