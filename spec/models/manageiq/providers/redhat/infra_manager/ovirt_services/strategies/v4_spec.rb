@@ -79,7 +79,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
       @vm   = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
       @cores_per_socket = 2
       @num_of_sockets   = 3
-      @vm_proxy = double("OvirtSDK4::Vm.new")
+      @vm_proxy = double("OvirtSDK4::Vm.new", :name => "vm_name_1")
       @vm_service = double("OvirtSDK4::Vm")
       allow(@ems).to receive(:highest_supported_api_version).and_return(4)
       allow(@vm).to receive(:with_provider_object).and_yield(@vm_service)
@@ -104,6 +104,48 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
       @ems.vm_reconfigure(@vm, :spec => spec)
     end
 
+    describe "remove disk" do
+      before do
+        @connection = double("OvirtSDK4::Connection")
+        @disk_1 = double("OvirtSDK4::Disk", :id => 'disk_id1', :name => 'disk1')
+        @disk_2 = double("OvirtSDK4::Disk", :id => 'disk_id2', :name => 'disk2')
+        @disk_attachment_1 = double("OvirtSDK4::DiskAttachment", :id => 'disk_id1', :disk => @disk_1)
+        @disk_attachment_2 = double("OvirtSDK4::DiskAttachment", :id => 'disk_id1', :disk => @disk_1)
+        @disk_attachments_service = double("OvirtSDK4::DiskAttachmentsService", :list => [@disk_attachment_1, @disk_attachment_2])
+        @disk_attachment_service_1 = double("OvirtSDK4::DiskAttachmentService", :id => 'disk_attachment_service_1', :get => @disk_attachment_1)
+        @disk_attachment_service_2 = double("OvirtSDK4::DiskAttachmentService", :id => 'disk_attachment_service_2', :get => @disk_attachment_2)
+        allow(@vm_service).to receive(:disk_attachments_service).and_return(@disk_attachments_service)
+        allow(@vm_service).to receive(:connection).and_return(@connection)
+        allow(@disk_attachments_service).to receive(:attachment_service).with(@disk_1.id).and_return(@disk_attachment_service_1)
+        allow(@disk_attachments_service).to receive(:attachment_service).with(@disk_2.id).and_return(@disk_attachment_service_2)
+        allow(@connection).to receive(:follow_link).with(@disk_attachment_1.disk).and_return(@disk_1)
+      end
+      let(:delete_backing) { true }
+      let(:spec) { { 'disksRemove' => [{ 'disk_name' => 'disk1', 'delete_backing' => delete_backing }] } }
+      subject(:reconfigure_vm) { @ems.vm_reconfigure(@vm, :spec => spec) }
+      context 'delete backing' do
+        it 'sends a remove command tp the appropriate disk attachment' do
+          expect(@disk_attachment_service_1).to receive(:remove).with(:detach_only => false)
+          subject
+        end
+      end
+
+      context 'detach without removing disk' do
+        let(:delete_backing) { false }
+        it 'sends a remove command tp the appropriate disk attachment' do
+          expect(@disk_attachment_service_1).to receive(:remove).with(:detach_only => true)
+          subject
+        end
+      end
+
+      context 'disk missing' do
+        let(:spec) { { 'disksRemove' => [{ 'disk_name' => 'disk3', 'delete_backing' => delete_backing }] } }
+        it 'raises an error with the vm and disk name' do
+          expect { subject }.to raise_error("no disk with the name disk3 is attached to the vm: vm_name_1")
+        end
+      end
+    end
+
     describe "memory" do
       before do
         @memory_policy = double("memory_policy")
@@ -113,7 +155,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
         allow(@vm_proxy).to receive(:memory_policy).and_return(@memory_policy)
         allow(@vm_proxy).to receive(:name).and_return("vm_name")
         @memory_spec = { :memory => memory, :memory_policy => { :guaranteed => guaranteed } }
-
       end
       subject(:reconfigure_vm) { @ems.vm_reconfigure(@vm, :spec => spec) }
       let(:spec) { { 'memoryMB' => 8.gigabytes / 1.megabyte } }
