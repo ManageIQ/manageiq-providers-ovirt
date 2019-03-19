@@ -436,7 +436,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
       expect(v4_connection).to receive(:test).with(hash_including(:raise_exception => true))
         .and_return(true)
 
-      expect(MiqPassword).to receive(:try_decrypt).with(options[:password])
+      expect(ManageIQ::Password).to receive(:try_decrypt).with(options[:password])
 
       described_class.raw_connect(options)
     end

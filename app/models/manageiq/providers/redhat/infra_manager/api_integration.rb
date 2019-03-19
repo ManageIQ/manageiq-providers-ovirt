@@ -295,7 +295,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       ca_certs = opts[:ca_certs]
 
       # Decrypt the password:
-      password = MiqPassword.try_decrypt(password)
+      password = ManageIQ::Password.try_decrypt(password)
 
       # Starting with version 4 of oVirt authentication doesn't work when using directly the IP address, it requires
       # the fully qualified host name, so if we received an IP address we try to convert it into the corresponding
@@ -358,7 +358,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       return true if server.blank?
 
       # Decrypt the password:
-      password = MiqPassword.try_decrypt(password)
+      password = ManageIQ::Password.try_decrypt(password)
 
       # Build the options that will be used to call the methods that checks that the metrics connection can
       # be created:
