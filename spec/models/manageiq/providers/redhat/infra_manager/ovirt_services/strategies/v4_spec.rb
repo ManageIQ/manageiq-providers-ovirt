@@ -109,22 +109,18 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
         @connection = double("OvirtSDK4::Connection")
         @disk_1 = double("OvirtSDK4::Disk", :id => 'disk_id1', :name => 'disk1')
         @disk_2 = double("OvirtSDK4::Disk", :id => 'disk_id2', :name => 'disk2')
-        @disk_attachment_1 = double("OvirtSDK4::DiskAttachment", :id => 'disk_id1', :disk => @disk_1)
-        @disk_attachment_2 = double("OvirtSDK4::DiskAttachment", :id => 'disk_id1', :disk => @disk_1)
-        @disk_attachments_service = double("OvirtSDK4::DiskAttachmentsService", :list => [@disk_attachment_1, @disk_attachment_2])
-        @disk_attachment_service_1 = double("OvirtSDK4::DiskAttachmentService", :id => 'disk_attachment_service_1', :get => @disk_attachment_1)
-        @disk_attachment_service_2 = double("OvirtSDK4::DiskAttachmentService", :id => 'disk_attachment_service_2', :get => @disk_attachment_2)
+        @disk_attachments_service = double("OvirtSDK4::DiskAttachmentsService")
+        @disk_attachment_service_1 = double("OvirtSDK4::DiskAttachmentService")
         allow(@vm_service).to receive(:disk_attachments_service).and_return(@disk_attachments_service)
         allow(@vm_service).to receive(:connection).and_return(@connection)
         allow(@disk_attachments_service).to receive(:attachment_service).with(@disk_1.id).and_return(@disk_attachment_service_1)
-        allow(@disk_attachments_service).to receive(:attachment_service).with(@disk_2.id).and_return(@disk_attachment_service_2)
-        allow(@connection).to receive(:follow_link).with(@disk_attachment_1.disk).and_return(@disk_1)
+        allow(@disk_attachments_service).to receive(:attachment_service).with(@disk_2.id).and_raise(OvirtSDK4::NotFoundError)
       end
       let(:delete_backing) { true }
-      let(:spec) { { 'disksRemove' => [{ 'disk_name' => 'disk1', 'delete_backing' => delete_backing }] } }
+      let(:spec) { { 'disksRemove' => [{ 'disk_name' => @disk_1.id, 'delete_backing' => delete_backing }] } }
       subject(:reconfigure_vm) { @ems.vm_reconfigure(@vm, :spec => spec) }
       context 'delete backing' do
-        it 'sends a remove command tp the appropriate disk attachment' do
+        it 'sends a remove command to the appropriate disk attachment' do
           expect(@disk_attachment_service_1).to receive(:remove).with(:detach_only => false)
           subject
         end
@@ -132,16 +128,21 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
 
       context 'detach without removing disk' do
         let(:delete_backing) { false }
-        it 'sends a remove command tp the appropriate disk attachment' do
+        it 'sends a remove command to the appropriate disk attachment' do
           expect(@disk_attachment_service_1).to receive(:remove).with(:detach_only => true)
           subject
         end
       end
 
       context 'disk missing' do
-        let(:spec) { { 'disksRemove' => [{ 'disk_name' => 'disk3', 'delete_backing' => delete_backing }] } }
+        let(:spec) { { 'disksRemove' => [{ 'disk_name' => @disk_2.id, 'delete_backing' => delete_backing }] } }
         it 'raises an error with the vm and disk name' do
-          expect { subject }.to raise_error("no disk with the name disk3 is attached to the vm: vm_name_1")
+          expect { subject }.to raise_error("no disk with the id #{@disk_2.id} is attached to the vm: vm_name_1")
+        end
+
+        it 'raises an error with the vm and disk name in case of generic error' do
+          allow(@disk_attachments_service).to receive(:attachment_service).with(@disk_2.id).and_raise(OvirtSDK4::Error)
+          expect { subject }.to raise_error("Failed to detach disk with the id #{@disk_2.id} from the vm: vm_name_1, check that it exists")
         end
       end
     end
