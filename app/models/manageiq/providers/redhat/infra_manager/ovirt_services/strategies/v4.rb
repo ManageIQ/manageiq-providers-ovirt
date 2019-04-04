@@ -262,6 +262,14 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       vm.with_provider_object(VERSION_HASH, &:suspend)
     end
 
+    def remote_viewer_console_file(vm)
+      vm.with_provider_object(VERSION_HASH) do |vm_service|
+        #TODO: need receives protocol from UI for opens console
+        console = vm_service.graphics_consoles_service.list.first
+        return Base64.encode64(vm_service.graphics_consoles_service.console_service(console.id).remote_viewer_connection_file)
+      end
+    end
+
     def vm_reconfigure(vm, options = {})
       log_header = "EMS: [#{ext_management_system.name}] #{vm.class.name}: id [#{vm.id}], name [#{vm.name}], ems_ref [#{vm.ems_ref}]"
       spec = options[:spec]

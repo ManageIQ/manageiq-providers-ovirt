@@ -16,6 +16,10 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm
             "#{protocol} remote console requires the vm to be running.") if options[:check_if_running] && state != "on"
     end
 
+    def remote_viewer_console_file
+      ext_management_system.ovirt_services.remote_viewer_console_file(self)
+    end
+
     def remote_console_acquire_ticket(userid, originating_server, console_type)
       validate_remote_console_acquire_ticket(console_type)
       ext_management_system.ovirt_services.remote_console_acquire_ticket(self, userid, originating_server)
