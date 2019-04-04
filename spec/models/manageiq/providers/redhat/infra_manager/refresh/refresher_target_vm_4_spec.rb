@@ -1,17 +1,14 @@
+require_relative 'ovirt_refresher_spec_common'
+
 describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
+  include OvirtRefresherSpecCommon
+
   let(:ip_address) { '192.168.1.105' }
 
   before(:each) do
-    _, _, zone = EvmSpecHelper.create_guid_miq_server_zone
-    @ems = FactoryBot.create(:ems_redhat, :zone => zone, :hostname => "192.168.1.105", :ipaddress => "192.168.1.105",
-                              :port => 8443)
-    @ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4
-    allow_any_instance_of(@ovirt_service)
-    allow_any_instance_of(@ovirt_service)
-      .to receive(:collect_external_network_providers).and_return(load_response_mock_for('external_network_providers'))
-    @ems.update_authentication(:default => {:userid => "admin@internal", :password => "engine"})
+    init_defaults(:hostname => ip_address, :ipaddress => ip_address, :port => 8443)
+
     @ems.default_endpoint.path = "/ovirt-engine/api"
-    allow(@ems).to receive(:supported_api_versions).and_return(%w(3 4))
     allow(@ems).to receive(:resolve_ip_address).with(ip_address).and_return(ip_address)
     stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
   end
@@ -20,18 +17,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(described_class.ems_type).to eq(:rhevm)
   end
 
-  require 'yaml'
   def load_response_mock_for(filename)
     prefix = described_class.name.underscore
     YAML.load_file(File.join('spec', 'models', prefix, 'target_response_yamls', filename + '.yml'))
   end
 
   before(:each) do
-    @inventory_wrapper_class = ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
-    allow_any_instance_of(@inventory_wrapper_class).to receive(:api).and_return("4.2.0_master")
-    allow_any_instance_of(@inventory_wrapper_class).to receive(:service)
-      .and_return(OpenStruct.new(:version_string => '4.2.0_master'))
-
     @root = FactoryBot.create(:ems_folder,
                                :ext_management_system => @ems,
                                :uid_ems               => 'root_dc',
