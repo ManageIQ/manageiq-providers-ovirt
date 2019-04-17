@@ -5,12 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-4
+## Hammer-5
+
+### Added
+- Add supports_conversion_host to Host [(#315)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/315)
+
+### Fixed
+- Fix removing a disk from a Vm [(#353)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/353)
+
+## Hammer-4 - Released 2019-03-29
 
 ### Fixed
 - Fix deleting a disk from VM [(#348)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/348)
 
-## Hammer-3
+## Hammer-3 - Released 2019-03-06
 
 ### Fixed
 - Host targeted refresh deleting and re-creating storage, switch, and lan records [(#336)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/336)
