@@ -126,11 +126,6 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       nics = collector.collect_host_nics(host)
       ipaddress = host_to_ip(nics, hostname) || host.address
 
-      ipmi_address = nil
-      if host.dig(:power_management, :type).to_s.include?('ipmi')
-        ipmi_address = host.dig(:power_management, :address)
-      end
-
       host_os_version = host.dig(:os, :version)
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(host.href)
 
@@ -152,7 +147,6 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :power_state      => power_state,
         :maintenance      => power_state == 'maintenance',
         :ems_cluster      => persister.ems_clusters.lazy_find(ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(cluster.href)),
-        :ipmi_address     => ipmi_address,
       )
 
       host_storages(dc, persister_host)

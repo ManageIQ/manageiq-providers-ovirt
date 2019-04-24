@@ -117,11 +117,6 @@ class ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Parser
       hardware[:guest_devices], guest_device_uids[mor] = host_inv_to_guest_device_hashes(host_inv, switch_uids[mor], ems_inv)
       hardware[:networks] = host_inv_to_network_hashes(host_inv, guest_device_uids[mor])
 
-      ipmi_address = nil
-      if host_inv.attributes.fetch_path(:power_management, :type).to_s.include?('ipmi')
-        ipmi_address = host_inv.attributes.fetch_path(:power_management, :address)
-      end
-
       host_os_version = host_inv[:os][:version] if host_inv[:os]
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(host_inv[:href])
       new_result = {
@@ -147,7 +142,6 @@ class ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Parser
         :switches         => switches,
 
       }
-      new_result[:ipmi_address] = ipmi_address unless ipmi_address.blank?
 
       result << new_result
       result_uids[mor] = new_result
