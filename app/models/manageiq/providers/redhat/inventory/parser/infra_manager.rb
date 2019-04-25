@@ -239,7 +239,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         attributes[:network] = persister_nic
       end
 
-      persister.guest_devices.find_or_build_by(
+      persister.host_guest_devices.find_or_build_by(
         :hardware => persister_hardware,
         :uid_ems  => nic.id
       ).assign_attributes(attributes)

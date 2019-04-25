@@ -52,6 +52,7 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::InfraColl
 
   def add_hosts_group
     %i(hosts
+       host_guest_devices
        host_hardwares
        host_networks
        host_operating_systems
