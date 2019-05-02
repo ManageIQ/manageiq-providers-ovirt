@@ -29,11 +29,11 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       cluster_parent = persister.ems_folders.lazy_find("#{datacenter_id}_host") if datacenter_id
 
       persister.ems_clusters.build(
-        :ems_ref       => ems_ref,
-        :ems_ref_obj   => ems_ref,
-        :uid_ems       => cluster.id,
-        :name          => cluster.name,
-        :parent        => cluster_parent,
+        :ems_ref     => ems_ref,
+        :ems_ref_obj => ems_ref,
+        :uid_ems     => cluster.id,
+        :name        => cluster.name,
+        :parent      => cluster_parent,
       )
     end
   end
