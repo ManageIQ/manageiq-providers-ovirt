@@ -23,6 +23,14 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::InfraManager < ManageIQ
     collected_inventory[:datacenter]
   end
 
+  def datacenter_by_cluster_id
+    @datacenter_by_cluster_id ||= begin
+      ems_clusters.each_with_object({}) do |cluster, hash|
+        hash[cluster.id] = cluster.dig(:data_center, :id)
+      end
+    end
+  end
+
   def hosts
     collected_inventory[:host]
   end

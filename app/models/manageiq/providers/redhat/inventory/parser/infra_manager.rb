@@ -344,6 +344,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       host = vm.try(:host) || vm.try(:placement_policy).try(:hosts).try(:first)
       host_ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(host.href) if host.present?
 
+      datacenter_id = collector.datacenter_by_cluster_id[vm.cluster.id]
+      parent_folder = persister.ems_folders.lazy_find("#{datacenter_id}_vm")
       resource_pool = persister.resource_pools.lazy_find("#{vm.cluster.id}_respool")
 
       storages, disks = storages(vm)
@@ -371,6 +373,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :ems_cluster      => persister.ems_clusters.lazy_find({:uid_ems => vm.cluster.id}, :ref => :by_uid_ems),
         :storages         => storages,
         :storage          => storages.first,
+        :parent           => parent_folder,
         :resource_pool    => resource_pool,
       )
 
