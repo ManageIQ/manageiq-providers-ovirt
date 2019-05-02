@@ -346,7 +346,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       datacenter_id = collector.datacenter_by_cluster_id[vm.cluster.id]
       parent_folder = persister.ems_folders.lazy_find("#{datacenter_id}_vm")
-      resource_pool = persister.resource_pools.lazy_find("#{vm.cluster.id}_respool")
+      resource_pool = persister.resource_pools.lazy_find("#{vm.cluster.id}_respool") unless template
 
       storages, disks = storages(vm)
 
