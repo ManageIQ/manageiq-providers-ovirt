@@ -24,8 +24,11 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
     add_resource_pools
     add_snapshots
     add_storages
-    add_ems_folder_children
-    add_ems_cluster_children
+
+    add_collection(infra, :parent_blue_folders)
+    add_collection(infra, :root_folder_relationship)
+    add_collection(infra, :vm_resource_pools)
+    add_collection(infra, :vm_parent_blue_folders)
   end
 
   # group :ems_clusters

@@ -78,15 +78,17 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :type    => 'EmsFolder',
         :uid_ems => 'root_dc',
         :hidden  => true,
+        :parent  => nil,
       )
 
       uid = datacenter.id
-      persister.datacenters.find_or_build(datacenter.id).assign_attributes(
+      persister.datacenters.find_or_build(ems_ref).assign_attributes(
         :name        => datacenter.name,
         :type        => 'Datacenter',
         :ems_ref     => ems_ref,
         :ems_ref_obj => ems_ref,
         :uid_ems     => uid,
+        :parent      => persister.ems_folders.lazy_find("root_dc"),
       )
 
       host_folder_uid = "#{uid}_host"
@@ -94,7 +96,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :name    => 'host',
         :type    => 'EmsFolder',
         :uid_ems => host_folder_uid,
-        :hidden  => true
+        :hidden  => true,
+        :parent  => persister.datacenters.lazy_find(ems_ref),
       )
 
       vm_folder_uid = "#{uid}_vm"
@@ -102,7 +105,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :name    => 'vm',
         :type    => 'EmsFolder',
         :uid_ems => vm_folder_uid,
-        :hidden  => true
+        :hidden  => true,
+        :parent  => persister.datacenters.lazy_find(ems_ref),
       )
     end
   end
