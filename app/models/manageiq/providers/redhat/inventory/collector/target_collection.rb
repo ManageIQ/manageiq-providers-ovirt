@@ -12,8 +12,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   end
 
   def ems_clusters
-    return @ems_clusters unless @ems_clusters.blank?
-    return @ems_clusters if references(:ems_clusters).blank?
+    return @ems_clusters if @ems_clusters.present? || references(:ems_clusters).blank?
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
       references(:ems_clusters).each do |ems_ref|
