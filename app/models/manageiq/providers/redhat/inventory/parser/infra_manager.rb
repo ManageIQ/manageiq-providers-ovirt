@@ -16,21 +16,24 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   def ems_clusters
     collector.ems_clusters.each do |cluster|
       r_id = "#{cluster.id}_respool"
+      ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(cluster.href)
 
       persister.resource_pools.find_or_build(:ems_uid => r_id).assign_attributes(
         :name       => "Default for Cluster #{cluster.name}",
         :uid_ems    => r_id,
         :is_default => true,
+        :parent     => persister.ems_clusters.lazy_find(ems_ref),
       )
 
-      ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(cluster.href)
+      datacenter_id  = cluster.dig(:data_center, :id)
+      cluster_parent = persister.ems_folders.lazy_find("#{datacenter_id}_host") if datacenter_id
 
       persister.ems_clusters.build(
         :ems_ref       => ems_ref,
         :ems_ref_obj   => ems_ref,
         :uid_ems       => cluster.id,
         :name          => cluster.name,
-        :datacenter_id => cluster.dig(:data_center, :id),
+        :parent        => cluster_parent,
       )
     end
   end
