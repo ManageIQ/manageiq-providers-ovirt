@@ -16,21 +16,24 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   def ems_clusters
     collector.ems_clusters.each do |cluster|
       r_id = "#{cluster.id}_respool"
+      ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(cluster.href)
 
-      persister.resource_pools.find_or_build(:ems_uid => r_id).assign_attributes(
+      persister.resource_pools.find_or_build(r_id).assign_attributes(
         :name       => "Default for Cluster #{cluster.name}",
         :uid_ems    => r_id,
         :is_default => true,
+        :parent     => persister.ems_clusters.lazy_find(ems_ref),
       )
 
-      ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(cluster.href)
+      datacenter_id  = cluster.dig(:data_center, :id)
+      cluster_parent = persister.ems_folders.lazy_find("#{datacenter_id}_host") if datacenter_id
 
       persister.ems_clusters.build(
-        :ems_ref       => ems_ref,
-        :ems_ref_obj   => ems_ref,
-        :uid_ems       => cluster.id,
-        :name          => cluster.name,
-        :datacenter_id => cluster.dig(:data_center, :id),
+        :ems_ref     => ems_ref,
+        :ems_ref_obj => ems_ref,
+        :uid_ems     => cluster.id,
+        :name        => cluster.name,
+        :parent      => cluster_parent,
       )
     end
   end
@@ -78,15 +81,17 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :type    => 'EmsFolder',
         :uid_ems => 'root_dc',
         :hidden  => true,
+        :parent  => nil,
       )
 
       uid = datacenter.id
-      persister.datacenters.find_or_build(datacenter.id).assign_attributes(
+      persister.datacenters.find_or_build(ems_ref).assign_attributes(
         :name        => datacenter.name,
         :type        => 'Datacenter',
         :ems_ref     => ems_ref,
         :ems_ref_obj => ems_ref,
         :uid_ems     => uid,
+        :parent      => persister.ems_folders.lazy_find("root_dc"),
       )
 
       host_folder_uid = "#{uid}_host"
@@ -94,7 +99,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :name    => 'host',
         :type    => 'EmsFolder',
         :uid_ems => host_folder_uid,
-        :hidden  => true
+        :hidden  => true,
+        :parent  => persister.datacenters.lazy_find(ems_ref),
       )
 
       vm_folder_uid = "#{uid}_vm"
@@ -102,7 +108,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :name    => 'vm',
         :type    => 'EmsFolder',
         :uid_ems => vm_folder_uid,
-        :hidden  => true
+        :hidden  => true,
+        :parent  => persister.datacenters.lazy_find(ems_ref),
       )
     end
   end
@@ -337,6 +344,10 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       host = vm.try(:host) || vm.try(:placement_policy).try(:hosts).try(:first)
       host_ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(host.href) if host.present?
 
+      datacenter_id = collector.datacenter_by_cluster_id[vm.cluster.id]
+      parent_folder = persister.ems_folders.lazy_find("#{datacenter_id}_vm")
+      resource_pool = persister.resource_pools.lazy_find("#{vm.cluster.id}_respool") unless template
+
       storages, disks = storages(vm)
 
       collection_persister = if template
@@ -362,6 +373,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :ems_cluster      => persister.ems_clusters.lazy_find({:uid_ems => vm.cluster.id}, :ref => :by_uid_ems),
         :storages         => storages,
         :storage          => storages.first,
+        :parent           => parent_folder,
+        :resource_pool    => resource_pool,
       )
 
       snapshots(persister_vm, vm)

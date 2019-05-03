@@ -12,20 +12,19 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   end
 
   def ems_clusters
-    clusters = []
-    return clusters if references(:ems_clusters).blank?
+    return @ems_clusters if @ems_clusters.present? || references(:ems_clusters).blank?
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
       references(:ems_clusters).each do |ems_ref|
         begin
-          clusters << connection.system_service.clusters_service.cluster_service(uuid_from_ems_ref(ems_ref)).get
+          @ems_clusters << connection.system_service.clusters_service.cluster_service(uuid_from_ems_ref(ems_ref)).get
         rescue OvirtSDK4::Error # when 404
           nil
         end
       end
     end
 
-    clusters
+    @ems_clusters
   end
 
   def networks
@@ -77,6 +76,14 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     end
 
     dcs
+  end
+
+  def datacenter_by_cluster_id
+    @datacenter_by_cluster_id ||= begin
+      ems_clusters.each_with_object({}) do |cluster, hash|
+        hash[cluster.id] = cluster.dig(:data_center, :id)
+      end
+    end
   end
 
   def hosts
