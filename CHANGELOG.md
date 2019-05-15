@@ -5,10 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-5
+## Hammer-6
 
 ### Added
 - Add supports_conversion_host to Host [(#315)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/315)
+
+### Fixed
+- Fix refreshing ipmi from host [(#359)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/359)
+
+## Hammer-5
 
 ### Fixed
 - Fix removing a disk from a Vm [(#353)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/353)
