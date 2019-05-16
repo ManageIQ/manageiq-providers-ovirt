@@ -70,7 +70,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
   def assert_ems
     expect(@ems).to have_attributes(
-      :api_version => "4.2.0_master.",
+      :api_version => "4.2.0",
       :uid_ems     => nil
     )
 

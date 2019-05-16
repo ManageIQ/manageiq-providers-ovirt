@@ -10,11 +10,12 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
       targets_with_data = targets.collect do |target|
         _log.info "Filtering inventory for #{target.class} [#{target.name}] id: [#{target.id}]..."
 
+        ems_api_version = inventory.service.version_string.match(/([\d][\.\d]+)/)
         if ems.use_graph_refresh?
           data = ManageIQ::Providers::Redhat::Inventory.build(ems, target)
 
           # TODO: remove when graph refresh supports ems updates
-          ems.api_version = inventory.service.version_string
+          ems.api_version = ems_api_version
           ems.save
         else
           case target
@@ -35,9 +36,9 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh
 
         case ems.highest_allowed_api_version
         when '3'
-          data[:ems_api_version] = {:api_version => inventory.service.version_string}
+          data[:ems_api_version] = {:api_version => ems_api_version}
         when '4'
-          data.instance_variable_set(:@ems_api_version, :api_version => inventory.service.version_string)
+          data.instance_variable_set(:@ems_api_version, :api_version => ems_api_version)
         end
 
         _log.info "Filtering inventory...Complete"
