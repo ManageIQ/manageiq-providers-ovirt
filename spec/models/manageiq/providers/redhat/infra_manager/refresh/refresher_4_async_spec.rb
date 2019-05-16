@@ -14,6 +14,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
   it "will perform a full refresh on v4.1" do
     EmsRefresh.refresh(@ems)
+    @ems.reload
     VCR.use_cassette("#{described_class.name.underscore}_ovn_provider") do
       Fog::OpenStack.instance_variable_set(:@version, nil)
       EmsRefresh.refresh(@ems.network_manager)
