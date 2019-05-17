@@ -349,7 +349,7 @@
         read_only: false
         auto_refresh: true
         trigger_auto_refresh:
-        visible:
+        visible: true
         type: DialogFieldDropDownList
         resource_action:
           action:
