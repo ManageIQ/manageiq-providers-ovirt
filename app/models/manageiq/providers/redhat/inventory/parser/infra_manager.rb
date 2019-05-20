@@ -426,7 +426,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     devices = collector.collect_vm_devices(vm)
     devices.to_miq_a.each do |device|
       nets = device.ips
-      return addresses unless nets
+      next unless nets
 
       ipaddresses = ipaddresses(addresses, device, nets)
       ipaddresses.each do |ipv4address, ipv6address|
