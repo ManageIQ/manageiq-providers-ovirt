@@ -5161,6 +5161,38 @@ https://localhost:8443/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f
                     <type>network</type>
                     <vm href="/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f" id="3a9401a0-bf3d-4496-8acf-edd3e903511f"/>
                 </reported_device>
+                <reported_device href="/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f/reporteddevices/76697262-7230-2d6e-6963-35323a35343a" id="76697262-7230-2d6e-6963-35323a35343a">
+                  <name>virbr0-nic</name>
+                  <description>guest reported data</description>
+                  <mac>
+                    <address>52:54:00:0d:fe:94</address>
+                  </mac>
+                  <type>network</type>
+                  <vm href="/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f" id="3a9401a0-bf3d-4496-8acf-edd3e903511f"/>
+                </reported_device>
+                <reported_device href="/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f/reporteddevices/656e7333-3030-3a31-613a-34613a35313a" id="656e7333-3030-3a31-613a-34613a35313a">
+                  <name>ens3</name>
+                  <description>guest reported data</description>
+                  <ips>
+                    <ip>
+                      <address>10.8.198.74</address>
+                      <version>v4</version>
+                    </ip>
+                    <ip>
+                      <address>2620:52:0:8c4:77cd:1729:6e0f:d0fa</address>
+                      <version>v6</version>
+                    </ip>
+                    <ip>
+                      <address>fe80::292b:fe88:1efc:ed5a</address>
+                      <version>v6</version>
+                    </ip>
+                  </ips>
+                  <mac>
+                    <address>00:1a:4a:51:00:0f</address>
+                  </mac>
+                  <type>network</type>
+                  <vm href="/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f" id="3a9401a0-bf3d-4496-8acf-edd3e903511f"/>
+                </reported_device>
             </reported_devices>
             <vnic_profile href="/ovirt-engine/api/vnicprofiles/361634d2-4975-4ef7-8429-c009871ce903" id="361634d2-4975-4ef7-8429-c009871ce903"/>
         </nic>
@@ -5200,6 +5232,38 @@ https://localhost:8443/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f
             </mac>
             <type>network</type>
             <vm href="/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f" id="3a9401a0-bf3d-4496-8acf-edd3e903511f"/>
+        </reported_device>
+        <reported_device href="/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f/reporteddevices/76697262-7230-2d6e-6963-35323a35343a" id="76697262-7230-2d6e-6963-35323a35343a">
+          <name>virbr0-nic</name>
+          <description>guest reported data</description>
+          <mac>
+            <address>52:54:00:0d:fe:94</address>
+          </mac>
+          <type>network</type>
+          <vm href="/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f" id="3a9401a0-bf3d-4496-8acf-edd3e903511f"/>
+        </reported_device>
+        <reported_device href="/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f/reporteddevices/656e7333-3030-3a31-613a-34613a35313a" id="656e7333-3030-3a31-613a-34613a35313a">
+          <name>ens3</name>
+          <description>guest reported data</description>
+          <ips>
+            <ip>
+              <address>10.8.198.74</address>
+              <version>v4</version>
+            </ip>
+            <ip>
+              <address>2620:52:0:8c4:77cd:1729:6e0f:d0fa</address>
+              <version>v6</version>
+            </ip>
+            <ip>
+              <address>fe80::292b:fe88:1efc:ed5a</address>
+              <version>v6</version>
+            </ip>
+          </ips>
+          <mac>
+            <address>00:1a:4a:51:00:0f</address>
+          </mac>
+          <type>network</type>
+          <vm href="/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f" id="3a9401a0-bf3d-4496-8acf-edd3e903511f"/>
         </reported_device>
     </reported_devices>
   :code: 200

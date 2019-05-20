@@ -53,7 +53,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(Lan.count).to eq(3)
     expect(MiqScsiLun.count).to eq(0)
     expect(MiqScsiTarget.count).to eq(0)
-    expect(Network.count).to eq(6)
+    expect(Network.count).to eq(8)
     expect(OperatingSystem.count).to eq(20)
     expect(Snapshot.count).to eq(17)
     # the old code expects 3 and new 2
@@ -493,7 +493,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
         :hostname    => "vm-18-82.eng.lab.tlv.redhat.com"
       )
 
-      expect(v.hardware.networks.size).to eq(2)
+      expect(v.hardware.networks.size).to eq(4)
       network = v.hardware.networks.find_by(:ipv6address => "fe80::21a:4aff:fe16:151")
       expect(network).not_to be_nil
       expect(network).to have_attributes(
