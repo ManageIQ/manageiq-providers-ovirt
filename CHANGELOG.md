@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-6
+## Hammer-7
+
+### Fixed
+- Don't collect security groups in rhev refresh [(#365)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/365)
+- Fix refreshing vm ips - multiple reported devices [(#371)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/371)
+
+## Hammer-6 - Released 2019-05-22
 
 ### Added
 - Add supports_conversion_host to Host [(#315)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/315)
@@ -13,7 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Fixed
 - Fix refreshing ipmi from host [(#359)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/359)
 
-## Hammer-5
+## Hammer-5 - Released 2019-04-23
 
 ### Fixed
 - Fix removing a disk from a Vm [(#353)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/353)
