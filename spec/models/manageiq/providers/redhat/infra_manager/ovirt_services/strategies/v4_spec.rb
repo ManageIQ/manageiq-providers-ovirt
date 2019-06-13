@@ -286,10 +286,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
     RSpec::Matchers.define :vm_with_properly_set_disk_attachments do |opts|
       sparsity = opts[:sparse]
       storage_domain_href = opts[:storage]
+      disk_format = opts[:disk_format]
       match do |actual|
         actual.disk_attachments.inject(true) do |res, disk_attachment|
           res &&= (disk_attachment.disk.sparse == sparsity)
           res &&= all_storage_domains_match_href?(disk_attachment.disk, storage_domain_href) if storage_domain_href
+          res &&= (disk_attachment.disk.format == disk_format)
           res
         end
       end
@@ -335,16 +337,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
       context "clone_type is full" do
         let(:create_options) { { :sparse => true } }
         it "requests to clone the vm as independant and sets the disk attachments attributes" do
-          opts = {:name => "provision_vm", :cluster => "/api/clusters/href", :clone_type => :full, :sparse => false, :storage => "/api/storagedomains/href"}
+          opts = {:name => "provision_vm", :cluster => "/api/clusters/href", :clone_type => :full, :sparse => false, :storage => "/api/storagedomains/href", :disk_foramt => "cow"}
           expect(@vms_service).to receive(:add).with(vm_with_properly_set_disk_attachments(opts), :clone => true)
-          @ovirt_services.start_clone(@source_template, opts, {})
-        end
-      end
-
-      context "clone_type is thin" do
-        it "requests to clone the vm as dependant and does not set the disk attachments attributes" do
-          opts = {:name => "provision_vm", :cluster => "/api/clusters/href", :clone_type => :thin, :sparse => true, :storage => "/api/storagedomains/href"}
-          expect(@vms_service).to receive(:add).with(vm_with_disk_attachments_not_set, :clone => false)
           @ovirt_services.start_clone(@source_template, opts, {})
         end
       end

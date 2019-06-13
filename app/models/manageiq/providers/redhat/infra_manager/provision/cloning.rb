@@ -36,13 +36,31 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Cloning
 
   def vm_clone_options
     clone_options = {
-      :name       => dest_name,
-      :cluster    => dest_cluster.ems_ref,
-      :clone_type => clone_type,
-      :sparse     => sparse_disk_value
+      :name        => dest_name,
+      :cluster     => dest_cluster.ems_ref,
+      :clone_type  => clone_type,
+      :sparse      => sparse_disk_value,
+      :disk_format => disk_format
     }
     clone_options[:storage] = dest_datastore.ems_ref unless dest_datastore.nil?
     clone_options
+  end
+
+  def disk_format
+    # If the datastore is not set, we will go with "block", because this will ensure
+    # the result of the sparsity will be as set by the user.
+    ds_type = 'block' unless dest_datastore
+    ds_type ||= dest_datastore.store_type.to_s.downcase == 'iscsi' ? 'block' : 'file'
+    # In case we want a dependant template the disk format has to be cow
+    return 'cow' if clone_type == :linked
+    # If it is cloned and we want the sparsity to be false the format has to be "raw"
+    return 'raw' unless sparse_disk_value
+    # If we need it to be sparese in case of 'file' type storage
+    # we can leave the disk foramt untouched
+    return nil if ds_type == 'file'
+    # In case of Block storage we need to set the disk format to "cow" if we want it
+    # to be sparse
+    "cow"
   end
 
   def clone_type

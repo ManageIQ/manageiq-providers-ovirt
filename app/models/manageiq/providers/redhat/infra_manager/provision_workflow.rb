@@ -150,14 +150,6 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
     super(:force_platform => 'linux')
   end
 
-  def update_field_visibility_linked_clone(_options = {}, f)
-    show_flag = supports_native_clone? ? :edit : :hide
-    f[show_flag] << :linked_clone
-
-    show_flag = supports_linked_clone? ? :hide : :edit
-    f[show_flag] << :disk_format
-  end
-
   def allowed_customization_templates(options = {})
     if supports_native_clone?
       if get_source_vm&.platform == 'windows'
@@ -202,6 +194,16 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
   def set_on_vm_id_changed
     @datacenter_by_vm = nil
     super
+  end
+
+  def fields_to_clear
+    [:placement_host_name,
+     :placement_ds_name,
+     :placement_folder_name,
+     :placement_cluster_name,
+     :placement_rp_name,
+     :snapshot,
+     :placement_dc_name]
   end
 
   def allowed_hosts_obj(_options = {})
@@ -282,5 +284,10 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
     if get_source_vm.platform == 'windows'
       _("Template sealing is supported only for non-Windows OS.")
     end
+  end
+
+  def dialog_field_visibility_service
+    @dialog_field_visibility_service ||= ManageIQ::Providers::Redhat::DialogFieldVisibilityService.new
+    @dialog_field_visibility_service
   end
 end

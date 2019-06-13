@@ -528,7 +528,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
         cluster = ovirt_services.cluster_from_href(options[:cluster], connection)
         template = get
         clone = options[:clone_type] == :full
-        disk_attachments = clone ? build_disk_attachments(template, options[:sparse], options[:storage]) : nil
+        disk_attachments = build_disk_attachments(template, options[:sparse], options[:storage], options[:disk_format])
         vm = build_vm_from_hash(:name             => options[:name],
                                 :template         => template,
                                 :cluster          => cluster,
@@ -536,9 +536,9 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
         vms_service.add(vm, :clone => clone)
       end
 
-      def build_disk_attachments(template, sparse, storage_href)
+      def build_disk_attachments(template, sparse, storage_href, disk_format)
         disk_attachments = connection.follow_link(template.disk_attachments)
-        apply_sparsity_on_disk_attachments(disk_attachments, sparse) unless sparse.nil?
+        apply_sparsity_on_disk_attachments(disk_attachments, sparse, disk_format) unless sparse.nil?
         apply_storage_domain_on_disk_attachments(disk_attachments, storage_href) unless storage_href.nil?
         disk_attachments
       end
@@ -551,9 +551,10 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
         end
       end
 
-      def apply_sparsity_on_disk_attachments(disk_attachments, sparse)
+      def apply_sparsity_on_disk_attachments(disk_attachments, sparse, disk_format)
         return if sparse.nil?
         disk_attachments.each do |disk_attachment|
+          disk_attachment.disk.format = disk_format
           disk_attachment.disk.sparse = sparse
         end
       end
