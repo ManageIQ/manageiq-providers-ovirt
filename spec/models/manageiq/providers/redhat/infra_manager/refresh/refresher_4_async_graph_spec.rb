@@ -541,7 +541,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       )
       nic.lan == @lan
 
-      expect(v.ipaddresses).to eq(["10.35.18.141", "10.8.198.74", "2620:52:0:2310:21a:4aff:fe16:151", "fe80::292b:fe88:1efc:ed5a", "2620:52:0:8c4:77cd:1729:6e0f:d0fa", "fe80::21a:4aff:fe16:151"])
+      expect(v.ipaddresses).to match_array(["10.35.18.141", "10.8.198.74", "2620:52:0:2310:21a:4aff:fe16:151", "fe80::292b:fe88:1efc:ed5a", "2620:52:0:8c4:77cd:1729:6e0f:d0fa", "fe80::21a:4aff:fe16:151"])
 
       guest_device = v.hardware.guest_devices.find_by(:device_name => "nic1")
       expect(guest_device.network).not_to be_nil
