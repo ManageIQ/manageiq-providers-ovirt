@@ -524,6 +524,12 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       end
 
       def create_vm(options)
+        return create_skeletal_vm(options) if options[:clone_type] == :skeletal
+
+        create_cloned_vm(options)
+      end
+
+      def create_cloned_vm(options)
         vms_service = connection.system_service.vms_service
         cluster = ovirt_services.cluster_from_href(options[:cluster], connection)
         template = get
@@ -534,6 +540,55 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
                                 :cluster          => cluster,
                                 :disk_attachments => disk_attachments)
         vms_service.add(vm, :clone => clone)
+      end
+
+      def create_skeletal_vm(options)
+        vms_service = connection.system_service.vms_service
+        cluster = ovirt_services.cluster_from_href(options[:cluster], connection)
+        template = get
+        vm = build_vm_from_hash(:name     => options[:name],
+                                :template => blank_template_sdk_obj,
+                                :cluster  => cluster)
+        vm_res = vms_service.add(vm, :clone => false)
+        add_disk_attachments_to_vm(template, vm_res, vms_service, options)
+        vm_res
+      end
+
+      def blank_template_sdk_obj
+        connection.system_service.templates_service.template_service("00000000-0000-0000-0000-000000000000").get
+      end
+
+      def add_disk_attachments_to_vm(template, vm_res, vms_service, options)
+        disk_attachments = build_skeletal_disk_attachments(template, options[:sparse], options[:storage], options[:name], options[:disk_format])
+        disk_attachments_service = vms_service.vm_service(vm_res.id).disk_attachments_service
+        disk_attachments.each do |disk_attachment|
+          disk_attachments_service.add(disk_attachment)
+        end
+      end
+
+      def build_skeletal_disk_attachments(template, sparse, storage_href, vm_name, disk_format)
+        disk_attachments = connection.follow_link(template.disk_attachments)
+        apply_full_disk_details_on_diks_attachments(disk_attachments)
+        apply_sparsity_on_disk_attachments(disk_attachments, sparse, disk_format) unless sparse.nil?
+        apply_storage_domain_on_disk_attachments(disk_attachments, storage_href) unless storage_href.nil?
+        apply_name_on_disk_attachments(disk_attachments, vm_name)
+        nullify_disk_ids(disk_attachments)
+        disk_attachments
+      end
+
+      def nullify_disk_ids(disk_attachments)
+        disk_attachments.each do |disk_attachment|
+          disk_attachment.disk.href = nil
+          disk_attachment.disk.id = nil
+        end
+      end
+
+      def apply_full_disk_details_on_diks_attachments(disk_attachments)
+        disk_attachments.each do |disk_attachment|
+          current_disk = disk_attachment.disk
+          disk = connection.system_service.disks_service.disk_service(current_disk.id).get
+          disk_attachment.disk = disk
+        end
       end
 
       def build_disk_attachments(template, sparse, storage_href, disk_format)

@@ -297,6 +297,20 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
       end
     end
 
+    RSpec::Matchers.define :disk_attachments_with_properly_set_attributes do |opts|
+      sparsity = opts[:sparse]
+      storage_domain_href = opts[:storage]
+      disk_format = opts[:disk_format]
+      match do |disk_attachment|
+        res = true
+        res &&= (disk_attachment.disk.sparse == sparsity)
+        res &&= all_storage_domains_match_href?(disk_attachment.disk, storage_domain_href) if storage_domain_href
+        res &&= (disk_attachment.disk.name =~ /#{opts[:name]}_Disk\d/)
+        res &&= (disk_attachment.disk.format == disk_format)
+        res &&= disk_attachment.disk.id.nil?
+        res
+      end
+    end
     RSpec::Matchers.define :vm_with_disk_attachments_not_set do
       match { |actual| actual.disk_attachments.blank? }
     end
@@ -310,8 +324,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
         @source_template = double("template")
         storage_domain = OvirtSDK4::StorageDomain.new(:href => "/api/storagedomains/href")
         storage_domain_old = OvirtSDK4::StorageDomain.new(:href => "/api/storagedomains/href_old")
-        disk = OvirtSDK4::Disk.new(:storage_domains => [storage_domain_old])
-        disk2 = OvirtSDK4::Disk.new(:storage_domains => [storage_domain_old])
+        disk = OvirtSDK4::Disk.new(:id => "disk_id1", :storage_domains => [storage_domain_old])
+        disk2 = OvirtSDK4::Disk.new(:id => "disk_id2", :storage_domains => [storage_domain_old])
         @disk_attachments = [OvirtSDK4::DiskAttachment.new(:disk => disk), OvirtSDK4::DiskAttachment.new(:disk => disk2)]
         @sdk_template = OvirtSDK4::Template.new(:disk_attachments => @disk_attachments)
         @ems = FactoryGirl.create(:ems_redhat_with_authentication)
@@ -332,13 +346,34 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
         allow(@source_template).to receive(:with_provider_object).and_yield(rhevm_template)
         allow(connection).to receive(:follow_link).with(@sdk_template.disk_attachments).and_return(@disk_attachments)
         allow(@ovirt_services).to receive(:populate_phase_context)
+        allow(rhevm_template).to receive(:blank_template_sdk_obj).and_return(OvirtSDK4::Template.new)
+        @disks_service = double(OvirtSDK4::DisksService)
+        @disk_service = double(OvirtSDK4::DiskService)
+        allow(system_services).to receive(:disks_service).and_return(@disks_service)
+        @disk1_service = double(OvirtSDK4::Disk, :get => disk)
+        @disk2_service = double(OvirtSDK4::Disk, :get => disk2)
+        allow(@disks_service).to receive(:disk_service).with(disk.id).and_return(@disk1_service)
+        allow(@disks_service).to receive(:disk_service).with(disk2.id).and_return(@disk2_service)
+        @vm_service = double(OvirtSDK4::VmService, :disk_attachments_service => @sdk_template.disk_attachments)
+        allow(@vms_service).to receive(:vm_service).and_return(@vm_service)
       end
 
       context "clone_type is full" do
         let(:create_options) { { :sparse => true } }
         it "requests to clone the vm as independant and sets the disk attachments attributes" do
-          opts = {:name => "provision_vm", :cluster => "/api/clusters/href", :clone_type => :full, :sparse => false, :storage => "/api/storagedomains/href", :disk_foramt => "cow"}
+          opts = {:name => "provision_vm", :cluster => "/api/clusters/href", :clone_type => :full, :sparse => false, :storage => "/api/storagedomains/href", :disk_format => "cow"}
           expect(@vms_service).to receive(:add).with(vm_with_properly_set_disk_attachments(opts), :clone => true)
+          @ovirt_services.start_clone(@source_template, opts, {})
+        end
+      end
+
+      context "clone_type is skeletal" do
+        let(:create_options) { { :sparse => true } }
+        it "requests to clone the vm as independant and sets the disk attachments attributes" do
+          opts = {:name => "provision_vm", :cluster => "/api/clusters/href", :clone_type => :skeletal, :sparse => false, :storage => "/api/storagedomains/href", :disk_format => "cow"}
+          expect(@vms_service).to receive(:add).and_return(OvirtSDK4::Vm.new(:id => "new_vm_id"))
+          expect(@sdk_template.disk_attachments).to receive(:add).with(disk_attachments_with_properly_set_attributes(opts))
+          expect(@sdk_template.disk_attachments).to receive(:add).with(disk_attachments_with_properly_set_attributes(opts))
           @ovirt_services.start_clone(@source_template, opts, {})
         end
       end
