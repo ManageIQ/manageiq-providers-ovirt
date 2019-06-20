@@ -57,9 +57,33 @@ class RecordingModifier
     def duplicate_by_key(key_str, uid, new_uid = nil)
       new_uid ||= SecureRandom.uuid
       new_key = key_str.gsub(uid, new_uid)
-      yml[new_key] = Marshal.load(Marshal.dump(yml[key_str]))
-      yml[new_key][0][:body].gsub!(uid, new_uid)
+      yml[new_key] ||= []
+      new_val = Marshal.load(Marshal.dump(yml[key_str]))
+      new_val[0][:body].gsub!(uid, new_uid)
+      yml[new_key] += new_val
+
       new_uid
+    end
+
+    def dependants_for_inv_defention
+      {}
+    end
+
+    def dependants_for_inv(inv_type)
+      dependants_for_inv_defention[inv_type]
+    end
+
+    def duplicate_dependants(inv_name, inv_key, existing_parent_uid, new_parent_uid)
+      dependants = dependants_for_inv(inv_name)
+      return unless dependants
+
+      dependants.each do |dependant|
+        ids = Nokogiri::XML(yml[inv_key][0][:body]).search(inv_name.singularize).collect { |e| e["id"] }
+        ids.each do |id|
+          dependant_key = inv_key.gsub("{}GET", "\/#{id}\/#{dependant}{}GET")
+          duplicate_by_key(dependant_key, existing_parent_uid, new_parent_uid)
+        end
+      end
     end
 
     def add_with_inv(orig_uid = nil, orig_name = nil, new_resource_uid = nil, substitution_hash = {})
@@ -120,6 +144,7 @@ class RecordingModifier
     def duplicate_invs(inv_name, existing_vm_uid, new_vm_uid)
       key = "#{resource_key_prefix}/#{existing_vm_uid}/#{inv_name}{}GET"
       duplicate_by_key(key, existing_vm_uid, new_vm_uid)
+      duplicate_dependants(inv_name, key, existing_vm_uid, new_vm_uid)
     end
   end
 
@@ -142,6 +167,10 @@ class RecordingModifier
 
     def resource_type_name
       "vm"
+    end
+
+    def dependants_for_inv_defention
+      { :snapshots => ["disks"] }.with_indifferent_access
     end
   end
 

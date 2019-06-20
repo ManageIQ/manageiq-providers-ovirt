@@ -2829,3 +2829,70 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/d247a90f-678e
       content-length: '623'
       correlation-id: ab4d5c1f-7bd6-4946-903a-1fe025bd6048
     :message: 
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/0d37ca3b-cdbc-4b78-b0b9-7cd71ddc7e35/snapshots/c1823dc1-f973-4721-8a56-6662b8b0969c/disks{}GET:
+- :body: "<disks/>\n"
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message:
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/0d37ca3b-cdbc-4b78-b0b9-7cd71ddc7e35/snapshots/0177be37-7b22-4ea8-8285-9af53a31ad3b/disks{}GET:
+- :body: "<disks/>\n"
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message:
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/0d37ca3b-cdbc-4b78-b0b9-7cd71ddc7e35/snapshots/a9d106cd-470c-4514-8484-78572c96dd8d/disks{}GET:
+- :body: "<disks/>\n"
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message:
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/d247a90f-678e-4639-84b2-d9aa8acae9f5/snapshots/ff300ea5-3d1e-4348-a445-67f8993e1c0d/disks{}GET:
+- :body: "<disks/>\n"
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message:
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/d247a90f-678e-4639-84b2-d9aa8acae9f5/snapshots/fcbfecd9-c4a9-47e4-accf-97cdccf42989/disks{}GET:
+- :body: "<disks/>\n"
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message:
+
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/d247a90f-678e-4639-84b2-d9aa8acae9f5/snapshots/45241d9c-1fd6-4d37-aa2b-04a6be2fbfd0/disks{}GET:
+- :body: "<disks/>\n"
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message:

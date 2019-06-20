@@ -132,7 +132,16 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
 
   def collect_snapshots(vm)
     manager.with_provider_connection(VERSION_HASH) do |connection|
-      connection.follow_link(vm.snapshots)
+      snapshots = connection.follow_link(vm.snapshots)
+      self.class.add_snapshot_disks_total_size(connection, snapshots, vm.id)
+    end
+  end
+
+  def self.add_snapshot_disks_total_size(connection, snapshots, vm_id)
+    snapshots.each do |snapshot|
+      snapshot.extend(ManageIQ::Providers::Redhat::InfraManager::SnapshotDisksMixin)
+      total_size = snapshot.disks_total_size(connection, vm_id)
+      snapshot.instance_variable_set(:@total_size, total_size)
     end
   end
 
