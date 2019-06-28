@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-7
+## Hammer-8
+
+### Fixed
+- Implement provisioning independent thin VM [(#372)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/372)
+- Add skeletal provisioning to V4 [(#379)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/379)
+
+## Hammer-7 - Released 2019-06-10
 
 ### Fixed
 - Don't collect security groups in rhev refresh [(#365)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/365)
