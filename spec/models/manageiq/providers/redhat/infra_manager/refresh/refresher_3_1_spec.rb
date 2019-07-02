@@ -59,7 +59,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(ExtManagementSystem.count).to eq(1)
     expect(EmsFolder.count).to eq(7)
     expect(EmsCluster.count).to eq(4)
-    expect(Host.count).to eq(2)
+    expect(Host.count).to eq(1)
     expect(ResourcePool.count).to eq(4)
     expect(VmOrTemplate.count).to eq(38)
     expect(Vm.count).to eq(27)
