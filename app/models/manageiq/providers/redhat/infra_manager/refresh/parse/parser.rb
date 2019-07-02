@@ -170,7 +170,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Parser
       end
     end
 
-    unless ipaddress.nil?
+    if ipaddress.nil?
       warn_msg = "IP lookup for host in VIM inventory data...Failed."
       if [nil, "localhost", "localhost.localdomain", "127.0.0.1"].include?(hostname)
         _log.warn warn_msg

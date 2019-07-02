@@ -599,7 +599,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       end
     end
 
-    unless ipaddress.nil?
+    if ipaddress.nil?
       unless [nil, "localhost", "localhost.localdomain", "127.0.0.1"].include?(hostname)
         begin
           ipaddress = Socket.getaddrinfo(hostname, nil)[0][3]

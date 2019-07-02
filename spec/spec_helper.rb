@@ -1,9 +1,3 @@
-RSpec.configure do |config|
-  config.before(:each) do
-    allow(Socket).to receive(:getaddrinfo).and_return([["AF_INET", 0, "10.35.18.14", "10.35.18.14", 2, 1, 6], ["AF_INET", 0, "10.35.18.14", "10.35.18.14", 2, 2, 17], ["AF_INET", 0, "10.35.18.14", "10.35.18.14", 2, 3, 0]])
-  end
-end
-
 if ENV['CI']
   require 'simplecov'
   SimpleCov.start
