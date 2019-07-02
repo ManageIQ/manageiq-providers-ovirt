@@ -10,6 +10,16 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
     stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
     stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => false }})
+
+    allow(Socket).to receive(:getaddrinfo) do |hostname, _|
+      ipaddress = case hostname
+                  when "bodh1.usersys.redhat.com"
+                    "10.35.18.15"
+                  when "bodh1.usersys.redhat.com"
+                    "10.35.18.16"
+                  end
+      [["AF_INET", 0, ipaddress, ipaddress, 2, 1, 6], ["AF_INET", 0, ipaddress, ipaddress, 2, 2, 17], ["AF_INET", 0, ipaddress, ipaddress, 2, 3, 0]]
+    end
   end
 
   it "will perform a full refresh on v4.1" do
@@ -279,7 +289,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
         :ems_ref_obj      => "/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a",
         :name             => "bodh1",
         :hostname         => "bodh1.usersys.redhat.com",
-        :ipaddress        => "10.35.18.14",
+        :ipaddress        => "10.35.18.15",
         :uid_ems          => "5bf6b336-f86d-4551-ac08-d34621ec5f0a",
         :vmm_vendor       => "redhat",
         :vmm_version      => "7",
