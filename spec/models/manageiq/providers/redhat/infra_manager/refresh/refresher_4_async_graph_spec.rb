@@ -312,7 +312,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
         :ems_ref_obj      => "/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a",
         :name             => "bodh1",
         :hostname         => "bodh1.usersys.redhat.com",
-        :ipaddress        => "10.35.18.14",
+        :ipaddress        => "10.35.19.12",
         :uid_ems          => "5bf6b336-f86d-4551-ac08-d34621ec5f0a",
         :vmm_vendor       => "redhat",
         :vmm_version      => "7",
