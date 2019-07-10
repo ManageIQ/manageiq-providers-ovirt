@@ -3769,3 +3769,14 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/storagedomains/4a
     content-length: '694'
     correlation-id: 0eee77c0-b1cc-4687-8ee7-08feee5835db
   :message: 
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/0d37ca3b-cdbc-4b78-b0b9-7cd71ddc7e35/snapshots/ea03ec4c-9ebd-4fac-a373-0206fd4e6db8/disks{}GET:
+- :body: "<disks/>\n"
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message: 

@@ -2450,3 +2450,15 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/storagedomains/72
     content-length: '673'
     correlation-id: 21a1bc45-e618-47d9-8744-f2f32a394133
   :message: 
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/73914d83-90ca-426f-a2c7-37045bd00ebd/snapshots/777d9c48-6f88-454f-a7d2-59d9b365d0b3/disks{}GET:
+- :body: |
+     <disks/>
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message: 

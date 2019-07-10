@@ -6843,3 +6843,73 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/storagedomains/4a
     content-length: '695'
     correlation-id: 8a8cb96b-9609-4ada-87c7-8228bd71e07e
   :message: 
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/0d37ca3b-cdbc-4b78-b0b9-7cd71ddc7e35/snapshots/c1823dc1-f973-4721-8a56-6662b8b0969c/disks{}GET:
+- :body: |
+     <disks/>
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message: 
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/0d37ca3b-cdbc-4b78-b0b9-7cd71ddc7e35/snapshots/a9d106cd-470c-4514-8484-78572c96dd8d/disks{}GET:
+- :body: |
+     <disks/>
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message: 
+- :body: |
+     <disks/>
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message: 
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/d247a90f-678e-4639-84b2-d9aa8acae9f5/snapshots/db481143-9b2f-4400-9dc9-752ad0e0407a/disks{}GET:
+- :body: |
+     <disks/>
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message: 
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/0d37ca3b-cdbc-4b78-b0b9-7cd71ddc7e35/snapshots/c1823dc1-f973-4721-8a56-6662b8b0969c/disks{}GET:
+- :body: |
+     <disks/>
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message: 
+- :body: |
+     <disks/>
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message: 

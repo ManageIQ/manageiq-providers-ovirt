@@ -525,7 +525,6 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   def snapshots(persister_vm, vm)
     snaps = []
     return snaps if vm.try(:snapshots).nil?
-
     snapshots = collector.collect_snapshots(vm)
     snapshots = snapshots.sort_by(&:date).reverse
 
@@ -533,7 +532,6 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     snapshots.each do |snapshot|
       name = description = snapshot.description
       name = "Active Image" if name[0, 13] == '_ActiveImage_'
-
       snaps << persister.snapshots.find_or_build(:uid => snapshot.id).assign_attributes(
         :uid_ems        => snapshot.id,
         :uid            => snapshot.id,
@@ -544,6 +542,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :create_time    => snapshot.date.getutc,
         :current        => snapshot.snapshot_type == "active",
         :vm_or_template => persister_vm,
+        :total_size     => snapshot.instance_variable_get(:@total_size)
       )
       parent_id = snapshot.id
     end

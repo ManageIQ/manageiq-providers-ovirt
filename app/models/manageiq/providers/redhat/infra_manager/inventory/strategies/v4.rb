@@ -73,9 +73,16 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
         res.each { |inv_name, inv| res[inv_name] = collect_inv_with_attributes_async(inv, inv_name_to_inv_type(inv_name)) }
         preloaded_disks = collect_disks_as_hash(res[:disk])
         collect_disks_from_attachments(res[:vm], preloaded_disks)
+        collect_snapshots_total_size(res[:vm])
         collect_disks_from_attachments(res[:template], preloaded_disks)
         collect_vnic_profiles(res)
         res
+      end
+    end
+
+    def collect_snapshots_total_size(vms)
+      vms.each do |vm|
+        ManageIQ::Providers::Redhat::Inventory::Collector.add_snapshot_disks_total_size(connection, vm.snapshots, vm.id)
       end
     end
 

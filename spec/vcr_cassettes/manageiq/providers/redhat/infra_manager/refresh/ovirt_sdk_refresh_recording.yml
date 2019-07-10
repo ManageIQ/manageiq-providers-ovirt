@@ -5275,6 +5275,42 @@ https://localhost:8443/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f
     correlation-id: 462db5bd-7241-4577-8b49-959903c7823b
     date: Thu, 03 Aug 2017 10:38:47 GMT
   :message: 
+https://localhost:8443/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f/snapshots/05ff445a-0bfc-44c3-90d1-a338e9095510/disks{}GET:
+- :body: |
+     <disks/>
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message: 
+https://localhost:8443/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f/snapshots/e13fc61c-c566-4264-9a75-0e62fe5d7a30/disks{}GET:
+- :body: |
+     <disks/>
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message: 
+https://localhost:8443/ovirt-engine/api/vms/072093dc-3492-4cb1-b240-dbf88a8f4fbf/snapshots/677a1c40-8112-4e4a-bd03-c430e7505912/disks{}GET:
+- :body: |
+     <disks/>
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message: 
 https://localhost:8443/ovirt-engine/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f/snapshots{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -6462,3 +6498,25 @@ https://localhost:8443/ovirt-engine/api/datacenters/00000001-0001-0001-0001-0000
     correlation-id: 520ea7d8-2e9e-49d8-8526-39251ebfb81e
     date: Thu, 03 Aug 2017 10:38:48 GMT
   :message: 
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/0d37ca3b-cdbc-4b78-b0b9-7cd71ddc7e35/snapshots/c1823dc1-f973-4721-8a56-6662b8b0969c/disks{}GET:
+- :body: "<disks/>\n"
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message:
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/0d37ca3b-cdbc-4b78-b0b9-7cd71ddc7e35/snapshots/0177be37-7b22-4ea8-8285-9af53a31ad3b/disks{}GET:
+- :body: "<disks/>\n"
+  :code: 200
+  :headers:
+    content-encoding: gzip
+    connection: keep-alive
+    content-type: application/xml
+    content-length: '309'
+    correlation-id: 602d8e11-f25b-4684-86b8-40de9d9c6932
+    date: Thu, 03 Aug 2017 10:38:46 GMT
+  :message:
