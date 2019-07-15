@@ -54,11 +54,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies
         location = if storage_type == 'NFS' || storage_type == 'GLUSTERFS'
                      "#{storage_inv.dig(:storage, :address)}:#{storage_inv.dig(:storage, :path)}"
                    else
-                     # TODO: this is taking only one location for some reason. Need to investigate
-                     # how this is used
-                     logical_units = storage_inv.dig(:storage, :volume_group, :logical_units)
-                     logical_unit =  logical_units && logical_units.first
-                     logical_unit && logical_unit.id
+                     storage_inv.dig(:storage, :volume_group, :id)
                    end
 
         free        = storage_inv.try(:available).to_i

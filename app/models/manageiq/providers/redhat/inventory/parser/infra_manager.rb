@@ -41,9 +41,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       location = if storage_type == 'NFS' || storage_type == 'GLUSTERFS'
                    "#{storagedomain.dig(:storage, :address)}:#{storagedomain.dig(:storage, :path)}"
                  else
-                   logical_units = storagedomain.dig(:storage, :volume_group, :logical_units)
-                   logical_unit =  logical_units && logical_units.first
-                   logical_unit && logical_unit.id
+                   storagedomain.dig(:storage, :volume_group, :id)
                  end
 
       free        = storagedomain.try(:available).to_i
