@@ -24,8 +24,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   end
 
   def use_graph_refresh?
-    Settings.ems_refresh.rhevm.try(:[], :inventory_object_refresh) &&
-      use_ovirt_sdk? && supported_api_versions.include?('4')
+    true
   end
 
   def apply_connection_options_defaults(options)
