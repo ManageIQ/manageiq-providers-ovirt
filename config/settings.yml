@@ -55,7 +55,6 @@
     :user:
 :ems_refresh:
   :rhevm:
-    :inventory_object_refresh: true
     :pipeline: 40
     :connections: 10
   :redhat_network:
