@@ -251,9 +251,6 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
   end
 
   def set_or_default_hardware_field_values(vm)
-    unless source_ems.use_ovirt_sdk?
-      vm.memory_limit = nil
-    end
     super(vm)
   end
 
@@ -263,9 +260,6 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
 
     ems = source_ems
     return nil if ems.blank?
-    unless ems.use_ovirt_sdk?
-      return _("Memory Limit is supported only when using ovirt-engine-sdk (To enable, set: ':use_ovirt_engine_sdk: true' in settings.yml).")
-    end
 
     unless ems.version_at_least?("4.1")
       return _("Memory Limit is supported for RHV 4.1 and above. Current provider version is %{version}.") % {:version => ems.api_version}

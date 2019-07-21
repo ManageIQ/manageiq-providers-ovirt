@@ -180,7 +180,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   end
 
   def use_ovirt_sdk?
-    ::Settings.ems.ems_redhat.use_ovirt_engine_sdk
+    true
   end
 
   class_methods do

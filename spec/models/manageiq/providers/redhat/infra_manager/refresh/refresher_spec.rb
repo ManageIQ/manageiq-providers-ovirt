@@ -14,13 +14,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       it 'returns the api4 refresher' do
         expect(ems.refresher).to eq(ManageIQ::Providers::Redhat::InfraManager::Refresh::Strategies::Api4)
       end
-
-      context "when use_ovirt_engine_sdk setting is turned to false" do
-        let(:use_ovirt_engine_sdk) { false }
-        it 'returns the api4 refresher' do
-          expect(ems.refresher).to eq(ManageIQ::Providers::Redhat::InfraManager::Refresh::Strategies::Api3)
-        end
-      end
     end
 
     context "when v3 api" do
