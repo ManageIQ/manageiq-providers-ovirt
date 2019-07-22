@@ -17,13 +17,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::ParserBuilde
         expect(subject).to eq(ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies::Api4)
       end
 
-      context "when use_ovirt_engine_sdk setting is turned to false" do
-        let(:use_ovirt_engine_sdk) { false }
-        it 'returns the api3 parser' do
-          expect(subject).to eq(ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::Strategies::Api3)
-        end
-      end
-
       context "forced version 3" do
         let(:options) { { :force_version => 3 } }
 
