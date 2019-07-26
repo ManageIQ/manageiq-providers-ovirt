@@ -28,6 +28,10 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
     unsupported_reason_add(:vm_import, _('Cannot import to a RHV provider of version < 4.1.5')) unless version_at_least?('4.1.5')
   end
 
+  def inventory_object_refresh?
+    true
+  end
+
   def supports_admin_ui?
     # Link to oVirt Admin UI is supported for Engine version 4.1.8 or better.
     # See https://bugzilla.redhat.com/1512989 for details.
