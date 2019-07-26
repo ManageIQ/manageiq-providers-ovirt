@@ -5,7 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-8
+## Ivanchuk Beta1
+
+### Added
+- Add ConversionHost and ServiceTemplateTransformationPlan subclasses [(#339)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/339)
+
+### Fixed
+- Fixes for host_switches [(#338)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/338)
+- Fix bug in vm targeted refresh [(#331)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/331)
+- Fix parse_targeted_inventory to call inv.parse [(#328)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/328)
+- Fix targeted host refresh [(#316)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/316)
+- EMS validation with maintenance zone specs fix [(#311)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/311)
+- mapping from "powering_up" to "on" [(#346)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/346)
+- Skip VMs missing a cluster when saving relats [(#343)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/343)
+
+## Hammer-8 - Released 2019-07-02
 
 ### Fixed
 - Implement provisioning independent thin VM [(#372)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/372)
@@ -35,32 +49,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Fixed
 - Fix deleting a disk from VM [(#348)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/348)
 
-## Unreleased as of Sprint 106 ending 2019-03-04
-
-### Fixed
-- mapping from "powering_up" to "on" [(#346)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/346)
-- Skip VMs missing a cluster when saving relats [(#343)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/343)
-
 ## Hammer-3 - Released 2019-03-06
 
 ### Fixed
 - Host targeted refresh deleting and re-creating storage, switch, and lan records [(#336)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/336)
-
-## Unreleased as of Sprint 105 ending 2019-02-18
-
-### Added
-- Add ConversionHost and ServiceTemplateTransformationPlan subclasses [(#339)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/339)
-
-### Fixed
-- Fixes for host_switches [(#338)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/338)
-
-## Unreleased as of Sprint 102 ending 2019-01-07
-
-### Fixed
-- Fix bug in vm targeted refresh [(#331)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/331)
-- Fix parse_targeted_inventory to call inv.parse [(#328)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/328)
-- Fix targeted host refresh [(#316)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/316)
-- EMS validation with maintenance zone specs fix [(#311)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/311)
 
 ## Hammer-1 - Released 2019-01-15
 
