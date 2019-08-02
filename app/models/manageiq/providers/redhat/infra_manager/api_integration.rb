@@ -515,7 +515,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     # @return [Exception] The exception that the ManageIQ expects.
     #
     # @api private
-    #rhevm_metrics_connect_options
+    # rhevm_metrics_connect_options
     def adapt_metrics_error(error)
       case error
       when PG::Error

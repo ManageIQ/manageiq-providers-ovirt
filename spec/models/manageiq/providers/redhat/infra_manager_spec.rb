@@ -49,9 +49,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
       it 'raises MiqEVMLoginError in case of connection error' do
         msg = "FATAL:  no pg_hba.conf entry for host ...."
         allow(OvirtMetrics).to receive(:connect).and_raise(msg)
-        expect {
-          ems.verify_credentials('metrics')
-        }.to raise_error(MiqException::MiqEVMLoginError)
+        expect { ems.verify_credentials('metrics') }.to raise_error(MiqException::MiqEVMLoginError)
       end
     end
   end
