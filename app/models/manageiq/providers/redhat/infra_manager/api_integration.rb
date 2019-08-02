@@ -522,7 +522,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
         message = error.message
         message = error.message[6..-1] if message.starts_with?('FATAL:')
         message = message.strip
-        _log.warn("PG::Error: #{message}")
+        _log.warn("#{error.class.name}: #{message}")
         MiqException::MiqEVMLoginError.new(message)
       else
         MiqException::MiqEVMLoginError.new(error.to_s)
