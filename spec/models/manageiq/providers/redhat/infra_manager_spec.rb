@@ -42,6 +42,18 @@ describe ManageIQ::Providers::Redhat::InfraManager do
     end
   end
 
+  describe "verify_credentials" do
+    let(:ems) { FactoryBot.create(:ems_redhat) }
+
+    context "metrics" do
+      it 'raises MiqEVMLoginError in case of connection error' do
+        msg = "FATAL:  no pg_hba.conf entry for host ...."
+        allow(OvirtMetrics).to receive(:connect).and_raise(PG::ConnectionBad, msg)
+        expect { ems.verify_credentials('metrics') }.to raise_error(MiqException::MiqEVMLoginError)
+      end
+    end
+  end
+
   context "#vm_reconfigure" do
     context "version 4" do
       context "#vm_reconfigure" do

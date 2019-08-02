@@ -515,14 +515,14 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     # @return [Exception] The exception that the ManageIQ expects.
     #
     # @api private
-    #
+    # rhevm_metrics_connect_options
     def adapt_metrics_error(error)
       case error
-      when PGError
+      when PG::Error
         message = error.message
         message = error.message[6..-1] if message.starts_with?('FATAL:')
         message = message.strip
-        _log.warn("PGError: #{message}")
+        _log.warn("#{error.class.name}: #{message}")
         MiqException::MiqEVMLoginError.new(message)
       else
         MiqException::MiqEVMLoginError.new(error.to_s)
