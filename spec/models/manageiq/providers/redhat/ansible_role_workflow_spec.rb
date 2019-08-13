@@ -1,5 +1,5 @@
 describe ManageIQ::Providers::Redhat::AnsibleRoleWorkflow do
-  let(:job)          { ManageIQ::Providers::Redhat::AnsibleRoleWorkflow.create_job(*options).tap { |job| job.state = state } }
+  let(:job)          { described_class.create_job(*options).tap { |job| job.state = state } }
   let(:role_options) { {:role_name => 'role_name', :roles_path => 'path/role', :role_skip_facts => true } }
   let(:extra_vars)   { { arg1: "arg2" } }
   let(:options)      { [{"ENV" => "VAR"}, extra_vars, role_options] }
@@ -26,7 +26,7 @@ describe ManageIQ::Providers::Redhat::AnsibleRoleWorkflow do
         expect(File.directory?(job.context[:ansible_cert_dir])).to be_truthy
       end
 
-      it "creates creates a file and adds its path to the extra vars" do
+      it "creates a file and adds its path to the extra vars" do
         job.signal(:start)
         ec_file_path = job.options[:extra_vars][:engine_cafile]
         expect(ec_file_path).not_to be_nil
