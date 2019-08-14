@@ -6,7 +6,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   let(:ip_address) { '192.168.1.107' }
 
   before(:each) do
-    init_defaults(:hostname => 'localhost', :ipaddress => 'localhost', :port => 8443)
+    init_defaults(:hostname => 'pluto-vdsg.eng.lab.tlv.redhat.com', :ipaddress => '10.35.19.13', :port => 443)
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/refresher_target_host.yml')
 
     @ems.default_endpoint.path = "/ovirt-engine/api"
@@ -23,10 +23,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
   before(:each) do
     @cluster = FactoryBot.create(:ems_cluster,
-                                  :ems_ref               => "/ovirt-engine/api/clusters/59c8cd2d-01d6-0367-037e-0000000002f7",
-                                  :uid_ems               => "11acc1a0-66c7-4aba-a00f-fa2648c9b51f",
-                                  :ext_management_system => @ems,
-                                  :name                  => "Default")
+                                 :ems_ref               => "/ovirt-engine/api/clusters/b875154c-5b87-4068-aa3f-f32c4d672193",
+                                 :uid_ems               => "b875154c-5b87-4068-aa3f-f32c4d672193",
+                                 :ext_management_system => @ems,
+                                 :name                  => "Default")
 
     @host = FactoryBot.create(:host_redhat,
                                :ext_management_system => @ems,

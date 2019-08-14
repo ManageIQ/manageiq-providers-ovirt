@@ -21,9 +21,14 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   COUNTED_MODELS = [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze
 
   it 'does not change the vm when target refresh after full refresh' do
+    allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).with(kind_of(Hash)) do |opts|
+      Spec::Support::OvirtSDK::ConnectionVCR.new(opts,
+                                                 'spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_graph_target_vm_after_full.yml',
+                                                 false)
+    end
     EmsRefresh.refresh(@ems)
     @ems.reload
-    vm = VmOrTemplate.where(:name => "vm1").first
+    vm = VmOrTemplate.where(:name => "vm_on").first
     expect(vm.ems_id).to eq(@ems.id)
     saved_vm             = vm_to_comparable_hash(vm)
     saved_counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
@@ -42,7 +47,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     end
     EmsRefresh.refresh(@ems)
     @ems.reload
-    vm = VmOrTemplate.where(:name => "vm1").first
+    vm = VmOrTemplate.where(:name => "vm_on").first
     expect(vm.ems_id).to eq(@ems.id)
     expect(vm.host_id).to be_present
     saved_vm             = vm_to_comparable_hash(vm)
@@ -59,7 +64,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   it 'refreshes successfuly after snapshot removal' do
     EmsRefresh.refresh(@ems)
     @ems.reload
-    vm = VmOrTemplate.where(:name => "vm1").first
+    vm = VmOrTemplate.where(:name => "vm_on_with_snapshots").first
     expect(vm.reload.snapshots.count).to eq(2)
     EmsRefresh.refresh(vm)
     expect(vm.reload.snapshots.count).to eq(1)
@@ -73,10 +78,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     end
     EmsRefresh.refresh(@ems)
     @ems.reload
-    vm = VmOrTemplate.where(:name => "vm3").first
-    expect(VmOrTemplate.where(:name => "vm3").first.ems_id).not_to be_nil
+    vm = VmOrTemplate.where(:name => "vm_to_be_deleted").first
+    expect(VmOrTemplate.where(:name => "vm_to_be_deleted").first.ems_id).not_to be_nil
     EmsRefresh.refresh(vm)
-    expect(VmOrTemplate.where(:name => "vm3").first.ems_id).to be_nil
+    expect(VmOrTemplate.where(:name => "vm_to_be_deleted").first.ems_id).to be_nil
   end
 
   def vm_to_comparable_hash(vm)

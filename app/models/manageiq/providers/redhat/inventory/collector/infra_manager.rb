@@ -48,7 +48,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::InfraManager < ManageIQ
   end
 
   def collect_vnic_profiles
-    collected_inventory[:vnic_profiles]
+    collected_inventory[:vnic_profile]
   end
 
   def collect_host_nics(host)

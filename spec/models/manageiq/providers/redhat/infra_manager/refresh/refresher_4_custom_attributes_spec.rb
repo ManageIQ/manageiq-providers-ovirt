@@ -9,8 +9,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_recording_custom_attrs.yml')
 
     @collector = ManageIQ::Providers::Redhat::Inventory::Collector
-    allow_any_instance_of(@collector)
-      .to receive(:collect_vnic_profiles).and_return([])
 
     stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
     stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
@@ -23,7 +21,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       EmsRefresh.refresh(@ems.network_manager)
     end
     @ems.reload
-    vm = Vm.where(:name => 'my-cirros-vm').first
+    vm = Vm.where(:name => 'vm_off').first
     expect(vm.custom_attributes.count).to eq(1)
     EmsRefresh.refresh(vm)
     vm.reload
@@ -37,7 +35,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       EmsRefresh.refresh(@ems.network_manager)
     end
 
-    vm = Vm.where(:name => 'my-cirros-vm').first
+    vm = Vm.where(:name => 'vm_off').first
     vm.ems_custom_attributes.first.destroy # This should be recreated
     vm.ems_custom_attributes.create(:section => 'custom_field', :name => "delete_me", :value => "please") # This should be deleted
     vm.miq_custom_set('test-key', 'test-val')
@@ -61,8 +59,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       EmsRefresh.refresh(@ems.network_manager)
     end
 
-    vm = Vm.where(:name => 'my-cirros-vm').first
-    other_vm = Vm.find_by(:name => 'vm2323')
+    vm = Vm.find_by(:name => 'vm_on')
+    other_vm = Vm.find_by(:name => 'vm_off')
 
     expect(other_vm.ems_custom_attributes.count).to eq(1)
 

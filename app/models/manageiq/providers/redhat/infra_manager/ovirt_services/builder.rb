@@ -22,7 +22,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
 
     def api_version(args)
       return ext_management_system.highest_supported_api_version if args[:use_highest_supported_version]
-      ext_management_system.highest_allowed_api_version
+      4
     end
   end
 end

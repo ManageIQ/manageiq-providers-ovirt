@@ -44,6 +44,23 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     nets
   end
 
+  def collect_vnic_profiles
+    vnics = []
+    return vnics if references(:vnic_profiles).blank?
+
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      references(:vnic_profiles).each do |ems_ref|
+        begin
+          vnics << connection.system_service.vnic_profiles_service.vnic_profile_service(uuid_from_ems_ref(ems_ref)).get
+        rescue OvirtSDK4::Error # when 404
+          nil
+        end
+      end
+    end
+
+    vnics
+  end
+
   def storagedomains
     domains = []
     return domains if references(:storagedomains).blank?

@@ -83,33 +83,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine do
     }
   end
 
-  context "version 3" do
-    include_examples "End-to-end State Machine Run"
-
-    ### BRANCH STATES
-    def test_autostart_destination_with_use_cloud_init
-      task.phase_context[:boot_with_cloud_init] = true
-
-      xml = double("XML")
-      expect(xml).to receive(:use_cloud_init).with(true)
-      expect(rhevm_vm).to receive(:start).and_yield(xml)
-
-      call_method
-    end
-
-    def test_autostart_destination_without_use_cloud_init
-      task.phase_context.delete(:boot_with_cloud_init)
-
-      xml = double("XML")
-      expect(xml).not_to receive(:use_cloud_init)
-      expect(rhevm_vm).to receive(:start).and_yield(xml)
-
-      call_method
-    end
-
-    let(:supported_api_versions) { [3] }
-  end
-
   context "version 4" do
     let(:supported_api_versions) { [3, 4] }
 
