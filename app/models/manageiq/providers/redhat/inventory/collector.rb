@@ -157,4 +157,40 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
       connection.follow_link(dc.storage_domains)
     end
   end
+
+  def collect_vm_disks(vm)
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      disk_attachments = connection.follow_link(vm.disk_attachments)
+      disk_attachments.collect do |disk_attachment|
+        connection.follow_link(disk_attachment.disk)
+      end
+    end
+  end
+
+  def vm_or_template_by_path(path)
+    uuid = ::File.basename(path, '.*')
+    vm      = vm_by_uuid(uuid)
+    vm      = template_by_uuid(uuid) if vm.blank?
+    vm
+  end
+
+  def vm_by_uuid(uuid)
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      begin
+        connection.system_service.vms_service.vm_service(uuid).get
+      rescue OvirtSDK4::Error # when 404
+        nil
+      end
+    end
+  end
+
+  def template_by_uuid(uuid)
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      begin
+        connection.system_service.templates_service.template_service(uuid).get
+      rescue OvirtSDK4::Error # when 404
+        nil
+      end
+    end
+  end
 end
