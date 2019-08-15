@@ -339,13 +339,13 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm.href)
 
-      host = vm.try(:host) || vm.try(:placement_policy).try(:hosts).try(:first)
-      host_ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(host.href) if host.present?
+      host_obj = vm.try(:host) || vm.try(:placement_policy).try(:hosts).try(:first)
+      host_ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(host_obj.href) if host_obj.present?
 
       datacenter_id = collector.datacenter_by_cluster_id[vm.cluster.id]
       parent_folder = persister.ems_folders.lazy_find("#{datacenter_id}_vm")
       resource_pool = persister.resource_pools.lazy_find("#{vm.cluster.id}_respool") unless template
-      host          = persister.hosts.lazy_find(host_ems_ref)
+      host          = persister.hosts.lazy_find(host_ems_ref) if host_ems_ref.present?
 
       storages, disks = storages(vm)
 
@@ -497,7 +497,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       profiles = collector.collect_vnic_profiles
       vnic_profile = profiles.detect { |p| p.id == profile_id } if profile_id && profiles
       network_id = vnic_profile.dig(:network, :id) if vnic_profile
-      lan = if network_id
+      lan = if network_id && host
               switch = persister.host_virtual_switches.lazy_find(
                 :host    => host,
                 :uid_ems => network_id
