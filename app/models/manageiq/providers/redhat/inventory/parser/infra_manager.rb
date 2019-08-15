@@ -339,12 +339,13 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm.href)
 
-      host = vm.try(:host) || vm.try(:placement_policy).try(:hosts).try(:first)
-      host_ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(host.href) if host.present?
+      host_obj = vm.try(:host) || vm.try(:placement_policy).try(:hosts).try(:first)
+      host_ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(host_obj.href) if host_obj.present?
 
       datacenter_id = collector.datacenter_by_cluster_id[vm.cluster.id]
       parent_folder = persister.ems_folders.lazy_find("#{datacenter_id}_vm")
       resource_pool = persister.resource_pools.lazy_find("#{vm.cluster.id}_respool") unless template
+      host          = persister.hosts.lazy_find(host_ems_ref) if host_ems_ref.present?
 
       storages, disks = storages(vm)
 
@@ -367,7 +368,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :memory_reserve   => vm_memory_reserve(vm),
         :raw_power_state  => template ? "never" : vm.status,
         :boot_time        => vm.try(:start_time),
-        :host             => persister.hosts.lazy_find(host_ems_ref),
+        :host             => host,
         :ems_cluster      => persister.ems_clusters.lazy_find({:uid_ems => vm.cluster.id}, :ref => :by_uid_ems),
         :storages         => storages,
         :storage          => storages.first,
@@ -376,7 +377,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       )
 
       snapshots(persister_vm, vm)
-      vm_hardware(persister_vm, vm, disks, template)
+      vm_hardware(persister_vm, vm, disks, template, host)
       operating_systems(persister_vm, vm)
       custom_attributes(persister_vm, vm)
     end
@@ -399,7 +400,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     return storages, disks
   end
 
-  def vm_hardware(presister_vm, vm, disks, template)
+  def vm_hardware(presister_vm, vm, disks, template, host)
     topology = vm.cpu.topology
     cpu_socks = topology.try(:sockets) || 1
     cpu_cores = topology.try(:cores) || 1
@@ -415,7 +416,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
     hardware_disks(persister_hardware, disks)
     addresses = hardware_networks(persister_hardware, vm) unless template
-    vm_hardware_guest_devices(persister_hardware, vm, addresses) unless template
+    vm_hardware_guest_devices(persister_hardware, vm, addresses, host) unless template
   end
 
   def hardware_networks(persister_hardware, vm)
@@ -476,7 +477,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     end
   end
 
-  def vm_hardware_guest_devices(persister_hardware, vm, addresses)
+  def vm_hardware_guest_devices(persister_hardware, vm, addresses, host)
     networks = {}
     addresses.each do |mac, address|
       network = persister.networks.lazy_find_by(
@@ -496,9 +497,9 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       profiles = collector.collect_vnic_profiles
       vnic_profile = profiles.detect { |p| p.id == profile_id } if profile_id && profiles
       network_id = vnic_profile.dig(:network, :id) if vnic_profile
-      lan = if network_id
+      lan = if network_id && host
               switch = persister.host_virtual_switches.lazy_find(
-                :host    => persister_hardware.vm_or_template&.host,
+                :host    => host,
                 :uid_ems => network_id
               )
 
