@@ -42,6 +42,12 @@ module Spec::Support::OvirtSDK
       super
     end
 
+    def revoke_access_token
+      return unless is_recording
+
+      super
+    end
+
     def http_response_to_hash(http_response)
       {
         :body    => http_response.body,
