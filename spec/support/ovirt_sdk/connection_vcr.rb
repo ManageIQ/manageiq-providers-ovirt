@@ -44,6 +44,7 @@ module Spec::Support::OvirtSDK
 
     def revoke_access_token
       return unless is_recording
+
       super
     end
 
