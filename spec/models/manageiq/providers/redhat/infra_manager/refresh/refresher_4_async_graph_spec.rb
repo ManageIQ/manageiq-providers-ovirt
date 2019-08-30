@@ -68,6 +68,23 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(VmOrTemplate.where(:uid_ems => "3a9401a0-bf3d-4496-8acf-edd3e903511f").count).to eq 1
   end
 
+  it 'preserve last boot time after vm refresh' do
+    vm = FactoryBot.create(:vm_redhat,
+                           :ext_management_system => @ems,
+                           :ems_ref               => "/api/vms/1010ec66-5d68-4ae6-b72b-824f5885259d",
+                           :ems_ref_obj           => "/api/vms/1010ec66-5d68-4ae6-b72b-824f5885259d",
+                           :uid_ems               => "1010ec66-5d68-4ae6-b72b-824f5885259d",
+                           :vendor                => "redhat",
+                           :boot_time             => Time.zone.parse("2017-08-02T06:53:36.148"),
+                           :raw_power_state       => "up")
+
+    EmsRefresh.refresh(@ems)
+    @ems.reload
+
+    refresh_vm = VmOrTemplate.find_by(:uid_ems => "1010ec66-5d68-4ae6-b72b-824f5885259d")
+    expect(refresh_vm.boot_time).to eq(vm.boot_time)
+  end
+
   def assert_table_counts(_lan_number)
     expect(ExtManagementSystem.count).to eq(2)
     expect(EmsFolder.count).to eq(7)
