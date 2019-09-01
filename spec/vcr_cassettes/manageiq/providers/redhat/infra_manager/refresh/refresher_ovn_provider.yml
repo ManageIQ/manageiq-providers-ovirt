@@ -5,7 +5,7 @@ http_interactions:
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -78,7 +78,7 @@ http_interactions:
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -161,7 +161,7 @@ http_interactions:
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -202,7 +202,7 @@ http_interactions:
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -243,7 +243,7 @@ http_interactions:
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -284,7 +284,7 @@ http_interactions:
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -325,7 +325,7 @@ http_interactions:
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -366,7 +366,7 @@ http_interactions:
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -407,7 +407,7 @@ http_interactions:
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456}}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123}}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -480,7 +480,7 @@ http_interactions:
     uri: http://localhost:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":123456},"tenantName":"tenant"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"tenant"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
