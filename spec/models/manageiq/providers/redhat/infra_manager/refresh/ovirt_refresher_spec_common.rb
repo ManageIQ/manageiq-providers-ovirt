@@ -28,7 +28,7 @@ module OvirtRefresherSpecCommon
                  zone: @zone)
     @ems = FactoryBot.create(:ems_redhat, :zone => zone, :hostname => hostname, :ipaddress => ipaddress,
                              :port => port)
-    @ems.update_authentication(:default => {:userid => "admin@internal", :password => "123456"})
+    @ems.update_authentication(:default => {:userid => "admin@internal", :password => "pass123"})
     @ems.default_endpoint.verify_ssl = OpenSSL::SSL::VERIFY_NONE
     allow(@ems).to(receive(:supported_api_versions).and_return(%w(3 4)))
 
