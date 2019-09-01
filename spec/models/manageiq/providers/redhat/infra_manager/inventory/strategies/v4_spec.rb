@@ -3,7 +3,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4 do
     _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
     @ems = FactoryBot.create(:ems_redhat, :zone => zone, :hostname => "localhost", :ipaddress => "localhost",
                               :port => 8443)
-    @ems.update_authentication(:default => {:userid => "admin@internal", :password => "123456"})
+    @ems.update_authentication(:default => {:userid => "admin@internal", :password => "pass123"})
     @ems.default_endpoint.verify_ssl = OpenSSL::SSL::VERIFY_NONE
     allow(@ems).to(receive(:supported_api_versions).and_return([3, 4]))
     stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
