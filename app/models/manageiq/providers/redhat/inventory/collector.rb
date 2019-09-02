@@ -158,6 +158,12 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
     end
   end
 
+  def collect_disks_of_snapshot(snapshot)
+    manager.with_provider_connection(VERSION_HASH) do |connection|
+      connection.follow_link(snapshot.disks)
+    end
+  end
+
   def collect_vm_disks(vm)
     manager.with_provider_connection(VERSION_HASH) do |connection|
       disk_attachments = connection.follow_link(vm.disk_attachments)
