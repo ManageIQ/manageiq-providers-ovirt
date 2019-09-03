@@ -289,6 +289,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
   def network_from_nic(nic, dc, networks)
     return unless dc
+
     network_id = nic.dig(:network, :id)
     if network_id
       # TODO: check to indexed_networks = networks.index_by(:id)
@@ -361,7 +362,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
                              else
                                persister.vms
                              end
-      persister_vm = collection_persister.find_or_build(vm.id).assign_attributes(
+      attrs_to_assign = {
         :type             => template ? "ManageIQ::Providers::Redhat::InfraManager::Template" : "ManageIQ::Providers::Redhat::InfraManager::Vm",
         :ems_ref          => ems_ref,
         :ems_ref_obj      => ems_ref,
@@ -374,14 +375,17 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :memory_limit     => extract_vm_memory_policy(vm, :max),
         :memory_reserve   => vm_memory_reserve(vm),
         :raw_power_state  => template ? "never" : vm.status,
-        :boot_time        => vm.try(:start_time),
         :host             => host,
         :ems_cluster      => persister.ems_clusters.lazy_find({:uid_ems => vm.cluster.id}, :ref => :by_uid_ems),
         :storages         => storages,
         :storage          => storages.first,
         :parent           => parent_folder,
-        :resource_pool    => resource_pool,
-      )
+        :resource_pool    => resource_pool
+      }
+      boot_time = vm.try(:start_time)
+      attrs_to_assign[:boot_time] = boot_time unless boot_time.nil?
+
+      persister_vm = collection_persister.find_or_build(vm.id).assign_attributes(attrs_to_assign)
 
       snapshots(persister_vm, vm)
       vm_hardware(persister_vm, vm, disks, template, host)
@@ -497,6 +501,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
     collector.collect_nics(vm).each do |nic|
       next if nic.blank?
+
       mac = nic.mac && nic.mac.address ? nic.mac.address : nil
       network = mac && networks.present? ? networks[mac] : nil
 
@@ -524,6 +529,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   def snapshots(persister_vm, vm)
     snaps = []
     return snaps if vm.try(:snapshots).nil?
+
     snapshots = collector.collect_snapshots(vm)
     snapshots = snapshots.sort_by(&:date).reverse
 
