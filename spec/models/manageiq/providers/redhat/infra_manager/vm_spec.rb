@@ -159,6 +159,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
     end
   end
 
+  describe "#support_conversion_host" do
+    it "supports conversion_host" do
+      expect(FactoryBot.create(:vm_redhat).supports_conversion_host?).to eq true
+    end
+  end
+
   describe "#disconnect_storage" do
     before(:each) do
       _, _, zone = EvmSpecHelper.create_guid_miq_server_zone

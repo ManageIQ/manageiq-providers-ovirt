@@ -35,6 +35,8 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm < ManageIQ::Providers::Infra
     end
   end
 
+  supports :conversion_host
+
   POWER_STATES = {
     'up'          => 'on',
     'powering_up' => 'on',
