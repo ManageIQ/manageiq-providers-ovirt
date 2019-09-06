@@ -248,6 +248,51 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       end
     end
 
+    # Validate Credentials
+    #
+    # args: {
+    #   "endpoints" => {
+    #     "default" => {
+    #       "username" => String,
+    #       "password" => String,
+    #       "server" => String,
+    #       "port" => Integer,
+    #       "verify_ssl" => [VERIFY_NONE, VERIFY_PEER],
+    #       "ca_certs" => String
+    #     },
+    #     "metrics" => {
+    #       "metrics_username" => String,
+    #       "metrics_password" => String,
+    #       "metrics_port" => Integer,
+    #     }
+    #   }
+    # }
+    def validate_credentials(args)
+      default_endpoint = args.dig("endpoints", "default")
+      metrics_endpoint = args.dig("endpoints", "metrics")
+
+      username, password, server, port, verify_ssl, ca_certs = default_endpoint&.values_at(
+        "username", "password", "server", "port", "verify_ssl", "ca_certs"
+      )
+
+      metrics_username, metrics_password, metrics_port, metrics_database = metrics_endpoint&.values_at(
+        "metrics_username", "metrics_password", "metrics_port", "metrics_database"
+      )
+
+      raw_connect(
+        :username         => username,
+        :password         => password,
+        :server           => server,
+        :port             => port,
+        :verify_ssl       => verify_ssl ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
+        :ca_certs         => ca_certs,
+        :metrics_username => metrics_username,
+        :metrics_password => metrics_password,
+        :metrics_port     => metrics_port,
+        :metrics_database => metrics_database
+      )
+    end
+
     #
     # This method is called only when the UI button to verify the connection details is clicked. It isn't used create
     # the connections actually used by the provider.
@@ -265,7 +310,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     #   be checked.
     # @option opts [String] :ca_certs The custom trusted CA certificates used to check the TLS certificates of the
     #   API server, in PEM format. A blank or nil value means that no custom CA certificates should be used.
-    # @option opts [String] :metrics_userid The name of the metrics database user.
+    # @option opts [String] :metrics_username The name of the metrics database user.
     # @option opts [String] :metrics_password The password of the metrics database user.
     # @options opts [String] :metrics_server The host name or IP address of the metrics database server.
     # @options opts [Integer] :metrics_port ('5432') The port number of the metrics database server.
