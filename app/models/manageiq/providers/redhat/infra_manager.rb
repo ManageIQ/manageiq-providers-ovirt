@@ -195,6 +195,17 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
         :name      => "endpoints.metrics.database",
         :label     => "Database Name"
       },
+      {
+        :component => "text-field",
+        :name      => "endpoints.ssh.username",
+        :label     => "Username"
+      },
+      {
+        :component => "text-field",
+        :name      => "endpoints.ssh.private_key",
+        :label     => "Private Key",
+        :type      => "password"
+      }
     ]
   }.freeze
 
