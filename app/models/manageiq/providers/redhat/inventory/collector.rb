@@ -41,8 +41,14 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
     end
   end
 
-  def collect_vnic_profiles
+  def collect_network_attachments(host_id)
     manager.with_provider_connection(VERSION_HASH) do |connection|
+      connection.system_service.hosts_service.host_service(host_id).network_attachments_service.list
+    end
+  end
+
+  def collect_vnic_profiles
+    @vnic_profiles ||= manager.with_provider_connection(VERSION_HASH) do |connection|
       connection.system_service.vnic_profiles_service.list
     end
   end

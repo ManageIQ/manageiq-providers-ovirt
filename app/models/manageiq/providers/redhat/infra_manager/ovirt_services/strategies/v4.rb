@@ -919,7 +919,8 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       )
     end
 
-    def private_load_allowed_networks(vlans, uid_ems_cluster)
+    # TODO: @borod108 consider if we can get this from local as well during provisioning
+    def private_load_allowed_networks_from_provider(vlans, uid_ems_cluster)
       profiles = get_vnic_profiles_in_cluster(uid_ems_cluster)
       profiles.each do |profile, profile_network|
         vlans[profile.id] = "#{profile.name} (#{profile_network.name})"
@@ -929,10 +930,38 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       vlans['<Template>'] = _('<Use template nics>')
     end
 
+    def private_load_allowed_networks(vlans, uid_ems_cluster)
+      profiles = local_get_vnic_profiles_in_cluster(uid_ems_cluster)
+      profiles.each do |profile, profile_network|
+        vlans[profile.uid_ems] = "#{profile.name} (#{profile_network.name})"
+      end
+
+      vlans['<Empty>'] = _('<No Profile>')
+      vlans['<Template>'] = _('<Use template nics>')
+    end
+
+    def local_get_vnic_profiles_in_cluster(uid_ems_cluster)
+      cluster_profiles = {}
+      profiles = ext_management_system.distributed_virtual_lans
+      cluster_networks = all_networks_as_switches_in_cluster(uid_ems_cluster)
+      profiles.each do |p|
+        profile_network = cluster_networks.detect { |n| n.id == p.switch.id }
+        if profile_network
+          cluster_profiles[p] = profile_network
+        end
+      end
+      cluster_profiles
+    end
+
+    def all_networks_as_switches_in_cluster(uid_ems_cluster)
+      cluster = EmsCluster.find_by(:uid_ems => uid_ems_cluster)
+      cluster&.switches
+    end
+
     def parse_vnic_profile_id(requested_profile, uid_ems_cluster)
       if requested_profile.include?('(')
         vlans = {}
-        private_load_allowed_networks(vlans, uid_ems_cluster)
+        private_load_allowed_networks_from_provider(vlans, uid_ems_cluster)
         matches = vlans.select { |_profile_id, profile_description| profile_description == requested_profile }
         return matches.keys[0] unless matches.empty?
       end

@@ -6,7 +6,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
   let(:network_name)  { "network1-name" }
   let(:rhevm_cluster) { double("Ovirt::Cluster") }
   let(:ems)           { FactoryBot.create(:ems_redhat_with_authentication) }
-  let(:ems_cluster)   { FactoryBot.create(:ems_cluster, :ext_management_system => ems, :ems_ref => "ems_ref") }
+  let(:ems_cluster)   { FactoryBot.create(:ems_cluster, :ext_management_system => ems, :ems_ref => "ems_ref", :uid_ems => "cluster_uid_ems") }
   let(:template)      { FactoryBot.create(:template_redhat, :ext_management_system => ems) }
   let(:rhevm_vm)      { double("Ovirt::Vm") }
   let(:target_vm)     { FactoryBot.create(:vm_redhat, :ext_management_system => ems) }
@@ -30,110 +30,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
     allow(template).to receive_messages(:ext_management_system => ems)
     allow(Ovirt::Cluster).to receive(:find_by_href).with(kind_of(ManageIQ::Providers::Redhat::InfraManager::ApiIntegration::OvirtConnectionDecorator), ems_cluster.ems_ref).and_return(rhevm_cluster)
     allow(rhevm_cluster).to receive(:find_network_by_name).with(network_name).and_return(:id => network_id)
-    allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager).to receive(:supported_api_versions)
-      .and_return([3])
     allow(target_vm).to receive(:provider_object).and_return(rhevm_vm)
   end
 
   context "#configure_network_adapters" do
-    context "ems version 3" do
-      let(:rhevm_nic1)    { {:id => "nic1-id", :name => "nic1", :network => {:id => network_id}, :mac => {:address => mac_address}} }
-      let(:rhevm_nic2)    { {:id => "nic2-id", :name => "nic2", :network => {:id => "network2-id"}} }
-      let(:set_vlan) { @task.options[:vlan] = [network_name, network_name] }
-      before do
-        allow(ems.ovirt_services).to receive(:get_vm_proxy).and_return(rhevm_vm)
-        allow(rhevm_vm).to receive_messages(:nics => [rhevm_nic1, rhevm_nic2], :ext_management_system => ems)
-      end
-      context "add second NIC in automate" do
-        before do
-          @task.options[:networks] = [nil, {:network => network_name}]
-        end
-
-        it "first NIC from dialog" do
-          set_vlan
-          expect(rhevm_nic1).to receive(:apply_options!)
-          expect(rhevm_nic2).to receive(:apply_options!)
-
-          @task.configure_network_adapters
-
-          expect(@task.options[:networks]).to eq([
-                                                   {:network => network_name, :mac_address => nil},
-                                                   {:network => network_name}
-                                                 ])
-        end
-
-        it "no NIC from dialog" do
-          expect(rhevm_nic1).to receive(:destroy)
-          expect(rhevm_nic2).to receive(:apply_options!)
-
-          @task.configure_network_adapters
-        end
-      end
-
-      it "dialog NIC only" do
-        set_vlan
-
-        expect(rhevm_nic1).to receive(:apply_options!)
-        expect(rhevm_nic2).to receive(:destroy)
-
-        @task.configure_network_adapters
-      end
-
-      it "no NICs" do
-        @task.configure_network_adapters
-      end
-
-      context "update NICs" do
-        it "should update an existing adapter's network" do
-          @task.options[:networks] = [{:network => network_name}]
-
-          expect(rhevm_vm).to receive(:nics).and_return([rhevm_nic1])
-          expect(rhevm_nic1).to receive(:apply_options!).with(:name => "nic1", :network_id => network_id)
-
-          @task.configure_network_adapters
-        end
-
-        it "should update an existing adapter's MAC address" do
-          @task.options[:networks] = [{:network => network_name, :mac_address => mac_address}]
-
-          expect(rhevm_vm).to receive(:nics).and_return([rhevm_nic1])
-          expect(rhevm_nic1).to receive(:apply_options!).with(
-            :name        => "nic1",
-            :network_id  => network_id,
-            :mac_address => mac_address
-          )
-
-          @task.configure_network_adapters
-        end
-      end
-
-      it "should create a new adapter with an optional MAC address" do
-        @task.options[:networks] = [{:network => network_name, :mac_address => mac_address}]
-
-        expect(rhevm_vm).to receive(:nics).and_return([])
-        expect(rhevm_vm).to receive(:create_nic).with(
-          :name        => 'nic1',
-          :network_id  => network_id,
-          :mac_address => mac_address
-        )
-
-        @task.configure_network_adapters
-      end
-
-      context "#get_mac_address_of_nic_on_requested_vlan" do
-        before { set_vlan }
-        it "NIC found" do
-          expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(mac_address)
-        end
-
-        it "NIC not found" do
-          rhevm_nic1[:network][:id] = "network2-id"
-
-          expect(@task.get_mac_address_of_nic_on_requested_vlan).to eq(nil)
-        end
-      end
-    end
-
     context "ems version 4" do
       let(:rhevm_nic1) { double(:id => "nic1-id", :name => "nic1", :network => {:id => network_id}, :mac => ovirtSDK4_mac, :vnic_profile => vnic_profile_1) }
       let(:rhevm_nic2) { double(:id => "nic2-id", :name => "nic2", :network => {:id => "network2-id"}, :vnic_profile => vnic_profile_2) }

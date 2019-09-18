@@ -35,19 +35,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionViaIso do
           @task.post_provision
         end
       end
-
-      context "version 3" do
-        before do
-          @vm_service = double("vm_service")
-          allow(@vm).to receive(:with_provider_object).and_yield(@vm_service)
-          allow(@ems).to receive(:supported_api_versions).and_return([3])
-        end
-
-        it "#post_provision" do
-          expect(@vm_service).to receive(:detach_floppy)
-          @task.post_provision
-        end
-      end
     end
 
     describe "#boot_from_cdrom" do

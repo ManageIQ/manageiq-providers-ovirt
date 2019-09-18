@@ -12,6 +12,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   require_nested  :Refresh
   require_nested  :Template
   require_nested  :Vm
+  require_nested  :DistributedVirtualSwitch
   include_concern :ApiIntegration
   include_concern :VmImport
   include_concern :AdminUI

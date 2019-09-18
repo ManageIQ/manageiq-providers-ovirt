@@ -5,7 +5,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
   describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     before(:each) do
-      init_defaults(:hostname => "bodnopoz-engine.eng.lab.tlv.redhat.com", :ipaddress => "10.35.19.13", :port => 443 )
+      init_defaults(:hostname => "pluto-vdsg.eng.lab.tlv.redhat.com", :ipaddress => "10.35.19.13", :port => 443)
       init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_graph_target_host.yml')
 
       @ovirt_service_inventory = ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
@@ -22,13 +22,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     let(:models_for_host_target) { [ExtManagementSystem, EmsFolder, EmsCluster, Storage, HostStorage, Switch, HostSwitch, Lan, CustomAttribute] }
 
     it 'does not change the host when target refresh after full refresh' do
-
       EmsRefresh.refresh(@ems)
       @ems.reload
 
       saved_inventory = serialize_inventory(models_for_host_target)
 
-      host = @ems.hosts.find_by(:ems_ref => "/api/hosts/f9dbfd16-3c79-4028-9304-9acf3b8857ba")
+      host = @ems.hosts.find_by(:ems_ref => "/api/hosts/9be35c00-6523-4c2f-89d2-680a6b6da4c0")
       EmsRefresh.refresh(host)
       host.reload
       expect(serialize_inventory(models_for_host_target)).to eq(saved_inventory)
@@ -40,10 +39,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       expect(Host.count).to eq(2)
       expect(host.ipmi_address).to eq("127.0.0.1")
       expect(host.authentications.first.userid).to eq("a")
-
       expect(host.switches.map { |switch| [switch.uid_ems, switch.name] }).to contain_exactly(
-        a_collection_containing_exactly("00000000-0000-0000-0000-000000000009", "ovirtmgmt"),
-        a_collection_containing_exactly("5c42817f-03fb-460e-a3ab-a8770553aeee", "vlan123t")
+        a_collection_containing_exactly("b6a660fd-f1ff-4d26-b535-91fae6d42a3f", "ovirtmgmt")
       )
     end
 
