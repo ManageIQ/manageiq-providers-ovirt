@@ -129,6 +129,91 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
     self::EventCatcher
   end
 
+  PARAMS_FOR_CREATE = {
+    :title  => "Configure Ovirt",
+    :fields => [
+      {
+        :component  => "text-field",
+        :name       => "endpoints.default.server",
+        :label      => "Server Hostname/IP Address",
+        :isRequired => true,
+        :validate   => [{:type => "required-validator"}]
+      },
+      {
+        :component  => "text-field",
+        :name       => "endpoints.default.username",
+        :label      => "Username",
+        :isRequired => true,
+        :validate   => [{:type => "required-validator"}]
+      },
+      {
+        :component  => "text-field",
+        :name       => "endpoints.default.password",
+        :label      => "Password",
+        :type       => "password",
+        :isRequired => true,
+        :validate   => [{:type => "required-validator"}]
+      },
+      {
+        :component => "text-field",
+        :name      => "endpoints.default.port",
+        :label     => "Port",
+        :type      => "number",
+      },
+      {
+        :component => "checkbox",
+        :name      => "endpoints.default.verify_ssl",
+        :label     => "Verify SSL"
+      },
+      {
+        :component => "text-field",
+        :name      => "endpoints.default.ca_certs",
+        :label     => "Certificate Authority Certificates"
+      },
+      {
+        :component  => "text-field",
+        :name       => "endpoints.metrics.username",
+        :label      => "Username",
+        :isRequired => true,
+        :validate   => [{:type => "required-validator"}]
+      },
+      {
+        :component  => "text-field",
+        :name       => "endpoints.metrics.password",
+        :label      => "Password",
+        :type       => "password",
+        :isRequired => true,
+        :validate   => [{:type => "required-validator"}]
+      },
+      {
+        :component => "text-field",
+        :name      => "endpoints.metrics.port",
+        :label     => "Port",
+        :type      => "number",
+      },
+      {
+        :component => "text-field",
+        :name      => "endpoints.metrics.database",
+        :label     => "Database Name"
+      },
+      {
+        :component => "text-field",
+        :name      => "endpoints.ssh.username",
+        :label     => "Username"
+      },
+      {
+        :component => "text-field",
+        :name      => "endpoints.ssh.private_key",
+        :label     => "Private Key",
+        :type      => "password"
+      }
+    ]
+  }.freeze
+
+  def self.params_for_create
+    PARAMS_FOR_CREATE
+  end
+
   def host_quick_stats(host)
     qs = {}
     with_provider_connection(:version => 4) do |connection|
