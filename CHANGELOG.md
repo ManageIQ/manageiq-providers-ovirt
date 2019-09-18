@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Ivanchuk-1
+## Sprint 120 - Unreleased as of 2019-09-16
+
+### Added
+- Add conversion host support to VMs now that there is a universal conversion image [(#406)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/406)
+
+## Ivanchuk-1 - Released 2019-09-18
 
 ### Added
 - Add ConversionHost and ServiceTemplateTransformationPlan subclasses [(#339)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/339)
