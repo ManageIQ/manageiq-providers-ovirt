@@ -5,32 +5,49 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   include OvirtRefresherSpecCommon
 
   before(:each) do
-    init_defaults(:hostname => 'localhost', :ipaddress => 'localhost', :port => 8443)
-    init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_recording.yml')
+    init_defaults(:hostname => 'pluto-vdsg.eng.lab.tlv.redhat.com', :port => 443)
+    init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/refresher_network_recording.yml')
 
+    stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
     stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
-    stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => false }})
   end
 
   it "will perform a full refresh on v4.1" do
     EmsRefresh.refresh(@ems)
-    @ems.reload
     VCR.use_cassette("#{described_class.name.underscore}_ovn_provider") do
       Fog::OpenStack.instance_variable_set(:@version, nil)
       EmsRefresh.refresh(@ems.network_manager)
     end
     @ems.reload
 
-    assert_table_counts(3)
-    assert_ems
-    assert_network_manager
-    assert_specific_cluster
-    assert_specific_storage
-    assert_specific_host
-    assert_specific_vm_powered_on
-    assert_specific_vm_powered_off
-    assert_specific_template
-    assert_relationship_tree
+    assert_network
+
+    assert_get_vnic_profiles_in_cluster
+  end
+
+  def assert_network
+    expect(Lan.count).to eq(7)
+    expect(ManageIQ::Providers::Redhat::InfraManager::DistributedVirtualSwitch.count).to eq(4)
+    lans = Lan.where(:uid_ems => "f67e4f7d-866d-4f99-a1a8-56d9662936fc")
+    expect(lans.count).to eq(1)
+    lan = lans.first
+    expect(lan.name).to eq("newnet")
+    expect(lan.switch.uid_ems).to eq("3ae53934-96b7-499d-912f-cb6b779b357b")
+    host = Host.find_by(:uid_ems => "9be35c00-6523-4c2f-89d2-680a6b6da4c0")
+    switch = ManageIQ::Providers::Redhat::InfraManager::DistributedVirtualSwitch.find_by(:uid_ems => "f46b7c46-6196-4750-a07f-bfeab9f1c275")
+    expect(HostSwitch.count).to eq(2)
+    expect(HostSwitch.where(:host_id => host.id, :switch_id => switch.id).count).to eq(1)
+  end
+
+  def assert_get_vnic_profiles_in_cluster
+    ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4.new(:ems => @ems)
+    vm_uid_ems = "3ce930c7-bac1-4081-bc93-c5f5686d7493"
+    vm_id = Vm.where(:uid_ems => vm_uid_ems).first.id
+    workflow = double(:get_source_vm => double(:id => vm_id))
+    vlans = {}
+    ovirt_service.load_allowed_networks([], vlans, workflow)
+    expected_vlans = {"4ec7ba24-c6bf-42fc-9975-d6a9bf3f01cf" => "ovirtmgmt (ovirtmgmt)", "<Empty>" => "<No Profile>", "<Template>" => "<Use template nics>"}
+    expect(vlans).to eq(expected_vlans)
   end
 
   def assert_table_counts(_lan_number)
@@ -49,14 +66,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(Disk.count).to eq(15)
     expect(GuestDevice.count).to eq(18)
     expect(Hardware.count).to eq(20)
-    # the old code expects 3 and new 2
     expect(Lan.count).to eq(3)
     expect(MiqScsiLun.count).to eq(0)
     expect(MiqScsiTarget.count).to eq(0)
     expect(Network.count).to eq(8)
     expect(OperatingSystem.count).to eq(20)
     expect(Snapshot.count).to eq(17)
-    # the old code expects 3 and new 2
     expect(Switch.count).to eq(3)
     expect(SystemService.count).to eq(0)
 
@@ -92,7 +107,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(@network_manager).to have_attributes(
       :name              => @ems.name + " Network Manager",
       :hostname          => "localhost",
-      :port              => 35357,
+      :port              => 35_357,
       :api_version       => "v2",
       :security_protocol => "non-ssl",
       :zone_id           => @ems.zone_id
@@ -133,7 +148,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :description => "tenant",
       :enabled     => true,
       :ems_ref     => "00000000000000000000000000000001",
-      :parent_id   => nil,
+      :parent_id   => nil
     )
 
     expect(@cloud_network.cloud_subnets.count).to eq(1)
@@ -415,7 +430,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
       host = ManageIQ::Providers::Redhat::InfraManager::Host.find_by(:name => "bodh2")
       expect(v.host).to eq(host)
-      expect(v.storages).to eq([@storage]) # CHECK MANUALLY
+      expect(v.storages).to eq([@storage])
 
       expect(v.operating_system).to have_attributes(
         :product_name => "other"
@@ -426,7 +441,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
       expect(v.snapshots.size).to eq(3)
 
-      snapshot = v.snapshots.detect { |s| s.name == "Active VM" } # TODO: Fix this boolean column
+      snapshot = v.snapshots.detect { |s| s.uid == "6e3e547f-9544-42cf-842d-9104828d8511" }
       expect(snapshot).to have_attributes(
         :uid         => "6e3e547f-9544-42cf-842d-9104828d8511",
         :parent_uid  => "05ff445a-0bfc-44c3-90d1-a338e9095510",
@@ -483,7 +498,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
         :start_connected => true,
         :address         => "00:1a:4a:16:01:51"
       )
-      nic.lan == @lan
+
+      expect(v.ipaddresses).to match_array(["10.35.18.141", "10.8.198.74", "2620:52:0:2310:21a:4aff:fe16:151", "fe80::292b:fe88:1efc:ed5a", "2620:52:0:8c4:77cd:1729:6e0f:d0fa", "fe80::21a:4aff:fe16:151"])
 
       guest_device = v.hardware.guest_devices.find_by(:device_name => "nic1")
       expect(guest_device.network).not_to be_nil
@@ -626,7 +642,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
         :start_connected => true,
         :address         => "00:1a:4a:16:01:53"
       )
-      nic.lan == @lan
 
       expect(v.parent_datacenter).to have_attributes(
         :ems_ref     => "/api/datacenters/b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1",

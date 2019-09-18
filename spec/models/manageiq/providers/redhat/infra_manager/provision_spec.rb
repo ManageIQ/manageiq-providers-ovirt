@@ -126,6 +126,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
 
       context "with a destination vm" do
         let(:destination_vm) { FactoryBot.create(:vm_redhat, :ext_management_system => @ems) }
+        let(:state) { "down" }
         before do
           stub_settings_merge(
             :ems => {
@@ -134,11 +135,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
               }
             }
           )
-          rhevm_vm = double(:attributes => {:status => {:state => "down"}})
+
+          rhevm_vm = double(:get => OpenStruct.new(:status => state))
           allow(@vm_prov).to receive(:with_provider_destination).and_yield(rhevm_vm)
           allow(@vm_prov).to receive(:destination).and_return(destination_vm)
-          allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager).to receive(:supported_api_versions)
-            .and_return([3])
           allow(destination_vm).to receive(:provider_object).and_return(rhevm_vm)
           allow(destination_vm).to receive(:with_provider_object)
             .and_yield(rhevm_vm)
@@ -149,15 +149,19 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
             expect(@vm_prov.destination_image_locked?).to be_falsey
           end
 
-          it "with an imaged_locked destination" do
-            @vm_prov.with_provider_destination { |d| d.attributes[:status][:state] = "image_locked" }
-
-            expect(@vm_prov.destination_image_locked?).to be_truthy
+          context "it is locked" do
+            let(:state) { "image_locked" }
+            it "with an imaged_locked destination" do
+              expect(@vm_prov.destination_image_locked?).to be_truthy
+            end
           end
 
-          it "when destination is nil" do
-            allow(@vm_prov).to receive(:with_provider_destination)
-            expect(@vm_prov.destination_image_locked?).to be_falsey
+          context "it is nil" do
+            let(:state) { nil }
+            it "is falsey" do
+              allow(@vm_prov).to receive(:with_provider_destination)
+              expect(@vm_prov.destination_image_locked?).to be_falsey
+            end
           end
         end
 
@@ -169,11 +173,14 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
             @vm_prov.customize_destination
           end
 
-          it "when destination_image_locked is true" do
-            @vm_prov.with_provider_destination { |d| d.attributes[:status][:state] = "image_locked" }
-            expect(@vm_prov).to receive(:requeue_phase)
+          context "it is locked" do
+            let(:state) { "image_locked" }
 
-            @vm_prov.customize_destination
+            it "when destination_image_locked is true" do
+              expect(@vm_prov).to receive(:requeue_phase)
+
+              @vm_prov.customize_destination
+            end
           end
         end
 
@@ -187,7 +194,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
             allow(@vm_prov).to receive(:configure_dialog_disks)
             allow(@vm_prov).to receive(:add_disks)
             expect(@vm_prov).to receive(:poll_add_disks_complete)
-
             @vm_prov.customize_destination
           end
 

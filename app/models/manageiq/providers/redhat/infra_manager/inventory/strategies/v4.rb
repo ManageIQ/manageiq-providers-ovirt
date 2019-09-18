@@ -55,7 +55,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
       get_uuid_from_href(object.ems_ref)
     end
 
-    TOP_LEVEL_INVENTORY_TYPES = %w(cluster storage host vm template network datacenter disk)
+    TOP_LEVEL_INVENTORY_TYPES = %w[cluster storage host vm template network datacenter disk vnic_profile].freeze
 
     # This hash contains the attributes to be fetched for diffrent types of inventory.
     ATTRIBUTES_TO_FETCH_FOR_INV_TYPE = {
@@ -75,7 +75,6 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
         collect_disks_from_attachments(res[:vm], preloaded_disks)
         collect_snapshots_total_size(res[:vm])
         collect_disks_from_attachments(res[:template], preloaded_disks)
-        collect_vnic_profiles(res)
         res
       end
     end

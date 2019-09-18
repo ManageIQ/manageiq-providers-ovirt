@@ -200,10 +200,15 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
   end
 
   context "load allowed vlans" do
-    let(:cluster1) { FactoryBot.create(:ems_cluster, :uid_ems => "uid_ems", :name => 'Cluster1') }
-    let(:template) { FactoryBot.create(:template_redhat, :ext_management_system => ems, :ems_cluster => cluster1) }
-    let(:workflow) { described_class.new({:src_vm_id => template.id}, admin) }
-    let(:hosts) { {} }
+    let!(:distributed_virtual_switch) { FactoryBot.create(:distributed_virtual_switch_redhat, :ems_id => ems.id, :name => "network") }
+    let!(:cluster1) { FactoryBot.create(:ems_cluster, :uid_ems => "uid_ems", :name => 'Cluster1') }
+    let!(:workflow) { described_class.new({:src_vm_id => template.id}, admin) }
+    let!(:host1)    { FactoryBot.create(:host, :ext_management_system => ems, :ems_cluster => cluster1) }
+    let!(:host2)    { FactoryBot.create(:host, :ext_management_system => ems, :ems_cluster => cluster1) }
+    let!(:host_switch_1) { FactoryBot.create(:host_switch, :host => host1, :switch => distributed_virtual_switch) }
+    let!(:host_switch_2) { FactoryBot.create(:host_switch, :host => host2, :switch => distributed_virtual_switch) }
+    let!(:template) { FactoryBot.create(:template_redhat, :ext_management_system => ems, :ems_cluster => cluster1) }
+
     before do
       stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
       allow(workflow).to receive(:source_ems).and_return(ems)
@@ -211,43 +216,25 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
     end
 
     context "ems version 4" do
-      let(:system_service) { double("system_service", :clusters_service => clusters_service, :vnic_profiles_service => vnic_profiles_service) }
-      let(:connection) { double("connection", :system_service => system_service) }
-      let(:vnic_profiles_service) { "vnic_profiles_service" }
-      let(:clusters_service) { double("clusters_service") }
-      let(:cluster_service1) { double("cluster", :networks_service => networks_service) }
-      let(:networks_service) { "networks_service" }
       let(:network_profile) { double(:id => "network_profile-id", :name => "network_profile", :network => double(:id => network_id)) }
       let(:network_profile2) { double(:id => "network_profile-id2", :name => "network_profile2", :network => double(:id => network_id)) }
       let(:network) { double(:id => network_id, :name => "network") }
       let(:network_id) { "network_id" }
       before do
-        allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager).to receive(:supported_api_versions)
-          .and_return([4])
-        allow(ems).to receive(:with_provider_connection).with(:version => 4).and_yield(connection)
-        allow(clusters_service).to receive(:cluster_service).with(any_args).and_return(cluster_service1)
         allow(VmOrTemplate).to receive(:find).with(any_args).and_return(template)
       end
       it "no profiles" do
-        allow(networks_service).to receive(:list).and_return([])
-        allow(vnic_profiles_service).to receive(:list).and_return([])
-
         workflow.load_allowed_vlans(ems, @vlans)
         expect(@vlans).to eq("<Empty>" => "<No Profile>", "<Template>" => "<Use template nics>")
       end
-      it "contains one profile" do
-        allow(networks_service).to receive(:list).and_return([network])
-        allow(vnic_profiles_service).to receive(:list).and_return([network_profile])
 
-        workflow.load_allowed_vlans(ems, @vlans)
-        expect(@vlans).to eq("network_profile-id" => "network_profile (network)", "<Empty>" => "<No Profile>", "<Template>" => "<Use template nics>")
-      end
-      it "contains two profiles on the same network" do
-        allow(networks_service).to receive(:list).and_return([network])
-        allow(vnic_profiles_service).to receive(:list).and_return([network_profile, network_profile2])
-
-        workflow.load_allowed_vlans(ems, @vlans)
-        expect(@vlans).to eq("network_profile-id" => "network_profile (network)", "network_profile-id2" => "network_profile2 (network)", "<Empty>" => "<No Profile>", "<Template>" => "<Use template nics>")
+      context "contains two profiles on the same network" do
+        let!(:lan1)     { FactoryBot.create(:lan, :name => "network_profile", :switch => distributed_virtual_switch, :uid_ems => "network_profile-id") }
+        let!(:lan2)     { FactoryBot.create(:lan, :name => "network_profile2", :switch => distributed_virtual_switch, :uid_ems => "network_profile-id2") }
+        it 'returns the righ hash' do
+          workflow.load_allowed_vlans(ems, @vlans)
+          expect(@vlans).to eq("network_profile-id" => "network_profile (network)", "network_profile-id2" => "network_profile2 (network)", "<Empty>" => "<No Profile>", "<Template>" => "<Use template nics>")
+        end
       end
     end
   end

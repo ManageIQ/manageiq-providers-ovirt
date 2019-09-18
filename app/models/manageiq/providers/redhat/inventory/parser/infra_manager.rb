@@ -9,8 +9,30 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     storagedomains
     hosts
     vms
+    networks
+    vnic_profiles
 
     $rhevm_log.info("#{log_header}...Complete")
+  end
+
+  def networks
+    collector.networks.each do |network|
+      persister.distributed_virtual_switches.find_or_build_by(:uid_ems => network.id)
+               .assign_attributes(
+                 :name    => network.name,
+                 :uid_ems => network.id
+               )
+    end
+  end
+
+  def vnic_profiles
+    collector.collect_vnic_profiles.each do |vnic_profile|
+      switch_persister = persister.distributed_virtual_switches.lazy_find(:uid_ems => vnic_profile.network.id)
+      persister.distributed_virtual_lans.find_or_build_by(:uid_ems => vnic_profile.id, :switch => switch_persister).assign_attributes(
+        :name    => vnic_profile.name,
+        :uid_ems => vnic_profile.id
+      )
+    end
   end
 
   def ems_clusters
@@ -156,8 +178,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       host_storages(dc, persister_host)
       host_operating_systems(persister_host, host, hostname)
-      networks = collector.collect_networks
-      switches(persister_host, dc, nics, networks)
+      network_attachments = collector.collect_network_attachments(host.id)
+      switches(persister_host, dc, network_attachments)
       host_hardware(persister_host, host, networks, nics)
     end
   end
@@ -220,7 +242,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       location = nil
       location = $1 if nic.name =~ /(\d+)$/
 
-      persister_nic = persister.host_networks.find_or_build_by(
+      persister_host_network = persister.host_networks.find_or_build_by(
         :hardware  => persister_hardware,
         :ipaddress => ip&.address
       ).assign_attributes(
@@ -240,8 +262,9 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       unless network.nil?
         switch_uid = network.try(:id) || network.name
-        attributes[:switch] = persister.host_virtual_switches.lazy_find(:host => persister_host, :uid_ems => switch_uid)
-        attributes[:network] = persister_nic
+        distributed_virtual_switch = persister.distributed_virtual_switches.lazy_find(:host => persister_host, :uid_ems => switch_uid)
+        attributes[:switch] = distributed_virtual_switch
+        attributes[:network] = persister_host_network
       end
 
       persister.host_guest_devices.find_or_build_by(
@@ -251,31 +274,15 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     end
   end
 
-  def switches(persister_host, dc, nics, networks)
-    nics.to_miq_a.each do |nic|
-      network = network_from_nic(nic, dc, networks)
-
-      next if network.nil?
-
-      uid = network.try(:id) || network.name
-      name = network.name
-
-      persister_switch = persister.host_virtual_switches.find_or_build_by(
-        :host => persister_host, :uid_ems => uid
-      ).assign_attributes(
-        :host    => persister_host,
-        :uid_ems => uid,
-        :name    => name,
-      )
-
-      lans(network, persister_switch)
-
+  def switches(persister_host, _data_center, network_attachments)
+    network_attachments.each do |na|
+      distributed_virtual_switch = persister.distributed_virtual_switches.lazy_find(:uid_ems => na.network.id)
       persister.host_switches.find_or_build_by(
         :host   => persister_host,
-        :switch => persister_switch
+        :switch => distributed_virtual_switch
       ).assign_attributes(
         :host   => persister_host,
-        :switch => persister_switch
+        :switch => distributed_virtual_switch
       )
     end
   end
@@ -310,7 +317,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       return
     end
 
-    persister.lans.find_or_build_by(
+    persister.distributed_virtual_lans.find_or_build_by(
       :switch => persister_switch, :uid_ems => uid
     ).assign_attributes(
       :name    => name,
@@ -493,18 +500,10 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       mac = nic.mac && nic.mac.address ? nic.mac.address : nil
       network = mac && networks.present? ? networks[mac] : nil
 
-      profile_id = nic.dig(:vnic_profile, :id)
-      profiles = collector.collect_vnic_profiles
-      vnic_profile = profiles.detect { |p| p.id == profile_id } if profile_id && profiles
-      network_id = vnic_profile.dig(:network, :id) if vnic_profile
-      lan = if network_id && host
-              switch = persister.host_virtual_switches.lazy_find(
-                :host    => host,
-                :uid_ems => network_id
-              )
-
-              persister.lans.lazy_find(:switch => switch, :uid_ems => network_id)
-            end
+      vnic_profile_id = nic.dig(:vnic_profile, :id)
+      network_uid = collector.collect_vnic_profiles.detect { |vp| vp.id == vnic_profile_id }&.network&.id
+      switch_persister = persister.distributed_virtual_switches.lazy_find(:uid_ems => network_uid)
+      lan_persister = persister.distributed_virtual_lans.lazy_find(:switch => switch_persister, :uid_ems => vnic_profile_id)
 
       persister.guest_devices.find_or_build_by(
         :hardware => persister_hardware,
@@ -515,8 +514,9 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :device_type     => 'ethernet',
         :controller_type => 'ethernet',
         :address         => nic.dig(:mac, :address),
-        :lan             => lan,
-        :network         => network
+        :lan             => lan_persister,
+        :network         => network,
+        :switch          => switch_persister
       )
     end
   end

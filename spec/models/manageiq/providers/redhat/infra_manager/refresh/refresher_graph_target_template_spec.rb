@@ -21,7 +21,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     end
     EmsRefresh.refresh(@ems)
     @ems.reload
-    template = VmOrTemplate.where(:name => "temp1").first
+    template = VmOrTemplate.where(:name => "template_cd2").first
     expect(template.ems_id).to eq(@ems.id)
     expect(template.host_id).to be_present
     saved_template       = template_to_comparable_hash(template)
@@ -38,7 +38,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   it 'does not change the template when target refresh after full refresh' do
     EmsRefresh.refresh(@ems)
     @ems.reload
-    template = VmOrTemplate.where(:name => "cirros-0.4").first
+    template = VmOrTemplate.where(:name => "template_cd1").first
     expect(template.ems_id).to eq(@ems.id)
     saved_template = template_to_comparable_hash(template)
     ENV["deb"]     = "true"
