@@ -20,16 +20,17 @@ class ManageIQ::Providers::Redhat::InfraManager::FuturesCollector
   end
 
   def process_queues
-    process_keyed_requests_queue
-    while tasks_present?
-      process_keyed_futures_queue if keyed_futures_queue.present?
+    begin
       process_keyed_requests_queue
+      while tasks_present?
+        process_keyed_futures_queue if keyed_futures_queue.present?
+        process_keyed_requests_queue
+      end
+    rescue => e
+      _log.error("failed to process queues, due to: #{e.message}")
+      wait_on_all_futures_ignoring_results
     end
     result_hash
-  rescue => e
-    _log.error("failed to process queues, due to: #{e.message}")
-    wait_on_all_futures_ignoring_results
-    return nil
   end
 
   def queue_keyed_request_tasks(keyed_request_tasks)
@@ -63,6 +64,9 @@ class ManageIQ::Providers::Redhat::InfraManager::FuturesCollector
         keyed_future = keyed_futures_queue.shift
         result_hash[keyed_future.key] = keyed_future.value.wait
         process_one_keyed_request if keyed_requests_queue.present?
+      rescue => e
+        _log.error("failure to get keyed value for #{keyed_future.inspect}, due to: #{e.message}")
+        raise e
       end
     end
   end

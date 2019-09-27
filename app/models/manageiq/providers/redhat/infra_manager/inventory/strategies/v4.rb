@@ -97,7 +97,6 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
       return inv if ATTRIBUTES_TO_FETCH_FOR_INV_TYPE[inv_type].blank?
       inv_keyed_requests = collect_inv_attributes_request(inv, inv_type)
       inv_fetched_attributes = ManageIQ::Providers::Redhat::InfraManager::FuturesCollector.process_keyed_requests_queue(inv_keyed_requests)
-      raise "Failed to fetch attributes for #{inv_type}" unless inv_fetched_attributes
       set_inv_attributes!(inv, inv_fetched_attributes, inv_type)
     end
 
@@ -105,7 +104,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies
       inv.each do |obj|
         key = base_key_for_obj(obj, inv_type)
         ATTRIBUTES_TO_FETCH_FOR_INV_TYPE[inv_type].each do |attribute_name|
-          obj.instance_variable_set("@#{attribute_name}", inv_fetched_attributes["#{key}#{attribute_name}"])
+          obj.instance_variable_set("@#{attribute_name}", inv_fetched_attributes["#{key}#{attribute_name}"]) if inv_fetched_attributes.key?("#{key}#{attribute_name}")
         end
       end
     end
