@@ -94,7 +94,7 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing
 
     def self.parse_new_vm(ems, vm_data, datacenter, cluster, message, event_type)
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm_data[:href])
-      parser = ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::ParserBuilder.new(ems).build
+      parser = ManageIQ::Providers::Redhat::InfraManager::RefreshParser
 
       vm_hash = parser.create_vm_hash(ems_ref.include?('/templates/'), ems_ref, vm_data[:id], parse_target_name(message, event_type))
 

@@ -2,6 +2,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   require_nested  :EventCatcher
   require_nested  :EventParser
   require_nested  :RefreshWorker
+  require_nested  :Refresher
   require_nested  :MetricsCapture
   require_nested  :MetricsCollectorWorker
   require_nested  :Host
@@ -9,7 +10,6 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   require_nested  :ProvisionViaIso
   require_nested  :ProvisionViaPxe
   require_nested  :ProvisionWorkflow
-  require_nested  :Refresh
   require_nested  :Template
   require_nested  :Vm
   require_nested  :DistributedVirtualSwitch
@@ -92,10 +92,6 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
     elsif uri.instance_of?(URI::HTTP)
       network_manager.security_protocol = "non-ssl"
     end
-  end
-
-  def refresher
-    Refresh::RefresherBuilder.new(self).build
   end
 
   def self.ems_type

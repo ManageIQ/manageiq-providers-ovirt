@@ -107,9 +107,20 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParsing::Strategies
 
     def self.parse_new_vm(ems, vm_data, datacenter, cluster, message, event_type)
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm_data.href)
-      parser = ManageIQ::Providers::Redhat::InfraManager::Refresh::Parse::ParserBuilder.new(ems).build
+      # parser = ManageIQ::Providers::Redhat::InfraManager::RefreshParser
 
-      vm_hash = parser.create_vm_hash(ems_ref.include?('/templates/'), ems_ref, vm_data.id, parse_target_name(message, event_type))
+      template = ems_ref.include?('/templates/')
+      vm_id = vm_data.id
+      vm_hash = {
+                :type => template ? "ManageIQ::Providers::Redhat::InfraManager::Template" : "ManageIQ::Providers::Redhat::InfraManager::Vm",
+                :ems_ref => ems_ref,
+                :ems_ref_obj => ems_ref,
+                :uid_ems => vm_id,
+                :vendor => "redhat",
+                :name => parse_target_name(message, event_type),
+                :location => "#{vm_id}.ovf",
+                :template => template,
+            }
 
       vm_hash[:ems_cluster] = cluster
       cluster[:ems_children][:resource_pools].first[:ems_children][:vms] << vm_hash
