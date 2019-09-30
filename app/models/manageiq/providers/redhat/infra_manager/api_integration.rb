@@ -248,7 +248,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       end
     end
 
-    # Validate Credentials
+    # Verify Credentials
     #
     # args: {
     #   "endpoints" => {
@@ -267,7 +267,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     #     }
     #   }
     # }
-    def validate_credentials(args)
+    def verify_credentials(args)
       default_endpoint = args.dig("endpoints", "default")
       metrics_endpoint = args.dig("endpoints", "metrics")
 
@@ -279,15 +279,15 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
         "metrics_username", "metrics_password", "metrics_port", "metrics_database"
       )
 
-      raw_connect(
+      !!raw_connect(
         :username         => username,
-        :password         => password,
+        :password         => MiqPassword.try_decrypt(password),
         :server           => server,
         :port             => port,
         :verify_ssl       => verify_ssl ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
         :ca_certs         => ca_certs,
         :metrics_username => metrics_username,
-        :metrics_password => metrics_password,
+        :metrics_password => MiqPassword.try_decrypt(metrics_password),
         :metrics_port     => metrics_port,
         :metrics_database => metrics_database
       )
