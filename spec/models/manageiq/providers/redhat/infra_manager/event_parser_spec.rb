@@ -1,5 +1,5 @@
 describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
-  context 'parse event using v4' do
+  context 'parse event' do
     let(:ip_address) { '192.168.1.105' }
 
     before(:each) do
@@ -55,9 +55,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
 
       event = OvirtSDK4::Reader.read(event_xml)
       allow(ManageIQ::Providers::Redhat::InfraManager).to receive(:find_by).with(:id => @ems.id).and_return(@ems)
-      parser = ManageIQ::Providers::Redhat::InfraManager::EventParsing::Builder.new(@ems).build
       ManageIQ::Providers::Redhat::InfraManager::EventFetcher.new(@ems).set_event_name!(event)
-      parsed = parser.event_to_hash(event, @ems.id)
+      parsed = described_class.event_to_hash(event, @ems.id)
       expect(parsed).to include(
         :event_type => "USER_UPDATE_VM",
         :source     => 'RHEVM',
