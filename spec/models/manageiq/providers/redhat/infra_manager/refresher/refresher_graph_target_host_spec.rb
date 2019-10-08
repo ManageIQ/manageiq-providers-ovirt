@@ -8,7 +8,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
       init_defaults(:hostname => "pluto-vdsg.eng.lab.tlv.redhat.com", :ipaddress => "10.35.19.13", :port => 443)
       init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_graph_target_host.yml')
 
-      @ovirt_service_inventory = ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
+      @ovirt_service_inventory = ManageIQ::Providers::Redhat::InfraManager::Inventory
       allow_any_instance_of(@ovirt_service_inventory)
                        .to receive(:collect_vnic_profiles).and_return([])
       @collector = ManageIQ::Providers::Redhat::Inventory::Collector

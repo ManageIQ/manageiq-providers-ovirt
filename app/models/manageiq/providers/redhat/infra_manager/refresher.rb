@@ -72,7 +72,7 @@ module ManageIQ::Providers::Redhat
 
     def inventory_from_ovirt(ems)
       @ems = ems
-      ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4.new(:ems => ems)
+      ManageIQ::Providers::Redhat::InfraManager::Inventory.new(:ems => ems)
     end
 
     private

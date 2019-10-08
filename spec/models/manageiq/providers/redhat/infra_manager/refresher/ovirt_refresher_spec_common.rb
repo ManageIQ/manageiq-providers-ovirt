@@ -50,7 +50,7 @@ module OvirtRefresherSpecCommon
   end
 
   def init_inventory_wrapper_class
-    @inventory_wrapper_class = ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
+    @inventory_wrapper_class = ManageIQ::Providers::Redhat::InfraManager::Inventory
 
     allow_any_instance_of(@inventory_wrapper_class).to(receive(:api).and_return("4.2.0_master."))
     allow_any_instance_of(@inventory_wrapper_class).to(receive(:service)
