@@ -40,7 +40,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Inventory
 
   def collect_disks_from_attachments(inv, preloaded_disks)
     inv.each do |inv_item|
-      disks = AttachedDisksFetcher.attached_disks(inv_item, connection, preloaded_disks)
+      disks = DisksHelper.collect_attached_disks(inv_item, connection, preloaded_disks)
       inv_item.singleton_class.send(:attr_accessor, :disks)
       inv_item.disks = disks
     end
@@ -102,15 +102,9 @@ class ManageIQ::Providers::Redhat::InfraManager::Inventory
     end
   end
 
-  def preloaded_disks
-    @preloaded_disks ||= collect_disks_as_hash
-  end
-
   def collect_disks_as_hash(disks = nil)
-    disks ||= connection.system_service.disks_service.list
-    Hash[disks.collect { |d| [d.id, d] }]
+    DisksHelper.collect_disks_as_hash(connection, disks)
   end
-
 
   def base_key_for_obj(obj, obj_type)
     "#{obj_type}_#{obj.id}_"
@@ -134,24 +128,6 @@ class ManageIQ::Providers::Redhat::InfraManager::Inventory
   def service
     ems.with_provider_connection(VERSION_HASH) do |connection|
       OpenStruct.new(:version_string => connection.system_service.get.product_info.version.full_version)
-    end
-  end
-
-
-  class AttachedDisksFetcher
-    def self.attached_disks(disks_owner, connection, preloaded_disks)
-      disks_owner.disk_attachments.map do |attachment|
-        res = disk_from_attachment(connection, attachment, preloaded_disks)
-        res.interface = attachment.interface
-        res.bootable = attachment.bootable
-        res.active = attachment.active
-        res
-      end
-    end
-
-    def self.disk_from_attachment(connection, attachment, preloaded_disks)
-      disk = preloaded_disks && preloaded_disks[attachment.disk.id]
-      disk || connection.follow_link(attachment.disk)
     end
   end
 end
