@@ -58,16 +58,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
       @vcr
     end
 
-    stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
-
     with_graph_results = []
     1.times do |n|
       res = refresh_once(@rec_yml, n)
       with_graph_results << res[1][:save_inventory]
       cleanup
     end
-
-    stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => false }})
 
     without_graph_results = []
     1.times do |n|

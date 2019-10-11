@@ -10,7 +10,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/refresher_target_host.yml')
 
     @ems.default_endpoint.path = "/ovirt-engine/api"
-    stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
     stub_settings_merge(
       :ems => {
         :ems_redhat => {

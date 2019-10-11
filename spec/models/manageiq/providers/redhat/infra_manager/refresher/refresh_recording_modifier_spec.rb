@@ -9,7 +9,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     init_connection_vcr
 
     stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
-    stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
   end
 
   ORIG_YML_PATH = 'spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_recording_for_mod.yml'.freeze

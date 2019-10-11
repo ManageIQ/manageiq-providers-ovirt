@@ -15,7 +15,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
                      .to receive(:collect_vnic_profiles).and_return([])
 
     stub_settings_merge(:ems => {:ems_redhat => {:use_ovirt_engine_sdk => true}})
-    stub_settings_merge(:ems_refresh => {:rhevm => {:inventory_object_refresh => true}})
   end
 
   COUNTED_MODELS = [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze

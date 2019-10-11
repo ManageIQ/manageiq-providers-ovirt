@@ -58,7 +58,6 @@
     :connections: 10
   :redhat_network:
     :is_admin: false
-    :inventory_object_refresh: true
 :log:
   :level_rhevm: info
 :workers:
