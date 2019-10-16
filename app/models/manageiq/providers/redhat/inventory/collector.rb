@@ -86,41 +86,17 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
 
   def collect_attached_disks(disks_owner)
     manager.with_provider_connection(VERSION_HASH) do |connection|
-      AttachedDisksFetcher.collect_attached_disks(disks_owner, connection, preloaded_disks)
+      ManageIQ::Providers::Redhat::InfraManager::Inventory::DisksHelper.collect_attached_disks(disks_owner, connection, preloaded_disks)
     end
   end
 
-  # This code is copied from redhat/infra_manager/inventory/strategies/v4.rb it is a part of other code
-  # which will should be extracted to a common place when the graph refresh is stabelized.
   def preloaded_disks
     @preloaded_disks ||= collect_disks_as_hash
   end
 
-  # This code is copied from redhat/infra_manager/inventory/strategies/v4.rb it is a part of other code
-  # which will should be extracted to a common place when the graph refresh is stabelized.
   def collect_disks_as_hash
     manager.with_provider_connection(VERSION_HASH) do |connection|
-      Hash[connection.system_service.disks_service.list.collect { |d| [d.id, d] }]
-    end
-  end
-
-  # This code is copied from redhat/infra_manager/inventory/strategies/v4.rb it is a part of other code
-  # which will should be extracted to a common place when the graph refresh is stabelized.
-  class AttachedDisksFetcher
-    def self.collect_attached_disks(disks_owner, connection, preloaded_disks = nil)
-      attachments = connection.follow_link(disks_owner.disk_attachments)
-      attachments.map do |attachment|
-        res = disk_from_attachment(connection, attachment, preloaded_disks)
-        res.interface = attachment.interface
-        res.bootable = attachment.bootable
-        res.active = attachment.active
-        res
-      end
-    end
-
-    def self.disk_from_attachment(connection, attachment, preloaded_disks)
-      disk = preloaded_disks && preloaded_disks[attachment.disk.id]
-      disk || connection.follow_link(attachment.disk)
+      ManageIQ::Providers::Redhat::InfraManager::Inventory::DisksHelper.collect_disks_as_hash(connection)
     end
   end
 

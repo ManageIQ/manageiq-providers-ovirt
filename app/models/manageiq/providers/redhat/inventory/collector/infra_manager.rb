@@ -1,8 +1,7 @@
 class ManageIQ::Providers::Redhat::Inventory::Collector::InfraManager < ManageIQ::Providers::Redhat::Inventory::Collector
   def collected_inventory
     @collected_inventory ||= begin
-                               inventory_collector = ManageIQ::Providers::Redhat::InfraManager::Inventory::Strategies::V4
-                                                     .new(:ems => manager)
+                               inventory_collector = ManageIQ::Providers::Redhat::InfraManager::Inventory.new(:ems => manager)
                                inventory_collector.refresh
                              end
   end

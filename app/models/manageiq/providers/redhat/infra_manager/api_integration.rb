@@ -23,10 +23,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     super
   end
 
-  def use_graph_refresh?
-    true
-  end
-
   def apply_connection_options_defaults(options)
     {
       :id         => id,
