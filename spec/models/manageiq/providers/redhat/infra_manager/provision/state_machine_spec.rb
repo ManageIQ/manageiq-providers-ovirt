@@ -21,7 +21,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine do
       allow(ems).to receive(:storages).and_return(storages)
       allow(storages).to receive(:find_by).with(:name => storage_name).and_return(storage)
       allow(ems).to receive(:hosts).and_return(hosts)
-      allow(ems).to receive(:supported_api_versions).and_return(supported_api_versions)
     end
   end
 
@@ -84,8 +83,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine do
   end
 
   context "version 4" do
-    let(:supported_api_versions) { [3, 4] }
-
     before do
       stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
     end

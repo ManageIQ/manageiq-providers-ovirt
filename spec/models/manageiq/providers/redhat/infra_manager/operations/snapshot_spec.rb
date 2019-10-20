@@ -29,21 +29,11 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Operations::Snapshot do
   end
 
   describe 'supported above api v4' do
-    let(:ems) { FactoryBot.create(:ems_redhat_with_authentication) }
+    let(:ems) { FactoryBot.create(:ems_redhat_with_authentication, :api_version => '4.3.6') }
     let(:vm)  { FactoryBot.create(:vm_redhat, :ext_management_system => ems) }
-    let(:supported_api_versions) { [] }
-    before(:each) do
-      allow(ems).to receive(:supported_api_versions).and_return(supported_api_versions)
-    end
     subject { vm.supports_snapshots? }
     context 'when engine supports v4 api' do
-      let(:supported_api_versions) { [4] }
       it { is_expected.to be_truthy }
-    end
-
-    context 'when engine does not support v4 api' do
-      let(:supported_api_versions) { [3] }
-      it { is_expected.to be_falsey }
     end
   end
 
@@ -51,7 +41,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Operations::Snapshot do
     let(:ems) { FactoryBot.create(:ems_redhat_with_authentication) }
     let(:vm)  { FactoryBot.create(:vm_redhat, :ext_management_system => ems) }
     let(:allowed_to_revert) { true }
-    let(:supported_api_versions) { [] }
     let(:active) { true }
     subject { vm.revert_to_snapshot_denied_message(active) }
     before do

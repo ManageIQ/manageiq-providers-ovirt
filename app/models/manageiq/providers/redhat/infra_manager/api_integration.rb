@@ -1,21 +1,28 @@
 require 'openssl'
 require 'ovirt_metrics'
 require 'resolv'
+require 'ovirtsdk4'
 
 module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   extend ActiveSupport::Concern
-
-  include SupportedApisMixin
-
-  require 'ovirtsdk4'
-  require 'ovirt'
 
   included do
     process_api_features_support
   end
 
-  def supported_features
-    @supported_features ||= supported_api_versions.collect { |version| self.class.api_features[version.to_s] }.flatten.uniq
+  SUPPORTED_API_VERSION = '4'.freeze
+
+  SUPPORTED_FEATURES = [
+    :migrate,
+    :quick_stats,
+    :reconfigure_disks,
+    :snapshots,
+    :publish
+  ].freeze
+
+  def supports_the_api_version?(version)
+    # Check only the major number of the api
+    version.to_s.split('.').first == SUPPORTED_API_VERSION
   end
 
   def authentication_status_ok?(type = nil)
@@ -40,7 +47,8 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
   def connect(options = {})
     raise "no credentials defined" if missing_credentials?(options[:auth_type])
-    version = options[:version] || highest_allowed_api_version
+
+    version = options[:version] || SUPPORTED_API_VERSION
     unless options[:skip_supported_api_validation] || supports_the_api_version?(version)
       raise "version #{version} of the api is not supported by the provider"
     end
@@ -59,10 +67,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       end
     end
 
-    # Create the underlying connection according to the version of the oVirt API requested by
-    # the caller:
-    connect_method = "raw_connect_v#{version}".to_sym
-    connection = self.class.public_send(connect_method, connect_options)
+    connection = self.class.raw_connect_v4(connect_options)
 
     # Copy the API path to the endpoints table:
     default_endpoint.path = connect_options[:path]
@@ -88,21 +93,11 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
   def rhevm_inventory(opts = {})
     connect_options = { :service => "Inventory" }
-    connect_options[:version] = 3 if opts[:force_v3]
     @rhevm_inventory ||= connect(connect_options)
   end
 
   def ovirt_services(args = {})
-    @ovirt_services ||= begin
-                          ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Builder.new(self)
-                                                                                           .build(args).new(:ems => self)
-                        end
-  end
-
-  def disconnect(connection)
-    self.class.disconnect(connection)
-  rescue StandardError => error
-    _log.error("Error while disconnecting #{error}")
+    @ovirt_services ||= ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4.new(:ems => self)
   end
 
   def verify_credentials_for_rhevm(options = {})
@@ -180,38 +175,9 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   end
 
   class_methods do
-    def disconnect(connection)
-      if connection.respond_to?(:disconnect)
-        connection.disconnect
-      end
-    end
-
-    def api3_supported_features
-      []
-    end
-
-    def api4_supported_features
-      [
-        :migrate,
-        :quick_stats,
-        :reconfigure_disks,
-        :snapshots,
-        :publish
-      ]
-    end
-
-    def api_features
-      { "3" => api3_supported_features, "4" => api4_supported_features }
-    end
-
     def process_api_features_support
-      all_features = api_features.values.flatten.uniq
-      all_features.each do |feature|
-        supports feature do
-          unless supported_features.include?(feature)
-            unsupported_reason_add(feature, _("This feature is not supported by the api version of the provider"))
-          end
-        end
+      SUPPORTED_FEATURES.each do |f|
+        supports f
       end
     end
 
@@ -370,15 +336,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       rescue OvirtSDK4::Error => error
         raise error if /error.*sso/i =~ error.message
       end
-
-      # Try to verify the details using version 3 of the API.
-      begin
-        connection = raw_connect_v3(opts)
-        connection.api
-      ensure
-        disconnect(connection)
-      end
-      true
     end
 
     #
@@ -425,8 +382,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
     # Connect to the engine using version 4 of the API and the `ovirt-engine-sdk` gem.
     def raw_connect_v4(options = {})
-      require 'ovirtsdk4'
-
       # Get the timeouts from the configuration:
       read_timeout, open_timeout = ems_timeouts(:ems_redhat, options[:service])
 
@@ -457,43 +412,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
         :connections     => options[:connections] || ::Settings.ems_refresh.rhevm.connections,
         :pipeline        => options[:pipeline] || ::Settings.ems_refresh.rhevm.pipeline
       )
-    end
-
-    # Connect to the engine using version 3 of the API and the `ovirt` gem.
-    def raw_connect_v3(options = {})
-      require 'ovirt'
-      require 'manageiq/providers/ovirt/legacy/inventory'
-      Ovirt.logger = $rhevm_log
-
-      # If 'ca_certs' is an empty string then the 'ovirt' gem will trust nothing, but we want it to trust the system CA
-      # certificates. To get that behaviour we need to pass 'nil' instead of the empty string.
-      ca_certs = options[:ca_certs]
-      ca_certs = nil if ca_certs.blank?
-
-      params = {
-        :server     => options[:server],
-        :port       => options[:port].presence && options[:port].to_i,
-        :path       => '/ovirt-engine/api',
-        :username   => options[:username],
-        :password   => options[:password],
-        :verify_ssl => options[:verify_ssl],
-        :ca_certs   => ca_certs
-      }
-
-      read_timeout, open_timeout = ems_timeouts(:ems_redhat, options[:service])
-      params[:timeout]      = read_timeout if read_timeout
-      params[:open_timeout] = open_timeout if open_timeout
-      const = options[:service] == "Inventory" ? ManageIQ::Providers::Ovirt::Legacy::Inventory : Ovirt.const_get(options[:service])
-      conn = const.new(params)
-      OvirtConnectionDecorator.new(conn)
-    end
-
-    class OvirtConnectionDecorator < SimpleDelegator
-      def test(_raise_exceptions)
-        api
-      rescue Ovirt::MissingResourceError, URI::InvalidURIError
-        raise MiqException::MiqUnreachableError, "Invalid URI specified for the server."
-      end
     end
 
     def default_history_database_name

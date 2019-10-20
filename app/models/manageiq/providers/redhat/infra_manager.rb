@@ -231,9 +231,8 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   end
 
   def vm_reconfigure(vm, options = {})
-    ovirt_services_for_reconfigure = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Builder.new(self)
-      .build(:use_highest_supported_version => true).new(:ems => self)
-    ovirt_services_for_reconfigure.vm_reconfigure(vm, options)
+    ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4.new(:ems => self)
+                                                                .vm_reconfigure(vm, options)
   end
 
   def vm_set_memory(vm, options = {})

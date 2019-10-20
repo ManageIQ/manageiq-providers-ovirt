@@ -14,8 +14,6 @@ class ManageIQ::Providers::Redhat::InfraManager::Template < ManageIQ::Providers:
   end
 
   def provider_object(connection = nil)
-    ovirt_services_class = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Builder
-                           .build_from_ems_or_connection(:ems => ext_management_system, :connection => connection)
-    ovirt_services_class.new(:ems => ext_management_system).get_template_proxy(self, connection)
+    ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4.new(:ems => ext_management_system).get_template_proxy(self, connection)
   end
 end

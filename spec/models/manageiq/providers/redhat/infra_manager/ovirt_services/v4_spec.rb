@@ -1,4 +1,4 @@
-describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4 do
+describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4 do
   describe "#advertised_images" do
     let(:ems) { FactoryBot.create(:ems_redhat_with_authentication) }
     let(:vm) { FactoryBot.create(:vm_redhat, :ext_management_system => ems) }
@@ -80,9 +80,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
     end
 
     let(:ems) do
-      FactoryBot.create(:ems_redhat_with_authentication, :zone => zone).tap do |e|
-        allow(e).to receive(:highest_supported_api_version).and_return(4)
-      end
+      FactoryBot.create(:ems_redhat_with_authentication, :zone => zone)
     end
 
     let(:vm) do
@@ -410,9 +408,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
         disk2 = OvirtSDK4::Disk.new(:id => "disk_id2", :storage_domains => [storage_domain_old])
         @disk_attachments = [OvirtSDK4::DiskAttachment.new(:disk => disk), OvirtSDK4::DiskAttachment.new(:disk => disk2)]
         @sdk_template = OvirtSDK4::Template.new(:disk_attachments => @disk_attachments)
-        ems = FactoryBot.create(:ems_redhat_with_authentication)
-        @ovirt_services = ManageIQ::Providers::Redhat::InfraManager::
-          OvirtServices::Strategies::V4.new(:ems => ems)
+        @ems = FactoryBot.create(:ems_redhat_with_authentication)
+        @ovirt_services = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4.new(:ems => @ems)
         connection = double(OvirtSDK4::Connection)
         template_service = OvirtSDK4::TemplateService
         cluster = OvirtSDK4::Cluster.new(:cluster => "/api/clusters/href")
@@ -421,7 +418,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
         allow(connection).to receive(:system_service).and_return(system_services)
         allow(system_services).to receive(:vms_service).and_return(@vms_service)
         rhevm_template = ManageIQ::Providers::Redhat::InfraManager::
-          OvirtServices::Strategies::V4::TemplateProxyDecorator.new(template_service, connection, @ovirt_services)
+          OvirtServices::V4::TemplateProxyDecorator.new(template_service, connection, @ovirt_services)
         allow(rhevm_template).to receive(:get).and_return(@sdk_template)
         allow(@ovirt_services).to receive(:cluster_from_href).with("/api/clusters/href", connection).and_return(cluster)
         allow(@ovirt_services).to receive(:storage_from_href).with("/api/storagedomains/href", connection).and_return(storage_domain)

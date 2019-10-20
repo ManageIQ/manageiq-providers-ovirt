@@ -1,8 +1,6 @@
 class ManageIQ::Providers::Redhat::InfraManager::Host < ::Host
   def provider_object(connection = nil)
-    ovirt_services_class = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Builder
-                           .build_from_ems_or_connection(:ems => ext_management_system, :connection => connection)
-    ovirt_services_class.new(:ems => ext_management_system).get_host_proxy(self, connection)
+    ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4.new(:ems => ext_management_system).get_host_proxy(self, connection)
   end
 
   def verify_credentials(auth_type = nil, options = {})

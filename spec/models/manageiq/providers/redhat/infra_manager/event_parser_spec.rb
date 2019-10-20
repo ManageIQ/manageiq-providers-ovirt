@@ -8,7 +8,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
                                 :port => 8443)
       @ems.update_authentication(:default => {:userid => "admin@internal", :password => "engine"})
       @ems.default_endpoint.path = "/ovirt-engine/api"
-      allow(@ems).to receive(:supported_api_versions).and_return([3, 4])
       stub_settings_merge(
         :ems => {
           :ems_redhat => {
@@ -25,7 +24,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
     end
 
     before(:each) do
-      inventory_wrapper_class = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4
+      inventory_wrapper_class = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4
       stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
       user_mock = load_response_mock_for('user')
       allow_any_instance_of(inventory_wrapper_class)

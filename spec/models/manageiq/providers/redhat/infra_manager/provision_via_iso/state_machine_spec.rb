@@ -26,7 +26,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionViaIso do
         before do
           @vm_service = double("vm_service")
           allow(@vm).to receive(:with_provider_object).and_yield(@vm_service)
-          allow(@ems).to receive(:supported_api_versions).and_return([3, 4])
           stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
         end
 

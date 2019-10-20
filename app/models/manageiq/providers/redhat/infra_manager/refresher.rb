@@ -19,12 +19,7 @@ module ManageIQ::Providers::Redhat
 
         empty_hash_when_target_not_found!(target, data) if targeted_refresh?(target)
 
-        case ems.highest_allowed_api_version
-        when '3'
-          data[:ems_api_version] = {:api_version => ems_api_version}
-        when '4'
-          data.instance_variable_set(:@ems_api_version, :api_version => ems_api_version)
-        end
+        data.instance_variable_set(:@ems_api_version, :api_version => ems_api_version)
 
         _log.info "Filtering inventory...Complete"
         [target, data]

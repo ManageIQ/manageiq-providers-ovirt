@@ -1,9 +1,6 @@
 ---
 :ems:
   :ems_redhat:
-    :product_version_to_api_version_regexps:
-      :'^3\..*$': 3
-      :'^4\..*$': 3 4
     :resolve_ip_addresses: true
     :inventory:
       :read_timeout: 1.hour
