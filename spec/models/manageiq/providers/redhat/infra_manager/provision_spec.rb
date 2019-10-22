@@ -168,6 +168,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
         context "customize_destination" do
           it "when destination_image_locked is false" do
             allow(@vm_prov).to receive(:for_destination).and_return("display_string")
+            allow(@vm_prov).to receive(:destination_disks_locked?).and_return(false)
             expect(@vm_prov).to receive(:configure_container)
 
             @vm_prov.customize_destination

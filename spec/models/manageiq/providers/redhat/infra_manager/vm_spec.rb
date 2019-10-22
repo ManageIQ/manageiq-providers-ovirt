@@ -139,6 +139,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
       let(:vm) { FactoryBot.create(:vm_redhat, :ext_management_system => ems, :storage => storage) }
 
       it "does not support publish" do
+        allow(ems).to receive(:supported_api_versions).and_return([4])
         allow(vm).to receive(:power_state).and_return("on")
 
         expect(vm.supports_publish?).to be_falsey
