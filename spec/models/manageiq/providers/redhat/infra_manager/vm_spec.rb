@@ -169,8 +169,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
   describe "#unregister" do
     before do
       _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-      @ems  = FactoryBot.create(:ems_redhat_with_authentication, :zone => zone)
-      @vm   = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
+      @ems = FactoryBot.create(:ems_redhat_with_authentication, :zone => zone)
+      @vm = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
       @vm_proxy = double("OvirtSDK4::Vm.new")
       @vm_service = double("OvirtSDK4::Vm")
     end

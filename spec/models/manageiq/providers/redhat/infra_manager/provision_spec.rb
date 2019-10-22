@@ -20,7 +20,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
       before(:each) do
         @ems         = FactoryBot.create(:ems_redhat_with_authentication)
         @vm_template = FactoryBot.create(:template_redhat, :name => "template1", :ext_management_system => @ems, :operating_system => @os, :cpu_limit => -1, :cpu_reserve => 0)
-        @vm          = FactoryBot.create(:vm_redhat, :name => "vm1",       :location => "abc/def.vmx")
+        @vm          = FactoryBot.create(:vm_redhat, :name => "vm1", :location => "abc/def.vmx")
         @pr          = FactoryBot.create(:miq_provision_request, :requester => @admin, :src_vm_id => @vm_template.id)
         @options[:src_vm_id] = [@vm_template.id, @vm_template.name]
         @vm_prov = FactoryBot.create(:miq_provision_redhat, :userid => @admin.userid, :miq_request => @pr, :source => @vm_template, :request_type => 'template', :state => 'pending', :status => 'Ok', :options => @options)
@@ -47,17 +47,17 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
         end
 
         it "with :default disk_format value" do
-          @vm_prov.options[:disk_format] = %w(default Default)
+          @vm_prov.options[:disk_format] = %w[default Default]
           expect(@vm_prov.sparse_disk_value).to be_nil
         end
 
         it "with :thin disk_format value" do
-          @vm_prov.options[:disk_format] = %w(thin Thin)
+          @vm_prov.options[:disk_format] = %w[thin Thin]
           expect(@vm_prov.sparse_disk_value).to be_truthy
         end
 
         it "with :preallocated disk_format value" do
-          @vm_prov.options[:disk_format] = %w(preallocated Preallocated)
+          @vm_prov.options[:disk_format] = %w[preallocated Preallocated]
           expect(@vm_prov.sparse_disk_value).to be_falsey
         end
       end
