@@ -139,6 +139,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
       let(:vm) { FactoryBot.create(:vm_redhat, :ext_management_system => ems, :storage => storage) }
 
       it "does not support publish" do
+        allow(ems).to receive(:supported_api_versions).and_return([4])
         allow(vm).to receive(:power_state).and_return("on")
 
         expect(vm.supports_publish?).to be_falsey
@@ -168,8 +169,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
   describe "#unregister" do
     before do
       _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-      @ems  = FactoryBot.create(:ems_redhat_with_authentication, :zone => zone)
-      @vm   = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
+      @ems = FactoryBot.create(:ems_redhat_with_authentication, :zone => zone)
+      @vm = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
       @vm_proxy = double("OvirtSDK4::Vm.new")
       @vm_service = double("OvirtSDK4::Vm")
     end
