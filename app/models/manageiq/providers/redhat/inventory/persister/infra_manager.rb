@@ -1,7 +1,7 @@
 class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ::Providers::Redhat::Inventory::Persister
   def initialize_inventory_collections
     add_collection(infra, :disks)
-    add_collection(infra, :ems_clusters, :secondary_refs => {:by_uid_ems => %i[uid_ems]})
+    add_collection(infra, :clusters, :secondary_refs => {:by_uid_ems => %i[uid_ems]})
     add_collection(infra, :ems_folders)
     add_collection(infra, :guest_devices)
     add_collection(infra, :hardwares)
@@ -35,13 +35,13 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
     add_collection(infra, :distributed_virtual_switches)
   end
 
-  # group :ems_clusters
+  # group :clusters
   def add_resource_pools
     add_collection(infra, :resource_pools) do |builder|
       if targeted?
         builder.add_targeted_arel(
           lambda do |_inventory_collection|
-            manager.resource_pools.where(:uid_ems => references(:ems_clusters).collect { |ref| "#{URI(ref).path.split('/').last}_respool" })
+            manager.resource_pools.where(:uid_ems => references(:clusters).collect { |ref| "#{URI(ref).path.split('/').last}_respool" })
           end
         )
       end
