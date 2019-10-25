@@ -40,7 +40,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
       context "there are iso domains attached to the data-center" do
         context "there are active iso domains" do
           it 'returns iso images from an active domain' do
-            expect(advertised_images).to match_array(%w(iso_1 iso_2))
+            expect(advertised_images).to match_array(%w[iso_1 iso_2])
           end
         end
 
@@ -72,36 +72,125 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
   end
 
   describe "#vm_reconfigure" do
-    before do
+    let(:vm_proxy) { double("OvirtSDK4::Vm.new", :name => "vm_name_1", :next_run_configuration_exists => false) }
+
+    let(:zone) do
       _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-      @ems  = FactoryBot.create(:ems_redhat_with_authentication, :zone => zone)
-      @hw   = FactoryBot.create(:hardware, :memory_mb => 1024, :cpu_sockets => 2, :cpu_cores_per_socket => 1)
-      @vm   = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
-      @cores_per_socket = 2
-      @num_of_sockets   = 3
-      @vm_proxy = double("OvirtSDK4::Vm.new", :name => "vm_name_1")
-      @vm_service = double("OvirtSDK4::Vm")
-      allow(@ems).to receive(:highest_supported_api_version).and_return(4)
-      allow(@vm).to receive(:with_provider_object).and_yield(@vm_service)
-      allow(@vm_service).to receive(:get).and_return(@vm_proxy)
+      zone
+    end
+
+    let(:ems) do
+      FactoryBot.create(:ems_redhat_with_authentication, :zone => zone).tap do |e|
+        allow(e).to receive(:highest_supported_api_version).and_return(4)
+      end
+    end
+
+    let(:vm) do
+      FactoryBot.create(:vm_redhat, :ext_management_system => ems).tap do |v|
+        allow(v).to receive(:with_provider_object).and_yield(vm_service)
+      end
+    end
+
+    let(:vm_service) do
+      double("OvirtSDK4::Vm").tap do |s|
+        allow(s).to receive(:get).and_return(vm_proxy)
+      end
     end
 
     it 'cpu_topology' do
+      cores_per_socket = 2
+      num_of_sockets = 3
+
       spec = {
-        "numCPUs"           => @cores_per_socket * @num_of_sockets,
-        "numCoresPerSocket" => @cores_per_socket
+        "numCPUs"           => cores_per_socket * num_of_sockets,
+        "numCoresPerSocket" => cores_per_socket
       }
 
-      expect(@vm_service).to receive(:update)
-        .with(OvirtSDK4::Vm.new(
-                :cpu => {
-                  :topology => {
-                    :cores   => @cores_per_socket,
-                    :sockets => @num_of_sockets
-                  }
+      expect(vm_service).to receive(:update)
+        .with(
+          OvirtSDK4::Vm.new(
+            :cpu => {
+              :topology => {
+                :cores   => cores_per_socket,
+                :sockets => num_of_sockets
+              }
+            }
+          ),
+          :next_run => false
+        )
+      ems.vm_reconfigure(vm, :spec => spec)
+    end
+
+    context "both cpu and memory" do
+      let(:future_cores_per_socket) { 1 }
+      let(:future_sockets) { 1 }
+      let(:future_memory) { 3.gigabytes }
+      let(:max_memory) { 4.gigabytes }
+      let(:guaranteed_memory) { 1.gigabytes }
+
+      let(:new_vm_specs) do
+        {
+          'numCPUs'           => future_cores_per_socket * future_sockets,
+          'numCoresPerSocket' => future_cores_per_socket,
+          'memoryMB'          => future_memory / 1.megabytes
+        }
+      end
+
+      let(:memory_policy) { double('memory_policy', :guaranteed => guaranteed_memory, :max => max_memory) }
+      let(:vm_status) { OvirtSDK4::VmStatus::UP }
+
+      before(:each) do
+        allow(vm_proxy).to receive(:status).and_return(vm_status)
+        allow(vm_proxy).to receive(:memory).and_return(4.gigabytes)
+        allow(vm_proxy).to receive(:memory_policy).and_return(memory_policy)
+        allow(ems).to receive(:version_at_least?).with('4.1').and_return(true)
+      end
+
+      it "vm without pending next_run" do
+        expect(vm_proxy).to receive(:next_run_configuration_exists).and_return(false)
+        expect(vm_service).to receive(:update)
+          .with(
+            OvirtSDK4::Vm.new(
+              :memory        => future_memory,
+              :memory_policy => {
+                :guaranteed => guaranteed_memory,
+                :max        => max_memory
+              },
+              :cpu           => {
+                :topology => {
+                  :cores   => future_cores_per_socket,
+                  :sockets => future_sockets
                 }
-        ))
-      @ems.vm_reconfigure(@vm, :spec => spec)
+              }
+            ),
+            :next_run => false
+          )
+
+        ems.vm_reconfigure(vm, :spec => new_vm_specs)
+      end
+
+      it "vm with pending next_run" do
+        expect(vm_proxy).to receive(:next_run_configuration_exists).and_return(true)
+        expect(vm_service).to receive(:update)
+          .with(
+            OvirtSDK4::Vm.new(
+              :memory        => future_memory,
+              :memory_policy => {
+                :guaranteed => guaranteed_memory,
+                :max        => max_memory
+              },
+              :cpu           => {
+                :topology => {
+                  :cores   => future_cores_per_socket,
+                  :sockets => future_sockets
+                }
+              }
+            ),
+            :next_run => true
+          )
+
+        ems.vm_reconfigure(vm, :spec => new_vm_specs)
+      end
     end
 
     describe "remove disk" do
@@ -111,14 +200,14 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
         @disk_2 = double("OvirtSDK4::Disk", :id => 'disk_id2', :name => 'disk2')
         @disk_attachments_service = double("OvirtSDK4::DiskAttachmentsService")
         @disk_attachment_service_1 = double("OvirtSDK4::DiskAttachmentService")
-        allow(@vm_service).to receive(:disk_attachments_service).and_return(@disk_attachments_service)
-        allow(@vm_service).to receive(:connection).and_return(@connection)
+        allow(vm_service).to receive(:disk_attachments_service).and_return(@disk_attachments_service)
+        allow(vm_service).to receive(:connection).and_return(@connection)
         allow(@disk_attachments_service).to receive(:attachment_service).with(@disk_1.id).and_return(@disk_attachment_service_1)
         allow(@disk_attachments_service).to receive(:attachment_service).with(@disk_2.id).and_raise(OvirtSDK4::NotFoundError)
       end
       let(:delete_backing) { true }
       let(:spec) { { 'disksRemove' => [{ 'disk_name' => @disk_1.id, 'delete_backing' => delete_backing }] } }
-      subject(:reconfigure_vm) { @ems.vm_reconfigure(@vm, :spec => spec) }
+      subject(:reconfigure_vm) { ems.vm_reconfigure(vm, :spec => spec) }
       context 'delete backing' do
         it 'sends a remove command to the appropriate disk attachment' do
           expect(@disk_attachment_service_1).to receive(:remove).with(:detach_only => false)
@@ -151,21 +240,20 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
       before do
         @memory_policy = double("memory_policy")
         allow(@memory_policy).to receive(:guaranteed).and_return(2.gigabytes)
-        allow(@vm_proxy).to receive(:status).and_return(vm_status)
-        allow(@vm_proxy).to receive(:memory).and_return(0)
-        allow(@vm_proxy).to receive(:memory_policy).and_return(@memory_policy)
-        allow(@vm_proxy).to receive(:name).and_return("vm_name")
+        allow(vm_proxy).to receive(:status).and_return(vm_status)
+        allow(vm_proxy).to receive(:memory).and_return(0)
+        allow(vm_proxy).to receive(:memory_policy).and_return(@memory_policy)
+        allow(vm_proxy).to receive(:name).and_return("vm_name")
         @memory_spec = { :memory => memory, :memory_policy => { :guaranteed => guaranteed } }
       end
-      subject(:reconfigure_vm) { @ems.vm_reconfigure(@vm, :spec => spec) }
+      subject(:reconfigure_vm) { ems.vm_reconfigure(vm, :spec => spec) }
       let(:spec) { { 'memoryMB' => 8.gigabytes / 1.megabyte } }
       let(:memory) { 8.gigabytes }
       let(:guaranteed) { 2.gigabytes }
       context "vm is up" do
         let(:vm_status) { OvirtSDK4::VmStatus::UP }
-        it 'updates the current and persistent configuration if the VM is up' do
-          expect(@vm_service).to receive(:update).with(OvirtSDK4::Vm.new(@memory_spec), :next_run => true)
-          expect(@vm_service).to receive(:update).with(OvirtSDK4::Vm.new(:memory => 8.gigabytes))
+        it 'updates configuration' do
+          expect(vm_service).to receive(:update).with(OvirtSDK4::Vm.new(@memory_spec), :next_run => false)
           reconfigure_vm
         end
 
@@ -173,8 +261,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
           let(:spec) { { 'memoryMB' => 8.gigabytes / 1.megabyte + 1 } }
           let(:memory) { 8.gigabytes + 256.megabytes }
           it 'adjusts the increased memory to the next 256 MiB multiple if the VM is up' do
-            expect(@vm_service).to receive(:update).with(OvirtSDK4::Vm.new(@memory_spec), :next_run => true)
-            expect(@vm_service).to receive(:update).with(OvirtSDK4::Vm.new(:memory => memory))
+            expect(vm_service).to receive(:update).with(OvirtSDK4::Vm.new(@memory_spec), :next_run => false)
             reconfigure_vm
           end
         end
@@ -182,8 +269,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
         context "memory is less than vms memory should be rounded up" do
           let(:spec) { { 'memoryMB' => 8.gigabytes / 1.megabyte - 1 } }
           it 'adjusts reduced memory to the next 256 MiB multiple if the VM is up' do
-            expect(@vm_service).to receive(:update).with(OvirtSDK4::Vm.new(@memory_spec), :next_run => true)
-            expect(@vm_service).to receive(:update).with(OvirtSDK4::Vm.new(:memory => memory))
+            expect(vm_service).to receive(:update).with(OvirtSDK4::Vm.new(@memory_spec), :next_run => false)
             reconfigure_vm
           end
         end
@@ -191,10 +277,9 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
         context "guaranteed memory is bigger than vms" do
           let(:spec) { { 'memoryMB' => 1.gigabyte / 1.megabyte } }
           let(:memory) { 1.gigabyte }
-          it 'adjusts the guaranteed memory if it is larger than the virtual memory if the VM is up' do
+          it 'adjusts the guaranteed memory if it is larger than the virtual memory' do
             mod_memory_spec = { :memory => memory, :memory_policy => { :guaranteed => 1.gigabyte } }
-            expect(@vm_service).to receive(:update).with(OvirtSDK4::Vm.new(mod_memory_spec), :next_run => true)
-            expect(@vm_service).to receive(:update).with(OvirtSDK4::Vm.new(:memory => memory))
+            expect(vm_service).to receive(:update).with(OvirtSDK4::Vm.new(mod_memory_spec), :next_run => false)
             reconfigure_vm
           end
         end
@@ -202,17 +287,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
 
       context "vm is down" do
         let(:vm_status) { OvirtSDK4::VmStatus::DOWN }
-        it 'updates only the persistent configuration when the VM is down' do
-          expect(@vm_service).to receive(:update).with(OvirtSDK4::Vm.new(@memory_spec))
-          reconfigure_vm
-        end
 
         context "guaranteed memory is bigger than vms" do
           let(:spec) { { 'memoryMB' => 1.gigabyte / 1.megabyte } }
           let(:memory) { 1.gigabyte }
-          it 'adjusts the guaranteed memory if it is larger than the virtual memory if the VM is up' do
+          it 'adjusts the guaranteed memory if it is larger than the virtual memory' do
             mod_memory_spec = { :memory => memory, :memory_policy => { :guaranteed => 1.gigabyte } }
-            expect(@vm_service).to receive(:update).with(OvirtSDK4::Vm.new(mod_memory_spec))
+            expect(vm_service).to receive(:update).with(OvirtSDK4::Vm.new(mod_memory_spec), :next_run => false)
             reconfigure_vm
           end
         end
@@ -223,13 +304,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
       before do
         @memory_policy = double("memory_policy")
         allow(@memory_policy).to receive(:guaranteed).and_return(2.gigabytes)
-        allow(@vm_proxy).to receive(:status).and_return(OvirtSDK4::VmStatus::DOWN)
-        allow(@vm_proxy).to receive(:memory).and_return(0)
-        allow(@vm_proxy).to receive(:memory_policy).and_return(@memory_policy)
-        allow(@vm_proxy).to receive(:name).and_return("vm_name")
+        allow(vm_proxy).to receive(:status).and_return(OvirtSDK4::VmStatus::DOWN)
+        allow(vm_proxy).to receive(:memory).and_return(0)
+        allow(vm_proxy).to receive(:memory_policy).and_return(@memory_policy)
+        allow(vm_proxy).to receive(:name).and_return("vm_name")
       end
 
-      subject(:reconfigure_vm) { @ems.vm_reconfigure(@vm, :spec => spec) }
+      subject(:reconfigure_vm) { ems.vm_reconfigure(vm, :spec => spec) }
 
       let(:spec) { { 'memoryMB' => 8.gigabytes / 1.megabyte } }
       let(:memory) { 8.gigabytes }
@@ -237,7 +318,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
 
       context "api version supports max" do
         before do
-          allow(@ems).to receive(:version_at_least?).with('4.1').and_return(true)
+          allow(ems).to receive(:version_at_least?).with('4.1').and_return(true)
           @memory_spec = { :memory => memory, :memory_policy => { :guaranteed => 2.gigabyte, :max => max } }
         end
 
@@ -246,7 +327,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
             allow(@memory_policy).to receive(:max).and_return(6.gigabytes)
 
             mod_memory_policy = { :guaranteed => 2.gigabyte, :max => 32.gigabytes }
-            expect(@vm_service).to receive(:update).with(OvirtSDK4::Vm.new(:memory => 8.gigabytes, :memory_policy => mod_memory_policy))
+            expect(vm_service).to receive(:update).with(OvirtSDK4::Vm.new(:memory => 8.gigabytes, :memory_policy => mod_memory_policy), :next_run => false)
             reconfigure_vm
           end
 
@@ -254,7 +335,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
             allow(@memory_policy).to receive(:max).and_return(16.gigabytes)
 
             mod_memory_policy = { :guaranteed => 2.gigabyte, :max => 16.gigabytes }
-            expect(@vm_service).to receive(:update).with(OvirtSDK4::Vm.new(:memory => 8.gigabytes, :memory_policy => mod_memory_policy))
+            expect(vm_service).to receive(:update).with(OvirtSDK4::Vm.new(:memory => 8.gigabytes, :memory_policy => mod_memory_policy), :next_run => false)
             reconfigure_vm
           end
         end
@@ -266,7 +347,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
             allow(@memory_policy).to receive(:max).and_return(16.gigabytes)
 
             mod_memory_policy = { :guaranteed => 2.gigabyte, :max => 2.terabytes }
-            expect(@vm_service).to receive(:update).with(OvirtSDK4::Vm.new(:memory => 2.terabytes, :memory_policy => mod_memory_policy))
+            expect(vm_service).to receive(:update).with(OvirtSDK4::Vm.new(:memory => 2.terabytes, :memory_policy => mod_memory_policy), :next_run => false)
             reconfigure_vm
           end
         end
@@ -274,10 +355,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
 
       context "api version doesn't support max" do
         it "doesn't pass the max in the request" do
-          allow(@ems).to receive(:version_at_least?).with('4.1').and_return(false)
+          allow(ems).to receive(:version_at_least?).with('4.1').and_return(false)
 
           mod_memory_policy = { :guaranteed => 2.gigabyte }
-          expect(@vm_service).to receive(:update).with(OvirtSDK4::Vm.new(:memory => 8.gigabytes, :memory_policy => mod_memory_policy))
+          expect(vm_service).to receive(:update).with(OvirtSDK4::Vm.new(:memory => 8.gigabytes, :memory_policy => mod_memory_policy), :next_run => false)
           reconfigure_vm
         end
       end
@@ -329,9 +410,9 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
         disk2 = OvirtSDK4::Disk.new(:id => "disk_id2", :storage_domains => [storage_domain_old])
         @disk_attachments = [OvirtSDK4::DiskAttachment.new(:disk => disk), OvirtSDK4::DiskAttachment.new(:disk => disk2)]
         @sdk_template = OvirtSDK4::Template.new(:disk_attachments => @disk_attachments)
-        @ems = FactoryBot.create(:ems_redhat_with_authentication)
+        ems = FactoryBot.create(:ems_redhat_with_authentication)
         @ovirt_services = ManageIQ::Providers::Redhat::InfraManager::
-          OvirtServices::Strategies::V4.new(:ems => @ems)
+          OvirtServices::Strategies::V4.new(:ems => ems)
         connection = double(OvirtSDK4::Connection)
         template_service = OvirtSDK4::TemplateService
         cluster = OvirtSDK4::Cluster.new(:cluster => "/api/clusters/href")
@@ -355,8 +436,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
         @disk2_service = double(OvirtSDK4::Disk, :get => disk2)
         allow(@disks_service).to receive(:disk_service).with(disk.id).and_return(@disk1_service)
         allow(@disks_service).to receive(:disk_service).with(disk2.id).and_return(@disk2_service)
-        @vm_service = double(OvirtSDK4::VmService, :disk_attachments_service => @sdk_template.disk_attachments)
-        allow(@vms_service).to receive(:vm_service).and_return(@vm_service)
+        vm_service = double(OvirtSDK4::VmService, :disk_attachments_service => @sdk_template.disk_attachments)
+        allow(@vms_service).to receive(:vm_service).and_return(vm_service)
       end
 
       context "clone_type is full" do
