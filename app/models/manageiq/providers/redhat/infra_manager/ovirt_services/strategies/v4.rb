@@ -270,27 +270,27 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
 
       vm.with_provider_object(VERSION_HASH) do |vm_service|
         # Retrieve the current representation of the virtual machine:
-        # TODO: no need to retreive vm here, only if memory is updated
+        # mandatory for memory parameters and to check if next_run_configuration_exists
+
         vm = vm_service.get
+        new_vm_specs = {}
 
         # Update the memory:
         memory = spec['memoryMB']
-        update_vm_memory(vm, vm_service, memory.megabytes) if memory
+        new_vm_specs.merge!(new_vm_memory_specs(vm, memory.megabytes)) if memory
 
         # Update the CPU:
         cpu_total = spec['numCPUs']
         cpu_cores = spec['numCoresPerSocket']
         cpu_sockets = cpu_total / (cpu_cores || vm.cpu.topology.cores) if cpu_total
-        if cpu_cores || cpu_sockets
+        new_vm_specs.merge!(new_vm_cpu_specs(cpu_cores, cpu_sockets)) if cpu_cores || cpu_sockets
+
+        unless new_vm_specs.empty?
           vm_service.update(
             OvirtSDK4::Vm.new(
-              :cpu => {
-                :topology => {
-                  :cores   => cpu_cores,
-                  :sockets => cpu_sockets
-                }
-              }
-            )
+              new_vm_specs
+            ),
+            :next_run => vm.next_run_configuration_exists
           )
         end
 
@@ -704,6 +704,17 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       connection.system_service.templates_service.template_service(template_uuid)
     end
 
+    def new_vm_cpu_specs(cpu_cores, cpu_sockets)
+      {
+        :cpu => {
+          :topology => {
+            :cores   => cpu_cores,
+            :sockets => cpu_sockets
+          }
+        }
+      }
+    end
+
     #
     # Updates the amount memory of a virtual machine.
     #
@@ -711,7 +722,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
     # @param vm_service [OvirtSDK4::VmService] The service that manages the virtual machine.
     # @param memory [Integer] The new amount of memory requested by the user.
     #
-    def update_vm_memory(vm, vm_service, memory)
+    def new_vm_memory_specs(vm, memory)
       # Calculate the adjusted virtual and guaranteed memory:
       virtual = calculate_adjusted_virtual_memory(vm, memory)
       guaranteed = calculate_adjusted_guaranteed_memory(vm, memory)
@@ -722,35 +733,13 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       supports_max = ext_management_system.version_at_least?('4.1')
       max = calculate_max_memory(vm, memory) if supports_max
 
-      # If the virtual machine is running we need to update first the configuration that will be used during the
-      # next run, as the guaranteed memory can't be changed for the running virtual machine.
-      if vm.status == OvirtSDK4::VmStatus::UP
-        vm_service.update(
-          OvirtSDK4::Vm.new(
-            :memory        => virtual,
-            :memory_policy => {
-              :guaranteed => guaranteed,
-              :max        => (max if supports_max)
-            }.compact
-          ),
-          :next_run => true
-        )
-        vm_service.update(
-          OvirtSDK4::Vm.new(
-            :memory => virtual
-          )
-        )
-      else
-        vm_service.update(
-          OvirtSDK4::Vm.new(
-            :memory        => virtual,
-            :memory_policy => {
-              :guaranteed => guaranteed,
-              :max        => (max if supports_max)
-            }.compact
-          )
-        )
-      end
+      {
+        :memory        => virtual,
+        :memory_policy => {
+          :guaranteed => guaranteed,
+          :max        => (max if supports_max)
+        }.compact
+      }
     end
 
     #
