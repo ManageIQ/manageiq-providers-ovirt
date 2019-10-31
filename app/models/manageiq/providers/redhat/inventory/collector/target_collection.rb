@@ -11,20 +11,20 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     target.manager_refs_by_association_reset
   end
 
-  def ems_clusters
-    return @ems_clusters if @ems_clusters.present? || references(:ems_clusters).blank?
+  def clusters
+    return @clusters if @clusters.present? || references(:clusters).blank?
 
     manager.with_provider_connection(VERSION_HASH) do |connection|
-      references(:ems_clusters).each do |ems_ref|
+      references(:clusters).each do |ems_ref|
         begin
-          @ems_clusters << connection.system_service.clusters_service.cluster_service(uuid_from_ems_ref(ems_ref)).get
+          @clusters << connection.system_service.clusters_service.cluster_service(uuid_from_ems_ref(ems_ref)).get
         rescue OvirtSDK4::Error # when 404
           nil
         end
       end
     end
 
-    @ems_clusters
+    @clusters
   end
 
   def networks
@@ -97,7 +97,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
   def datacenter_by_cluster_id
     @datacenter_by_cluster_id ||= begin
-      ems_clusters.each_with_object({}) do |cluster, hash|
+      clusters.each_with_object({}) do |cluster, hash|
         hash[cluster.id] = cluster.dig(:data_center, :id)
       end
     end
@@ -213,9 +213,9 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   def infer_related_vm_ems_refs_api!
     vms_and_templates = Array(vms) + Array(templates)
     vms_and_templates.compact.each do |vm|
-      clusters = collect_ems_clusters
+      clusters = collect_clusters
       clusters.each do |c|
-        add_simple_target!(:ems_clusters, ems_ref_from_sdk(c))
+        add_simple_target!(:clusters, ems_ref_from_sdk(c))
         if c.id == vm.cluster&.id
           add_simple_target!(:datacenters, ems_ref_from_sdk(c.data_center))
         end
@@ -235,7 +235,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     changed_hosts = manager.hosts.where(:ems_ref => references(:hosts))
 
     changed_hosts.each do |host|
-      add_simple_target!(:ems_clusters, uuid_from_target(host.ems_cluster))
+      add_simple_target!(:clusters, uuid_from_target(host.ems_cluster))
       host.storages.each do |storage|
         add_simple_target!(:storagedomains, storage.ems_ref)
       end
@@ -247,7 +247,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
   def infer_related_host_ems_refs_api!
     hosts.each do |host|
-      add_simple_target!(:ems_clusters, host.cluster.id)
+      add_simple_target!(:clusters, host.cluster.id)
       manager.with_provider_connection(VERSION_HASH) do |connection|
         connection.follow_link(host.network_attachments).each do |attachment|
           add_simple_target!(:switches, attachment.network.id)

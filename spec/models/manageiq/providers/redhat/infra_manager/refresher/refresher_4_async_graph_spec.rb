@@ -811,13 +811,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
         [EmsFolder, "Datacenters", {:hidden=>true}] => {
           [Datacenter, "Newd"] => {
             [EmsFolder, "host", {:hidden=>true}] => {
-              [EmsCluster, "newc"] => {
+              [ManageIQ::Providers::Redhat::InfraManager::Cluster, "newc"] => {
                 [ResourcePool, "Default for Cluster newc"] => {}
               }
             }, [EmsFolder, "vm", {:hidden=>true}] => {}
           }, [Datacenter, "newd1"] => {
             [EmsFolder, "host", {:hidden=>true}] => {
-              [EmsCluster, "newd1_cluster"] => {
+              [ManageIQ::Providers::Redhat::InfraManager::Cluster, "newd1_cluster"] => {
                 [ResourcePool, "Default for Cluster newd1_cluster"] => {
                   [ManageIQ::Providers::Redhat::InfraManager::Vm, "vm_off"] => {}, [ManageIQ::Providers::Redhat::InfraManager::Vm, "vm_on"] => {}
                 }

@@ -4,7 +4,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     log_header = "MIQ(#{self.class.name}.#{__method__}) Collecting data for EMS name: [#{collector.manager.name}] id: [#{collector.manager.id}]"
     $rhevm_log.info("#{log_header}...")
 
-    ems_clusters
+    clusters
     datacenters
     storagedomains
     hosts
@@ -35,8 +35,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     end
   end
 
-  def ems_clusters
-    collector.ems_clusters.each do |cluster|
+  def clusters
+    collector.clusters.each do |cluster|
       r_id = "#{cluster.id}_respool"
       ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(cluster.href)
 
@@ -44,13 +44,13 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :name       => "Default for Cluster #{cluster.name}",
         :uid_ems    => r_id,
         :is_default => true,
-        :parent     => persister.ems_clusters.lazy_find(ems_ref),
+        :parent     => persister.clusters.lazy_find(ems_ref),
       )
 
       datacenter_id  = cluster.dig(:data_center, :id)
       cluster_parent = persister.ems_folders.lazy_find("#{datacenter_id}_host") if datacenter_id
 
-      persister.ems_clusters.build(
+      persister.clusters.build(
         :ems_ref     => ems_ref,
         :ems_ref_obj => ems_ref,
         :uid_ems     => cluster.id,
@@ -173,7 +173,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :connection_state => connection_state,
         :power_state      => power_state,
         :maintenance      => power_state == 'maintenance',
-        :ems_cluster      => persister.ems_clusters.lazy_find({:uid_ems => cluster.id}, :ref => :by_uid_ems),
+        :ems_cluster      => persister.clusters.lazy_find({:uid_ems => cluster.id}, :ref => :by_uid_ems),
       )
 
       host_storages(dc, persister_host)
@@ -376,7 +376,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :memory_reserve   => vm_memory_reserve(vm),
         :raw_power_state  => template ? "never" : vm.status,
         :host             => host,
-        :ems_cluster      => persister.ems_clusters.lazy_find({:uid_ems => vm.cluster.id}, :ref => :by_uid_ems),
+        :ems_cluster      => persister.clusters.lazy_find({:uid_ems => vm.cluster.id}, :ref => :by_uid_ems),
         :storages         => storages,
         :storage          => storages.first,
         :parent           => parent_folder,
