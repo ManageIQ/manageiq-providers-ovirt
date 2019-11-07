@@ -10,6 +10,10 @@ module ManageIQ::Providers::Redhat::InfraManager::VmOrTemplateShared::Scanning
     end
   end
 
+  def require_snapshot_for_scan?
+    false
+  end
+
   def perform_metadata_scan(ost)
     require 'MiqVm/MiqRhevmVm'
 
