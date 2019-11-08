@@ -10,8 +10,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     process_api_features_support
   end
 
-  SUPPORTED_API_VERSION = '4'.freeze
-
   SUPPORTED_FEATURES = [
     :migrate,
     :quick_stats,
@@ -19,11 +17,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     :snapshots,
     :publish
   ].freeze
-
-  def supports_the_api_version?(version)
-    # Check only the major number of the api
-    version.to_s.split('.').first == SUPPORTED_API_VERSION
-  end
 
   def authentication_status_ok?(type = nil)
     return true if type == :ssh_keypair
@@ -47,11 +40,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
   def connect(options = {})
     raise "no credentials defined" if missing_credentials?(options[:auth_type])
-
-    version = options[:version] || SUPPORTED_API_VERSION
-    unless options[:skip_supported_api_validation] || supports_the_api_version?(version)
-      raise "version #{version} of the api is not supported by the provider"
-    end
 
     # Prepare the options to call the method that creates the actual connection:
     connect_options = apply_connection_options_defaults(options)
@@ -158,15 +146,14 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
   # Adding disks is supported only by API version 4.0
   def with_disk_attachments_service(vm)
-    with_version4_vm_service(vm) do |service|
+    with_vm_service(vm) do |service|
       disk_service = service.disk_attachments_service
       yield disk_service
     end
   end
 
-  def with_version4_vm_service(vm)
-    connection = connect(:version => 4)
-    service = connection.system_service.vms_service.vm_service(vm.uid_ems)
+  def with_vm_service(vm)
+    service = connect.system_service.vms_service.vm_service(vm.uid_ems)
     yield service
   end
 

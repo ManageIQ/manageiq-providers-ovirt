@@ -105,15 +105,6 @@ describe ManageIQ::Providers::Redhat::InfraManager do
     end
   end
 
-  context "#supports_the_api_version?" do
-    let(:ems) { FactoryBot.create(:ems_redhat) }
-
-    it "only major version 4 are supported" do
-      expect(ems.supports_the_api_version?('4.2.5')).to eq(true)
-      expect(ems.supports_the_api_version?(6)).to eq(false)
-    end
-  end
-
   context "supported features" do
     let(:ems) { FactoryBot.create(:ems_redhat)}
     context "#process_api_features_support" do
@@ -287,7 +278,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
 
       service = double
       allow(service).to receive(:migrate).with(:host => {:id => "11089411-53a2-4337-8613-7c1d411e8ae8"})
-      allow(@ems).to receive(:with_version4_vm_service).and_return(service)
+      allow(@ems).to receive(:with_vm_service).and_return(service)
     end
 
     it "succeeds migration" do

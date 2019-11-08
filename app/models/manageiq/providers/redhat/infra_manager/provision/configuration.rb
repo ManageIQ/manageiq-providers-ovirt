@@ -29,7 +29,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration
   end
 
   def configure_container
-    vm.with_provider_object(:version => ManageIQ::Providers::Redhat::InfraManager::ApiIntegration::SUPPORTED_API_VERSION) do |rhevm_vm|
+    vm.with_provider_object do |rhevm_vm|
       configure_container_description(rhevm_vm)
       configure_memory(rhevm_vm)
       configure_memory_reserve(rhevm_vm)

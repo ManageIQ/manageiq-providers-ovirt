@@ -10,21 +10,19 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
 
     attr_reader :ext_management_system
 
-    VERSION_HASH = {:version => ManageIQ::Providers::Redhat::InfraManager::ApiIntegration::SUPPORTED_API_VERSION}.freeze
-
     def initialize(args)
       @ext_management_system = args[:ems]
     end
 
     def username_by_href(href)
-      ext_management_system.with_provider_connection(VERSION_HASH) do |connection|
+      ext_management_system.with_provider_connection do |connection|
         user = connection.system_service.users_service.user_service(uuid_from_href(href)).get
         "#{user.name}@#{user.domain.name}"
       end
     end
 
     def cluster_name_href(href)
-      ext_management_system.with_provider_connection(VERSION_HASH) do |connection|
+      ext_management_system.with_provider_connection do |connection|
         cluster_proxy_from_href(href, connection).name
       end
     end
@@ -47,7 +45,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
     end
 
     def vm_clone_completed?(logger, phase_context, source)
-      source.with_provider_connection(VERSION_HASH) do |connection|
+      source.with_provider_connection do |connection|
         vm = vm_service_by_href(phase_context[:new_vm_ems_ref], connection).get
         status = vm.status
         logger.info("The Vm being cloned is #{status}")
@@ -56,7 +54,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
     end
 
     def template_clone_completed?(logger, phase_context, source)
-      source.with_provider_connection(VERSION_HASH) do |connection|
+      source.with_provider_connection do |connection|
         template = template_service_by_href(phase_context[:new_vm_ems_ref], connection).get
         status = template.status
         logger.info("The status of the template being cloned is #{status}")
@@ -65,13 +63,13 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
     end
 
     def destination_image_locked?(vm)
-      vm.with_provider_object(VERSION_HASH) do |vm_proxy|
+      vm.with_provider_object do |vm_proxy|
         vm_proxy.get.status == OvirtSDK4::VmStatus::IMAGE_LOCKED
       end
     end
 
     def exists_on_provider?(vm)
-      vm.with_provider_object(VERSION_HASH) do |vm_proxy|
+      vm.with_provider_object do |vm_proxy|
         vm_proxy.get
         true
       end
@@ -84,14 +82,14 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
     end
 
     def nics_for_vm(vm)
-      vm.with_provider_connection(VERSION_HASH) do |connection|
+      vm.with_provider_connection do |connection|
         vm_proxy = connection.system_service.vms_service.vm_service(vm.uid_ems).get
         connection.follow_link(vm_proxy.nics)
       end
     end
 
     def cluster_find_network_by_name(href, network_name)
-      ext_management_system.with_provider_connection(VERSION_HASH) do |connection|
+      ext_management_system.with_provider_connection do |connection|
         cluster_service = connection.system_service.clusters_service.cluster_service(uuid_from_href(href))
         networks = cluster_service.networks_service.list
         networks.detect { |n| n.name == network_name }
@@ -99,7 +97,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
     end
 
     def configure_vnics(requested_vnics, destination_vnics, destination_cluster, destination_vm)
-      destination_vm.with_provider_connection(VERSION_HASH) do |connection|
+      destination_vm.with_provider_connection do |connection|
         nics_service = connection.system_service.vms_service.vm_service(destination_vm.uid_ems).nics_service
 
         requested_vnics.stretch!(destination_vnics).each_with_index do |requested_vnic, idx|
@@ -121,15 +119,15 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
     end
 
     def powered_off_in_provider?(vm)
-      vm.with_provider_object(VERSION_HASH) { |vm_service| vm_service.get.status } == OvirtSDK4::VmStatus::DOWN
+      vm.with_provider_object { |vm_service| vm_service.get.status } == OvirtSDK4::VmStatus::DOWN
     end
 
     def powered_on_in_provider?(vm)
-      vm.with_provider_object(VERSION_HASH) { |vm_service| vm_service.get.status } == OvirtSDK4::VmStatus::UP
+      vm.with_provider_object { |vm_service| vm_service.get.status } == OvirtSDK4::VmStatus::UP
     end
 
     def vm_boot_from_cdrom(operation, name)
-      operation.destination.with_provider_object(VERSION_HASH) do |vm_service|
+      operation.destination.with_provider_object do |vm_service|
         vm_service.start(
           :vm => {
             :os     => {
@@ -152,13 +150,13 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
     end
 
     def detach_floppy(operation)
-      operation.destination.with_provider_object(VERSION_HASH) do |vm_service|
+      operation.destination.with_provider_object do |vm_service|
         vm_service.update(:payloads => [])
       end
     end
 
     def vm_boot_from_network(operation)
-      operation.destination.with_provider_object(VERSION_HASH) do |vm_service|
+      operation.destination.with_provider_object do |vm_service|
         vm_service.start(
           :vm => {
             :os => {
@@ -212,7 +210,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
 
     def collect_disks_by_hrefs(disks)
       vm_disks = []
-      ext_management_system.with_provider_connection(VERSION_HASH) do |connection|
+      ext_management_system.with_provider_connection do |connection|
         disks.each do |disk|
           parts = URI(disk).path.split('/')
           begin
@@ -226,43 +224,43 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
     end
 
     def shutdown_guest(operation)
-      operation.with_provider_object(VERSION_HASH, &:shutdown)
+      operation.with_provider_object(&:shutdown)
     rescue OvirtSDK4::Error
     end
 
     def reboot_guest(operation)
-      operation.with_provider_object(VERSION_HASH, &:reboot)
+      operation.with_provider_object(&:reboot)
     rescue OvirtSDK4::Error
     end
 
     def start_clone(source, clone_options, phase_context)
-      source.with_provider_object(VERSION_HASH) do |rhevm_template|
+      source.with_provider_object do |rhevm_template|
         vm = rhevm_template.create_vm(clone_options)
         populate_phase_context(phase_context, vm)
       end
     end
 
     def make_template(source, clone_options, phase_context)
-      source.with_provider_object(VERSION_HASH) do |rhevm_vm|
+      source.with_provider_object do |rhevm_vm|
         template = rhevm_vm.make_template(clone_options)
         populate_phase_context(phase_context, template)
       end
     end
 
     def vm_start(vm, opts = {})
-      vm.with_provider_object(VERSION_HASH) do |rhevm_vm|
+      vm.with_provider_object do |rhevm_vm|
         rhevm_vm.start(opts)
       end
     rescue OvirtSDK4::Error
     end
 
     def vm_stop(vm)
-      vm.with_provider_object(VERSION_HASH, &:stop)
+      vm.with_provider_object(&:stop)
     rescue OvirtSDK4::Error
     end
 
     def vm_suspend(vm)
-      vm.with_provider_object(VERSION_HASH, &:suspend)
+      vm.with_provider_object(&:suspend)
     end
 
     def vm_reconfigure(vm, options = {})
@@ -271,7 +269,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
 
       _log.info("#{log_header} Started...")
 
-      vm.with_provider_object(VERSION_HASH) do |vm_service|
+      vm.with_provider_object do |vm_service|
         # Retrieve the current representation of the virtual machine:
         # mandatory for memory parameters and to check if next_run_configuration_exists
 
@@ -310,7 +308,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
     end
 
     def advertised_images
-      ext_management_system.with_provider_connection(VERSION_HASH) do |ems_service|
+      ext_management_system.with_provider_connection do |ems_service|
         query = { :search => "status=#{OvirtSDK4::DataCenterStatus::UP}" }
         data_centers = ems_service.system_service.data_centers_service.list(:query => query)
         iso_sd = nil
@@ -679,7 +677,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
     end
 
     def collect_external_network_providers
-      ext_management_system.with_provider_connection(VERSION_HASH) do |connection|
+      ext_management_system.with_provider_connection do |connection|
         connection.system_service.openstack_network_providers_service.list
       end
     end
@@ -983,7 +981,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
 
     def get_vnic_profiles_in_cluster(uid_ems_cluster)
       cluster_profiles = {}
-      ext_management_system.with_provider_connection(VERSION_HASH) do |connection|
+      ext_management_system.with_provider_connection do |connection|
         profiles = connection.system_service.vnic_profiles_service.list
 
         cluster_networks = connection.system_service.clusters_service.cluster_service(uid_ems_cluster).networks_service.list

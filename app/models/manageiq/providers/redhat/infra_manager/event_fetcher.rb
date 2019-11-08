@@ -9,7 +9,7 @@ class ManageIQ::Providers::Redhat::InfraManager::EventFetcher
     query = {}
     query[:max] = query_options[:max] if query_options[:max]
     query[:from] = query_options[:since] if query_options[:since]
-    ext_management_system.with_provider_connection(:version => 4) do |ems_service|
+    ext_management_system.with_provider_connection do |ems_service|
       events = ems_service.system_service.events_service.list(query)
       events.each { |event| set_event_name!(event) }
       events
