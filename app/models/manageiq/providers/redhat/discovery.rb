@@ -1,16 +1,30 @@
 require 'manageiq/network_discovery/port'
-require 'ovirt'
+require 'ovirtsdk4'
 
 module ManageIQ
   module Providers
     module Redhat
       class Discovery
-        def self.probe(ost)
-          ::Ovirt.logger = $rhevm_log if $rhevm_log
+        OVIRT_DEFAULT_PORT = 443
 
-          if ManageIQ::NetworkDiscovery::Port.open?(ost, ::Ovirt::Service::DEFAULT_PORT) &&
-             ::Ovirt::Service.ovirt?(:server => ost.ipaddr, :verify_ssl => false)
-            ost.hypervisor << :rhevm
+        class << self
+          def probe(ost)
+            if ManageIQ::NetworkDiscovery::Port.open?(ost, OVIRT_DEFAULT_PORT) &&
+               ovirt_exists?(ost.ipaddr, $rhevm_log)
+              ost.hypervisor << :rhevm
+            end
+          end
+
+          private
+
+          def ovirt_exists?(host, logger = nil)
+            opts = {
+              :host => host,
+              :log  => logger
+            }.compact
+            OvirtSDK4::Probe.exists?(opts)
+          rescue OvirtSDK4::Error
+            false
           end
         end
       end
