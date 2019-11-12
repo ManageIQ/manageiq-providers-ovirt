@@ -29,7 +29,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration
   end
 
   def configure_container
-    vm.with_provider_object(:version => vm.ext_management_system.highest_allowed_api_version) do |rhevm_vm|
+    vm.with_provider_object do |rhevm_vm|
       configure_container_description(rhevm_vm)
       configure_memory(rhevm_vm)
       configure_memory_reserve(rhevm_vm)

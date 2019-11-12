@@ -14,7 +14,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   def clusters
     return @clusters if @clusters.present? || references(:clusters).blank?
 
-    manager.with_provider_connection(VERSION_HASH) do |connection|
+    manager.with_provider_connection do |connection|
       references(:clusters).each do |ems_ref|
         begin
           @clusters << connection.system_service.clusters_service.cluster_service(uuid_from_ems_ref(ems_ref)).get
@@ -31,7 +31,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     nets = []
     return nets if references(:networks).blank?
 
-    manager.with_provider_connection(VERSION_HASH) do |connection|
+    manager.with_provider_connection do |connection|
       references(:networks).each do |ems_ref|
         begin
           nets << connection.system_service.networks_service.network_service(uuid_from_ems_ref(ems_ref)).get
@@ -48,7 +48,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     vnics = []
     return vnics if references(:vnic_profiles).blank?
 
-    manager.with_provider_connection(VERSION_HASH) do |connection|
+    manager.with_provider_connection do |connection|
       references(:vnic_profiles).each do |ems_ref|
         begin
           vnics << connection.system_service.vnic_profiles_service.vnic_profile_service(uuid_from_ems_ref(ems_ref)).get
@@ -65,7 +65,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     domains = []
     return domains if references(:storagedomains).blank?
 
-    manager.with_provider_connection(VERSION_HASH) do |connection|
+    manager.with_provider_connection do |connection|
       references(:storagedomains).each do |ems_ref|
         begin
           domains << connection.system_service.storage_domains_service.storage_domain_service(uuid_from_ems_ref(ems_ref)).get
@@ -82,7 +82,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     dcs = []
     return dcs if references(:datacenters).blank?
 
-    manager.with_provider_connection(VERSION_HASH) do |connection|
+    manager.with_provider_connection do |connection|
       references(:datacenters).each do |ems_ref|
         begin
           dcs << connection.system_service.data_centers_service.data_center_service(uuid_from_ems_ref(ems_ref)).get
@@ -106,7 +106,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   def hosts
     return @hosts unless @hosts.empty?
 
-    @hosts = manager.with_provider_connection(VERSION_HASH) do |connection|
+    @hosts = manager.with_provider_connection do |connection|
       references(:hosts).map do |ems_ref|
         begin
           connection.system_service.hosts_service.host_service(uuid_from_ems_ref(ems_ref)).get
@@ -118,7 +118,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   end
 
   def vms
-    @vms = manager.with_provider_connection(VERSION_HASH) do |connection|
+    @vms = manager.with_provider_connection do |connection|
       select_vms(references(:vms)).map do |ems_ref|
         begin
           connection.system_service.vms_service.vm_service(uuid_from_ems_ref(ems_ref)).get
@@ -142,7 +142,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     t = []
     return t if select_templates(references(:vms)).blank?
 
-    manager.with_provider_connection(VERSION_HASH) do |connection|
+    manager.with_provider_connection do |connection|
       select_templates(references(:vms)).each do |ems_ref|
         begin
           # returns OvirtSDK4::List
@@ -248,7 +248,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   def infer_related_host_ems_refs_api!
     hosts.each do |host|
       add_simple_target!(:clusters, host.cluster.id)
-      manager.with_provider_connection(VERSION_HASH) do |connection|
+      manager.with_provider_connection do |connection|
         connection.follow_link(host.network_attachments).each do |attachment|
           add_simple_target!(:switches, attachment.network.id)
         end

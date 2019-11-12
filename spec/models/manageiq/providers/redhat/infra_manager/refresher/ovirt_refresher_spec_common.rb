@@ -30,9 +30,8 @@ module OvirtRefresherSpecCommon
                              :port => port)
     @ems.update_authentication(:default => {:userid => "admin@internal", :password => "pass123"})
     @ems.default_endpoint.verify_ssl = OpenSSL::SSL::VERIFY_NONE
-    allow(@ems).to(receive(:supported_api_versions).and_return(%w(3 4)))
 
-    @ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4
+    @ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4
     allow_any_instance_of(@ovirt_service)
       .to receive(:collect_external_network_providers).and_return(load_response_mock_for('external_network_providers'))
   end

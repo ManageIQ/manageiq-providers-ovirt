@@ -207,7 +207,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
 
   def host_quick_stats(host)
     qs = {}
-    with_provider_connection(:version => 4) do |connection|
+    with_provider_connection do |connection|
       stats_list = connection.system_service.hosts_service.host_service(host.uid_ems)
                              .statistics_service.list
       qs["overallMemoryUsage"] = stats_list.detect { |x| x.name == "memory.used" }
@@ -231,9 +231,8 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   end
 
   def vm_reconfigure(vm, options = {})
-    ovirt_services_for_reconfigure = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Builder.new(self)
-      .build(:use_highest_supported_version => true).new(:ems => self)
-    ovirt_services_for_reconfigure.vm_reconfigure(vm, options)
+    ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4.new(:ems => self)
+                                                                .vm_reconfigure(vm, options)
   end
 
   def vm_set_memory(vm, options = {})
@@ -301,7 +300,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
     }
 
     started_time = Time.zone.now
-    with_version4_vm_service(vm) do |service|
+    with_vm_service(vm) do |service|
       service.migrate(migration_options)
     end
 

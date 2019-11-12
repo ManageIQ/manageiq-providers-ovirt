@@ -39,7 +39,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
   end
 
   def assert_get_vnic_profiles_in_cluster
-    ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4.new(:ems => @ems)
+    ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4.new(:ems => @ems)
     vm_uid_ems = "3ce930c7-bac1-4081-bc93-c5f5686d7493"
     vm_id = Vm.where(:uid_ems => vm_uid_ems).first.id
     workflow = double(:get_source_vm => double(:id => vm_id))

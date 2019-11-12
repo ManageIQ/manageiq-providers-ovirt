@@ -79,7 +79,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
     end
 
     it 'only from same data_center as template' do
-      allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager).to receive(:supported_api_versions).and_return([3])
       expect(workflow.allowed_clusters).to match_array([[cluster1.id, cluster1.name], [cluster2.id, cluster2.name]])
     end
   end

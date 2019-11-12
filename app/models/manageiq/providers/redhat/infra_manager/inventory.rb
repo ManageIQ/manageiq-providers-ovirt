@@ -2,8 +2,6 @@ class ManageIQ::Providers::Redhat::InfraManager::Inventory
   attr_accessor :connection
   attr_reader :ems
 
-  VERSION_HASH = {:version => 4}.freeze
-
   def initialize(args)
     @ems = args[:ems]
   end
@@ -19,7 +17,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Inventory
   }.freeze
 
   def refresh
-    ems.with_provider_connection(VERSION_HASH) do |connection|
+    ems.with_provider_connection do |connection|
       @connection = connection
       top_level_futures_hash = collect_top_level_futures
       res = wait_on_top_level_collections(top_level_futures_hash)
@@ -120,13 +118,13 @@ class ManageIQ::Providers::Redhat::InfraManager::Inventory
   end
 
   def api
-    ems.with_provider_connection(VERSION_HASH) do |connection|
+    ems.with_provider_connection do |connection|
       connection.system_service.get.product_info.version.full_version
     end
   end
 
   def service
-    ems.with_provider_connection(VERSION_HASH) do |connection|
+    ems.with_provider_connection do |connection|
       OpenStruct.new(:version_string => connection.system_service.get.product_info.version.full_version)
     end
   end

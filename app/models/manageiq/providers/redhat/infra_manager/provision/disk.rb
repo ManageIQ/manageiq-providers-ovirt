@@ -13,7 +13,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Disk
   end
 
   def destination_disks_locked?
-    destination.ext_management_system.with_provider_connection(:version => 4) do |connection|
+    destination.ext_management_system.with_provider_connection do |connection|
       system_service = connection.system_service
       disks = system_service.vms_service.vm_service(destination.uid_ems).disk_attachments_service.list
       disks.each do |disk|

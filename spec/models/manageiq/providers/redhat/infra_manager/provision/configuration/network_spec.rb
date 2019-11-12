@@ -1,16 +1,12 @@
-require "ovirt"
-
 describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Network do
   let(:mac_address)   { "mac_address" }
   let(:network_id)    { "network1-id" }
   let(:network_name)  { "network1-name" }
-  let(:rhevm_cluster) { double("Ovirt::Cluster") }
   let(:ems)           { FactoryBot.create(:ems_redhat_with_authentication) }
   let(:ems_cluster)   { FactoryBot.create(:ems_cluster, :ext_management_system => ems, :ems_ref => "ems_ref", :uid_ems => "cluster_uid_ems") }
   let(:template)      { FactoryBot.create(:template_redhat, :ext_management_system => ems) }
-  let(:rhevm_vm)      { double("Ovirt::Vm") }
+  let(:rhevm_vm)      { double("Vm") }
   let(:target_vm)     { FactoryBot.create(:vm_redhat, :ext_management_system => ems) }
-  let(:ovirt_service) { double("Ovirt::Service", :api_path => "/api") }
 
   before do
     @task = FactoryBot.create(:miq_provision_redhat,
@@ -24,12 +20,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
       :source       => template,
     )
     allow(@task).to receive(:get_provider_destination).and_yield(rhevm_vm)
-
-    allow(Ovirt::Service).to receive_messages(:new => ovirt_service)
-
     allow(template).to receive_messages(:ext_management_system => ems)
-    allow(Ovirt::Cluster).to receive(:find_by_href).with(kind_of(ManageIQ::Providers::Redhat::InfraManager::ApiIntegration::OvirtConnectionDecorator), ems_cluster.ems_ref).and_return(rhevm_cluster)
-    allow(rhevm_cluster).to receive(:find_network_by_name).with(network_name).and_return(:id => network_id)
     allow(target_vm).to receive(:provider_object).and_return(rhevm_vm)
   end
 
@@ -60,8 +51,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
 
       before do
         stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
-        allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager).to receive(:supported_api_versions)
-          .and_return([3, 4])
         allow(ems.ovirt_services).to receive(:get_vm_proxy).and_return(rhevm_vm)
         allow(rhevm_vm).to receive_messages(:nics => [rhevm_nic1, rhevm_nic2], :ext_management_system => ems)
         allow(ems).to receive(:with_provider_connection).and_yield(connection)

@@ -2,7 +2,7 @@ describe 'update_cloud_init!' do
   let(:service) { double }
   let(:connection) { double }
   let(:services) { double }
-  let(:proxy) { ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4::VmProxyDecorator.new(service, connection, services) }
+  let(:proxy) { ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4::VmProxyDecorator.new(service, connection, services) }
 
   it 'does nothing if the script is empty' do
     expect(service).not_to receive(:update)

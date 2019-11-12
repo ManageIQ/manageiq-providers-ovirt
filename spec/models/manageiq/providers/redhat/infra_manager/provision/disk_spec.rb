@@ -131,7 +131,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Disk do
 
     before do
       allow(vm).to receive(:with_provider_object).and_yield(rhevm_vm)
-      allow(ems).to receive(:with_provider_connection).with(:version => 4).and_yield(connection)
+      allow(ems).to receive(:with_provider_connection).and_yield(connection)
     end
 
     it "returns true if there are locked disks" do
