@@ -77,6 +77,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
 
   def collect_datacenter_for_cluster(cluster)
     return unless cluster.data_center
+
     manager.with_provider_connection do |connection|
       connection.follow_link(cluster.data_center)
     end
@@ -133,6 +134,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
 
   def collect_dc_domains(dc)
     return unless dc
+
     manager.with_provider_connection do |connection|
       connection.follow_link(dc.storage_domains)
     end
@@ -155,28 +157,24 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
 
   def vm_or_template_by_path(path)
     uuid = ::File.basename(path, '.*')
-    vm      = vm_by_uuid(uuid)
-    vm      = template_by_uuid(uuid) if vm.blank?
+    vm = vm_by_uuid(uuid)
+    vm = template_by_uuid(uuid) if vm.blank?
     vm
   end
 
   def vm_by_uuid(uuid)
     manager.with_provider_connection do |connection|
-      begin
-        connection.system_service.vms_service.vm_service(uuid).get
-      rescue OvirtSDK4::Error # when 404
-        nil
-      end
+      connection.system_service.vms_service.vm_service(uuid).get
+    rescue OvirtSDK4::Error # when 404
+      nil
     end
   end
 
   def template_by_uuid(uuid)
     manager.with_provider_connection do |connection|
-      begin
-        connection.system_service.templates_service.template_service(uuid).get
-      rescue OvirtSDK4::Error # when 404
-        nil
-      end
+      connection.system_service.templates_service.template_service(uuid).get
+    rescue OvirtSDK4::Error # when 404
+      nil
     end
   end
 end

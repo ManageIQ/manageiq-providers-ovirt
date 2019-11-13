@@ -225,12 +225,14 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
 
     def shutdown_guest(operation)
       operation.with_provider_object(&:shutdown)
-    rescue OvirtSDK4::Error
+    rescue OvirtSDK4::Error => err
+      _log.error("Error while doing shutdown_guest: #{err}")
     end
 
     def reboot_guest(operation)
       operation.with_provider_object(&:reboot)
-    rescue OvirtSDK4::Error
+    rescue OvirtSDK4::Error => err
+      _log.error("Error while doing reboot guest: #{err}")
     end
 
     def start_clone(source, clone_options, phase_context)
@@ -251,12 +253,14 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
       vm.with_provider_object do |rhevm_vm|
         rhevm_vm.start(opts)
       end
-    rescue OvirtSDK4::Error
+    rescue OvirtSDK4::Error => err
+      _log.error("Error starting vm: #{err}")
     end
 
     def vm_stop(vm)
       vm.with_provider_object(&:stop)
-    rescue OvirtSDK4::Error
+    rescue OvirtSDK4::Error => err
+      _log.error("Error stopping vm: #{err}")
     end
 
     def vm_suspend(vm)
@@ -319,6 +323,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
           break iso_sd if iso_sd
         end
         return [] unless iso_sd
+
         sd_service = ems_service.system_service.storage_domains_service.storage_domain_service(iso_sd.id)
         iso_images = sd_service.files_service.list
         iso_images.collect(&:name)
@@ -381,7 +386,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
       def attach_floppy(filename_hash)
         name, content = filename_hash.first
         file = OvirtSDK4::File.new(:name => name, :content => content)
-        payload = OvirtSDK4::Payload.new(:files => [file], type: "floppy")
+        payload = OvirtSDK4::Payload.new(:files => [file], :type => "floppy")
         vm = get
         vm.payloads ||= []
         vm.payloads << payload
@@ -413,7 +418,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
         # 'converted_cloud_init' methods in the 'vm.rb' file of the 'ovirt' gem.
         #
         # This is the list of keys that need special treatment:
-        keys = %i(
+        keys = %i[
           active_directory_ou
           authorized_ssh_keys
           dns_search
@@ -430,7 +435,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
           ui_language
           user_locale
           user_name
-        )
+        ]
 
         # Load the YAML text and check it is a hash, as otherwise we will not be able to process it
         # and cloud-init will not understand it either.
@@ -499,11 +504,13 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
       end
 
       def update_sysprep!(content)
-        update(OvirtSDK4::Vm.new(
-                 :initialization => {
-                   :custom_script => content
-                 }
-        ))
+        update(
+          OvirtSDK4::Vm.new(
+            :initialization => {
+              :custom_script => content
+            }
+          )
+        )
       end
 
       def destroy
@@ -606,6 +613,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
 
       def apply_storage_domain_on_disk_attachments(disk_attachments, storage_href)
         return if storage_href.nil?
+
         storage_domain = ovirt_services.storage_from_href(storage_href, connection)
         disk_attachments.each do |disk_attachment|
           disk_attachment.disk.storage_domains = [storage_domain]
@@ -614,6 +622,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
 
       def apply_sparsity_on_disk_attachments(disk_attachments, sparse, disk_format)
         return if sparse.nil?
+
         disk_attachments.each do |disk_attachment|
           disk_attachment.disk.format = disk_format
           disk_attachment.disk.sparse = sparse
@@ -669,7 +678,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
         _log.warn("Cannot find a MAC address based on vnic_profile=#{vnic_profile_id}, there is no NIC with this profile")
       end
 
-      nic && nic.mac && nic.mac.address
+      nic&.mac&.address
     end
 
     def event_fetcher
@@ -763,7 +772,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
       if vm.status == OvirtSDK4::VmStatus::UP
         delta = memory - vm.memory
         remainder = delta % HOT_PLUG_DIMM_SIZE
-        if remainder > 0
+        if remainder.positive?
           adjustment = HOT_PLUG_DIMM_SIZE - remainder
           adjusted = memory + adjustment
           _log.info(
@@ -822,8 +831,8 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
       max = vm.memory_policy&.max || memory
       if memory >= 1.terabyte
         max = memory
-      else
-        max = [memory * 4, 1.terabyte].min if memory > max
+      elsif memory > max
+        max = [memory * 4, 1.terabyte].min
       end
 
       max
@@ -857,7 +866,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
         :storage          => storage_spec,
         :name             => disk_spec[:disk_name],
         :thin_provisioned => disk_spec[:thin_provisioned],
-        :bootable         => disk_spec[:bootable],
+        :bootable         => disk_spec[:bootable]
       )
       attachment_builder.disk_attachment
     end
@@ -873,15 +882,13 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
     def remove_vm_disks(vm_service, disk_specs)
       attachments_service = vm_service.disk_attachments_service
       disk_specs.each do |disk_spec|
-        begin
-          disk_spec = disk_spec.with_indifferent_access
-          attachment_service = attachments_service.attachment_service(disk_spec['disk_name'])
-          attachment_service.remove(:detach_only => !disk_spec['delete_backing'])
-        rescue OvirtSDK4::NotFoundError
-          raise "no disk with the id #{disk_spec['disk_name']} is attached to the vm: #{vm_service.get.name}"
-        rescue OvirtSDK4::Error
-          raise "Failed to detach disk with the id #{disk_spec['disk_name']} from the vm: #{vm_service.get.name}, check that it exists"
-        end
+        disk_spec = disk_spec.with_indifferent_access
+        attachment_service = attachments_service.attachment_service(disk_spec['disk_name'])
+        attachment_service.remove(:detach_only => !disk_spec['delete_backing'])
+      rescue OvirtSDK4::NotFoundError
+        raise "no disk with the id #{disk_spec['disk_name']} is attached to the vm: #{vm_service.get.name}"
+      rescue OvirtSDK4::Error
+        raise "Failed to detach disk with the id #{disk_spec['disk_name']} from the vm: #{vm_service.get.name}, check that it exists"
       end
     end
 
