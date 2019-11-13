@@ -31,9 +31,9 @@ describe ManageIQ::Providers::Redhat::InfraManager do
     context "non default metrics database name" do
       let(:ems) do
         FactoryBot.create(:ems_redhat,
-                           :hostname                  => "some.thing.tld",
-                           :connection_configurations => [{:endpoint => {:role => :metrics,
-                                                                         :path => "some.database"}}])
+                          :hostname                  => "some.thing.tld",
+                          :connection_configurations => [{:endpoint => {:role => :metrics,
+                                                                        :path => "some.database"}}])
       end
 
       it "fetches the set database name" do
@@ -59,8 +59,8 @@ describe ManageIQ::Providers::Redhat::InfraManager do
       context "#vm_reconfigure" do
         before do
           _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-          @ems  = FactoryBot.create(:ems_redhat_with_authentication, :zone => zone)
-          @vm   = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
+          @ems = FactoryBot.create(:ems_redhat_with_authentication, :zone => zone)
+          @vm = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
 
           @rhevm_vm_attrs = double('rhevm_vm_attrs')
           stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => use_ovirt_engine_sdk } })
@@ -106,7 +106,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
   end
 
   context "supported features" do
-    let(:ems) { FactoryBot.create(:ems_redhat)}
+    let(:ems) { FactoryBot.create(:ems_redhat) }
     context "#process_api_features_support" do
       before(:each) do
         allow(SupportsFeatureMixin).to receive(:guard_queryable_feature).and_return(true)
@@ -190,7 +190,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
     it "works with version 4" do
       expect(described_class).to receive(:raw_connect_v4).and_return(v4_connection)
       expect(v4_connection).to receive(:test).with(hash_including(:raise_exception => true))
-        .and_return(true)
+                                             .and_return(true)
 
       described_class.raw_connect(options)
     end
@@ -198,7 +198,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
     it "decrypts the password" do
       allow(described_class).to receive(:raw_connect_v4).and_return(v4_connection)
       expect(v4_connection).to receive(:test).with(hash_including(:raise_exception => true))
-        .and_return(true)
+                                             .and_return(true)
 
       expect(ManageIQ::Password).to receive(:try_decrypt).with(options[:password])
 
@@ -267,7 +267,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
     let(:ems) { FactoryBot.create(:ems_redhat) }
 
     it "#supported_catalog_types" do
-      expect(ems.supported_catalog_types).to eq(%w(redhat))
+      expect(ems.supported_catalog_types).to eq(%w[redhat])
     end
   end
 

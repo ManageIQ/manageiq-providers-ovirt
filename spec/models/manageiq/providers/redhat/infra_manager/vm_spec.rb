@@ -91,7 +91,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
       end
 
       context "when vm has provider" do
-        let(:ems_redhat) { FactoryBot.create(:ems_redhat)}
+        let(:ems_redhat) { FactoryBot.create(:ems_redhat) }
         let(:vm) { FactoryBot.create(:vm_redhat, :storage => storage, :ext_management_system => ems_redhat) }
 
         it "supports reconfigure disks" do

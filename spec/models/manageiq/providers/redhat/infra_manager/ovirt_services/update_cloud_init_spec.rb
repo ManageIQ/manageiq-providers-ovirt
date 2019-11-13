@@ -15,7 +15,7 @@ describe 'update_cloud_init!' do
   end
 
   it 'extracts the values that need special treatment' do
-    script = <<~END
+    script = <<~OPTIONS
       active_directory_ou: my_active_directory_ou
       authorized_ssh_keys: my_authorized_ssh_keys
       dns_search: my_dns_search
@@ -31,7 +31,7 @@ describe 'update_cloud_init!' do
       ui_language: my_ui_language
       user_locale: my_user_locale
       user_name: my_user_name
-    END
+    OPTIONS
     expect(service).to receive(:update) do |vm|
       expect(vm.initialization.active_directory_ou).to eq('my_active_directory_ou')
       expect(vm.initialization.authorized_ssh_keys).to eq('my_authorized_ssh_keys')
@@ -53,9 +53,9 @@ describe 'update_cloud_init!' do
   end
 
   it 'does not assign values to attributes that are not part of the cloud-init script' do
-    script = <<~END
+    script = <<~OPTIONS
       not_special: my_value
-    END
+    OPTIONS
     expect(service).to receive(:update) do |vm|
       expect(vm.initialization.active_directory_ou).to be_nil
       expect(vm.initialization.authorized_ssh_keys).to be_nil
@@ -78,7 +78,7 @@ describe 'update_cloud_init!' do
   end
 
   it 'extracts the nested values that need special treatment' do
-    script = <<~END
+    script = <<~CONFS
       nic_configurations:
       - name: eth0
         on_boot: true
@@ -91,7 +91,7 @@ describe 'update_cloud_init!' do
           address: 192.168.122.100
           netmask: 255.255.255.0
           gateway: 192.168.122.1
-    END
+    CONFS
     expect(service).to receive(:update) do |vm|
       nics = vm.initialization.nic_configurations
       expect(nics).not_to be_nil
@@ -115,23 +115,23 @@ describe 'update_cloud_init!' do
   end
 
   it 'preserves the values that do not need special treatment' do
-    script = <<~END
+    script = <<~OPTIONS
       not_special_1: my_value_1
       host_name: my_host_name
       not_special_2: my_value_2
-    END
+    OPTIONS
     expect(service).to receive(:update) do |vm|
-      expected = <<~END
+      expected = <<~OPTIONS
         not_special_1: my_value_1
         not_special_2: my_value_2
-      END
+      OPTIONS
       expect(vm.initialization.custom_script).to eq(expected)
     end
     proxy.update_cloud_init!(script)
   end
 
   it 'does not alter the custom script' do
-    script = <<~END
+    script = <<~OPTIONS
       #cloud-config
       write_files:
       - path: /tmp/test.txt
@@ -139,16 +139,16 @@ describe 'update_cloud_init!' do
           Here is a line.
           Another line is here.
         permissions: '0755'
-    END
+    OPTIONS
     expect(service).to receive(:update) do |vm|
-      expected = <<~END
+      expected = <<~OPTIONS
         write_files:
         - path: "/tmp/test.txt"
           content: |
             Here is a line.
             Another line is here.
           permissions: '0755'
-      END
+      OPTIONS
       expect(vm.initialization.custom_script).to eq(expected)
     end
     proxy.update_cloud_init!(script)

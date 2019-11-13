@@ -20,6 +20,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
   def authentication_status_ok?(type = nil)
     return true if type == :ssh_keypair
+
     super
   end
 
@@ -68,7 +69,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
   end
 
   def supported_auth_types
-    %w(default metrics ssh_keypair)
+    %w[default metrics ssh_keypair]
   end
 
   def supports_authentication?(authtype)
@@ -79,12 +80,11 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     @rhevm_service ||= connect(:service => "Service")
   end
 
-  def rhevm_inventory(opts = {})
-    connect_options = { :service => "Inventory" }
-    @rhevm_inventory ||= connect(connect_options)
+  def rhevm_inventory
+    @rhevm_inventory ||= connect(:service => "Inventory")
   end
 
-  def ovirt_services(args = {})
+  def ovirt_services
     @ovirt_services ||= ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4.new(:ems => self)
   end
 
@@ -98,7 +98,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     metrics_hostname = connection_configuration_by_role('metrics')
                        .try(:endpoint)
                        .try(:hostname)
-    server   = options[:hostname] || metrics_hostname || hostname
+    server = options[:hostname] || metrics_hostname || hostname
     username = options[:user] || authentication_userid(:metrics)
     password = options[:pass] || authentication_password(:metrics)
     database = options[:database] || history_database_name
@@ -180,17 +180,17 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       end
     end
 
-    def handle_credentials_verification_error(e)
-      case e
+    def handle_credentials_verification_error(err)
+      case err
       when SocketError, Errno::EHOSTUNREACH, Errno::ENETUNREACH
         _log.warn($ERROR_INFO)
         raise MiqException::MiqUnreachableError, $ERROR_INFO
       when MiqException::MiqUnreachableError
-        raise e
+        raise err
       when RestClient::Unauthorized
         raise MiqException::MiqInvalidCredentialsError, "Incorrect user name or password."
       when OvirtSDK4::Error
-        rethrow_as_a_miq_error(e)
+        rethrow_as_a_miq_error(err)
       else
         _log.error("Error while verifying credentials #{$ERROR_INFO}")
         raise MiqException::MiqEVMLoginError, $ERROR_INFO
@@ -321,7 +321,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
         connection.test(:raise_exception => true)
         return true
       rescue OvirtSDK4::Error => error
-        raise error if /error.*sso/i =~ error.message
+        raise error if /error.*sso/i.match?(error.message)
       end
     end
 
@@ -409,11 +409,11 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     # "/ovirt-engine/" prefix, as for historic reasons the "ems_ref" stored in the database does not
     # contain it, it only contains the "/api" prefix which was used by older versions of the engine.
     def make_ems_ref(href)
-      href && href.sub(%r{^/ovirt-engine/}, '/')
+      href&.sub(%r{^/ovirt-engine/}, '/')
     end
 
     def extract_ems_ref_id(href)
-      href && href.split("/").last
+      href&.split("/")&.last
     end
 
     #
