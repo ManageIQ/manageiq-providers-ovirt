@@ -111,7 +111,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     expect(SystemService.count).to eq(0)
 
     expect(Relationship.count).to eq(20)
-    expect(MiqQueue.count).to eq(6)
+    expect(MiqQueue.count).to eq(8)
 
     expect(CloudNetwork.count).to eq(6)
     expect(CloudSubnet.count).to eq(2)
