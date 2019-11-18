@@ -76,14 +76,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     supported_auth_types.include?(authtype.to_s)
   end
 
-  def rhevm_service
-    @rhevm_service ||= connect(:service => "Service")
-  end
-
-  def rhevm_inventory
-    @rhevm_inventory ||= connect(:service => "Inventory")
-  end
-
   def ovirt_services
     @ovirt_services ||= ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4.new(:ems => self)
   end
