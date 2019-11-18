@@ -1,2 +1,2 @@
-class ManageIQ::Providers::Redhat::NetworkManager::RefreshWorker::Runner < ManageIQ::Providers::Openstack::NetworkManager::RefreshWorker::Runner
+class ManageIQ::Providers::Redhat::NetworkManager::RefreshWorker::Runner < ManageIQ::Providers::BaseManager::RefreshWorker::Runner
 end
