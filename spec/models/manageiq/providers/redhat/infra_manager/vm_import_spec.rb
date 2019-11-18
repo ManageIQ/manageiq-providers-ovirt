@@ -11,7 +11,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::VmImport do
   let(:cluster_path_escaped)  { 'Folder1%2FFolder%20%40%23%24*2%2FCompute%203%2FFolder4%2FCluster%205' }
 
   let(:cluster_guid) { cluster.uid_ems }
-  let(:storage_guid) { storage.ems_ref_obj.split('/').last }
+  let(:storage_guid) { storage.ems_ref.split('/').last }
 
   let(:new_name)  { 'created-vm' }
   let(:new_vm_id) { '6820ad2a-a8c0-4b4e-baf2-3482357ba352' }

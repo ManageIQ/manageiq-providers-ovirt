@@ -52,7 +52,6 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       persister.clusters.build(
         :ems_ref     => ems_ref,
-        :ems_ref_obj => ems_ref,
         :uid_ems     => cluster.id,
         :name        => cluster.name,
         :parent      => cluster_parent,
@@ -78,7 +77,6 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       persister.storages.find_or_build(ems_ref).assign_attributes(
         :ems_ref             => ems_ref,
-        :ems_ref_obj         => ems_ref,
         :name                => storagedomain.try(:name),
         :store_type          => storage_type,
         :storage_domain_type => storagedomain.dig(:type, :downcase),
@@ -109,7 +107,6 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :name        => datacenter.name,
         :type        => 'Datacenter',
         :ems_ref     => ems_ref,
-        :ems_ref_obj => ems_ref,
         :uid_ems     => uid,
         :parent      => persister.ems_folders.lazy_find("root_dc"),
       )
@@ -161,7 +158,6 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       persister_host = persister.hosts.find_or_build(ems_ref).assign_attributes(
         :type             => 'ManageIQ::Providers::Redhat::InfraManager::Host',
         :ems_ref          => ems_ref,
-        :ems_ref_obj      => ems_ref,
         :name             => host.name || hostname,
         :hostname         => hostname,
         :ipaddress        => ipaddress,
@@ -365,7 +361,6 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       attrs_to_assign = {
         :type             => template ? "ManageIQ::Providers::Redhat::InfraManager::Template" : "ManageIQ::Providers::Redhat::InfraManager::Vm",
         :ems_ref          => ems_ref,
-        :ems_ref_obj      => ems_ref,
         :uid_ems          => vm.id,
         :connection_state => "connected",
         :vendor           => "redhat",
