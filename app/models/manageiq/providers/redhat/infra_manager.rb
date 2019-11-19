@@ -4,6 +4,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   require_nested  :EventParser
   require_nested  :RefreshWorker
   require_nested  :Refresher
+  require_nested  :ResourcePool
   require_nested  :MetricsCapture
   require_nested  :MetricsCollectorWorker
   require_nested  :Host

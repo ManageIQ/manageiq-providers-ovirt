@@ -239,6 +239,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
       :ems_ref_obj           => nil,
       :uid_ems               => "504ae500-3476-450e-8243-f6df0f7f7acf_respool",
       :name                  => "Default for Cluster cc1",
+      :type                  => "ManageIQ::Providers::Redhat::InfraManager::ResourcePool",
       :memory_reserve        => nil,
       :memory_reserve_expand => nil,
       :memory_limit          => nil,

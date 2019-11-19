@@ -274,6 +274,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
       :ems_ref               => nil,
       :ems_ref_obj           => nil,
       :name                  => "Default for Cluster newd1_cluster",
+      :type                  => "ManageIQ::Providers::Redhat::InfraManager::ResourcePool",
       :uid_ems               => "1c273044-e6ca-492f-9ac2-47381b626808_respool",
       :memory_reserve        => nil,
       :memory_reserve_expand => nil,
@@ -812,13 +813,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
           [Datacenter, "Newd"] => {
             [EmsFolder, "host", {:hidden=>true}] => {
               [ManageIQ::Providers::Redhat::InfraManager::Cluster, "newc"] => {
-                [ResourcePool, "Default for Cluster newc"] => {}
+                [ManageIQ::Providers::Redhat::InfraManager::ResourcePool, "Default for Cluster newc"] => {}
               }
             }, [EmsFolder, "vm", {:hidden=>true}] => {}
           }, [Datacenter, "newd1"] => {
             [EmsFolder, "host", {:hidden=>true}] => {
               [ManageIQ::Providers::Redhat::InfraManager::Cluster, "newd1_cluster"] => {
-                [ResourcePool, "Default for Cluster newd1_cluster"] => {
+                [ManageIQ::Providers::Redhat::InfraManager::ResourcePool, "Default for Cluster newd1_cluster"] => {
                   [ManageIQ::Providers::Redhat::InfraManager::Vm, "vm_off"] => {}, [ManageIQ::Providers::Redhat::InfraManager::Vm, "vm_on"] => {}
                 }
               },
