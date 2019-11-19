@@ -545,7 +545,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
         :ems_ref     => "/api/datacenters/944df9ee-3274-43c4-908f-8c35e59e483b",
         :uid_ems     => "944df9ee-3274-43c4-908f-8c35e59e483b",
         :name        => "newd1",
-        :type        => "Datacenter",
+        :type        => "ManageIQ::Providers::Redhat::InfraManager::Datacenter",
         :folder_path => "Datacenters/newd1"
       )
 
@@ -553,7 +553,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
         :ems_ref     => nil,
         :uid_ems     => "root_dc",
         :name        => "Datacenters",
-        :type        => nil,
+        :type        => "ManageIQ::Providers::Redhat::InfraManager::Folder",
         :folder_path => "Datacenters"
       )
 
@@ -561,7 +561,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
         :ems_ref     => nil,
         :uid_ems     => "944df9ee-3274-43c4-908f-8c35e59e483b_vm",
         :name        => "vm",
-        :type        => nil,
+        :type        => "ManageIQ::Providers::Redhat::InfraManager::Folder",
         :folder_path => "Datacenters/newd1/vm"
       )
     end
@@ -668,7 +668,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
         :ems_ref     => "/api/datacenters/944df9ee-3274-43c4-908f-8c35e59e483b",
         :folder_path => "Datacenters/newd1",
         :name        => "newd1",
-        :type        => "Datacenter",
+        :type        => "ManageIQ::Providers::Redhat::InfraManager::Datacenter",
         :uid_ems     => "944df9ee-3274-43c4-908f-8c35e59e483b"
       )
 
@@ -676,7 +676,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
         :ems_ref     => nil,
         :uid_ems     => "root_dc",
         :name        => "Datacenters",
-        :type        => nil,
+        :type        => "ManageIQ::Providers::Redhat::InfraManager::Folder",
         :folder_path => "Datacenters"
       )
 
@@ -684,7 +684,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
         :ems_ref     => nil,
         :uid_ems     => "944df9ee-3274-43c4-908f-8c35e59e483b_vm",
         :name        => "vm",
-        :type        => nil,
+        :type        => "ManageIQ::Providers::Redhat::InfraManager::Folder",
         :folder_path => "Datacenters/newd1/vm"
       )
     end
@@ -766,7 +766,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
         :ems_ref     => "/api/datacenters/944df9ee-3274-43c4-908f-8c35e59e483b",
         :folder_path => "Datacenters/newd1",
         :name        => "newd1",
-        :type        => "Datacenter",
+        :type        => "ManageIQ::Providers::Redhat::InfraManager::Datacenter",
         :uid_ems     => "944df9ee-3274-43c4-908f-8c35e59e483b"
       )
 
@@ -774,7 +774,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
         :ems_ref     => nil,
         :uid_ems     => "root_dc",
         :name        => "Datacenters",
-        :type        => nil,
+        :type        => "ManageIQ::Providers::Redhat::InfraManager::Folder",
         :folder_path => "Datacenters"
       )
 
@@ -782,28 +782,28 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
         :ems_ref     => nil,
         :uid_ems     => "944df9ee-3274-43c4-908f-8c35e59e483b_vm",
         :name        => "vm",
-        :type        => nil,
+        :type        => "ManageIQ::Providers::Redhat::InfraManager::Folder",
         :folder_path => "Datacenters/newd1/vm"
       )
     end
 
     def assert_relationship_tree
       expect(@ems.descendants_arranged).to match_relationship_tree(
-        [EmsFolder, "Datacenters", {:hidden=>true}] => {
-          [Datacenter, "Newd"] => {
-            [EmsFolder, "host", {:hidden=>true}] => {
+        [ManageIQ::Providers::Redhat::InfraManager::Folder, "Datacenters", {:hidden=>true}] => {
+          [ManageIQ::Providers::Redhat::InfraManager::Datacenter, "Newd"] => {
+            [ManageIQ::Providers::Redhat::InfraManager::Folder, "host", {:hidden=>true}] => {
               [ManageIQ::Providers::Redhat::InfraManager::Cluster, "newc"] => {
                 [ManageIQ::Providers::Redhat::InfraManager::ResourcePool, "Default for Cluster newc"] => {}
               }
-            }, [EmsFolder, "vm", {:hidden=>true}] => {}
-          }, [Datacenter, "newd1"] => {
-            [EmsFolder, "host", {:hidden=>true}] => {
+            }, [ManageIQ::Providers::Redhat::InfraManager::Folder, "vm", {:hidden=>true}] => {}
+          }, [ManageIQ::Providers::Redhat::InfraManager::Datacenter, "newd1"] => {
+            [ManageIQ::Providers::Redhat::InfraManager::Folder, "host", {:hidden=>true}] => {
               [ManageIQ::Providers::Redhat::InfraManager::Cluster, "newd1_cluster"] => {
                 [ManageIQ::Providers::Redhat::InfraManager::ResourcePool, "Default for Cluster newd1_cluster"] => {
                   [ManageIQ::Providers::Redhat::InfraManager::Vm, "vm_off"] => {}, [ManageIQ::Providers::Redhat::InfraManager::Vm, "vm_on"] => {}
                 }
               },
-            }, [EmsFolder, "vm", {:hidden=>true}] => {
+            }, [ManageIQ::Providers::Redhat::InfraManager::Folder, "vm", {:hidden=>true}] => {
               [ManageIQ::Providers::Redhat::InfraManager::Template, "template_cd1"] => {}, [ManageIQ::Providers::Redhat::InfraManager::Template, "template_cd2"] => {}, [ManageIQ::Providers::Redhat::InfraManager::Vm, "vm_off"] => {}, [ManageIQ::Providers::Redhat::InfraManager::Vm, "vm_on"] => {}
             }
           }
