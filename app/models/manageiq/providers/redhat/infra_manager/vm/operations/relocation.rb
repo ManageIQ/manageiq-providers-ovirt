@@ -20,8 +20,8 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Operations::Relocation
       raise _("The VM '%{name}' can not be migrated to the same host it is already running on.") % {:name => name}
     end
 
-    host_mor = host.ems_ref_obj
-    pool_mor = pool.ems_ref_obj
+    host_mor = host.ems_ref
+    pool_mor = pool.ems_ref
     run_command_via_parent(:vm_migrate, :host => host_mor, :pool => pool_mor, :priority => priority, :state => state)
   end
 end

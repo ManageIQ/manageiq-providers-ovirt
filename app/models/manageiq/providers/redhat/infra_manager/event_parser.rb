@@ -121,7 +121,6 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParser
     dc_hash = {
         :type         => 'Datacenter',
         :ems_ref      => dc_ems_ref,
-        :ems_ref_obj  => dc_ems_ref,
         :uid_ems      => dc.id,
         :ems_children => {:folders => [vm_folder_hash, host_folder_hash]}
     }
@@ -133,14 +132,15 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParser
     ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(vm_data.href)
 
     template = ems_ref.include?('/templates/')
+    type     = template ? "ManageIQ::Providers::Redhat::InfraManager::Template" : "ManageIQ::Providers::Redhat::InfraManager::Vm"
+
     vm_id = vm_data.id
     vm_hash = {
-        :type => template ? "ManageIQ::Providers::Redhat::InfraManager::Template" : "ManageIQ::Providers::Redhat::InfraManager::Vm",
-        :ems_ref => ems_ref,
-        :ems_ref_obj => ems_ref,
-        :uid_ems => vm_id,
-        :vendor => "redhat",
-        :name => parse_target_name(message, event_type),
+        :type     => type,
+        :ems_ref  => ems_ref,
+        :uid_ems  => vm_id,
+        :vendor   => "redhat",
+        :name     => parse_target_name(message, event_type),
         :location => "#{vm_id}.ovf",
         :template => template,
     }
@@ -160,7 +160,6 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParser
 
     cluster_hash = {
         :ems_ref      => cluster_ref,
-        :ems_ref_obj  => cluster_ref,
         :uid_ems      => cluster_data.id,
         :name         => cluster_name,
         :ems_children => {:resource_pools => []}

@@ -220,7 +220,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     @cluster = EmsCluster.find_by(:name => 'cc1')
     expect(@cluster).to have_attributes(
       :ems_ref                 => "/api/clusters/504ae500-3476-450e-8243-f6df0f7f7acf",
-      :ems_ref_obj             => "/api/clusters/504ae500-3476-450e-8243-f6df0f7f7acf",
       :uid_ems                 => "504ae500-3476-450e-8243-f6df0f7f7acf",
       :name                    => "cc1",
       :ha_enabled              => nil, # TODO: Should be true
@@ -236,7 +235,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
 
     expect(@default_rp).to have_attributes(
       :ems_ref               => nil,
-      :ems_ref_obj           => nil,
       :uid_ems               => "504ae500-3476-450e-8243-f6df0f7f7acf_respool",
       :name                  => "Default for Cluster cc1",
       :type                  => "ManageIQ::Providers::Redhat::InfraManager::ResourcePool",
@@ -258,7 +256,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     @storage = Storage.find_by(:name => "data1")
     expect(@storage).to have_attributes(
       :ems_ref                       => "/api/storagedomains/27a3bcce-c4d0-4bce-afe9-1d669d5a9d02",
-      :ems_ref_obj                   => "/api/storagedomains/27a3bcce-c4d0-4bce-afe9-1d669d5a9d02",
       :name                          => "data1",
       :store_type                    => "NFS",
       :total_space                   => 53_687_091_200,
@@ -274,7 +271,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     @storage2 = Storage.find_by(:name => "data2")
     expect(@storage2).to have_attributes(
       :ems_ref                       => "/api/storagedomains/4672fe17-c260-4ecc-aab0-b535f4d0dbeb",
-      :ems_ref_obj                   => "/api/storagedomains/4672fe17-c260-4ecc-aab0-b535f4d0dbeb",
       :name                          => "data2",
       :store_type                    => "NFS",
       :total_space                   => 53_687_091_200,
@@ -291,7 +287,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
       @host = ManageIQ::Providers::Redhat::InfraManager::Host.find_by(:name => "bodh1")
       expect(@host).to have_attributes(
         :ems_ref          => "/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a",
-        :ems_ref_obj      => "/api/hosts/5bf6b336-f86d-4551-ac08-d34621ec5f0a",
         :name             => "bodh1",
         :hostname         => "bodh1.usersys.redhat.com",
         :ipaddress        => "10.35.19.12",
@@ -401,7 +396,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
       expect(v).to have_attributes(
         :template              => false,
         :ems_ref               => "/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f",
-        :ems_ref_obj           => "/api/vms/3a9401a0-bf3d-4496-8acf-edd3e903511f",
         :uid_ems               => "3a9401a0-bf3d-4496-8acf-edd3e903511f",
         :vendor                => "redhat",
         :raw_power_state       => "up",
@@ -519,7 +513,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
 
       expect(v.parent_datacenter).to have_attributes(
         :ems_ref     => "/api/datacenters/b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1",
-        :ems_ref_obj => "/api/datacenters/b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1",
         :uid_ems     => "b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1",
         :name        => "dc1",
         :type        => "Datacenter",
@@ -528,7 +521,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
 
       expect(v.parent_folder).to have_attributes(
         :ems_ref     => nil,
-        :ems_ref_obj => nil,
         :uid_ems     => "root_dc",
         :name        => "Datacenters",
         :type        => nil,
@@ -537,7 +529,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
 
       expect(v.parent_blue_folder).to have_attributes(
         :ems_ref     => nil,
-        :ems_ref_obj => nil,
         :uid_ems     => "b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1_vm",
         :name        => "vm",
         :type        => nil,
@@ -550,7 +541,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
       expect(v).to have_attributes(
         :template              => false,
         :ems_ref               => "/api/vms/1010ec66-5d68-4ae6-b72b-824f5885259d",
-        :ems_ref_obj           => "/api/vms/1010ec66-5d68-4ae6-b72b-824f5885259d",
         :uid_ems               => "1010ec66-5d68-4ae6-b72b-824f5885259d",
         :vendor                => "redhat",
         :raw_power_state       => "down",
@@ -645,7 +635,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
 
       expect(v.parent_datacenter).to have_attributes(
         :ems_ref     => "/api/datacenters/b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1",
-        :ems_ref_obj => "/api/datacenters/b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1",
         :uid_ems     => "b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1",
         :name        => "dc1",
         :type        => "Datacenter",
@@ -654,7 +643,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
 
       expect(v.parent_folder).to have_attributes(
         :ems_ref     => nil,
-        :ems_ref_obj => nil,
         :uid_ems     => "root_dc",
         :name        => "Datacenters",
         :type        => nil,
@@ -663,7 +651,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
 
       expect(v.parent_blue_folder).to have_attributes(
         :ems_ref     => nil,
-        :ems_ref_obj => nil,
         :uid_ems     => "b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1_vm",
         :name        => "vm",
         :type        => nil,
@@ -676,7 +663,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
       expect(v).to have_attributes(
         :template              => true,
         :ems_ref               => "/api/templates/785e845e-baa0-4812-8a8c-467f37ad6c79",
-        :ems_ref_obj           => "/api/templates/785e845e-baa0-4812-8a8c-467f37ad6c79",
         :uid_ems               => "785e845e-baa0-4812-8a8c-467f37ad6c79",
         :vendor                => "redhat",
         :power_state           => "never",
@@ -747,7 +733,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
 
       expect(v.parent_datacenter).to have_attributes(
         :ems_ref     => "/api/datacenters/b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1",
-        :ems_ref_obj => "/api/datacenters/b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1",
         :uid_ems     => "b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1",
         :name        => "dc1",
         :type        => "Datacenter",
@@ -756,7 +741,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
 
       expect(v.parent_folder).to have_attributes(
         :ems_ref     => nil,
-        :ems_ref_obj => nil,
         :uid_ems     => "root_dc",
         :name        => "Datacenters",
         :type        => nil,
@@ -765,7 +749,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
 
       expect(v.parent_blue_folder).to have_attributes(
         :ems_ref     => nil,
-        :ems_ref_obj => nil,
         :uid_ems     => "b60b3daa-dcbd-40c9-8d09-3fc08c91f5d1_vm",
         :name        => "vm",
         :type        => nil,
