@@ -18,6 +18,10 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
       builder.add_properties(:model_class => Lan)
       builder.add_properties(:complete => !targeted?)
     end
+    add_collection(infra, :external_distributed_virtual_lans) do |builder|
+      builder.add_properties(:model_class => Lan)
+      builder.add_properties(:complete => !targeted?)
+    end
     add_collection(infra, :networks)
     add_collection(infra, :operating_systems)
     add_collection(infra, :vms)
@@ -33,6 +37,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
     add_collection(infra, :vm_resource_pools)
     add_collection(infra, :vm_parent_blue_folders)
     add_collection(infra, :distributed_virtual_switches)
+    add_collection(infra, :external_distributed_virtual_switches)
   end
 
   # group :clusters
