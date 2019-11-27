@@ -919,8 +919,22 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
       vlans['<Template>'] = _('<Use template nics>')
     end
 
+    def local_external_vnic_profiles
+      external_profiles = {}
+      profiles = ext_management_system.external_distributed_virtual_lans
+      external_networks = ext_management_system.external_distributed_virtual_switches
+      profiles.each do |p|
+        profile_network = external_networks.detect { |n| n.id == p.switch.id }
+        if profile_network
+          external_profiles[p] = profile_network
+        end
+      end
+      external_profiles
+    end
+
     def private_load_allowed_networks(vlans, uid_ems_cluster)
       profiles = local_get_vnic_profiles_in_cluster(uid_ems_cluster)
+      profiles.merge!(local_external_vnic_profiles)
       profiles.each do |profile, profile_network|
         vlans[profile.uid_ems] = "#{profile.name} (#{profile_network.name})"
       end

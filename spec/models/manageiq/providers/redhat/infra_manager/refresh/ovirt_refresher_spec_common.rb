@@ -16,16 +16,18 @@ module OvirtRefresherSpecCommon
 
   def init_defaults(hostname: "pluto-vdsg.eng.lab.tlv.redhat.com",
                     ipaddress: "10.35.19.13",
-                    port: 443)
+                    port: 443,
+                    external_network_provider_mock: 'external_network_providers')
     _guid, _server, @zone = EvmSpecHelper.create_guid_miq_server_zone
-    create_ems(:hostname => hostname, :ipaddress => ipaddress, :port => port, :zone => @zone)
+    create_ems(:hostname => hostname, :ipaddress => ipaddress, :port => port, :zone => @zone, :external_network_provider_mock => external_network_provider_mock)
     init_inventory_wrapper_class
   end
 
   def create_ems(hostname: "pluto-vdsg.eng.lab.tlv.redhat.com",
                  ipaddress: "10.35.19.13",
                  port: 443,
-                 zone: @zone)
+                 zone: @zone,
+                 external_network_provider_mock: 'external_network_providers')
     @ems = FactoryBot.create(:ems_redhat, :zone => zone, :hostname => hostname, :ipaddress => ipaddress,
                              :port => port)
     @ems.update_authentication(:default => {:userid => "admin@internal", :password => "pass123"})
@@ -34,7 +36,7 @@ module OvirtRefresherSpecCommon
 
     @ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V4
     allow_any_instance_of(@ovirt_service)
-      .to receive(:collect_external_network_providers).and_return(load_response_mock_for('external_network_providers'))
+      .to receive(:collect_external_network_providers).and_return(load_response_mock_for(external_network_provider_mock))
   end
 
   def init_connection_vcr(path_to_recording = nil, is_recording: false)

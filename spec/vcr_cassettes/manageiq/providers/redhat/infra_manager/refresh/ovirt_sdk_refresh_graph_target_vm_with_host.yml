@@ -2012,6 +2012,61 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/networks{}GET:
     content-length: '501'
     correlation-id: 3dddd110-d044-4362-953d-e94b83380216
   :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <networks>
+        <network href="/ovirt-engine/api/networks/3ae53934-96b7-499d-912f-cb6b779b357b" id="3ae53934-96b7-499d-912f-cb6b779b357b">
+            <name>newnet</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/3ae53934-96b7-499d-912f-cb6b779b357b/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/3ae53934-96b7-499d-912f-cb6b779b357b/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/3ae53934-96b7-499d-912f-cb6b779b357b/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/2812e1c2-fb19-4bf9-ac42-74c069a5e507" id="2812e1c2-fb19-4bf9-ac42-74c069a5e507"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/b6a660fd-f1ff-4d26-b535-91fae6d42a3f" id="b6a660fd-f1ff-4d26-b535-91fae6d42a3f">
+            <name>ovirtmgmt</name>
+            <description>Default Management Network</description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/b6a660fd-f1ff-4d26-b535-91fae6d42a3f/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/b6a660fd-f1ff-4d26-b535-91fae6d42a3f/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/b6a660fd-f1ff-4d26-b535-91fae6d42a3f/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/2812e1c2-fb19-4bf9-ac42-74c069a5e507" id="2812e1c2-fb19-4bf9-ac42-74c069a5e507"/>
+        </network>
+        <network href="/ovirt-engine/api/networks/f46b7c46-6196-4750-a07f-bfeab9f1c275" id="f46b7c46-6196-4750-a07f-bfeab9f1c275">
+            <name>ovirtmgmt</name>
+            <description>Default Management Network</description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/networks/f46b7c46-6196-4750-a07f-bfeab9f1c275/networklabels" rel="networklabels"/>
+            <link href="/ovirt-engine/api/networks/f46b7c46-6196-4750-a07f-bfeab9f1c275/permissions" rel="permissions"/>
+            <link href="/ovirt-engine/api/networks/f46b7c46-6196-4750-a07f-bfeab9f1c275/vnicprofiles" rel="vnicprofiles"/>
+            <mtu>0</mtu>
+            <stp>false</stp>
+            <usages>
+                <usage>vm</usage>
+            </usages>
+            <data_center href="/ovirt-engine/api/datacenters/944df9ee-3274-43c4-908f-8c35e59e483b" id="944df9ee-3274-43c4-908f-8c35e59e483b"/>
+        </network>
+    </networks>
+  :code: 200
+  :headers:
+    date: Mon, 26 Aug 2019 08:42:14 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '501'
+    correlation-id: 3dddd110-d044-4362-953d-e94b83380216
+  :message: 
 https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -3016,7 +3071,8 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/disks{}GET:
     correlation-id: '0816e087-a675-4aee-abbb-7cd580e440bd'
   :message: 
 https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vnicprofiles{}GET:
-- :body: |
+- &1
+  :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <vnic_profiles>
         <vnic_profile href="/ovirt-engine/api/vnicprofiles/52ac0668-d782-4079-bd2e-c3fafea0c858" id="52ac0668-d782-4079-bd2e-c3fafea0c858">
@@ -3049,6 +3105,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vnicprofiles{}GET
     content-length: '420'
     correlation-id: e8a6d009-f34f-4d4d-9026-f828af04b05f
   :message: 
+- *1
 https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/ce40bb38-f10a-43f3-8e15-d0ffad692a19/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
