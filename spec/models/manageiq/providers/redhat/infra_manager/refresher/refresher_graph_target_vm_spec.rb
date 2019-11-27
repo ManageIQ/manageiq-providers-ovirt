@@ -11,8 +11,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     allow_any_instance_of(@ovirt_service_inventory)
                      .to receive(:collect_vnic_profiles).and_return([])
     @collector = ManageIQ::Providers::Redhat::Inventory::Collector
-    allow_any_instance_of(@collector)
-                     .to receive(:collect_vnic_profiles).and_return([])
   end
 
   COUNTED_MODELS = [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze
