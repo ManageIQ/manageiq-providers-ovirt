@@ -7,8 +7,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
   before(:each) do
     init_defaults(:hostname => 'pluto-vdsg.eng.lab.tlv.redhat.com', :port => 443)
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/refresher_network_recording.yml')
-
-    stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
   end
 
   it "will perform a full refresh on v4.1" do

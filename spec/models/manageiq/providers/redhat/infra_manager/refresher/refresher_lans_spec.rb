@@ -7,8 +7,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
   before(:each) do
     init_defaults(:hostname => 'pluto-vdsg.eng.lab.tlv.redhat.com', :ipaddress => '10.35.19.13', :port => 443)
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_lans_refresh_recording.yml')
-
-    stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
   end
 
   it "lans are not duplicated after refresh" do

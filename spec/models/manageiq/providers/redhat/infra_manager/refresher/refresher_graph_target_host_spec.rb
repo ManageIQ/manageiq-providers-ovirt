@@ -14,8 +14,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
       @collector = ManageIQ::Providers::Redhat::Inventory::Collector
       allow_any_instance_of(@collector)
                        .to receive(:collect_vnic_profiles).and_return([])
-
-      stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
     end
 
     let(:models_for_host_target) { [ExtManagementSystem, EmsFolder, EmsCluster, Storage, HostStorage, Switch, HostSwitch, Lan, CustomAttribute] }

@@ -25,7 +25,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
 
     before(:each) do
       inventory_wrapper_class = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4
-      stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
       user_mock = load_response_mock_for('user')
       allow_any_instance_of(inventory_wrapper_class)
         .to receive(:username_by_href).and_return("#{user_mock.name}@#{user_mock.domain.name}")
