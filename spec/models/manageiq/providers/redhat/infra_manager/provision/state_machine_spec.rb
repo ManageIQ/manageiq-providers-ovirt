@@ -83,10 +83,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::StateMachine do
   end
 
   context "version 4" do
-    before do
-      stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
-    end
-
     ## BRANCH STATES
     def test_autostart_destination_with_use_cloud_init
       task.phase_context[:boot_with_cloud_init] = true

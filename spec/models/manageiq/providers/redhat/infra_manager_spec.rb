@@ -55,37 +55,23 @@ describe ManageIQ::Providers::Redhat::InfraManager do
   end
 
   context "#vm_reconfigure" do
-    context "version 4" do
-      context "#vm_reconfigure" do
-        before do
-          _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-          @ems = FactoryBot.create(:ems_redhat_with_authentication, :zone => zone)
-          @vm = FactoryBot.create(:vm_redhat, :ext_management_system => @ems)
+    let!(:zone) do
+      _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
+      zone
+    end
 
-          @rhevm_vm_attrs = double('rhevm_vm_attrs')
-          stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => use_ovirt_engine_sdk } })
-          @v4_strategy_instance = instance_double(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4)
-          allow(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4)
-            .to receive(:new)
-            .and_return(@v4_strategy_instance)
-        end
+    let!(:ems) { FactoryBot.create(:ems_redhat_with_authentication, :zone => zone) }
+    let!(:vm) { FactoryBot.create(:vm_redhat, :ext_management_system => ems) }
+    let(:ovirt_services_instance) { instance_double(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4) }
 
-        context "use_ovirt_engine_sdk is set to true" do
-          let(:use_ovirt_engine_sdk) { true }
-          it 'sends vm_reconfigure to the right ovirt_services' do
-            expect(@v4_strategy_instance).to receive(:vm_reconfigure).with(@vm, {})
-            @ems.vm_reconfigure(@vm)
-          end
-        end
+    it 'sends vm_reconfigure to ovirt_services' do
+      allow(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4)
+        .to receive(:new)
+        .and_return(ovirt_services_instance)
 
-        context "use_ovirt_engine_sdk is set to false" do
-          let(:use_ovirt_engine_sdk) { false }
-          it 'sends vm_reconfigure to the right ovirt_services' do
-            expect(@v4_strategy_instance).to receive(:vm_reconfigure).with(@vm, {})
-            @ems.vm_reconfigure(@vm)
-          end
-        end
-      end
+      expect(ovirt_services_instance).to receive(:vm_reconfigure).with(vm, {})
+
+      ems.vm_reconfigure(vm)
     end
   end
 

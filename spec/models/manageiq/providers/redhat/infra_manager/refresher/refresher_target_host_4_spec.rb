@@ -13,7 +13,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     stub_settings_merge(
       :ems => {
         :ems_redhat => {
-          :use_ovirt_engine_sdk => true,
           :resolve_ip_addresses => false
         }
       }

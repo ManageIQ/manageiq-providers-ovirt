@@ -9,8 +9,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_recording_custom_attrs.yml')
 
     @collector = ManageIQ::Providers::Redhat::Inventory::Collector
-
-    stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
   end
 
   CASSETTE_PATH = "#{described_class.parent.name.underscore}/refresh/refresher_ovn_provider".freeze

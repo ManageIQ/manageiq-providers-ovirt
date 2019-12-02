@@ -209,7 +209,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
     let!(:template) { FactoryBot.create(:template_redhat, :ext_management_system => ems, :ems_cluster => cluster1) }
 
     before do
-      stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
       allow(workflow).to receive(:source_ems).and_return(ems)
       @vlans = {}
     end

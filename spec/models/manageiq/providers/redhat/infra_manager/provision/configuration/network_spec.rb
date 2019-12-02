@@ -50,7 +50,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration::Ne
       let(:ovirtSDK4_mac) { OvirtSDK4::Mac.new(:address => mac_address) }
 
       before do
-        stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
         allow(ems.ovirt_services).to receive(:get_vm_proxy).and_return(rhevm_vm)
         allow(rhevm_vm).to receive_messages(:nics => [rhevm_nic1, rhevm_nic2], :ext_management_system => ems)
         allow(ems).to receive(:with_provider_connection).and_yield(connection)

@@ -22,17 +22,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionViaIso do
     end
 
     describe "post provisioning" do
-      context "version 4" do
-        before do
-          @vm_service = double("vm_service")
-          allow(@vm).to receive(:with_provider_object).and_yield(@vm_service)
-          stub_settings_merge(:ems => { :ems_redhat => { :use_ovirt_engine_sdk => true } })
-        end
+      let(:vm_service) { double("vm_service") }
 
-        it "#post_provision" do
-          expect(@vm_service).to receive(:update).with(:payloads => [])
-          @task.post_provision
-        end
+      it "#post_provision" do
+        allow(@vm).to receive(:with_provider_object).and_yield(vm_service)
+        expect(vm_service).to receive(:update).with(:payloads => [])
+        @task.post_provision
       end
     end
 
