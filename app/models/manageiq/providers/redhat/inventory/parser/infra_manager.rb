@@ -358,6 +358,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
                              else
                                persister.vms
                              end
+
       attrs_to_assign = {
         :type             => template ? "ManageIQ::Providers::Redhat::InfraManager::Template" : "ManageIQ::Providers::Redhat::InfraManager::Vm",
         :ems_ref          => ems_ref,
@@ -377,6 +378,9 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :parent           => parent_folder,
         :resource_pool    => resource_pool
       }
+
+      attrs_to_assign[:restart_needed] = vm.next_run_configuration_exists unless template
+
       boot_time = vm.try(:start_time)
       attrs_to_assign[:boot_time] = boot_time unless boot_time.nil?
 
