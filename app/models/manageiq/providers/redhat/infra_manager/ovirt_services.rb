@@ -866,7 +866,8 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
         :storage          => storage_spec,
         :name             => disk_spec[:disk_name],
         :thin_provisioned => disk_spec[:thin_provisioned],
-        :bootable         => disk_spec[:bootable]
+        :bootable         => disk_spec[:bootable],
+        :interface        => disk_spec[:interface]
       )
       attachment_builder.disk_attachment
     end
