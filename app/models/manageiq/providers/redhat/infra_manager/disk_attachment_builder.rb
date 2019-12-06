@@ -5,7 +5,7 @@ class ManageIQ::Providers::Redhat::InfraManager::DiskAttachmentBuilder
     @name = options[:name]
     @thin_provisioned = BooleanParameter.new(options[:thin_provisioned])
     @bootable = BooleanParameter.new(options[:bootable])
-    @interface = options[:interface]
+    @interface = options[:interface] || ::Settings.ems.ems_ovirt.disk_attachment&.interface
   end
 
   def disk_attachment
