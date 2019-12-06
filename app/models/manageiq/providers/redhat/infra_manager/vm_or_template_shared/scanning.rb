@@ -10,6 +10,10 @@ module ManageIQ::Providers::Redhat::InfraManager::VmOrTemplateShared::Scanning
     end
   end
 
+  def scan_job_class
+    ManageIQ::Providers::Redhat::InfraManager::Scanning::Job
+  end
+
   def require_snapshot_for_scan?
     false
   end
