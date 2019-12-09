@@ -10,8 +10,6 @@
       :open_timeout: 1.minute
     :blacklisted_event_names: []
   :ems_ovirt:
-    :disk_attachment:
-      :interface: virtio_scsi
     :event_handling:
       :event_groups:
         :console:

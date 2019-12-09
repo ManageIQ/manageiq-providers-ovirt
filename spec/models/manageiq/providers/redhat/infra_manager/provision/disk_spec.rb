@@ -32,7 +32,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision::Disk do
     [
       {
         :bootable  => false,
-        :interface => "VIRTIO",
+        :interface => "virtio_scsi",
         :active    => true,
         :disk      => {
           :name             => nil,

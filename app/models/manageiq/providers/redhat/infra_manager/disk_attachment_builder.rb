@@ -5,14 +5,14 @@ class ManageIQ::Providers::Redhat::InfraManager::DiskAttachmentBuilder
     @name = options[:name]
     @thin_provisioned = BooleanParameter.new(options[:thin_provisioned])
     @bootable = BooleanParameter.new(options[:bootable])
-    @interface = options[:interface] || ::Settings.ems.ems_ovirt.disk_attachment&.interface
+    @interface = options[:interface]
   end
 
   def disk_attachment
     thin_provisioned = @thin_provisioned.true?
     {
       :bootable  => @bootable.true?,
-      :interface => @interface || "VIRTIO",
+      :interface => @interface || "virtio_scsi",
       :active    => true,
       :disk      => {
         :name             => @name,
