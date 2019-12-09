@@ -1,2 +1,2 @@
-class ManageIQ::Providers::Redhat::InfraManager::ExternalDistributedVirtualSwitch < ManageIQ::Providers::InfraManager::ExternalDistributedVirtualSwitch
+class ManageIQ::Providers::Redhat::InfraManager::ExternalDistributedVirtualSwitch < ManageIQ::Providers::Redhat::InfraManager::DistributedVirtualSwitch
 end
