@@ -288,6 +288,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     expect(@storage).to have_attributes(
       :ems_ref                       => "/api/storagedomains/723b4112-1502-4b01-83a7-2ba87d1bbb35",
       :name                          => "data_spider_1",
+      :type                          => "ManageIQ::Providers::Redhat::InfraManager::Storage",
       :store_type                    => "NFS",
       :total_space                   => 53_687_091_200,
       :free_space                    => 37_580_963_840,
