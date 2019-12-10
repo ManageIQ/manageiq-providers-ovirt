@@ -89,7 +89,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     expect(VmOrTemplate.count).to eq(4)
     expect(Vm.count).to eq(2)
     expect(MiqTemplate.count).to eq(2)
-    expect(Storage.count).to eq(7)
+    expect(Storage.count).to eq(8)
 
     expect(CustomAttribute.count).to eq(0) # TODO: 3.0 spec has values for this
     expect(CustomizationSpec.count).to eq(0)
@@ -123,7 +123,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     expect(@ems.ems_folders.size).to eq(7)
     expect(@ems.ems_clusters.size).to eq(3)
     expect(@ems.resource_pools.size).to eq(3)
-    expect(@ems.storages.size).to eq(6)
+    expect(@ems.storages.size).to eq(8)
     expect(@ems.hosts.size).to eq(2)
     expect(@ems.vms_and_templates.size).to eq(4)
     expect(@ems.vms.size).to eq(2)
