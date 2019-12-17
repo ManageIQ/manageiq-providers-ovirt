@@ -1199,7 +1199,8 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/templates{}GET:
     correlation-id: 55e09218-c1aa-44f7-9de5-f8565d5a4935
   :message: 
 https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/networks{}GET:
-- :body: |
+- &1
+  :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <networks>
         <network href="/ovirt-engine/api/networks/5a2457bc-b7bd-414f-852e-f92784600e21" id="5a2457bc-b7bd-414f-852e-f92784600e21">
@@ -1226,6 +1227,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/networks{}GET:
     content-length: '357'
     correlation-id: fd7823fc-b0e0-46f0-8212-742e4f6d06c6
   :message: 
+- *1
 https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -2610,7 +2612,8 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/disks{}GET:
     correlation-id: d5af83a2-a968-4abc-88c7-1c095dc98b43
   :message: 
 https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vnicprofiles{}GET:
-- :body: |
+- &1
+  :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <vnic_profiles>
         <vnic_profile href="/ovirt-engine/api/vnicprofiles/bd73ad67-17a7-434c-a661-8557add4e99f" id="bd73ad67-17a7-434c-a661-8557add4e99f">
@@ -2633,6 +2636,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vnicprofiles{}GET:
     content-length: '348'
     correlation-id: 1feb1ec9-80aa-40a7-9332-06a3148948d7
   :message: 
+- *1
 https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/72bce52e-c060-4907-a459-f5cfea517b30/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>

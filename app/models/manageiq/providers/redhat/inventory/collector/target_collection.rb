@@ -26,6 +26,10 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   end
 
   def networks
+    if references(:vms).present? || references(:templates).present?
+      return @collect_networks ||= collect_networks
+    end
+
     nets = []
     return nets if references(:networks).blank?
 
@@ -41,6 +45,10 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
   end
 
   def collect_vnic_profiles
+    if references(:vms).present? || references(:templates).present?
+      return super
+    end
+
     vnics = []
     return vnics if references(:vnic_profiles).blank?
 

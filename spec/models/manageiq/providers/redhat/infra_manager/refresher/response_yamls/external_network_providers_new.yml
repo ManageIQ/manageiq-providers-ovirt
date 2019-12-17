@@ -1,0 +1,30 @@
+--- !ruby/array:OvirtSDK4::List
+internal:
+- !ruby/object:OvirtSDK4::OpenStackNetworkProvider
+  href: "/ovirt-engine/api/openstacknetworkproviders/37560706-8aeb-4a73-b6c1-a0a1fb45a996"
+  comment:
+  description:
+  id: 37560706-8aeb-4a73-b6c1-a0a1fb45a996
+  name: ovirt-provider-ovn
+  authentication_url: https://pluto-vdsg.eng.lab.tlv.redhat.com:35357/v2.0/
+  password:
+  properties:
+  requires_authentication: true
+  url: https://pluto-vdsg.eng.lab.tlv.redhat.com:9696
+  username: admin@internal
+  tenant_name:
+  agent_configuration:
+  certificates: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/openstacknetworkproviders/37560706-8aeb-4a73-b6c1-a0a1fb45a996/certificates"
+  networks: !ruby/array:OvirtSDK4::List
+    internal: []
+    ivars:
+      :@href: "/ovirt-engine/api/openstacknetworkproviders/37560706-8aeb-4a73-b6c1-a0a1fb45a996/networks"
+  plugin_type: open_vswitch
+  read_only:
+  subnets:
+  type: external
+ivars:
+  :@href:
