@@ -12,7 +12,7 @@ class ManageIQ::Providers::Redhat::InfraManager::DiskAttachmentBuilder
     thin_provisioned = @thin_provisioned.true?
     {
       :bootable  => @bootable.true?,
-      :interface => @interface || "virtio_scsi",
+      :interface => @interface || "VIRTIO",
       :active    => true,
       :disk      => {
         :name             => @name,
