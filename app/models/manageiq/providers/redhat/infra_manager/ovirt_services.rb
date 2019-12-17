@@ -850,7 +850,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
     #
     def add_vm_disks(vm_service, disk_specs)
       storage_spec = disk_specs[:storage]
-      default_disk_spec = disk_specs[:default]
+      default_disk_spec = disk_specs[:default] || {}
       attachments_service = vm_service.disk_attachments_service
       disk_specs[:disks].each do |disk_spec|
         attachment = prepare_vm_disk_attachment(default_disk_spec.merge(disk_spec), storage_spec)
