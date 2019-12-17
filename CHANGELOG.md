@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Sprint 126 - Unreleased as of 2019-12-11
+
+### Added
+- Track if a VM requires a restart for changes to take effect [(#443)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/443)
 
 ## Sprint 120 - Unreleased as of 2019-09-16
 

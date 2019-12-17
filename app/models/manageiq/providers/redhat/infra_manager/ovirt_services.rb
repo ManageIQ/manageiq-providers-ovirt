@@ -277,7 +277,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
         # Retrieve the current representation of the virtual machine:
         # mandatory for memory parameters and to check if next_run_configuration_exists
 
-        vm = vm_service.get
+        vm = vm_service.get(:all_content => true)
         new_vm_specs = {}
 
         # Update the memory:

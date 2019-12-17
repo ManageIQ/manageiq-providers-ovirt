@@ -12,6 +12,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   require_nested  :ProvisionViaIso
   require_nested  :ProvisionViaPxe
   require_nested  :ProvisionWorkflow
+  require_nested  :Storage
   require_nested  :Template
   require_nested  :Vm
   require_nested  :DistributedVirtualSwitch
