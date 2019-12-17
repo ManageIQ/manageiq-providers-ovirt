@@ -1,7 +1,9 @@
 class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraManager
   require_nested  :Cluster
+  require_nested  :Datacenter
   require_nested  :EventCatcher
   require_nested  :EventParser
+  require_nested  :Folder
   require_nested  :RefreshWorker
   require_nested  :Refresher
   require_nested  :ResourcePool

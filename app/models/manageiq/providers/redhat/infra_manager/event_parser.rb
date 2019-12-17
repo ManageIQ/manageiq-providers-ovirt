@@ -79,7 +79,7 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParser
 
   def self.parse_new_target(full_data, message, ems, event_type)
     folders = parse_new_folders(full_data.data_center)
-    dc      = folders.detect { |f| f[:type] == 'Datacenter' }
+    dc      = folders.detect { |f| f.kind_of?(Datacenter) }
 
     cluster = parse_new_cluster(ems, full_data.cluster, dc)
     rp      = parse_new_resource_pool(cluster)
@@ -104,14 +104,14 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParser
 
   def self.parse_new_folders(dc)
     vm_folder_hash = {
-        :type    => 'EmsFolder',
+        :type    => 'ManageIQ::Providers::Redhat::InfraManager::Folder',
         :name    => 'vm',
         :uid_ems => "#{dc.id}_vm",
         :hidden  => true
     }
 
     host_folder_hash = {
-        :type    => 'EmsFolder',
+        :type    => 'ManageIQ::Providers::Redhat::InfraManager::Folder',
         :name    => 'host',
         :uid_ems => "#{dc.id}_host",
         :hidden  => true
@@ -119,7 +119,7 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParser
 
     dc_ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(dc.href)
     dc_hash = {
-        :type         => 'Datacenter',
+        :type         => 'ManageIQ::Providers::Redhat::InfraManager::Datacenter',
         :ems_ref      => dc_ems_ref,
         :uid_ems      => dc.id,
         :ems_children => {:folders => [vm_folder_hash, host_folder_hash]}

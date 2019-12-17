@@ -50,8 +50,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
 
   context "allowed clusters" do
     let(:workflow) { described_class.new({:src_vm_id => template.id}, admin) }
-    let(:datacenter1) { FactoryBot.create(:ems_folder, :type => "Datacenter") }
-    let(:datacenter2) { FactoryBot.create(:ems_folder, :type => "Datacenter") }
+    let(:datacenter1) { FactoryBot.create(:ems_folder, :type => "ManageIQ::Providers::Redhat::InfraManager::Datacenter") }
+    let(:datacenter2) { FactoryBot.create(:ems_folder, :type => "ManageIQ::Providers::Redhat::InfraManager::Datacenter") }
     let(:cluster1) { FactoryBot.create(:ems_cluster, :ems_id => ems.id, :name => 'Cluster1') }
     let(:cluster2) { FactoryBot.create(:ems_cluster, :ems_id => ems.id, :name => 'Cluster2') }
     let(:cluster3) { FactoryBot.create(:ems_cluster, :ems_id => ems.id, :name => 'Cluster3') }
