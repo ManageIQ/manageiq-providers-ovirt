@@ -300,7 +300,11 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
 
         # Add disks:
         added_disk_specs = spec['disksAdd']
-        add_vm_disks(vm_service, added_disk_specs) if added_disk_specs
+        if added_disk_specs
+          added_disk_specs[:default] = {}
+          added_disk_specs[:default][:interface] = 'virtio_scsi' if vm.virtio_scsi.enabled
+          add_vm_disks(vm_service, added_disk_specs)
+        end
       end
 
       _log.info("#{log_header} Completed.")
@@ -847,9 +851,10 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
     #
     def add_vm_disks(vm_service, disk_specs)
       storage_spec = disk_specs[:storage]
+      default_disk_spec = disk_specs[:default] || {}
       attachments_service = vm_service.disk_attachments_service
       disk_specs[:disks].each do |disk_spec|
-        attachment = prepare_vm_disk_attachment(disk_spec, storage_spec)
+        attachment = prepare_vm_disk_attachment(default_disk_spec.merge(disk_spec), storage_spec)
         attachments_service.add(attachment)
       end
     end
@@ -868,6 +873,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies
         :name             => disk_spec[:disk_name],
         :thin_provisioned => disk_spec[:thin_provisioned],
         :bootable         => disk_spec[:bootable],
+        :interface        => disk_spec[:interface]
       )
       attachment_builder.disk_attachment
     end
