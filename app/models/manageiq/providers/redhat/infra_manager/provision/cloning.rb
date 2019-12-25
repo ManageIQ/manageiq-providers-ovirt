@@ -88,7 +88,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Cloning
   end
 
   def sparse_disk_value
-    case get_option(:disk_format)
+    case get_option(:disk_sparsity)
     when "preallocated" then false
     when "thin"         then true
     when "default"      then nil   # default choice implies inherit from template
