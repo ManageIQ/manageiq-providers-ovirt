@@ -1,5 +1,14 @@
 describe ManageIQ::Providers::Redhat::InfraManager::MetricsCapture do
   require 'ovirt_metrics'
+
+  context "#perf_capture_object" do
+    let(:ems) { FactoryBot.create(:ems_redhat_with_metrics_authentication) }
+    let(:host) { FactoryBot.create(:host_redhat, :ems_id => ems.id) }
+    it "returns the correct class" do
+      expect(host.perf_capture_object.class).to eq(described_class)
+    end
+  end
+
   context '#perf_collect_metrics' do
     let(:ems) { FactoryBot.create(:ems_redhat_with_metrics_authentication) }
     let(:host) { FactoryBot.create(:host_redhat, :ems_id => ems.id) }
