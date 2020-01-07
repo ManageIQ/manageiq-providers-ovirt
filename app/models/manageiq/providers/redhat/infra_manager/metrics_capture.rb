@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Redhat::InfraManager::MetricsCapture < ManageIQ::Providers::BaseManager::MetricsCapture
+class ManageIQ::Providers::Redhat::InfraManager::MetricsCapture < ManageIQ::Providers::InfraManager::MetricsCapture
   #
   # Connect / Disconnect / Intialize methods
   #
