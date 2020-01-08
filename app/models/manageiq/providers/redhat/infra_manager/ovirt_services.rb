@@ -196,6 +196,16 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
       SystemConsole.launch_proxy_if_not_local(console_args, originating_server, host_address, host_port)
     end
 
+    def native_console_connection(vm)
+      vm.with_provider_object do |vm_service|
+        consoles = vm_service.graphics_consoles_service.list(:current => true)
+        return nil if consoles.empty?
+
+        console = select_graphics_console(consoles)
+        Base64.encode64(vm_service.graphics_consoles_service.console_service(console.id).remote_viewer_connection_file)
+      end
+    end
+
     def get_template_proxy(template, connection)
       TemplateProxyDecorator.new(
         connection.system_service.templates_service.template_service(template.uid_ems),
@@ -696,6 +706,18 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
     end
 
     private
+
+    def select_graphics_console(consoles)
+      # In case of multiple graphics console ('SPICE + VNC') choose the SPICE one
+      pref_type = 'spice'
+      console = consoles.find { |c| c.protocol.downcase == pref_type }
+
+      unless console
+        console = consoles.first
+        _log.warn("Can't find a console of type #{pref_type}, choosing a #{console.protocol} type one")
+      end
+      console
+    end
 
     #
     # Hot plug of virtual memory has to be done in quanta of this size. Actually this is configurable in the
