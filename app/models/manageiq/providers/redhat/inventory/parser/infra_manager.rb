@@ -41,7 +41,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
   def id_of_external_network?(network_id)
     network = collector.networks.detect { |net| net.id == network_id }
-    network.external_provider.present?
+    network&.external_provider.present?
   end
 
   def ems_clusters
@@ -516,6 +516,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       network = mac && networks.present? ? networks[mac] : nil
 
       vnic_profile_id = nic.dig(:vnic_profile, :id)
+      next if vnic_profile_id.nil?
+
       network_uid = collector.collect_vnic_profiles.detect { |vp| vp.id == vnic_profile_id }&.network&.id
       virtual_switches_persister = id_of_external_network?(network_uid) ? persister.external_distributed_virtual_switches : persister.distributed_virtual_switches
       virtual_lans_persister = id_of_external_network?(network_uid) ? persister.external_distributed_virtual_lans : persister.distributed_virtual_lans
