@@ -17,7 +17,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
   def networks
     collector.networks.each do |network|
-      persister.distributed_virtual_switches.find_or_build_by(:uid_ems => network.id)
+      persister_switches = id_of_external_network?(network.id) ? persister.external_distributed_virtual_switches : persister.distributed_virtual_switches
+      persister_switches.find_or_build_by(:uid_ems => network.id)
                .assign_attributes(
                  :name    => network.name,
                  :uid_ems => network.id
@@ -27,12 +28,20 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
   def vnic_profiles
     collector.collect_vnic_profiles.each do |vnic_profile|
-      switch_persister = persister.distributed_virtual_switches.lazy_find(:uid_ems => vnic_profile.network.id)
-      persister.distributed_virtual_lans.find_or_build_by(:uid_ems => vnic_profile.id, :switch => switch_persister).assign_attributes(
+      virtual_switches_persister = id_of_external_network?(vnic_profile.network.id) ? persister.external_distributed_virtual_switches : persister.distributed_virtual_switches
+      virtual_lans_persister = id_of_external_network?(vnic_profile.network.id) ? persister.external_distributed_virtual_lans : persister.distributed_virtual_lans
+
+      switch_persister = virtual_switches_persister.lazy_find(:uid_ems => vnic_profile.network.id)
+      virtual_lans_persister.find_or_build_by(:uid_ems => vnic_profile.id, :switch => switch_persister).assign_attributes(
         :name    => vnic_profile.name,
         :uid_ems => vnic_profile.id
       )
     end
+  end
+
+  def id_of_external_network?(network_id)
+    network = collector.networks.detect { |net| net.id == network_id }
+    network.external_provider.present?
   end
 
   def ems_clusters
@@ -304,6 +313,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     network
   end
 
+  # TODO: (borod108) is this ever used?
   def lans(network, persister_switch)
     tag_value = nil
     if network
@@ -507,8 +517,11 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
       vnic_profile_id = nic.dig(:vnic_profile, :id)
       network_uid = collector.collect_vnic_profiles.detect { |vp| vp.id == vnic_profile_id }&.network&.id
-      switch_persister = persister.distributed_virtual_switches.lazy_find(:uid_ems => network_uid)
-      lan_persister = persister.distributed_virtual_lans.lazy_find(:switch => switch_persister, :uid_ems => vnic_profile_id)
+      virtual_switches_persister = id_of_external_network?(network_uid) ? persister.external_distributed_virtual_switches : persister.distributed_virtual_switches
+      virtual_lans_persister = id_of_external_network?(network_uid) ? persister.external_distributed_virtual_lans : persister.distributed_virtual_lans
+
+      switch_persister = virtual_switches_persister.lazy_find(:uid_ems => network_uid)
+      lan_persister = virtual_lans_persister.lazy_find(:switch => switch_persister, :uid_ems => vnic_profile_id)
 
       persister.guest_devices.find_or_build_by(
         :hardware => persister_hardware,

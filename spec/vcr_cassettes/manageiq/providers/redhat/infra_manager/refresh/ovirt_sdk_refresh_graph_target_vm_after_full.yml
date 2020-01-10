@@ -1957,7 +1957,8 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/templates{}GET:
     correlation-id: cf134f00-8806-456a-b483-f3b5ca9bc6e8
   :message: 
 https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/networks{}GET:
-- :body: |
+- &1
+  :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <networks>
         <network href="/ovirt-engine/api/networks/3ae53934-96b7-499d-912f-cb6b779b357b" id="3ae53934-96b7-499d-912f-cb6b779b357b">
@@ -2012,6 +2013,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/networks{}GET:
     content-length: '501'
     correlation-id: 396bfdd7-9da0-40cf-9588-9de225f41f0e
   :message: 
+- *1
 https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -3016,7 +3018,8 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/disks{}GET:
     correlation-id: 110cfabe-5ff7-4974-a3dc-4e55941da6eb
   :message: 
 https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vnicprofiles{}GET:
-- :body: |
+- &2
+  :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <vnic_profiles>
         <vnic_profile href="/ovirt-engine/api/vnicprofiles/52ac0668-d782-4079-bd2e-c3fafea0c858" id="52ac0668-d782-4079-bd2e-c3fafea0c858">
@@ -3049,6 +3052,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vnicprofiles{}GET
     content-length: '420'
     correlation-id: 5ae900f8-60cc-49bb-b0d2-78a27111ca6e
   :message: 
+- *2
 https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/ce40bb38-f10a-43f3-8e15-d0ffad692a19/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
