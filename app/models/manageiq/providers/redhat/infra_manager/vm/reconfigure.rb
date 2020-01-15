@@ -29,7 +29,8 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure
       "memoryMB"          => (task_options[:vm_memory].to_i if task_options[:vm_memory]),
       "numCPUs"           => (task_options[:number_of_cpus].to_i if task_options[:number_of_cpus]),
       "disksRemove"       => task_options[:disk_remove],
-      "disksAdd"          => (spec_for_added_disks(task_options[:disk_add]) if task_options[:disk_add])
+      "disksAdd"          => (spec_for_added_disks(task_options[:disk_add]) if task_options[:disk_add]),
+      "networkAdapters"   => spec_for_network_adapters(task_options)
     }
   end
 
@@ -38,5 +39,104 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure
       :disks   => disks,
       :storage => storage
     }
+  end
+
+  def spec_for_network_adapters(options)
+    {
+      :edit   => (network_adapters_edit(options[:network_adapter_edit]) if options[:network_adapter_edit]),
+      :add    => (network_adapters_add(options[:network_adapter_add]) if options[:network_adapter_add]),
+      :remove => (network_adapters_remove(options[:network_adapter_remove]) if options[:network_adapter_remove])
+    }.compact
+  end
+
+  def network_adapters_add(adapters)
+    nic_names = hardware.nics.pluck(:device_name)
+    switch_ids = HostSwitch.where(:host => host).pluck(:switch_id)
+
+    adapters.collect do |adapt|
+      new_nic_name = suggest_nic_name(nic_names)
+      nic_names << new_nic_name
+      network_adapter_add_spec(adapt['network'],
+                               new_nic_name,
+                               switch_ids)
+    end
+  end
+
+  def network_adapters_edit(adapters)
+    switch_ids = HostSwitch.where(:host => host).pluck(:switch_id)
+
+    adapters.collect do |adapt|
+      network_adapter_edit_spec(adapt['network'],
+                                adapt['name'],
+                                switch_ids)
+    end
+  end
+
+  def network_adapters_remove(adapters)
+    adapters.collect do |adapt|
+      network_adapter_remove_spec(adapt['network']['vlan'],
+                                  adapt['network']['name'],
+                                  adapt['network']['mac'])
+    end
+  end
+
+  def network_adapter_add_spec(network_name, nic_name, switch_ids)
+    lan = find_lan_by_name(network_name, switch_ids)
+    raise MiqException::MiqVmError, "Network [#{network_name}] not available for the target" unless lan
+
+    {
+      :network         => network_name,
+      :name            => nic_name,
+      :vnic_profile_id => lan.uid_ems
+    }
+  end
+
+  def network_adapter_edit_spec(network_name, nic_name, switch_ids)
+    nic = hardware.nics.find_by_name(nic_name)
+    raise MiqException::MiqVmError, "No NIC named '#{nic_name}' was found" unless nic
+
+    lan = find_lan_by_name(network_name, switch_ids)
+    raise MiqException::MiqVmError, "Network [#{network_name}] not available for the target" unless lan
+
+    {
+      :network         => network_name,
+      :name            => nic_name,
+      :vnic_profile_id => lan.uid_ems,
+      :nic_id          => nic.uid_ems
+    }
+  end
+
+  def network_adapter_remove_spec(network_name, nic_name, mac)
+    nic = hardware.nics.find_by_name(nic_name)
+    raise MiqException::MiqVmError, "No NIC named '#{nic_name}' was found" unless nic
+
+    {
+      :network     => network_name,
+      :name        => nic_name,
+      :mac_address => mac,
+      :nic_id      => nic.uid_ems
+    }
+  end
+
+  def find_lan_by_name(network_name, switch_ids)
+    lan_name, ext_switch_name = network_name.split('/').collect(&:strip)
+
+    switch_ids = ext_switch_ids_by_name(ext_switch_name) if ext_switch_name
+
+    Lan.find_by(:name => lan_name, :switch_id => switch_ids)
+  end
+
+  def ext_switch_ids_by_name(switch_name)
+    ext_management_system.external_distributed_virtual_switches.where(:name => switch_name).pluck(:id)
+  end
+
+  def suggest_nic_name(nic_list)
+    nic_list.inject('nic1') do |memo, n|
+      m = n.match(/^nic(\d+)$/)
+      next memo unless m
+
+      nic_number = m[1].to_i + 1
+      nic_number > memo[3..-1].to_i ? "nic#{nic_number}" : memo
+    end
   end
 end

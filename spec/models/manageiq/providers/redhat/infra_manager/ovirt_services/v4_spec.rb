@@ -191,6 +191,191 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4 do
       end
     end
 
+    describe 'add network adapters' do
+      let(:connection) { double("OvirtSDK4::Connection") }
+      let(:nics_service) { double('OvirtSDK4::VmNicsService') }
+
+      before :each do
+        allow(vm_service).to receive(:connection).and_return(connection)
+        allow(vm_service).to receive(:nics_service).and_return(nics_service)
+      end
+
+      let :spec do
+        {'networkAdapters' => {:add => [{:network         => 'oVirtA',
+                                         :name            => 'nic2',
+                                         :vnic_profile_id => 'ovirta_uid_ems'}]}}
+      end
+
+      subject(:reconfigure_vm) { ems.vm_reconfigure(vm, :spec => spec) }
+
+      it 'calls the add command with mandatory params' do
+        expect(nics_service).to receive(:add).with(nic_with_mandatory_attrs(spec['networkAdapters'][:add].first))
+
+        subject
+      end
+
+      context 'errors' do
+        let(:error) { OvirtSDK4::Error.new }
+
+        it 'already existing nic' do
+          fault = OvirtSDK4::Fault.new(:reason => 'Operation Failed',
+                                       :detail => '[Network interface name is already in use]')
+          error.fault = fault
+          error.code = 409
+
+          expect(nics_service).to receive(:add).and_raise(error)
+          expect($log).to receive(:error).with(/Error reconfiguring.*name is already in use/)
+
+          expect {
+            subject
+          }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
+                           "Error reconfiguring [#{spec['networkAdapters'][:add][0][:name]}]. #{error.fault.detail}")
+        end
+
+        it 'not existing profile id' do
+          fault = OvirtSDK4::Fault.new(:reason => 'Operation Failed',
+                                       :detail => '[Cannot add Interface. The specified VM network interface profile doesn\'t exist.]')
+          error.fault = fault
+          error.code = 400
+
+          expect(nics_service).to receive(:add).and_raise(error)
+          expect($log).to receive(:error).with(/Error reconfiguring.*network interface profile doesn't exist.\]/)
+
+          expect {
+            subject
+          }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
+                           "Error reconfiguring [#{spec['networkAdapters'][:add][0][:name]}]. #{error.fault.detail}")
+        end
+      end
+
+      RSpec::Matchers.define :nic_with_mandatory_attrs do |attrs|
+        match do |nic|
+          res = nic.kind_of?(OvirtSDK4::Nic)
+          res &&= (nic.name == attrs[:name])
+          res &&= (nic.vnic_profile.id == attrs[:vnic_profile_id])
+          res
+        end
+      end
+    end
+
+    describe 'edit network adapters' do
+      let(:connection) { double("OvirtSDK4::Connection") }
+      let(:nics_service) { double('OvirtSDK4::VmNicsService') }
+      let(:nic_service) { double('OvirtSDk4::VmNicService') }
+
+      before :each do
+        allow(vm_service).to receive(:connection).and_return(connection)
+        allow(vm_service).to receive(:nics_service).and_return(nics_service)
+      end
+
+      let :spec do
+        {'networkAdapters' => {:edit => [{:network         => 'oVirtA',
+                                          :name            => 'nic2',
+                                          :vnic_profile_id => 'ovirta_uid_ems',
+                                          :nic_id          => 'nic_uid_ems'}]}}
+      end
+
+      subject(:reconfigure_vm) { ems.vm_reconfigure(vm, :spec => spec) }
+
+      it 'calls the add command with mandatory params' do
+        edit_spec = spec['networkAdapters'][:edit].first
+        expect(nics_service).to receive(:nic_service).twice.with(edit_spec[:nic_id]).and_return(nic_service)
+        expect(nic_service).to receive(:deactivate)
+        expect(nic_service).to receive(:update).with(:name => edit_spec[:name],
+                                                     :vnic_profile => {:id => edit_spec[:vnic_profile_id]})
+        expect(nic_service).to receive(:activate)
+
+        subject
+      end
+
+      context 'errors' do
+        it 'not existing nic' do
+          expect(nics_service).to receive(:nic_service).and_raise(OvirtSDK4::NotFoundError)
+          expect($log).to receive(:error).with(/Error reconfiguring.*NIC not found/)
+
+          expect {
+            subject
+          }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
+                           "Error reconfiguring [#{spec['networkAdapters'][:edit][0][:name]}]. NIC not found")
+        end
+
+        it 'not existing profile id' do
+          fault = OvirtSDK4::Fault.new(:reason => "Operation Failed",
+                                       :detail => "[Cannot edit Interface. The specified VM network interface profile doesn't exist.]")
+          error = OvirtSDK4::Error.new fault.detail
+          error.code = 400
+          error.fault = fault
+
+          expect(nics_service).to receive(:nic_service).and_raise(error)
+          expect($log).to receive(:error).with(/Error reconfiguring.*network interface profile doesn't exist.\]/)
+
+          expect {
+            subject
+          }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
+                           "Error reconfiguring [#{spec['networkAdapters'][:edit][0][:name]}]. #{error.fault.detail}")
+        end
+      end
+    end
+
+    describe 'remove network adapters' do
+      let(:connection) { double("OvirtSDK4::Connection") }
+      let(:nics_service) { double('OvirtSDK4::VmNicsService') }
+      let(:nic_service) { double('OvirtSDk4::VmNicService') }
+
+      before :each do
+        allow(vm_service).to receive(:connection).and_return(connection)
+        allow(vm_service).to receive(:nics_service).and_return(nics_service)
+      end
+
+      let :spec do
+        {'networkAdapters' => {:remove => [{:network     => 'oVirtA',
+                                            :name        => 'nic2',
+                                            :mac_address => '56:6f:85:ae:00:00',
+                                            :nic_id      => 'nic_uid_ems' }]}}
+      end
+
+      subject(:reconfigure_vm) { ems.vm_reconfigure(vm, :spec => spec) }
+
+      it 'calls the add command with mandatory params' do
+        remove_spec = spec['networkAdapters'][:remove].first
+        expect(nics_service).to receive(:nic_service).with(remove_spec[:nic_id]).and_return(nic_service)
+        expect(nic_service).to receive(:deactivate)
+        expect(nic_service).to receive(:remove)
+
+        subject
+      end
+
+      context 'errors' do
+        it 'not existing nic' do
+          expect(nics_service).to receive(:nic_service).and_raise(OvirtSDK4::NotFoundError)
+          expect($log).to receive(:error).with(/Error reconfiguring.*NIC not found |.*/)
+
+          expect {
+            subject
+          }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
+                           "Error reconfiguring [#{spec['networkAdapters'][:remove][0][:name]}]. NIC not found")
+        end
+
+        it 'generic error while removing' do
+          fault = OvirtSDK4::Fault.new(:reason => "Operation Failed",
+                                       :detail => "[generic failure]")
+          error = OvirtSDK4::Error.new fault.detail
+          error.fault = fault
+
+          remove_spec = spec['networkAdapters'][:remove].first
+          expect(nics_service).to receive(:nic_service).with(remove_spec[:nic_id]).and_return(nic_service)
+          expect(nic_service).to receive(:deactivate)
+          expect(nic_service).to receive(:remove).and_raise(error)
+          expect($log).to receive(:error).with(/Error reconfiguring.*generic failure\]/)
+
+          expect {
+            subject
+          }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
+                           "Error reconfiguring [#{spec['networkAdapters'][:remove][0][:name]}]. #{error.fault.detail}")
+        end
+      end
+    end
+
     describe "remove disk" do
       let(:disk_1) { double("OvirtSDK4::Disk", :id => 'disk_id1', :name => 'disk1') }
       let(:disk_2) { double("OvirtSDK4::Disk", :id => 'disk_id2', :name => 'disk2') }
