@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Sprint 128 - Unreleased as of 2020-01-20
+
+### Added
+
+* Add support for the native virt-viewer console [(#452)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/452)
+
+### Fixed
+
+* Fix a refresh bug when a NIC doesn't have a vnic_profile [(#457)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/457)
+
 ## Sprint 126 - Unreleased as of 2019-12-11
 
 ### Added
