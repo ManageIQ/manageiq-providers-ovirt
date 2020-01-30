@@ -78,8 +78,7 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParser
   end
 
   def self.parse_new_target(full_data, message, ems, event_type)
-    folders = parse_new_folders(full_data.data_center)
-    dc      = folders.detect { |f| f.kind_of?(Datacenter) }
+    dc, vm_folder, host_folder = parse_new_folders(full_data.data_center)
 
     cluster = parse_new_cluster(ems, full_data.cluster, dc)
     rp      = parse_new_resource_pool(cluster)
@@ -96,7 +95,7 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParser
         :vms            => [vm],
         :clusters       => [cluster],
         :resource_pools => [rp],
-        :folders        => [*folders]
+        :folders        => [dc, vm_folder, host_folder]
     }
 
     return target_hash, klass, {:uid_ems => vm[:uid_ems]}
