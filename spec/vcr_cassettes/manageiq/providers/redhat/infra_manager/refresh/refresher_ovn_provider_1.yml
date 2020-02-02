@@ -457,4 +457,35 @@ http_interactions:
       string: '{"security_groups": []}'
     http_version: 
   recorded_at: Wed, 04 Dec 2019 09:09:04 GMT
+- request:
+    method: get
+    uri: https://pluto-vdsg.eng.lab.tlv.redhat.com:9696/v2.0/security-group-rules?limit=1000
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - '00000000000000000000000000000001'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - BaseHTTP/0.3 Python/2.7.5
+      Date:
+      - Sun, 02 Feb 2020 09:15:59 GMT
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"security_group_rules": []}'
+    http_version:
+  recorded_at: Sun, 02 Feb 2020 09:15:59 GMT
 recorded_with: VCR 5.0.0
