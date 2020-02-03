@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:35357/v2.0/tokens
+    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"pass123"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -19,31 +19,29 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:14 GMT
+      - Tue, 04 Feb 2020 10:27:58 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:14Z", "id": "aQwrUF3rAuc0NEgl7VvhZBnJIVyrLaH-y3MspqITzPxLvPZn3I7OC3xEovVETbyJkv98qjRtNh230W8GYAE8lg"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
+      string: '{"access": {"token": {"expires": "2020-02-08T14:27:58Z", "id": "dA-Amki8rk1bZNpqoJZ3tSNH7N2xBiPRvlHiOQJMlMsylETg_MQNJOiwOIgAnqIq2rEvI_hM20uY4bmGdGBx9w"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
+        "https://engine-43.lab.inz.redhat.com:9696/", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://localhost:35357/", "region":
-        "RegionOne", "publicURL": "http://localhost:35357/",
-        "internalURL": "http://localhost:35357/", "id":
-        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
-        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
-        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
-        "internalURL": "http://localhost:9696/v2.1/",
-        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
-        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
-        "admin"}], "name": "admin"}}}'
+        [{"adminURL": "https://engine-43.lab.inz.redhat.com:35357/", "region": "RegionOne",
+        "publicURL": "https://engine-43.lab.inz.redhat.com:35357/", "internalURL": "https://engine-43.lab.inz.redhat.com:35357/",
+        "id": "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "internalURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
+        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
+        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:14 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:10 GMT
 - request:
     method: get
-    uri: http://localhost:9696/
+    uri: https://engine-43.lab.inz.redhat.com:9696/
     body:
       encoding: US-ASCII
       string: ''
@@ -55,7 +53,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - aQwrUF3rAuc0NEgl7VvhZBnJIVyrLaH-y3MspqITzPxLvPZn3I7OC3xEovVETbyJkv98qjRtNh230W8GYAE8lg
+      - dA-Amki8rk1bZNpqoJZ3tSNH7N2xBiPRvlHiOQJMlMsylETg_MQNJOiwOIgAnqIq2rEvI_hM20uY4bmGdGBx9w
   response:
     status:
       code: 200
@@ -64,21 +62,21 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:14 GMT
+      - Tue, 04 Feb 2020 10:27:58 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"versions": [{"status": "CURRENT", "id": "v2.0", "links": [{"href":
-        "http://localhost:9696/v2.0/", "rel": "self"}]}]}'
+        "https://engine-43.lab.inz.redhat.com:9696/v2.0/", "rel": "self"}]}]}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:14 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:10 GMT
 - request:
     method: post
-    uri: http://localhost:35357/v2.0/tokens
+    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"pass123"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -92,31 +90,29 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:15 GMT
+      - Tue, 04 Feb 2020 10:27:58 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "pPz-bDJb8aO7ITNkTNAtSptE9JvTt91cz5jnQrBFy_YqBdCYVcgkuhQSfHyYJo-kOMJEZAxsoQUBRcQsdeGG0w"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
+      string: '{"access": {"token": {"expires": "2020-02-08T14:27:58Z", "id": "ZVEw9nMvPpIMVtnQ29cXPyIjKdWCPR0mPPPUOndrXTsSY-H-y6QvLHRwZiWFbzcVxeYPhX-kuEZUS_UpcRYc-A"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
+        "https://engine-43.lab.inz.redhat.com:9696/", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://localhost:35357/", "region":
-        "RegionOne", "publicURL": "http://localhost:35357/",
-        "internalURL": "http://localhost:35357/", "id":
-        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
-        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
-        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
-        "internalURL": "http://localhost:9696/v2.1/",
-        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
-        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
-        "admin"}], "name": "admin"}}}'
+        [{"adminURL": "https://engine-43.lab.inz.redhat.com:35357/", "region": "RegionOne",
+        "publicURL": "https://engine-43.lab.inz.redhat.com:35357/", "internalURL": "https://engine-43.lab.inz.redhat.com:35357/",
+        "id": "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "internalURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
+        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
+        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:10 GMT
 - request:
     method: get
-    uri: http://localhost:9696/v2.0/networks
+    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/networks
     body:
       encoding: US-ASCII
       string: ''
@@ -128,7 +124,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - pPz-bDJb8aO7ITNkTNAtSptE9JvTt91cz5jnQrBFy_YqBdCYVcgkuhQSfHyYJo-kOMJEZAxsoQUBRcQsdeGG0w
+      - ZVEw9nMvPpIMVtnQ29cXPyIjKdWCPR0mPPPUOndrXTsSY-H-y6QvLHRwZiWFbzcVxeYPhX-kuEZUS_UpcRYc-A
   response:
     status:
       code: 200
@@ -137,31 +133,26 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:15 GMT
+      - Tue, 04 Feb 2020 10:27:58 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"networks": [{"status": "ACTIVE", "name": "net5", "tenant_id": "00000000000000000000000000000001",
-        "mtu": 1442, "port_security_enabled": false, "id": "9ae1c713-88d7-4699-a501-f308bf526c26"},
-        {"status": "ACTIVE", "name": "net3", "tenant_id": "00000000000000000000000000000001",
-        "mtu": 1442, "port_security_enabled": false, "id": "1f24c4cb-9f41-4c37-8553-83cd464e62cd"},
-        {"status": "ACTIVE", "name": "net1", "tenant_id": "00000000000000000000000000000001",
-        "mtu": 1442, "port_security_enabled": false, "id": "b85981f3-b7d0-4ed1-8b1b-94708b472b17"},
-        {"status": "ACTIVE", "name": "net2", "tenant_id": "00000000000000000000000000000001",
-        "mtu": 1442, "port_security_enabled": false, "id": "7d678a46-81e9-4482-92e9-25329671a947"},
+      string: '{"networks": [{"status": "ACTIVE", "name": "net1", "tenant_id": "00000000000000000000000000000001",
+        "mtu": 1442, "port_security_enabled": true, "id": "66bcf2f0-092a-43fd-bbe2-0f848ac052ba"},
+        {"status": "ACTIVE", "name": "extNetwork", "provider:physical_network": "ovirtmgmt",
+        "tenant_id": "00000000000000000000000000000001", "mtu": 1442, "port_security_enabled":
+        true, "provider:network_type": "flat", "id": "c249135d-c8f2-4192-92e8-dcc23c6672b1"},
         {"status": "ACTIVE", "name": "ext_net", "tenant_id": "00000000000000000000000000000001",
-        "mtu": 1442, "port_security_enabled": false, "id": "298b724d-9f19-4b76-a58f-b737f86768fe"},
-        {"status": "ACTIVE", "name": "net4", "tenant_id": "00000000000000000000000000000001",
-        "mtu": 1442, "port_security_enabled": false, "id": "c643d618-29ca-4dff-8f8a-bac4715577fa"}]}'
+        "mtu": 1442, "port_security_enabled": true, "id": "f2b8c578-e2b0-47cc-a807-2034aaa37cc8"}]}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:10 GMT
 - request:
     method: post
-    uri: http://localhost:35357/v2.0/tokens
+    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"pass123"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -175,34 +166,32 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:15 GMT
+      - Tue, 04 Feb 2020 10:27:58 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "4awFmDazsnBGleYsrg1fPpuIvsnTgBLEmFO3BoHT9265RNWVT_Zxjs3v2YbcNkKrRXUL-I58r61VLJa2dvdFiA"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
+      string: '{"access": {"token": {"expires": "2020-02-08T14:27:58Z", "id": "Yl3RTPWvE4yT4hBUWFRqwiH3BFGZZl5ZpDMbzCCHl5XkZXshcrufeVLKXsLtDfLRNodlvuoPdMwrwcFCMRS6RA"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
+        "https://engine-43.lab.inz.redhat.com:9696/", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://localhost:35357/", "region":
-        "RegionOne", "publicURL": "http://localhost:35357/",
-        "internalURL": "http://localhost:35357/", "id":
-        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
-        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
-        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
-        "internalURL": "http://localhost:9696/v2.1/",
-        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
-        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
-        "admin"}], "name": "admin"}}}'
+        [{"adminURL": "https://engine-43.lab.inz.redhat.com:35357/", "region": "RegionOne",
+        "publicURL": "https://engine-43.lab.inz.redhat.com:35357/", "internalURL": "https://engine-43.lab.inz.redhat.com:35357/",
+        "id": "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "internalURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
+        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
+        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:11 GMT
 - request:
     method: post
-    uri: http://localhost:35357/v2.0/tokens
+    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"pass123"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -216,34 +205,32 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:15 GMT
+      - Tue, 04 Feb 2020 10:27:59 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "wa_g9OHX8JFJYuk8i36mkPe_cNO0EB5H0XqLmtGZp3cfmOZjeyiTdELE63E4YDOs_s_jnytDIWi21pUI5zE0Mw"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
+      string: '{"access": {"token": {"expires": "2020-02-08T14:27:59Z", "id": "djMSf55f7mu3eIQjt_ZkMoYlhzyXm7jGIBhnyqARHHcy44rCBsiA47cjMrs2AxeBNtKAOibeQEaLq81ilrDXog"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
+        "https://engine-43.lab.inz.redhat.com:9696/", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://localhost:35357/", "region":
-        "RegionOne", "publicURL": "http://localhost:35357/",
-        "internalURL": "http://localhost:35357/", "id":
-        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
-        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
-        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
-        "internalURL": "http://localhost:9696/v2.1/",
-        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
-        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
-        "admin"}], "name": "admin"}}}'
+        [{"adminURL": "https://engine-43.lab.inz.redhat.com:35357/", "region": "RegionOne",
+        "publicURL": "https://engine-43.lab.inz.redhat.com:35357/", "internalURL": "https://engine-43.lab.inz.redhat.com:35357/",
+        "id": "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "internalURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
+        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
+        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:11 GMT
 - request:
     method: post
-    uri: http://localhost:35357/v2.0/tokens
+    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"pass123"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -257,34 +244,32 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:15 GMT
+      - Tue, 04 Feb 2020 10:27:59 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "g57peM41SkaSleKVrcy1DMKuVExjWd_fJcTHuAeQvAogwExLa18St9pdnsVEzUOJpkSLB6yQa3BXBxiUxsukeQ"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
+      string: '{"access": {"token": {"expires": "2020-02-08T14:27:59Z", "id": "5-9e2kBlZRWD_V0Jlc_jy6aVZjsX0mcffnq_gdzeL1ag0JDAJLnaEnjVOCFzZ4PIHQcSUStvxuUyXwmAvOww6g"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
+        "https://engine-43.lab.inz.redhat.com:9696/", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://localhost:35357/", "region":
-        "RegionOne", "publicURL": "http://localhost:35357/",
-        "internalURL": "http://localhost:35357/", "id":
-        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
-        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
-        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
-        "internalURL": "http://localhost:9696/v2.1/",
-        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
-        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
-        "admin"}], "name": "admin"}}}'
+        [{"adminURL": "https://engine-43.lab.inz.redhat.com:35357/", "region": "RegionOne",
+        "publicURL": "https://engine-43.lab.inz.redhat.com:35357/", "internalURL": "https://engine-43.lab.inz.redhat.com:35357/",
+        "id": "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "internalURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
+        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
+        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:11 GMT
 - request:
     method: post
-    uri: http://localhost:35357/v2.0/tokens
+    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"pass123"}}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -298,154 +283,29 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:15 GMT
+      - Tue, 04 Feb 2020 10:27:59 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:15Z", "id": "f-sdfg-NjWpYPu9JtTW-VkMDvGEKX0mCcOTs3R2Irz6XzIm8JsPPEbW3VMdlCOqGDL8GYep9idcbrxvKsWyGMg"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
+      string: '{"access": {"token": {"expires": "2020-02-08T14:27:59Z", "id": "9GG7LGx9s33N6i48ZoVjq1HdsevtobOVPUuXMZKYOkWNyLN1QWRScxMPiPPUjz00XYJM3C8KYoAlcLJE7Iq_gA"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
+        "https://engine-43.lab.inz.redhat.com:9696/", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://localhost:35357/", "region":
-        "RegionOne", "publicURL": "http://localhost:35357/",
-        "internalURL": "http://localhost:35357/", "id":
-        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
-        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
-        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
-        "internalURL": "http://localhost:9696/v2.1/",
-        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
-        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
-        "admin"}], "name": "admin"}}}'
+        [{"adminURL": "https://engine-43.lab.inz.redhat.com:35357/", "region": "RegionOne",
+        "publicURL": "https://engine-43.lab.inz.redhat.com:35357/", "internalURL": "https://engine-43.lab.inz.redhat.com:35357/",
+        "id": "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "internalURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
+        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
+        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:15 GMT
-- request:
-    method: post
-    uri: http://localhost:35357/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - BaseHTTP/0.3 Python/2.7.5
-      Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:16Z", "id": "IxnbPp_w0p_wjvd9sU4m1NL4GCSTWdSr13KQp3ac1XKLC13d4moZV_ZAIKm6aEmg9dVmyDo8najVmOpebLPLIA"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
-        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
-        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://localhost:35357/", "region":
-        "RegionOne", "publicURL": "http://localhost:35357/",
-        "internalURL": "http://localhost:35357/", "id":
-        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
-        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
-        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
-        "internalURL": "http://localhost:9696/v2.1/",
-        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
-        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
-        "admin"}], "name": "admin"}}}'
-    http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
-- request:
-    method: post
-    uri: http://localhost:35357/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"admin"}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - BaseHTTP/0.3 Python/2.7.5
-      Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:16Z", "id": "Y09myvKNk9zjG8cuaI_HDnaAlf6sDiSTE8C6Icq9Cx0rKogmFDQMU--sEeG7R8eMMNq2vo2CItJseH8hSWHGuQ"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
-        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
-        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://localhost:35357/", "region":
-        "RegionOne", "publicURL": "http://localhost:35357/",
-        "internalURL": "http://localhost:35357/", "id":
-        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
-        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
-        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
-        "internalURL": "http://localhost:9696/v2.1/",
-        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
-        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
-        "admin"}], "name": "admin"}}}'
-    http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
-- request:
-    method: post
-    uri: http://localhost:35357/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123}}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - BaseHTTP/0.3 Python/2.7.5
-      Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:16Z", "id": "HQV7GwV4VUN56shTk-xVk_02exzyxqF_ZZpOZFLLygpekoqRJvZBIspb9MWuQ78XayysIr3AUsCEYp1DGu-m1A"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
-        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
-        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://localhost:35357/", "region":
-        "RegionOne", "publicURL": "http://localhost:35357/",
-        "internalURL": "http://localhost:35357/", "id":
-        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
-        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
-        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
-        "internalURL": "http://localhost:9696/v2.1/",
-        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
-        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
-        "admin"}], "name": "admin"}}}'
-    http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:11 GMT
 - request:
     method: get
-    uri: http://localhost:35357/v2.0/tenants
+    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tenants
     body:
       encoding: US-ASCII
       string: ''
@@ -457,7 +317,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - HQV7GwV4VUN56shTk-xVk_02exzyxqF_ZZpOZFLLygpekoqRJvZBIspb9MWuQ78XayysIr3AUsCEYp1DGu-m1A
+      - 9GG7LGx9s33N6i48ZoVjq1HdsevtobOVPUuXMZKYOkWNyLN1QWRScxMPiPPUjz00XYJM3C8KYoAlcLJE7Iq_gA
   response:
     status:
       code: 200
@@ -466,7 +326,7 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Tue, 04 Feb 2020 10:27:59 GMT
       Content-Type:
       - application/json
     body:
@@ -474,13 +334,13 @@ http_interactions:
       string: '{"tenants": [{"id": "00000000000000000000000000000001", "enabled":
         true, "description": "tenant", "name": "tenant"}]}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:11 GMT
 - request:
     method: post
-    uri: http://localhost:35357/v2.0/tokens
+    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":pass123},"tenantName":"tenant"}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"pass123"},"tenantName":"tenant"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -494,31 +354,29 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Tue, 04 Feb 2020 10:27:59 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"expires": "2018-11-18T13:07:16Z", "id": "ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw"},
-        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/",
+      string: '{"access": {"token": {"expires": "2020-02-08T14:27:59Z", "id": "IYGNHpjQI7uhC0PmDOD5S3Eu1rGgEmfqhd_7tOSbtsUGe8JETljurE2VusyvNp1fmoUBSve31VbypwJ71_4Qdw"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
-        "http://localhost:9696/", "publicURL": "http://localhost:9696/"}],
+        "https://engine-43.lab.inz.redhat.com:9696/", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/"}],
         "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
-        [{"adminURL": "http://localhost:35357/", "region":
-        "RegionOne", "publicURL": "http://localhost:35357/",
-        "internalURL": "http://localhost:35357/", "id":
-        "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
-        {"endpoints_links": [], "endpoints": [{"adminURL": "http://localhost:9696/v2.1/",
-        "region": "RegionOne", "publicURL": "http://localhost:9696/v2.1/",
-        "internalURL": "http://localhost:9696/v2.1/",
-        "id": "00000000000000000000000000000002"}], "type": "compute", "name": "nova"}],
-        "user": {"username": "admin", "roles_links": [], "id": "", "roles": [{"name":
-        "admin"}], "name": "admin"}}}'
+        [{"adminURL": "https://engine-43.lab.inz.redhat.com:35357/", "region": "RegionOne",
+        "publicURL": "https://engine-43.lab.inz.redhat.com:35357/", "internalURL": "https://engine-43.lab.inz.redhat.com:35357/",
+        "id": "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "internalURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
+        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
+        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:11 GMT
 - request:
     method: get
-    uri: http://localhost:9696/v2.0/subnets?limit=1000
+    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/subnets?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -530,7 +388,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - IYGNHpjQI7uhC0PmDOD5S3Eu1rGgEmfqhd_7tOSbtsUGe8JETljurE2VusyvNp1fmoUBSve31VbypwJ71_4Qdw
   response:
     status:
       code: 200
@@ -539,24 +397,31 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Tue, 04 Feb 2020 10:27:59 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"subnets": [{"ip_version": 4, "allocation_pools": [{"start": "11.0.0.2",
-        "stop": "11.0.0.255"}], "gateway_ip": "11.0.0.0", "name": "sub_net2", "enable_dhcp":
-        true, "network_id": "7d678a46-81e9-4482-92e9-25329671a947", "tenant_id": "00000000000000000000000000000001",
-        "cidr": "11.0.0.0/24", "dns_nameservers": [], "id": "03b6dee4-b035-491c-8eb1-9b19ea51a665"},
-        {"ip_version": 4, "allocation_pools": [{"start": "11.0.0.2", "stop": "11.0.0.255"}],
-        "gateway_ip": "11.0.0.0", "name": "sub_net1", "enable_dhcp": true, "network_id":
-        "b85981f3-b7d0-4ed1-8b1b-94708b472b17", "tenant_id": "00000000000000000000000000000001",
-        "cidr": "11.0.0.0/24", "dns_nameservers": [], "id": "4c9b5697-8562-420b-972c-d3bbeb10f11e"}]}'
+      string: '{"subnets": [{"ip_version": 4, "allocation_pools": [{"start": "192.168.178.2",
+        "stop": "192.168.179.255"}], "gateway_ip": "192.168.178.1", "name": "sub_net1",
+        "enable_dhcp": true, "network_id": "66bcf2f0-092a-43fd-bbe2-0f848ac052ba",
+        "tenant_id": "00000000000000000000000000000001", "cidr": "192.168.178.0/23",
+        "dns_nameservers": ["192.168.178.1"], "id": "7e27ec88-f144-4a46-aecc-cf79deb37021"},
+        {"ip_version": 4, "allocation_pools": [{"start": "192.168.179.2", "stop":
+        "192.168.179.255"}], "gateway_ip": "192.168.179.1", "name": "ext_net_sub_net",
+        "enable_dhcp": true, "network_id": "f2b8c578-e2b0-47cc-a807-2034aaa37cc8",
+        "tenant_id": "00000000000000000000000000000001", "cidr": "192.168.179.0/24",
+        "dns_nameservers": ["8.8.8.8"], "id": "20e82d67-156b-4e40-8139-84f7b0b8dcde"},
+        {"ip_version": 4, "allocation_pools": [{"start": "192.168.178.2", "stop":
+        "192.168.178.3"}], "gateway_ip": "192.168.178.1", "name": "ext_net_subnet",
+        "enable_dhcp": true, "network_id": "c249135d-c8f2-4192-92e8-dcc23c6672b1",
+        "tenant_id": "00000000000000000000000000000001", "cidr": "192.168.178.0/30",
+        "dns_nameservers": ["192.168.178.1"], "id": "b34a61e3-87ee-45eb-be3d-43b57ce9d6ab"}]}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:11 GMT
 - request:
     method: get
-    uri: http://localhost:9696/v2.0/subnets?limit=1000&marker=4c9b5697-8562-420b-972c-d3bbeb10f11e
+    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/subnets?limit=1000&marker=b34a61e3-87ee-45eb-be3d-43b57ce9d6ab
     body:
       encoding: US-ASCII
       string: ''
@@ -568,7 +433,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - IYGNHpjQI7uhC0PmDOD5S3Eu1rGgEmfqhd_7tOSbtsUGe8JETljurE2VusyvNp1fmoUBSve31VbypwJ71_4Qdw
   response:
     status:
       code: 200
@@ -577,17 +442,17 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Tue, 04 Feb 2020 10:27:59 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"subnets": []}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:11 GMT
 - request:
     method: get
-    uri: http://localhost:9696/v2.0/floatingips?limit=1000
+    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/floatingips?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -599,7 +464,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - IYGNHpjQI7uhC0PmDOD5S3Eu1rGgEmfqhd_7tOSbtsUGe8JETljurE2VusyvNp1fmoUBSve31VbypwJ71_4Qdw
   response:
     status:
       code: 200
@@ -608,17 +473,17 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Tue, 04 Feb 2020 10:27:59 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"floatingips": []}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:11 GMT
 - request:
     method: get
-    uri: http://localhost:9696/v2.0/ports?limit=1000
+    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/ports?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -630,7 +495,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - IYGNHpjQI7uhC0PmDOD5S3Eu1rGgEmfqhd_7tOSbtsUGe8JETljurE2VusyvNp1fmoUBSve31VbypwJ71_4Qdw
   response:
     status:
       code: 200
@@ -639,22 +504,32 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:16 GMT
+      - Tue, 04 Feb 2020 10:27:59 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"ports": [{"device_owner": "oVirt", "port_security_enabled": false,
-        "fixed_ips": [{"subnet_id": "4c9b5697-8562-420b-972c-d3bbeb10f11e", "ip_address":
-        "11.0.0.2"}], "id": "2500800a-9dec-4fea-a7ec-a6fdb836da0a", "security_groups":
-        [], "device_id": "3b31db55-96cc-4b0b-b820-c693139cbaf9", "name": "nic1", "admin_state_up":
-        true, "network_id": "b85981f3-b7d0-4ed1-8b1b-94708b472b17", "tenant_id": "00000000000000000000000000000001",
-        "mac_address": "00:1a:4a:16:01:00"}]}'
+      string: '{"ports": [{"device_owner": "oVirt", "port_security_enabled": true,
+        "fixed_ips": [{"subnet_id": "b34a61e3-87ee-45eb-be3d-43b57ce9d6ab", "ip_address":
+        "192.168.178.2"}], "id": "ee1b5c07-5222-4f24-86b7-4889b9674c91", "security_groups":
+        ["Default"], "device_id": "f8d8b4c2-5ea2-4255-9aa2-100c347c5756", "name":
+        "nic_ext", "admin_state_up": true, "network_id": "c249135d-c8f2-4192-92e8-dcc23c6672b1",
+        "tenant_id": "00000000000000000000000000000001", "mac_address": "56:6f:59:c0:00:06"},
+        {"device_owner": "oVirt", "port_security_enabled": true, "fixed_ips": [{"subnet_id":
+        "20e82d67-156b-4e40-8139-84f7b0b8dcde", "ip_address": "192.168.179.2"}], "id":
+        "e3d43e58-d4fa-4c8a-ba91-db873892ceee", "security_groups": ["Default"], "device_id":
+        "1ab583f4-6636-4b7c-8293-d6c3bae17391", "name": "nic2", "admin_state_up":
+        false, "network_id": "f2b8c578-e2b0-47cc-a807-2034aaa37cc8", "tenant_id":
+        "00000000000000000000000000000001", "mac_address": "56:6f:59:c0:00:00"}, {"mac_address":
+        "unknown", "name": "localnet_port", "tenant_id": "00000000000000000000000000000001",
+        "network_id": "c249135d-c8f2-4192-92e8-dcc23c6672b1", "port_security_enabled":
+        false, "admin_state_up": false, "fixed_ips": [], "id": "d9da3144-379b-4235-aa05-0653c8dd07bb",
+        "security_groups": []}]}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:16 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:11 GMT
 - request:
     method: get
-    uri: http://localhost:9696/v2.0/ports?limit=1000&marker=2500800a-9dec-4fea-a7ec-a6fdb836da0a
+    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/ports?limit=1000&marker=d9da3144-379b-4235-aa05-0653c8dd07bb
     body:
       encoding: US-ASCII
       string: ''
@@ -666,7 +541,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - IYGNHpjQI7uhC0PmDOD5S3Eu1rGgEmfqhd_7tOSbtsUGe8JETljurE2VusyvNp1fmoUBSve31VbypwJ71_4Qdw
   response:
     status:
       code: 200
@@ -675,17 +550,17 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:17 GMT
+      - Tue, 04 Feb 2020 10:27:59 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"ports": []}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:17 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:11 GMT
 - request:
     method: get
-    uri: http://localhost:9696/v2.0/routers?limit=1000
+    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/routers?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -697,7 +572,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - IYGNHpjQI7uhC0PmDOD5S3Eu1rGgEmfqhd_7tOSbtsUGe8JETljurE2VusyvNp1fmoUBSve31VbypwJ71_4Qdw
   response:
     status:
       code: 200
@@ -706,19 +581,19 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:17 GMT
+      - Tue, 04 Feb 2020 10:27:59 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"routers": [{"status": "INACTIVE", "external_gateway_info": null,
-        "name": "router1", "admin_state_up": true, "tenant_id": "00000000000000000000000000000001",
-        "routes": [], "id": "38dbd81b-bb7c-4fd2-9e7e-a1a8cfeb4312"}]}'
+        "name": "net1net2", "admin_state_up": true, "tenant_id": "00000000000000000000000000000001",
+        "routes": [], "id": "238ec54a-d0ec-4fb4-be6e-1763f6a2b8f4"}]}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:17 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:12 GMT
 - request:
     method: get
-    uri: http://localhost:9696/v2.0/routers?limit=1000&marker=38dbd81b-bb7c-4fd2-9e7e-a1a8cfeb4312
+    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/routers?limit=1000&marker=238ec54a-d0ec-4fb4-be6e-1763f6a2b8f4
     body:
       encoding: US-ASCII
       string: ''
@@ -730,7 +605,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - IYGNHpjQI7uhC0PmDOD5S3Eu1rGgEmfqhd_7tOSbtsUGe8JETljurE2VusyvNp1fmoUBSve31VbypwJ71_4Qdw
   response:
     status:
       code: 200
@@ -739,17 +614,17 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:17 GMT
+      - Tue, 04 Feb 2020 10:27:59 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"routers": []}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:17 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:12 GMT
 - request:
     method: get
-    uri: http://localhost:9696/v2.0/security-groups?limit=1000
+    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/security-groups?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -761,7 +636,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - IYGNHpjQI7uhC0PmDOD5S3Eu1rGgEmfqhd_7tOSbtsUGe8JETljurE2VusyvNp1fmoUBSve31VbypwJ71_4Qdw
   response:
     status:
       code: 200
@@ -770,17 +645,105 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Wed, 14 Nov 2018 09:07:17 GMT
+      - Tue, 04 Feb 2020 10:28:00 GMT
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"security_groups": [{"description": null, "tags": [], "tenant_id":
+        null, "created_at": "2020-02-03T09:21:28.409111", "updated_at": "2020-02-03T09:21:28.409111",
+        "security_group_rules": [{"remote_group_id": null, "direction": "egress",
+        "protocol": null, "description": null, "ethertype": "IPv4", "port_range_max":
+        null, "security_group_id": "1d1c9b20-c74c-4e85-b9ba-5aec43233d45", "port_range_min":
+        null, "remote_ip_prefix": null, "id": "c8bb3d36-c391-4275-809c-4f8dcdbf08ca"},
+        {"remote_group_id": "1d1c9b20-c74c-4e85-b9ba-5aec43233d45", "direction": "ingress",
+        "protocol": null, "description": null, "ethertype": "IPv6", "port_range_max":
+        null, "security_group_id": "1d1c9b20-c74c-4e85-b9ba-5aec43233d45", "port_range_min":
+        null, "remote_ip_prefix": null, "id": "27976b51-d568-43c9-95eb-689c1802e926"},
+        {"remote_group_id": "1d1c9b20-c74c-4e85-b9ba-5aec43233d45", "direction": "ingress",
+        "protocol": null, "description": null, "ethertype": "IPv4", "port_range_max":
+        null, "security_group_id": "1d1c9b20-c74c-4e85-b9ba-5aec43233d45", "port_range_min":
+        null, "remote_ip_prefix": null, "id": "6d4949b6-8a34-48d0-911e-d87358554940"},
+        {"remote_group_id": null, "direction": "egress", "protocol": null, "description":
+        null, "ethertype": "IPv6", "port_range_max": null, "security_group_id": "1d1c9b20-c74c-4e85-b9ba-5aec43233d45",
+        "port_range_min": null, "remote_ip_prefix": null, "id": "62ac7692-3d42-4e07-9126-53e6a3ce9052"}],
+        "revision_number": 1, "project_id": null, "id": "1d1c9b20-c74c-4e85-b9ba-5aec43233d45",
+        "name": "Default"}]}'
+    http_version: 
+  recorded_at: Tue, 04 Feb 2020 10:28:12 GMT
+- request:
+    method: get
+    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/security-groups?limit=1000&marker=1d1c9b20-c74c-4e85-b9ba-5aec43233d45
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - IYGNHpjQI7uhC0PmDOD5S3Eu1rGgEmfqhd_7tOSbtsUGe8JETljurE2VusyvNp1fmoUBSve31VbypwJ71_4Qdw
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - BaseHTTP/0.3 Python/2.7.5
+      Date:
+      - Tue, 04 Feb 2020 10:28:00 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"security_groups": []}'
     http_version: 
-  recorded_at: Wed, 14 Nov 2018 09:07:17 GMT
+  recorded_at: Tue, 04 Feb 2020 10:28:12 GMT
+- request:
+    method: post
+    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"passwordCredentials":{"username":"admin@internal","password":"pass123"},"tenantName":"admin"}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - BaseHTTP/0.3 Python/2.7.5
+      Date:
+      - Tue, 04 Feb 2020 10:28:00 GMT
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"expires": "2020-02-08T14:28:00Z", "id": "5vtsdHiJZJsgwmff4veGzU8vdzfixAwKbL1m4CVTLLPpb81KfXhtRudcfMU_uBAGu9dbQMPzj6lwB89O0rWHnw"},
+        "serviceCatalog": [{"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/",
+        "region": "RegionOne", "id": "00000000000000000000000000000001", "internalURL":
+        "https://engine-43.lab.inz.redhat.com:9696/", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/"}],
+        "type": "network", "name": "neutron"}, {"endpoints_links": [], "endpoints":
+        [{"adminURL": "https://engine-43.lab.inz.redhat.com:35357/", "region": "RegionOne",
+        "publicURL": "https://engine-43.lab.inz.redhat.com:35357/", "internalURL": "https://engine-43.lab.inz.redhat.com:35357/",
+        "id": "00000000000000000000000000000002"}], "type": "identity", "name": "keystone"},
+        {"endpoints_links": [], "endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "region": "RegionOne", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
+        "internalURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/", "id": "00000000000000000000000000000002"}],
+        "type": "compute", "name": "nova"}], "user": {"username": "admin", "roles_links":
+        [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}}}'
+    http_version: 
+  recorded_at: Tue, 04 Feb 2020 10:28:12 GMT
 - request:
     method: get
-    uri: http://localhost:9696/v2.0/security-group-rules?limit=1000
+    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/security-group-rules?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -792,7 +755,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - ZCl-1LhfF7NANbRz4SJQCTDDV_uNv4qehajPXO7RXdQdlgEVAtdJbIsIrWQjIUkl_yuI8tL1Fn_GO8o2WBngvw
+      - IYGNHpjQI7uhC0PmDOD5S3Eu1rGgEmfqhd_7tOSbtsUGe8JETljurE2VusyvNp1fmoUBSve31VbypwJ71_4Qdw
   response:
     status:
       code: 200
@@ -801,12 +764,57 @@ http_interactions:
       Server:
       - BaseHTTP/0.3 Python/2.7.5
       Date:
-      - Sun, 02 Feb 2020 09:16:16 GMT
+      - Tue, 04 Feb 2020 10:28:00 GMT
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"security_group_rules": [{"remote_group_id": null, "direction": "egress",
+        "protocol": null, "description": null, "ethertype": "IPv4", "port_range_max":
+        null, "security_group_id": "1d1c9b20-c74c-4e85-b9ba-5aec43233d45", "port_range_min":
+        null, "remote_ip_prefix": null, "id": "c8bb3d36-c391-4275-809c-4f8dcdbf08ca"},
+        {"remote_group_id": "1d1c9b20-c74c-4e85-b9ba-5aec43233d45", "direction": "ingress",
+        "protocol": null, "description": null, "ethertype": "IPv6", "port_range_max":
+        null, "security_group_id": "1d1c9b20-c74c-4e85-b9ba-5aec43233d45", "port_range_min":
+        null, "remote_ip_prefix": null, "id": "27976b51-d568-43c9-95eb-689c1802e926"},
+        {"remote_group_id": "1d1c9b20-c74c-4e85-b9ba-5aec43233d45", "direction": "ingress",
+        "protocol": null, "description": null, "ethertype": "IPv4", "port_range_max":
+        null, "security_group_id": "1d1c9b20-c74c-4e85-b9ba-5aec43233d45", "port_range_min":
+        null, "remote_ip_prefix": null, "id": "6d4949b6-8a34-48d0-911e-d87358554940"},
+        {"remote_group_id": null, "direction": "egress", "protocol": null, "description":
+        null, "ethertype": "IPv6", "port_range_max": null, "security_group_id": "1d1c9b20-c74c-4e85-b9ba-5aec43233d45",
+        "port_range_min": null, "remote_ip_prefix": null, "id": "62ac7692-3d42-4e07-9126-53e6a3ce9052"}]}'
+    http_version: 
+  recorded_at: Tue, 04 Feb 2020 10:28:12 GMT
+- request:
+    method: get
+    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/security-group-rules?limit=1000&marker=62ac7692-3d42-4e07-9126-53e6a3ce9052
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - IYGNHpjQI7uhC0PmDOD5S3Eu1rGgEmfqhd_7tOSbtsUGe8JETljurE2VusyvNp1fmoUBSve31VbypwJ71_4Qdw
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - BaseHTTP/0.3 Python/2.7.5
+      Date:
+      - Tue, 04 Feb 2020 10:28:00 GMT
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"security_group_rules": []}'
     http_version: 
-  recorded_at: Sun, 02 Feb 2020 09:16:16 GMT
-recorded_with: VCR 3.0.3
+  recorded_at: Tue, 04 Feb 2020 10:28:12 GMT
+recorded_with: VCR 5.0.0
