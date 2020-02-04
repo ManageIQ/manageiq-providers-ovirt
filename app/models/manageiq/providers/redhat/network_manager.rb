@@ -4,8 +4,6 @@ class ManageIQ::Providers::Redhat::NetworkManager < ManageIQ::Providers::Network
   require_nested :EventCatcher
   require_nested :EventParser
   require_nested :FloatingIp
-  require_nested :MetricsCapture
-  require_nested :MetricsCollectorWorker
   require_nested :NetworkPort
   require_nested :NetworkRouter
   require_nested :RefreshWorker
