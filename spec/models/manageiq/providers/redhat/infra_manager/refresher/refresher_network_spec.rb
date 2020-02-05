@@ -44,7 +44,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     guest_devices = vm1.hardware.guest_devices
     expect(guest_devices.count).to eq(3)
 
-    nic_ext = vm1.hardware.guest_devices.where(device_name: 'nic_ext').first
+    nic_ext = vm1.hardware.guest_devices.where(:device_name => 'nic_ext').first
     expect(nic_ext.switch.uid_ems).to eq("6a0cb90c-16ac-47ae-b262-ac382b2c42e5")
     expect(nic_ext.lan.uid_ems).to eq("76ec486d-d881-4ad7-ab59-6371cdfcd723")
   end
@@ -56,9 +56,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     workflow = double(:get_source_vm => double(:id => template_id))
     vlans = {}
     ovirt_service.load_allowed_networks([], vlans, workflow)
-    expected_vlans = {"f6898bd4-bcca-4ea4-bedf-3dc976396b36"=>"ovirtmgmt (ovirtmgmt)", "c8df273f-b67c-4527-9423-46b9e4625aed"=>"oVirtB (ovirtmgmt)", 
-                      "265ac89f-98c2-41be-a78b-97852159adb1"=>"vnic1 (ovirtmgmt)", "76ec486d-d881-4ad7-ab59-6371cdfcd723"=>"extNetwork (extNetwork)", 
-                      "<Empty>"=>"<No Profile>", "<Template>"=>"<Use template nics>"}
+    expected_vlans = {
+      "f6898bd4-bcca-4ea4-bedf-3dc976396b36"    => "ovirtmgmt (ovirtmgmt)",
+      "c8df273f-b67c-4527-9423-46b9e4625aed"    => "oVirtB (ovirtmgmt)",
+      "265ac89f-98c2-41be-a78b-97852159adb1"    => "vnic1 (ovirtmgmt)",
+      "76ec486d-d881-4ad7-ab59-6371cdfcd723"    => "extNetwork (extNetwork)",
+      "<Empty>" => "<No Profile>", "<Template>" => "<Use template nics>"
+    }
     expect(vlans).to eq(expected_vlans)
   end
 end

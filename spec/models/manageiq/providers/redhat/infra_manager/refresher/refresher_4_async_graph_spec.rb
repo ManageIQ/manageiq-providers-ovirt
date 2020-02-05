@@ -196,7 +196,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
       :dns_nameservers                => ["192.168.178.1"],
       :ipv6_router_advertisement_mode => nil,
       :ipv6_address_mode              => nil,
-      :allocation_pools               => [{"start"=>"192.168.178.2", "stop"=>"192.168.179.255"}],
+      :allocation_pools               => [{"start" => "192.168.178.2", "stop" => "192.168.179.255"}],
       :host_routes                    => nil,
       :ip_version                     => 4,
       :cloud_tenant_id                => @cloud_tenant.id,
