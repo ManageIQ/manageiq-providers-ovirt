@@ -46,7 +46,7 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParser
         :message             => event.description,
         :timestamp           => event.time,
         :username            => username,
-        :full_data           => event,
+        :full_data           => ovirtobj_to_hash(event),
         :ems_id              => ems_id,
         :vm_ems_ref          => vm_ref,
         :host_ems_ref        => ems_ref_from_object_in_event(event.host),
@@ -77,7 +77,8 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParser
     ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(data.href)
   end
 
-  def self.parse_new_target(full_data, message, ems, event_type)
+  def self.parse_new_target(full_data_hash, message, ems, event_type)
+    full_data = hash_to_ostruct(full_data_hash)
     dc, *folders = parse_new_folders(full_data.data_center)
 
     cluster = parse_new_cluster(ems, full_data.cluster, dc)
@@ -205,5 +206,30 @@ module ManageIQ::Providers::Redhat::InfraManager::EventParser
     cluster[:ems_children][:resource_pools] << rp_hash
 
     rp_hash
+  end
+
+  def self.hash_to_ostruct(hash)
+    require 'ostruct'
+
+    OpenStruct.new(
+      hash.each_with_object({}) do |(key, val), memo|
+        memo[key] = val.kind_of?(Hash) ? hash_to_ostruct(val) : val
+      end
+    )
+  end
+
+  def self.ovirtobj_to_hash(obj)
+    obj.instance_variables.each_with_object({}) do |k, h|
+      val = obj.instance_variable_get(k)
+
+      h[k.to_s[1..-1]] = case val
+                         when OvirtSDK4::Identified
+                           ovirtobj_to_hash(val)
+                         when Array
+                           val.map { |v| ovirtobj_to_hash(v) }
+                         else
+                           val.to_s
+                         end
+    end
   end
 end
