@@ -1,30 +1,30 @@
 --- !ruby/array:OvirtSDK4::List
 internal:
 - !ruby/object:OvirtSDK4::OpenStackNetworkProvider
-  href: "/ovirt-engine/api/openstacknetworkproviders/6e452166-e772-4355-b050-24705a32c15c"
-  comment: 
-  description: 
-  id: 6e452166-e772-4355-b050-24705a32c15c
-  name: ovn
-  authentication_url: http://localhost:35357/v2.0/
-  password: 
-  properties: 
+  href: "/ovirt-engine/api/openstacknetworkproviders/5ca0335c-be48-4cf4-acd3-283763cb7e04"
+  comment:
+  description:
+  id: 5ca0335c-be48-4cf4-acd3-283763cb7e04
+  name: ovirt-provider-ovn
+  authentication_url: https://engine-43.lab.inz.redhat.com:35357/v2.0/
+  password:
+  properties:
   requires_authentication: true
-  url: http://localhost:9696
+  url: https://engine-43.lab.inz.redhat.com:9696
   username: admin@internal
-  tenant_name: 
-  agent_configuration: 
+  tenant_name:
+  agent_configuration:
   certificates: !ruby/array:OvirtSDK4::List
     internal: []
     ivars:
-      :@href: "/ovirt-engine/api/openstacknetworkproviders/6e452166-e772-4355-b050-24705a32c15c/certificates"
+      :@href: "/ovirt-engine/api/openstacknetworkproviders/5ca0335c-be48-4cf4-acd3-283763cb7e04/certificates"
   networks: !ruby/array:OvirtSDK4::List
     internal: []
     ivars:
-      :@href: "/ovirt-engine/api/openstacknetworkproviders/6e452166-e772-4355-b050-24705a32c15c/networks"
+      :@href: "/ovirt-engine/api/openstacknetworkproviders/5ca0335c-be48-4cf4-acd3-283763cb7e04/networks"
   plugin_type: open_vswitch
-  read_only: 
-  subnets: 
+  read_only:
+  subnets:
   type: external
 ivars:
-  :@href: 
+  :@href:

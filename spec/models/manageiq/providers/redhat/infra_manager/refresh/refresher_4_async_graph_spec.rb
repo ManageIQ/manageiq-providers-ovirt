@@ -114,10 +114,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     expect(Relationship.count).to eq(20)
     expect(MiqQueue.count).to eq(8)
 
-    expect(CloudNetwork.count).to eq(6)
-    expect(CloudSubnet.count).to eq(2)
+    expect(CloudNetwork.count).to eq(3)
+    expect(CloudSubnet.count).to eq(3)
     expect(NetworkRouter.count).to eq(1)
-    expect(NetworkPort.count).to eq(1)
+    expect(NetworkPort.count).to eq(3)
   end
 
   def assert_ems
@@ -142,10 +142,10 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
     @network_manager = ExtManagementSystem.find_by(:type => 'ManageIQ::Providers::Redhat::NetworkManager')
     expect(@network_manager).to have_attributes(
       :name              => @ems.name + " Network Manager",
-      :hostname          => "localhost",
+      :hostname          => "engine-43.lab.inz.redhat.com",
       :port              => 35_357,
       :api_version       => "v2",
-      :security_protocol => "non-ssl",
+      :security_protocol => "ssl",
       :zone_id           => @ems.zone_id
     )
 
@@ -160,7 +160,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :ems_id                    => @ems.network_manager.id,
       :type                      => "ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Private",
       :name                      => "net1",
-      :ems_ref                   => "b85981f3-b7d0-4ed1-8b1b-94708b472b17",
+      :ems_ref                   => "66bcf2f0-092a-43fd-bbe2-0f848ac052ba",
       :shared                    => nil,
       :status                    => "active",
       :enabled                   => nil,
@@ -169,7 +169,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :provider_physical_network => nil,
       :provider_network_type     => nil,
       :provider_segmentation_id  => nil,
-      :port_security_enabled     => false,
+      :port_security_enabled     => true,
       :qos_policy_id             => nil,
       :vlan_transparent          => nil,
       :maximum_transmission_unit => 1442
@@ -193,16 +193,16 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
       :ems_id                         => @ems.network_manager.id,
       :type                           => "ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet",
       :name                           => "sub_net1",
-      :ems_ref                        => "4c9b5697-8562-420b-972c-d3bbeb10f11e",
-      :cidr                           => "11.0.0.0/24",
+      :ems_ref                        => "7e27ec88-f144-4a46-aecc-cf79deb37021",
+      :cidr                           => "192.168.178.0/23",
       :status                         => "active",
       :network_protocol               => "ipv4",
-      :gateway                        => "11.0.0.0",
+      :gateway                        => "192.168.178.1",
       :dhcp_enabled                   => true,
-      :dns_nameservers                => [],
+      :dns_nameservers                => ["192.168.178.1"],
       :ipv6_router_advertisement_mode => nil,
       :ipv6_address_mode              => nil,
-      :allocation_pools               => [{"start" => "11.0.0.2", "stop" => "11.0.0.255"}],
+      :allocation_pools               => [{"start"=>"192.168.178.2", "stop"=>"192.168.179.255"}],
       :host_routes                    => nil,
       :ip_version                     => 4,
       :cloud_tenant_id                => @cloud_tenant.id,
@@ -213,12 +213,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   end
 
   def assert_specific_network_router
-    @router = NetworkRouter.find_by(:name => "router1")
+    @router = NetworkRouter.find_by(:name => "net1net2")
     expect(@router).to have_attributes(
       :ems_id                => @ems.network_manager.id,
       :type                  => "ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter",
-      :name                  => "router1",
-      :ems_ref               => "38dbd81b-bb7c-4fd2-9e7e-a1a8cfeb4312",
+      :name                  => "net1net2",
+      :ems_ref               => "238ec54a-d0ec-4fb4-be6e-1763f6a2b8f4",
       :admin_state_up        => "t",
       :status                => "INACTIVE",
       :external_gateway_info => nil,
@@ -231,17 +231,17 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   end
 
   def assert_specific_network_port
-    @port = NetworkPort.find_by(:name => "nic1")
+    @port = NetworkPort.find_by(:name => "nic2")
     expect(@port).to have_attributes(
       :ems_id                            => @ems.network_manager.id,
       :type                              => "ManageIQ::Providers::Openstack::NetworkManager::NetworkPort",
-      :name                              => "nic1",
-      :ems_ref                           => "2500800a-9dec-4fea-a7ec-a6fdb836da0a",
-      :admin_state_up                    => true,
+      :name                              => "nic2",
+      :ems_ref                           => "e3d43e58-d4fa-4c8a-ba91-db873892ceee",
+      :admin_state_up                    => false,
       :status                            => nil,
-      :mac_address                       => "00:1a:4a:16:01:00",
+      :mac_address                       => "56:6f:59:c0:00:00",
       :device_owner                      => "oVirt",
-      :device_ref                        => "3b31db55-96cc-4b0b-b820-c693139cbaf9",
+      :device_ref                        => "1ab583f4-6636-4b7c-8293-d6c3bae17391",
       :device                            => nil,
       :cloud_tenant_id                   => @cloud_tenant.id,
       :binding_host_id                   => nil,
