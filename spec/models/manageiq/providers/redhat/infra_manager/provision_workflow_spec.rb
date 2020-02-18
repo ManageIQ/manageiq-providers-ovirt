@@ -37,7 +37,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
     end
 
     it "for linked-clone provisioning" do
-      allow(workflow).to receive(:supports_linked_clone?).and_return(true)
+      allow(workflow).to receive(:selected_linked_clone?).and_return(true)
       template.storage = Storage.where(:storage_domain_type => "data").first
       template.save
 
@@ -82,17 +82,17 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
       expect(workflow.allowed_clusters).to match_array([[cluster1.id, cluster1.name], [cluster2.id, cluster2.name]])
     end
   end
-  context "supports_linked_clone?" do
+  context "selected_linked_clone?" do
     let(:workflow) { described_class.new({:src_vm_id => template.id, :linked_clone => true}, admin) }
 
-    it "when supports_native_clone? is true" do
-      allow(workflow).to receive(:supports_native_clone?).and_return(true)
-      expect(workflow.supports_linked_clone?).to be_truthy
+    it "when selected_native_clone? is true" do
+      allow(workflow).to receive(:selected_native_clone?).and_return(true)
+      expect(workflow.selected_linked_clone?).to be_truthy
     end
 
-    it "when supports_native_clone? is false " do
-      allow(workflow).to receive(:supports_native_clone?).and_return(false)
-      expect(workflow.supports_linked_clone?).to be_falsey
+    it "when selected_native_clone? is false " do
+      allow(workflow).to receive(:selected_native_clone?).and_return(false)
+      expect(workflow.selected_linked_clone?).to be_falsey
     end
   end
 
@@ -110,7 +110,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
 
     it "should retrieve cloud-init templates when cloning" do
       options = {'key' => 'value'}
-      allow(workflow).to receive(:supports_native_clone?).and_return(true)
+      allow(workflow).to receive(:selected_native_clone?).and_return(true)
       expect(workflow).to receive(:allowed_cloud_init_customization_templates).with(options)
       workflow.allowed_customization_templates(options)
     end
@@ -141,7 +141,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
                          :id             => other_region_id,
                          :pxe_image_type => pxe_image_type)
 
-      expect(workflow).to receive(:supports_native_clone?).and_return(true)
+      expect(workflow).to receive(:selected_native_clone?).and_return(true)
       result = workflow.allowed_customization_templates
       expect(result.size).to eq(1)
       expect(result.first.id).to eq(template.id)

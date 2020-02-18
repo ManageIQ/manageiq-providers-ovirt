@@ -42,23 +42,23 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
       end
 
       context "#sparse_disk_value" do
-        it "with nil disk_format value" do
+        it "with nil disk_sparsity value" do
           expect(@vm_prov.sparse_disk_value).to be_nil
         end
 
-        it "with :default disk_format value" do
-          @vm_prov.options[:disk_format] = %w[default Default]
+        it "with :default disk_sparsity value" do
+          @vm_prov.options[:disk_sparsity] = %w[default Default]
           expect(@vm_prov.sparse_disk_value).to be_nil
         end
 
-        it "with :thin disk_format value" do
-          @vm_prov.options[:disk_format] = %w[thin Thin]
+        it "with :thin disk_sparsity value" do
+          @vm_prov.options[:disk_sparsity] = %w[thin Thin]
           expect(@vm_prov.sparse_disk_value).to be_truthy
         end
 
-        it "with :preallocated disk_format value" do
-          @vm_prov.options[:disk_format] = %w[preallocated Preallocated]
-          expect(@vm_prov.sparse_disk_value).to be_falsey
+        it "with :preallocated disk_sparsity value" do
+          @vm_prov.options[:disk_sparsity] = %w[preallocated Preallocated]
+          expect(@vm_prov.sparse_disk_value).to be false
         end
       end
 
@@ -90,17 +90,34 @@ describe ManageIQ::Providers::Redhat::InfraManager::Provision do
           expect(clone_options[:clone_type]).to eq(:full)
         end
 
+        context "with disk_format defined" do
+          before { @vm_prov.options[:linked_clone] = nil }
+          it "with disk_format raw" do
+            @vm_prov.options[:disk_format] = "raw"
+            clone_options = @vm_prov.prepare_for_clone_task
+
+            expect(clone_options[:disk_format]).to eq("raw")
+          end
+
+          it "with disk_format cow" do
+            @vm_prov.options[:disk_format] = "cow"
+            clone_options = @vm_prov.prepare_for_clone_task
+
+            expect(clone_options[:disk_format]).to eq("cow")
+          end
+        end
+
         context "no liked_clone defined" do
           before { @vm_prov.options[:linked_clone] = nil }
-          it "with disk_format preallocated" do
-            @vm_prov.options[:disk_format] = "preallocated"
+          it "with disk_sparsity preallocated" do
+            @vm_prov.options[:disk_sparsity] = "preallocated"
             clone_options = @vm_prov.prepare_for_clone_task
 
             expect(clone_options[:clone_type]).to eq(:full)
           end
 
-          it "with disk format thin" do
-            @vm_prov.options[:disk_format] = "thin"
+          it "with disk sparsity thin" do
+            @vm_prov.options[:disk_sparsity] = "thin"
             clone_options = @vm_prov.prepare_for_clone_task
 
             expect(clone_options[:clone_type]).to eq(:linked)

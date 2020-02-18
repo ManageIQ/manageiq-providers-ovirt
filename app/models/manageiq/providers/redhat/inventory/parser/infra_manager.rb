@@ -488,6 +488,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
           :location        => index.to_s,
           :size            => device.provisioned_size.to_i,
           :size_on_disk    => device.actual_size.to_i,
+          :disk_type       => device.sparse == true ? 'thin' : 'thick',
           :thin            => device.sparse,
           :mode            => 'persistent',
           :bootable        => device.try(:bootable),

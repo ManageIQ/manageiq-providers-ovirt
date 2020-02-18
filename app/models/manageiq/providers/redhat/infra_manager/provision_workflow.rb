@@ -219,13 +219,13 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
     src_template = load_ar_obj(src[:vm])
     if selected_linked_clone?
       s_id = src_template.storage_id
-      return storages.detect { |s| s.id == s_id }
+      return [storages.detect { |s| s.id == s_id }].compact
     end
 
     storages = storages.select do |storage|
       src_template.disks.all? do |disk|
         storage_type = storage_type_from_storage(storage)
-        validate_disk(disk, { :storage_type => storage_type })
+        validate_disk(disk, :storage_type => storage_type)
       end
     end
 
