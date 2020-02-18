@@ -71,7 +71,11 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   def storagedomains
     collector.storagedomains.each do |storagedomain|
       storage_type = storagedomain.dig(:storage, :type).upcase
-      location = if storage_type == 'NFS' || storage_type == 'GLUSTERFS'
+      ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(storagedomain.try(:href))
+      location = case storage_type
+                 when 'LOCALFS'
+                   ems_ref
+                 when 'NFS', 'GLUSTERFS'
                    "#{storagedomain.dig(:storage, :address)}:#{storagedomain.dig(:storage, :path)}"
                  else
                    storagedomain.dig(:storage, :volume_group, :id)
@@ -81,8 +85,6 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       used        = storagedomain.try(:used).to_i
       total       = free + used
       committed   = storagedomain.try(:committed).to_i
-
-      ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(storagedomain.try(:href))
 
       persister.storages.find_or_build(ems_ref).assign_attributes(
         :ems_ref             => ems_ref,
