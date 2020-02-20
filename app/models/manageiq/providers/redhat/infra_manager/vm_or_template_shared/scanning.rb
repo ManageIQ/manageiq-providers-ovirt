@@ -20,6 +20,7 @@ module ManageIQ::Providers::Redhat::InfraManager::VmOrTemplateShared::Scanning
 
   def perform_metadata_scan(ost)
     require 'MiqVm/MiqRhevmVm'
+    require 'manageiq-smartstate'
 
     log_pref = "MIQ(#{self.class.name}##{__method__})"
     vm_name  = ManageIQ::Smartstate::Util.uri_to_local_path(ost.args[0])
