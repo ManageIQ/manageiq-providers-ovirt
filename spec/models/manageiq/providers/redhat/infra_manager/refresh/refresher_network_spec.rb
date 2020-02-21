@@ -5,7 +5,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
   include OvirtRefresherSpecCommon
 
   before(:each) do
-    init_defaults(:hostname => 'pluto-vdsg.eng.lab.tlv.redhat.com', :port => 443, :external_network_provider_mock => 'external_network_providers_new')
+    init_defaults(:hostname => 'pluto-vdsg.eng.lab.tlv.redhat.com', :port => 443)
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/refresher_network_recording.yml')
 
     stub_settings_merge(:ems_refresh => { :rhevm => {:inventory_object_refresh => true }})
@@ -14,7 +14,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresh::Refresher do
 
   it "will perform a full refresh on v4.1" do
     EmsRefresh.refresh(@ems)
-    VCR.use_cassette("#{described_class.parent.name.underscore}/refresher_ovn_provider_1") do
+    VCR.use_cassette("#{described_class.parent.name.underscore}/refresher_ovn_provider") do
       Fog::OpenStack.instance_variable_set(:@version, nil)
       EmsRefresh.refresh(@ems.network_manager)
     end
