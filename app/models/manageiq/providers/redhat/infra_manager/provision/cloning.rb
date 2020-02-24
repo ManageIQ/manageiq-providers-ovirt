@@ -47,6 +47,9 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Cloning
   end
 
   def disk_format
+    format_from_dialog = get_option(:disk_format)
+    return format_from_dialog if format_from_dialog
+
     # If the datastore is not set, we will go with "block", because this will ensure
     # the result of the sparsity will be as set by the user.
     ds_type = 'block' unless dest_datastore
@@ -64,15 +67,15 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Cloning
   end
 
   def clone_type
-    get_option(:linked_clone).nil? ? clone_type_by_disk_format : clone_type_by_linked_clone
+    get_option(:linked_clone).nil? ? clone_type_by_disk_sparsity : clone_type_by_linked_clone
   end
 
   def clone_type_by_linked_clone
     get_option(:linked_clone) ? :linked : :full
   end
 
-  def clone_type_by_disk_format
-    get_option(:disk_format) == 'preallocated' ? :full : :linked
+  def clone_type_by_disk_sparsity
+    get_option(:disk_sparsity) == 'preallocated' ? :full : :linked
   end
 
   def template_clone_options
@@ -88,7 +91,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Cloning
   end
 
   def sparse_disk_value
-    case get_option(:disk_format)
+    case get_option(:disk_sparsity)
     when "preallocated" then false
     when "thin"         then true
     when "default"      then nil   # default choice implies inherit from template

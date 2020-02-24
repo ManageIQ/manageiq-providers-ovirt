@@ -2,6 +2,8 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
   include CloudInitTemplateMixin
   include SysprepTemplateMixin
 
+  include_concern "DialogFieldValidation"
+
   SYSPREP_TIMEZONES = {
     '001' => '(UTC-12:00) Dateline Standard Time',
     '002' => '(UTC-11:00) UTC-11',
@@ -122,12 +124,12 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
     get_value(@values[:provision_type]).to_s == 'iso'
   end
 
-  def supports_native_clone?
+  def selected_native_clone?
     get_value(@values[:provision_type]).to_s == 'native_clone'
   end
 
-  def supports_linked_clone?
-    supports_native_clone? && get_value(@values[:linked_clone])
+  def selected_linked_clone?
+    selected_native_clone? && get_value(@values[:linked_clone])
   end
 
   def supports_cloud_init?
@@ -151,7 +153,7 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
   end
 
   def allowed_customization_templates(options = {})
-    if supports_native_clone?
+    if selected_native_clone?
       if get_source_vm&.platform == 'windows'
         allowed_sysprep_customization_templates(options)
       else
@@ -212,14 +214,22 @@ class ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow < MiqProvisio
 
   def allowed_storages(options = {})
     return [] if (src = resources_for_ui).blank?
-    result = super
-
-    if supports_linked_clone?
-      s_id = load_ar_obj(src[:vm]).storage_id
-      result = result.select { |s| s.id == s_id }
+    storages = super
+    storages = storages.select { |s| s.storage_domain_type == "data" }
+    src_template = load_ar_obj(src[:vm])
+    if selected_linked_clone?
+      s_id = src_template.storage_id
+      return [storages.detect { |s| s.id == s_id }].compact
     end
 
-    result.select { |s| s.storage_domain_type == "data" }
+    storages = storages.select do |storage|
+      src_template.disks.all? do |disk|
+        storage_type = storage_type_from_storage(storage)
+        validate_disk(disk, :storage_type => storage_type)
+      end
+    end
+
+    storages
   end
 
   def source_ems
