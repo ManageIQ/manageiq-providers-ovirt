@@ -24,24 +24,13 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure
   end
 
   def available_vlans
-    vlans = []
-
-    switch_ids = HostSwitch.where(:host => host).pluck(:switch_id)
-    Lan.where(:switch_id => switch_ids).each do |lan|
-      vlans << lan.name
-    end
+    vlans = host.lans.pluck(:name)
 
     vlans.sort.concat(available_external_vlans)
   end
 
   def available_external_vlans
-    ext_vlans = []
-    ems = ext_management_system
-
-    ext_switch_ids = ems.external_distributed_virtual_switches.pluck(:id)
-    ems.external_distributed_virtual_lans.where(:switch_id => ext_switch_ids).each do |ext_lan|
-      ext_vlans << "#{ext_lan.name}/#{ext_lan.switch.name}"
-    end
+    ext_vlans = ext_management_system.external_distributed_virtual_lans.map { |lan| "#{lan.name}/#{lan.switch.name}" }
 
     ext_vlans.sort
   end
