@@ -88,4 +88,54 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure do
       expect(subject["disksRemove"][0]["delete_backing"]).to be_falsey
     end
   end
+
+  describe 'available_vlans' do
+    let(:ems) { FactoryBot.create(:ems_redhat) }
+    let!(:cluster) { FactoryBot.create(:ems_cluster, :uid_ems => "uid_ems", :name => 'cluster') }
+    let!(:host1) { FactoryBot.create(:host_redhat, :ext_management_system => ems, :ems_cluster => cluster) }
+    let!(:host2) { FactoryBot.create(:host_redhat, :ext_management_system => ems, :ems_cluster => cluster) }
+    let!(:dist_switch) { FactoryBot.create(:distributed_virtual_switch_redhat, :ems_id => ems.id, :name => "network") }
+    let!(:switch1) { FactoryBot.create(:distributed_virtual_switch_redhat, :ems_id => ems.id, :name => "network1") }
+    let!(:switch2) { FactoryBot.create(:distributed_virtual_switch_redhat, :ems_id => ems.id, :name => "network2") }
+    let!(:host_dist_switch1) { FactoryBot.create(:host_switch, :host => host1, :switch => dist_switch) }
+    let!(:host_dist_switch2) { FactoryBot.create(:host_switch, :host => host2, :switch => dist_switch) }
+    let!(:host_switch1) { FactoryBot.create(:host_switch, :host => host1, :switch => switch1) }
+    let!(:host_switch2) { FactoryBot.create(:host_switch, :host => host2, :switch => switch2) }
+    let!(:lan_mgmt) { FactoryBot.create(:lan, :name => 'ovirtmgmt', :switch => dist_switch) }
+    let!(:vm) { FactoryBot.create(:vm_redhat, :ext_management_system => ems, :host => host1, :storage => storage) }
+
+    context 'host vlans' do
+      let!(:lan_A) { FactoryBot.create(:lan, :name => 'lanA', :switch => switch1) }
+      let!(:lan_B) { FactoryBot.create(:lan, :name => 'lanB', :switch => switch2) }
+
+      it 'only vlans related to vm host' do
+        vlans = vm.available_vlans
+
+        expect(vlans.count).to eq(2)
+        expect(vlans).to match_array([lan_mgmt.name, lan_A.name])
+      end
+
+      context 'with external lans' do
+        let!(:ext_dist_switch) do
+          FactoryBot.create(:external_distributed_virtual_switch_redhat,
+                            :ems_id => ems.id,
+                            :name   => 'ext_network')
+        end
+
+        let!(:ext_lan) do
+          FactoryBot.create(:lan,
+                            :name    => 'ext_lan',
+                            :uid_ems => 'ext_net_uid_ems',
+                            :switch  => ext_dist_switch)
+        end
+
+        it 'host and external vlans' do
+          vlans = vm.available_vlans
+
+          expect(vlans.count).to eq(3)
+          expect(vlans).to match_array([lan_mgmt.name, lan_A.name, "#{ext_lan.name}/#{ext_dist_switch.name}"])
+        end
+      end
+    end
+  end
 end

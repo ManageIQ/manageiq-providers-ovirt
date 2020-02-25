@@ -23,6 +23,29 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure
     2.terabyte / 1.megabyte
   end
 
+  def available_vlans
+    vlans = []
+
+    switch_ids = HostSwitch.where(:host => host).pluck(:switch_id)
+    Lan.where(:switch_id => switch_ids).each do |lan|
+      vlans << lan.name
+    end
+
+    vlans.sort.concat(available_external_vlans)
+  end
+
+  def available_external_vlans
+    ext_vlans = []
+    ems = ext_management_system
+
+    ext_switch_ids = ems.external_distributed_virtual_switches.pluck(:id)
+    ems.external_distributed_virtual_lans.where(:switch_id => ext_switch_ids).each do |ext_lan|
+      ext_vlans << "#{ext_lan.name}/#{ext_lan.switch.name}"
+    end
+
+    ext_vlans.sort
+  end
+
   def build_config_spec(task_options)
     {
       "numCoresPerSocket" => (task_options[:cores_per_socket].to_i if task_options[:cores_per_socket]),
