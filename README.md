@@ -1,11 +1,11 @@
 # manageiq-providers-ovirt
 
 [![Gem Version](https://badge.fury.io/rb/manageiq-providers-ovirt.svg)](http://badge.fury.io/rb/manageiq-providers-ovirt)
-[![Build Status](https://travis-ci.org/ManageIQ/manageiq-providers-ovirt.svg?branch=master)](https://travis-ci.org/ManageIQ/manageiq-providers-ovirt)
+[![Build Status](https://travis-ci.org/ManageIQ/manageiq-providers-ovirt.svg?branch=jansa)](https://travis-ci.org/ManageIQ/manageiq-providers-ovirt)
 [![Code Climate](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt.svg)](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt)
 [![Test Coverage](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt/badges/coverage.svg)](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt/coverage)
 [![Dependency Status](https://gemnasium.com/ManageIQ/manageiq-providers-ovirt.svg)](https://gemnasium.com/ManageIQ/manageiq-providers-ovirt)
-[![Security](https://hakiri.io/github/ManageIQ/manageiq-providers-ovirt/master.svg)](https://hakiri.io/github/ManageIQ/manageiq-providers-ovirt/master)
+[![Security](https://hakiri.io/github/ManageIQ/manageiq-providers-ovirt/jansa.svg)](https://hakiri.io/github/ManageIQ/manageiq-providers-ovirt/jansa)
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq-providers-ovirt?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
