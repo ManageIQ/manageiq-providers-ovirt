@@ -29,12 +29,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
     add_snapshots
     add_storages
 
-    add_collection(infra, :parent_blue_folders)
-    add_collection(infra, :root_folder_relationship)
-    add_collection(infra, :vm_resource_pools)
-    add_collection(infra, :vm_parent_blue_folders)
     add_collection(infra, :distributed_virtual_switches)
-
     add_collection(infra, :external_distributed_virtual_switches) do |builder|
       builder.add_properties(
         :manager_ref          => %i[uid_ems],
@@ -52,6 +47,10 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
         :complete                     => !targeted?
       )
     end
+    add_collection(infra, :parent_blue_folders)
+    add_collection(infra, :root_folder_relationship)
+    add_collection(infra, :vm_resource_pools)
+    add_collection(infra, :vm_parent_blue_folders)
   end
 
   # group :clusters
