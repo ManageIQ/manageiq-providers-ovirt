@@ -51,9 +51,9 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     vm.save
     EmsRefresh.refresh(vm)
     vm.reload
-    new_counted_models = counted_models.map { |m| [m.name, m.count] }
+    all_counted_models = counted_models.map { |m| [m.name, m.count] }
     expect(saved_vm).to eq(vm_to_comparable_hash(vm))
-    expect(saved_counted_models).to eq(new_counted_models)
+    expect(saved_counted_models).to eq(all_counted_models)
   end
 
   it 'refreshes successfuly after snapshot removal' do
