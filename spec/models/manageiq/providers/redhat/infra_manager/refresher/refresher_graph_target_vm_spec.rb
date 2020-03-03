@@ -3,6 +3,8 @@ require_relative 'ovirt_refresher_spec_common'
 describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
   include OvirtRefresherSpecCommon
 
+  let(:counted_models) { [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze }
+
   before(:each) do
     init_defaults
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_graph_target_vm_deleted_snapshot.yml')
@@ -12,8 +14,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
                      .to receive(:collect_vnic_profiles).and_return([])
     @collector = ManageIQ::Providers::Redhat::Inventory::Collector
   end
-
-  COUNTED_MODELS = [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze
 
   it 'does not change the vm when target refresh after full refresh' do
     allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).with(kind_of(Hash)) do |opts|
@@ -26,12 +26,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     vm = VmOrTemplate.where(:name => "vm_on").first
     expect(vm.ems_id).to eq(@ems.id)
     saved_vm             = vm_to_comparable_hash(vm)
-    saved_counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
+    saved_counted_models = counted_models.map { |m| [m.name, m.count] }
     EmsRefresh.refresh(vm)
     vm.reload
-    counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
+    all_counted_models = counted_models.map { |m| [m.name, m.count] }
     expect(saved_vm).to eq(vm_to_comparable_hash(vm))
-    expect(saved_counted_models).to eq(counted_models)
+    expect(saved_counted_models).to eq(all_counted_models)
   end
 
   it 'refreshes vm hosts properly' do
@@ -46,14 +46,14 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     expect(vm.ems_id).to eq(@ems.id)
     expect(vm.host_id).to be_present
     saved_vm             = vm_to_comparable_hash(vm)
-    saved_counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
+    saved_counted_models = counted_models.map { |m| [m.name, m.count] }
     vm.host              = nil
     vm.save
     EmsRefresh.refresh(vm)
     vm.reload
-    counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
+    all_counted_models = counted_models.map { |m| [m.name, m.count] }
     expect(saved_vm).to eq(vm_to_comparable_hash(vm))
-    expect(saved_counted_models).to eq(counted_models)
+    expect(saved_counted_models).to eq(all_counted_models)
   end
 
   it 'refreshes successfuly after snapshot removal' do
