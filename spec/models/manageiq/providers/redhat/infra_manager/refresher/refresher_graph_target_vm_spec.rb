@@ -6,14 +6,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
   before(:each) do
     init_defaults
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_graph_target_vm_deleted_snapshot.yml')
+    stub_const('COUNTED_MODELS', [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze)
 
     @ovirt_service_inventory = ManageIQ::Providers::Redhat::InfraManager::Inventory
     allow_any_instance_of(@ovirt_service_inventory)
                      .to receive(:collect_vnic_profiles).and_return([])
     @collector = ManageIQ::Providers::Redhat::Inventory::Collector
   end
-
-  COUNTED_MODELS = [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze
 
   it 'does not change the vm when target refresh after full refresh' do
     allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).with(kind_of(Hash)) do |opts|

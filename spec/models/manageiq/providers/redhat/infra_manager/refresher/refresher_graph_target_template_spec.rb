@@ -6,9 +6,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
   before(:each) do
     init_defaults
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_graph_target_template.yml')
+    stub_const('COUNTED_MODELS', [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze)
   end
-
-  COUNTED_MODELS = [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze
 
   it 'refreshes template host properly when placement_policy defined' do
     allow(Spec::Support::OvirtSDK::ConnectionVCR).to receive(:new).with(kind_of(Hash)) do |opts|
