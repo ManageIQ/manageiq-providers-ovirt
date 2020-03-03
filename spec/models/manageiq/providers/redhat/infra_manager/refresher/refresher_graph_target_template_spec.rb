@@ -3,10 +3,11 @@ require_relative 'ovirt_refresher_spec_common'
 describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
   include OvirtRefresherSpecCommon
 
+  let(:counted_models) { [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze }
+
   before(:each) do
     init_defaults
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_graph_target_template.yml')
-    stub_const('COUNTED_MODELS', [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze)
   end
 
   it 'refreshes template host properly when placement_policy defined' do
@@ -21,14 +22,14 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     expect(template.ems_id).to eq(@ems.id)
     expect(template.host_id).to be_present
     saved_template       = template_to_comparable_hash(template)
-    saved_counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
+    saved_counted_models = counted_models.map { |m| [m.name, m.count] }
     template.host        = nil
     template.save
     EmsRefresh.refresh(template)
     template.reload
-    counted_models = COUNTED_MODELS.map { |m| [m.name, m.count] }
+    all_counted_models = counted_models.map { |m| [m.name, m.count] }
     expect(saved_template).to eq(template_to_comparable_hash(template))
-    expect(saved_counted_models).to eq(counted_models)
+    expect(saved_counted_models).to eq(all_counted_models)
   end
 
   it 'does not change the template when target refresh after full refresh' do

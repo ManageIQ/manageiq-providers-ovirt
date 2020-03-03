@@ -7,17 +7,18 @@ require_relative 'ovirt_refresher_spec_common'
 describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
   include OvirtRefresherSpecCommon
 
+  let(:orig_yml_path) { 'spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_recording_for_mod.yml'.freeze }
+
   before(:each) do
     init_defaults
     init_connection_vcr
-    stub_const('ORIG_YML_PATH', 'spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/ovirt_sdk_refresh_recording_for_mod.yml'.freeze)
   end
 
   it "will perform a full refresh on v4.1" do
     # TODO: @borod108 fix to work with network remodeling
     pending
 
-    original_yml = YAML.load_file(ORIG_YML_PATH)
+    original_yml = YAML.load_file(orig_yml_path)
     rec_mod = RecordingModifier.new(:yml => original_yml)
 
     2.times do
