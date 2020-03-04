@@ -45,7 +45,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
         :complete                     => !targeted?
       )
     end
-    add_collection(infra, :parent_blue_folders)
 
     add_parent_blue_folders
 
