@@ -7,6 +7,4 @@ class ManageIQ::Providers::Redhat::InfraManager::ExternalDistributedVirtualSwitc
   def parent_datacenter
     detect_ancestor(:of_type => "EmsFolder") { |a| a.kind_of?(Datacenter) }
   end
-
-  alias datacenter parent_datacenter
 end

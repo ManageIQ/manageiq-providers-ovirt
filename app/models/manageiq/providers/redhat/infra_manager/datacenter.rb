@@ -3,6 +3,13 @@ class ManageIQ::Providers::Redhat::InfraManager::Datacenter < ManageIQ::Provider
     children(:of_type => 'Switch')
   end
 
-  alias add_distributed_virtual_switch set_child
-  alias remove_distributed_virtual_switch remove_child
+  def external_distributed_virtual_switches
+    distributed_virtual_switches.select do |s|
+      s.kind_of?(ManageIQ::Providers::Redhat::InfraManager::ExternalDistributedVirtualSwitch)
+    end
+  end
+
+  def external_distributed_virtual_lans
+    external_distributed_virtual_switches.map(&:lans).flatten
+  end
 end

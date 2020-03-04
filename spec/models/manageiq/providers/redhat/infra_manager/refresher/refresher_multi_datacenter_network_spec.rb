@@ -25,18 +25,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     dc2 = Datacenter.where(:uid_ems => 'f0bf9fb9-7e8c-4cb2-add7-ab433f30d1fd').first
     dc3 = Datacenter.where(:uid_ems => '2c4d1610-6b88-4330-a745-26e1f2b4ad97').first
 
-    expect(dc1.distributed_virtual_switches.count).to eq(1)
-    expect(dc2.distributed_virtual_switches.count).to eq(0)
-    expect(dc3.distributed_virtual_switches.count).to eq(1)
+    expect(dc1.external_distributed_virtual_switches.count).to eq(1)
+    expect(dc2.external_distributed_virtual_switches.count).to eq(0)
+    expect(dc3.external_distributed_virtual_switches.count).to eq(1)
 
-    # the following samples works with datacenter_id into switch schema migration
-    # expect(dc1.external_distributed_virtual_switches.count).to eq(1)
-    # expect(dc1.external_distributed_virtual_lans.count).to eq(1)
-
-    # expect(dc2.external_distributed_virtual_switches.count).to eq(0)
-    # expect(dc2.external_distributed_virtual_lans.count).to eq(0)
-
-    # expect(dc3.external_distributed_virtual_switches.count).to eq(1)
-    # expect(dc3.external_distributed_virtual_lans.count).to eq(1)
+    expect(dc1.external_distributed_virtual_lans.count).to eq(1)
+    expect(dc2.external_distributed_virtual_lans.count).to eq(0)
+    expect(dc3.external_distributed_virtual_lans.count).to eq(1)
   end
 end
