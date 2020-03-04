@@ -18,7 +18,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
       builder.add_properties(:model_class => Lan)
       builder.add_properties(:complete => !targeted?)
     end
-
     add_collection(infra, :networks)
     add_collection(infra, :operating_systems)
     add_collection(infra, :vms)
@@ -38,7 +37,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
       )
       builder.add_default_values(:ems_id => ->(persister) { persister.manager.id })
     end
-
     add_collection(infra, :external_distributed_virtual_lans) do |builder|
       builder.add_properties(
         :manager_ref                  => %i[switch uid_ems],
@@ -48,6 +46,9 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
       )
     end
     add_collection(infra, :parent_blue_folders)
+
+    add_parent_blue_folders
+
     add_collection(infra, :root_folder_relationship)
     add_collection(infra, :vm_resource_pools)
     add_collection(infra, :vm_parent_blue_folders)
@@ -106,6 +107,16 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
         :manager_ref => %i(uid),
         :strategy    => :local_db_find_missing_references,
       )
+    end
+  end
+
+  def add_parent_blue_folders
+    add_collection(infra, :parent_blue_folders) do |builder|
+      dependency_collections = %i[clusters ems_folders datacenters hosts resource_pools storages distributed_virtual_switches external_distributed_virtual_switches]
+      dependency_attributes = dependency_collections.each_with_object({}) do |collection, hash|
+        hash[collection] = ->(persister) { [persister.collections[collection]].compact }
+      end
+      builder.add_dependency_attributes(dependency_attributes)
     end
   end
 end
