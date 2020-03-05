@@ -30,7 +30,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure
   end
 
   def available_external_vlans
-    ext_vlans = ext_management_system.external_distributed_virtual_lans.map { |lan| "#{lan.name}/#{lan.switch.name}" }
+    ext_vlans = parent_datacenter.external_distributed_virtual_lans.map { |lan| "#{lan.name}/#{lan.switch.name}" }
 
     ext_vlans.sort
   end
