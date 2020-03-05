@@ -1018,7 +1018,7 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
 
     def private_load_allowed_networks(vlans, uid_ems_cluster)
       profiles = local_get_vnic_profiles_in_cluster(uid_ems_cluster)
-      profiles.merge!(local_external_vnic_profiles)
+      profiles.merge!(local_external_vnic_profiles(uid_ems_cluster))
       profiles.each do |profile, profile_network|
         vlans[profile.uid_ems] = "#{profile.name} (#{profile_network.name})"
       end
@@ -1040,10 +1040,12 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
       cluster_profiles
     end
 
-    def local_external_vnic_profiles
+    def local_external_vnic_profiles(uid_ems_cluster)
       external_profiles = {}
-      profiles = ext_management_system.external_distributed_virtual_lans
-      external_networks = ext_management_system.external_distributed_virtual_switches
+      cluster = cluster_by_uid_ems(uid_ems_cluster)
+      datacenter = cluster.parent_datacenter
+      profiles = datacenter.external_distributed_virtual_lans
+      external_networks = datacenter.external_distributed_virtual_switches
       profiles.each do |p|
         profile_network = external_networks.detect { |n| n.id == p.switch.id }
         if profile_network
@@ -1054,8 +1056,12 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
     end
 
     def all_networks_as_switches_in_cluster(uid_ems_cluster)
-      cluster = EmsCluster.find_by(:uid_ems => uid_ems_cluster)
+      cluster = cluster_by_uid_ems(uid_ems_cluster)
       cluster&.switches
+    end
+
+    def cluster_by_uid_ems(uid_ems)
+      ext_management_system.ems_clusters.find_by(:uid_ems => uid_ems)
     end
 
     def parse_vnic_profile_id(requested_profile, uid_ems_cluster)

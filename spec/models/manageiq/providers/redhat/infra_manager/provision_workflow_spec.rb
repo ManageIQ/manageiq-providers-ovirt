@@ -200,7 +200,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
 
   context "load allowed vlans" do
     let!(:distributed_virtual_switch) { FactoryBot.create(:distributed_virtual_switch_redhat, :ems_id => ems.id, :name => "network") }
-    let!(:cluster1) { FactoryBot.create(:ems_cluster, :uid_ems => "uid_ems", :name => 'Cluster1') }
+    let!(:dc1) { FactoryBot.create(:datacenter_redhat, :name => 'dc1', :ems_ref => 'dc1-ems-ref', :ems_ref_type => 'Datacenter') }
+    let!(:cluster1) { FactoryBot.create(:ems_cluster, :uid_ems => "uid_ems", :name => 'Cluster1', :ext_management_system => ems).tap { |c| c.parent = dc1 } }
     let!(:workflow) { described_class.new({:src_vm_id => template.id}, admin) }
     let!(:host1)    { FactoryBot.create(:host, :ext_management_system => ems, :ems_cluster => cluster1) }
     let!(:host2)    { FactoryBot.create(:host, :ext_management_system => ems, :ems_cluster => cluster1) }
