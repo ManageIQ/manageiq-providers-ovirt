@@ -226,10 +226,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4 do
           expect(nics_service).to receive(:add).and_raise(error)
           expect($log).to receive(:error).with(/Error reconfiguring.*name is already in use/)
 
-          expect {
-            subject
-          }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
-                           "Error reconfiguring [#{spec['networkAdapters'][:add][0][:name]}]. #{error.fault.detail}")
+          expect { subject }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
+                                            "Error reconfiguring [#{spec['networkAdapters'][:add][0][:name]}]. #{error.fault.detail}")
         end
 
         it 'not existing profile id' do
@@ -241,10 +239,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4 do
           expect(nics_service).to receive(:add).and_raise(error)
           expect($log).to receive(:error).with(/Error reconfiguring.*network interface profile doesn't exist.\]/)
 
-          expect {
-            subject
-          }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
-                           "Error reconfiguring [#{spec['networkAdapters'][:add][0][:name]}]. #{error.fault.detail}")
+          expect { subject }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
+                                            "Error reconfiguring [#{spec['networkAdapters'][:add][0][:name]}]. #{error.fault.detail}")
         end
       end
 
@@ -281,7 +277,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4 do
         edit_spec = spec['networkAdapters'][:edit].first
         expect(nics_service).to receive(:nic_service).twice.with(edit_spec[:nic_id]).and_return(nic_service)
         expect(nic_service).to receive(:deactivate)
-        expect(nic_service).to receive(:update).with(:name => edit_spec[:name],
+        expect(nic_service).to receive(:update).with(:name         => edit_spec[:name],
                                                      :vnic_profile => {:id => edit_spec[:vnic_profile_id]})
         expect(nic_service).to receive(:activate)
 
@@ -293,10 +289,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4 do
           expect(nics_service).to receive(:nic_service).and_raise(OvirtSDK4::NotFoundError)
           expect($log).to receive(:error).with(/Error reconfiguring.*NIC not found/)
 
-          expect {
-            subject
-          }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
-                           "Error reconfiguring [#{spec['networkAdapters'][:edit][0][:name]}]. NIC not found")
+          expect { subject }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
+                                            "Error reconfiguring [#{spec['networkAdapters'][:edit][0][:name]}]. NIC not found")
         end
 
         it 'not existing profile id' do
@@ -309,10 +303,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4 do
           expect(nics_service).to receive(:nic_service).and_raise(error)
           expect($log).to receive(:error).with(/Error reconfiguring.*network interface profile doesn't exist.\]/)
 
-          expect {
-            subject
-          }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
-                           "Error reconfiguring [#{spec['networkAdapters'][:edit][0][:name]}]. #{error.fault.detail}")
+          expect { subject }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
+                                            "Error reconfiguring [#{spec['networkAdapters'][:edit][0][:name]}]. #{error.fault.detail}")
         end
       end
     end
@@ -331,7 +323,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4 do
         {'networkAdapters' => {:remove => [{:network     => 'oVirtA',
                                             :name        => 'nic2',
                                             :mac_address => '56:6f:85:ae:00:00',
-                                            :nic_id      => 'nic_uid_ems' }]}}
+                                            :nic_id      => 'nic_uid_ems'}]}}
       end
 
       subject(:reconfigure_vm) { ems.vm_reconfigure(vm, :spec => spec) }
@@ -350,10 +342,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4 do
           expect(nics_service).to receive(:nic_service).and_raise(OvirtSDK4::NotFoundError)
           expect($log).to receive(:error).with(/Error reconfiguring.*NIC not found |.*/)
 
-          expect {
-            subject
-          }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
-                           "Error reconfiguring [#{spec['networkAdapters'][:remove][0][:name]}]. NIC not found")
+          expect { subject }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
+                                            "Error reconfiguring [#{spec['networkAdapters'][:remove][0][:name]}]. NIC not found")
         end
 
         it 'generic error while removing' do
@@ -368,10 +358,8 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4 do
           expect(nic_service).to receive(:remove).and_raise(error)
           expect($log).to receive(:error).with(/Error reconfiguring.*generic failure\]/)
 
-          expect {
-            subject
-          }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
-                           "Error reconfiguring [#{spec['networkAdapters'][:remove][0][:name]}]. #{error.fault.detail}")
+          expect { subject }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
+                                            "Error reconfiguring [#{spec['networkAdapters'][:remove][0][:name]}]. #{error.fault.detail}")
         end
       end
     end

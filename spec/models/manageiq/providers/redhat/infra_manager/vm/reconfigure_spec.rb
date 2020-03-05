@@ -47,15 +47,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure do
         :vm_memory        => '1024',
         :number_of_cpus   => '8',
         :cores_per_socket => '2',
-        :disk_add         => [{  "disk_size_in_mb"  => "33",
-                                  "persistent"       => true,
-                                  "thin_provisioned" => true,
-                                  "dependent"        => true,
-                                  "bootable"         => false
-                              }],
-        :disk_remove      => [{  "disk_name"      => "2520b46a-799b-472d-89ce-d47f5b65ee5e",
-                                  "delete_backing" => false
-                              }],
+        :disk_add         => [{"disk_size_in_mb"  => "33",
+                               "persistent"       => true,
+                               "thin_provisioned" => true,
+                               "dependent"        => true,
+                               "bootable"         => false}],
+        :disk_remove      => [{"disk_name"      => "2520b46a-799b-472d-89ce-d47f5b65ee5e",
+                               "delete_backing" => false}]
       }
     end
 
@@ -93,6 +91,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure do
 
     context 'network adapters spec' do
       let(:ems) { FactoryBot.create(:ems_redhat) }
+      let!(:dc1) { FactoryBot.create(:datacenter_redhat, :name => 'dc1', :ems_ref => 'dc1-ems-ref', :ems_ref_type => 'Datacenter') }
       let!(:cluster1) { FactoryBot.create(:ems_cluster, :uid_ems => "uid_ems", :name => 'Cluster1') }
       let!(:host1) { FactoryBot.create(:host_redhat, :ext_management_system => ems, :ems_cluster => cluster1) }
       let!(:host2) { FactoryBot.create(:host_redhat, :ext_management_system => ems, :ems_cluster => cluster1) }
@@ -183,10 +182,17 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure do
       end
 
       context 'external lan' do
+        let!(:dc2) { FactoryBot.create(:datacenter_redhat, :name => 'dc2', :ems_ref => 'dc2-ems-ref', :ems_ref_type => 'Datacenter') }
         let!(:external_distributed_virtual_switch) do
           FactoryBot.create(:external_distributed_virtual_switch_redhat,
                             :ems_id => ems.id,
-                            :name   => 'ext_network')
+                            :name   => 'ext_network').tap { |e| e.parent = dc1 }
+        end
+
+        let!(:ext_switch2) do
+          FactoryBot.create(:external_distributed_virtual_switch_redhat,
+                            :ems_id => ems.id,
+                            :name   => 'ext_network').tap { |e| e.parent = dc2 }
         end
 
         let!(:ext_lan) do
@@ -194,6 +200,17 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure do
                             :name    => 'ext_lan',
                             :uid_ems => 'ext_net_uid_ems',
                             :switch  => external_distributed_virtual_switch)
+        end
+
+        let!(:ext_lan2) do
+          FactoryBot.create(:lan,
+                            :name    => 'ext_lan',
+                            :uid_ems => 'ext_net_uid_ems',
+                            :switch  => ext_switch2)
+        end
+
+        before :each do
+          expect(vm).to receive(:parent_datacenter).and_return(dc1)
         end
 
         context 'edit network' do

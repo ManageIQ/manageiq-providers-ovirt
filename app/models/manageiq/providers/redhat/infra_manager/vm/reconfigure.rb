@@ -92,7 +92,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure
   end
 
   def network_adapter_edit_spec(network_name, nic_name, switch_ids)
-    nic = hardware.nics.find_by_name(nic_name)
+    nic = hardware.nics.find_by(:name => nic_name)
     raise MiqException::MiqVmError, "No NIC named '#{nic_name}' was found" unless nic
 
     lan = find_lan_by_name(network_name, switch_ids)
@@ -107,7 +107,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure
   end
 
   def network_adapter_remove_spec(network_name, nic_name, mac)
-    nic = hardware.nics.find_by_name(nic_name)
+    nic = hardware.nics.find_by(:name => nic_name)
     raise MiqException::MiqVmError, "No NIC named '#{nic_name}' was found" unless nic
 
     {
@@ -127,7 +127,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure
   end
 
   def ext_switch_ids_by_name(switch_name)
-    ext_management_system.external_distributed_virtual_switches.where(:name => switch_name).pluck(:id)
+    parent_datacenter.external_distributed_virtual_switches.select { |s| s.name == switch_name }.map(&:id)
   end
 
   def suggest_nic_name(nic_list)
