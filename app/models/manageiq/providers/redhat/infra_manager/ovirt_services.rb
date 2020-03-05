@@ -320,6 +320,13 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
           added_disk_specs[:default][:interface] = 'virtio_scsi' if vm.virtio_scsi.enabled
           add_vm_disks(vm_service, added_disk_specs)
         end
+
+        network_specs = spec['networkAdapters']
+        if network_specs
+          network_specs.each do |action, nets|
+            send("#{action}_vm_networks", nets, vm_service)
+          end
+        end
       end
 
       _log.info("#{log_header} Completed.")
@@ -917,6 +924,60 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
         raise "no disk with the id #{disk_spec['disk_name']} is attached to the vm: #{vm_service.get.name}"
       rescue OvirtSDK4::Error
         raise "Failed to detach disk with the id #{disk_spec['disk_name']} from the vm: #{vm_service.get.name}, check that it exists"
+      end
+    end
+
+    def add_vm_networks(networks, vm_service)
+      nics_service = vm_service.nics_service
+      with_each_network(networks) do |n|
+        configure_vnic(
+          :nic_name     => n[:name],
+          :vnic_profile => n[:vnic_profile_id],
+          :nics_service => nics_service,
+          :logger       => _log
+        )
+      end
+    end
+
+    def edit_vm_networks(networks, vm_service)
+      nics_service = vm_service.nics_service
+
+      with_each_network(networks) do |n|
+        vnic = Struct.new(:id).new(n[:nic_id])
+        nic_service = nics_service.nic_service(vnic.id)
+        nic_service.deactivate
+        configure_vnic(
+          :nic_name     => n[:name],
+          :vnic_profile => n[:vnic_profile_id],
+          :nics_service => nics_service,
+          :vnic         => vnic,
+          :logger       => _log
+        )
+        nic_service.activate
+      end
+    end
+
+    def remove_vm_networks(networks, vm_service)
+      with_each_network(networks) do |n|
+        nic_service = vm_service.nics_service.nic_service(n[:nic_id])
+        nic_service.deactivate
+        nic_service.remove
+      end
+    end
+
+    def with_each_network(networks)
+      networks.each do |n|
+        yield n
+      rescue OvirtSDK4::NotFoundError => err
+        err_msg = "Error reconfiguring [#{n[:name]}]. NIC not found"
+
+        _log.error("#{err_msg} | #{err}")
+        raise ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error, err_msg
+      rescue OvirtSDK4::Error => err
+        err_msg = "Error reconfiguring [#{n[:name]}]. #{err.fault&.detail}"
+
+        _log.error("#{err_msg} | #{err}")
+        raise ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error, err_msg
       end
     end
 
