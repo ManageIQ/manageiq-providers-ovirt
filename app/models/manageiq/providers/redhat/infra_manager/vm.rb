@@ -37,6 +37,8 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm < ManageIQ::Providers::Infra
 
   supports :conversion_host
 
+  supports :reconfigure_network_adapters
+
   POWER_STATES = {
     'up'          => 'on',
     'powering_up' => 'on',
