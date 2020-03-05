@@ -6,12 +6,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
 
   before(:each) do
     init_defaults(:hostname => 'engine-43.lab.inz.redhat.com', :port => 443)
-    init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/refresher_network_recording.yml')
+    init_connection_vcr('spec/vcr_cassettes/manageiq/providers/redhat/infra_manager/refresh/refresher_multi_datacenter_network_recording.yml')
   end
 
   it "will perform a full refresh" do
     EmsRefresh.refresh(@ems)
-    VCR.use_cassette("#{described_class.parent.name.underscore}/refresh/refresher_ovn_provider") do
+    VCR.use_cassette("#{described_class.parent.name.underscore}/refresh/refresher_multi_external_network_ovn_provider") do
       Fog::OpenStack.instance_variable_set(:@version, nil)
       EmsRefresh.refresh(@ems.network_manager)
     end
@@ -25,9 +25,9 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
   end
 
   def assert_network
-    expect(Lan.count).to eq(4)
-    expect(ManageIQ::Providers::Redhat::InfraManager::DistributedVirtualSwitch.count).to eq(1)
-    expect(ManageIQ::Providers::Redhat::InfraManager::ExternalDistributedVirtualSwitch.count).to eq(1)
+    expect(Lan.count).to eq(7)
+    expect(ManageIQ::Providers::Redhat::InfraManager::DistributedVirtualSwitch.count).to eq(6)
+    expect(ManageIQ::Providers::Redhat::InfraManager::ExternalDistributedVirtualSwitch.count).to eq(2)
     lans = Lan.where(:uid_ems => "265ac89f-98c2-41be-a78b-97852159adb1")
     expect(lans.count).to eq(1)
     lan = lans.first
@@ -40,13 +40,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
   end
 
   def assert_guest_device_connected_to_vm
-    vm1 = Vm.find_by(:uid_ems => "ca7e8d64-0fc7-45de-b258-ae471ea31056")
+    vm1 = Vm.find_by(:uid_ems => "882b9a7c-f3f0-49a3-bda6-1ee289a6adf0")
     guest_devices = vm1.hardware.guest_devices
     expect(guest_devices.count).to eq(3)
 
-    nic_ext = vm1.hardware.guest_devices.where(:device_name => 'nic_ext').first
-    expect(nic_ext.switch.uid_ems).to eq("6a0cb90c-16ac-47ae-b262-ac382b2c42e5")
-    expect(nic_ext.lan.uid_ems).to eq("76ec486d-d881-4ad7-ab59-6371cdfcd723")
+    nic_ext = vm1.hardware.guest_devices.where(:device_name => 'nic1').first
+    expect(nic_ext.switch.uid_ems).to eq("dac27d35-5858-4663-abd2-bf087050b3eb")
+    expect(nic_ext.lan.uid_ems).to eq("f6898bd4-bcca-4ea4-bedf-3dc976396b36")
   end
 
   def assert_get_vnic_profiles_in_cluster
