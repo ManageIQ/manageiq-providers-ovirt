@@ -23,6 +23,18 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure
     2.terabyte / 1.megabyte
   end
 
+  def available_vlans
+    vlans = host.lans.pluck(:name)
+
+    vlans.sort.concat(available_external_vlans)
+  end
+
+  def available_external_vlans
+    ext_vlans = parent_datacenter.external_distributed_virtual_lans.map { |lan| "#{lan.name}/#{lan.switch.name}" }
+
+    ext_vlans.sort
+  end
+
   def build_config_spec(task_options)
     {
       "numCoresPerSocket" => (task_options[:cores_per_socket].to_i if task_options[:cores_per_socket]),
