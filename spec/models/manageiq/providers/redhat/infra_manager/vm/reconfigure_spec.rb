@@ -1,4 +1,8 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure do
+  let(:ems) do
+    _, _, zone = EvmSpecHelper.create_guid_miq_server_zone
+    FactoryBot.create(:ems_redhat, :zone => zone)
+  end
   let(:storage) { FactoryBot.create(:storage_nfs, :ems_ref => "http://example.com/storages/XYZ") }
   let(:vm)      { FactoryBot.create(:vm_redhat, :storage => storage) }
 
@@ -6,7 +10,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure do
     let(:vm_active)   { FactoryBot.create(:vm_redhat, :storage => storage, :ext_management_system => ems) }
     let(:vm_retired)  { FactoryBot.create(:vm_redhat, :retired => true, :storage => storage, :ext_management_system => ems) }
     let(:vm_archived) { FactoryBot.create(:vm_redhat) }
-    let(:ems)         { FactoryBot.create(:ext_management_system) }
 
     it 'returns true for active vm' do
       expect(vm_active.reconfigurable?).to be_truthy
@@ -89,19 +92,78 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure do
       expect(subject["disksRemove"][0]["delete_backing"]).to be_falsey
     end
 
+    context 'disk resize' do
+      let(:disk1) { FactoryBot.create(:disk, :filename => '36b02b75-fcbd-42c1-818f-82ec90d4780b', :size => 10.gigabytes) }
+      let(:disk2) { FactoryBot.create(:disk, :filename => 'd9ba0873-5d5e-464a-945d-132bccba49fd', :size => 3.gigabytes) }
+      let(:hardware) { FactoryBot.create(:hardware, :disks => [disk1, disk2]) }
+
+      let(:vm) do
+        FactoryBot.create(:vm_redhat,
+                          :ext_management_system => ems,
+                          :hardware              => hardware)
+      end
+
+      let(:disk_size_in_mb) { '4096' }
+      let(:disk_name) { 'd9ba0873-5d5e-464a-945d-132bccba49fd' }
+
+      let(:options) do
+        {
+          :disk_resize => [{"disk_name"       => disk_name,
+                            "disk_size_in_mb" => disk_size_in_mb}]
+        }
+      end
+
+      subject { vm.build_config_spec(options)['disksEdit'] }
+
+      it 'new disk size greater or equal than the current one' do
+        expect(subject.first).to include(:disk_name => disk_name, :disk_size_in_mb => disk_size_in_mb.to_i)
+      end
+
+      context 'snapshots' do
+        before(:each) { EvmSpecHelper.local_miq_server }
+
+        it 'supported with one active snapshot' do
+          FactoryBot.create(:snapshot, :vm_or_template => vm, :create_time => 1.minute.ago)
+
+          expect(vm.supports_reconfigure_disksize?).to be true
+        end
+
+        it 'unsupported with snapshots other than the active one' do
+          FactoryBot.create_list(:snapshot, 2, :vm_or_template => vm, :create_time => 1.minute.ago)
+
+          expect(vm.supports_reconfigure_disksize?).to be false
+        end
+      end
+
+      context 'not existing vm disk' do
+        let(:disk_name) { 'not-existing-disk-name' }
+
+        it 'raise an exception' do
+          expect { subject }.to raise_error(MiqException::MiqVmError, /No disk with filename.*was found/)
+        end
+      end
+
+      context 'new disk size smaller than the current one' do
+        let(:disk_size_in_mb) { '2048' }
+
+        it 'raise an exception' do
+          expect { subject }.to raise_error(MiqException::MiqVmError, /New disk size must be larger than the current one/)
+        end
+      end
+    end
+
     context 'network adapters spec' do
-      let(:ems) { FactoryBot.create(:ems_redhat) }
-      let!(:dc1) { FactoryBot.create(:datacenter_redhat, :name => 'dc1', :ems_ref => 'dc1-ems-ref', :ems_ref_type => 'Datacenter') }
-      let!(:cluster1) { FactoryBot.create(:ems_cluster, :uid_ems => "uid_ems", :name => 'Cluster1') }
-      let!(:host1) { FactoryBot.create(:host_redhat, :ext_management_system => ems, :ems_cluster => cluster1) }
-      let!(:host2) { FactoryBot.create(:host_redhat, :ext_management_system => ems, :ems_cluster => cluster1) }
+      let(:dc1) { FactoryBot.create(:datacenter_redhat, :name => 'dc1', :ems_ref => 'dc1-ems-ref', :ems_ref_type => 'Datacenter') }
+      let(:cluster1) { FactoryBot.create(:ems_cluster, :uid_ems => "uid_ems", :name => 'Cluster1') }
+      let(:host1) { FactoryBot.create(:host_redhat, :ext_management_system => ems, :ems_cluster => cluster1) }
+      let(:host2) { FactoryBot.create(:host_redhat, :ext_management_system => ems, :ems_cluster => cluster1) }
       let!(:distributed_virtual_switch) { FactoryBot.create(:distributed_virtual_switch_redhat, :ems_id => ems.id, :name => "network") }
       let!(:host_switch_1) { FactoryBot.create(:host_switch, :host => host1, :switch => distributed_virtual_switch) }
       let!(:host_switch_2) { FactoryBot.create(:host_switch, :host => host2, :switch => distributed_virtual_switch) }
-      let!(:lan_mgmt) { FactoryBot.create(:lan, :name => 'ovirtmgmt', :switch => distributed_virtual_switch) }
+      let(:lan_mgmt) { FactoryBot.create(:lan, :name => 'ovirtmgmt', :switch => distributed_virtual_switch) }
       let(:nic1) { FactoryBot.create(:guest_device_nic, :lan => lan_mgmt, :device_name => 'nic1', :uid_ems => 'nic1_uid_ems') }
       let(:hardware) { FactoryBot.create(:hardware, :guest_devices => [nic1]) }
-      let!(:vm) do
+      let(:vm) do
         FactoryBot.create(:vm_redhat,
                           :ext_management_system => ems,
                           :host                  => host1,
@@ -309,20 +371,19 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure do
   end
 
   describe 'available_vlans' do
-    let(:ems) { FactoryBot.create(:ems_redhat) }
-    let!(:dc1) { FactoryBot.create(:datacenter_redhat, :name => 'dc1', :ems_ref => 'dc1-ems-ref', :ems_ref_type => 'Datacenter') }
-    let!(:cluster) { FactoryBot.create(:ems_cluster, :uid_ems => "uid_ems", :name => 'cluster') }
-    let!(:host1) { FactoryBot.create(:host_redhat, :ext_management_system => ems, :ems_cluster => cluster) }
-    let!(:host2) { FactoryBot.create(:host_redhat, :ext_management_system => ems, :ems_cluster => cluster) }
-    let!(:dist_switch) { FactoryBot.create(:distributed_virtual_switch_redhat, :ems_id => ems.id, :name => "network") }
-    let!(:switch1) { FactoryBot.create(:distributed_virtual_switch_redhat, :ems_id => ems.id, :name => "network1") }
-    let!(:switch2) { FactoryBot.create(:distributed_virtual_switch_redhat, :ems_id => ems.id, :name => "network2") }
+    let(:dc1) { FactoryBot.create(:datacenter_redhat, :name => 'dc1', :ems_ref => 'dc1-ems-ref', :ems_ref_type => 'Datacenter') }
+    let(:cluster) { FactoryBot.create(:ems_cluster, :uid_ems => "uid_ems", :name => 'cluster') }
+    let(:host1) { FactoryBot.create(:host_redhat, :ext_management_system => ems, :ems_cluster => cluster) }
+    let(:host2) { FactoryBot.create(:host_redhat, :ext_management_system => ems, :ems_cluster => cluster) }
+    let(:dist_switch) { FactoryBot.create(:distributed_virtual_switch_redhat, :ems_id => ems.id, :name => "network") }
+    let(:switch1) { FactoryBot.create(:distributed_virtual_switch_redhat, :ems_id => ems.id, :name => "network1") }
+    let(:switch2) { FactoryBot.create(:distributed_virtual_switch_redhat, :ems_id => ems.id, :name => "network2") }
     let!(:host_dist_switch1) { FactoryBot.create(:host_switch, :host => host1, :switch => dist_switch) }
     let!(:host_dist_switch2) { FactoryBot.create(:host_switch, :host => host2, :switch => dist_switch) }
     let!(:host_switch1) { FactoryBot.create(:host_switch, :host => host1, :switch => switch1) }
     let!(:host_switch2) { FactoryBot.create(:host_switch, :host => host2, :switch => switch2) }
     let!(:lan_mgmt) { FactoryBot.create(:lan, :name => 'ovirtmgmt', :switch => dist_switch) }
-    let!(:vm) { FactoryBot.create(:vm_redhat, :ext_management_system => ems, :host => host1, :storage => storage) }
+    let(:vm) { FactoryBot.create(:vm_redhat, :ext_management_system => ems, :host => host1, :storage => storage) }
 
     context 'host vlans' do
       let!(:lan_A) { FactoryBot.create(:lan, :name => 'lanA', :switch => switch1) }
