@@ -321,6 +321,11 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
           add_vm_disks(vm_service, added_disk_specs)
         end
 
+        edit_disk_specs = spec['disksEdit']
+        if edit_disk_specs
+          edit_vm_disks(vm_service, edit_disk_specs)
+        end
+
         network_specs = spec['networkAdapters']
         if network_specs
           network_specs.each do |action, nets|
@@ -869,6 +874,24 @@ module ManageIQ::Providers::Redhat::InfraManager::OvirtServices
       end
 
       max
+    end
+
+    def edit_vm_disks(vm_service, disks_specs)
+      disk_attachments_service = vm_service.disk_attachments_service
+      disks_specs.each do |d|
+        das = disk_attachments_service.attachment_service(d[:disk_name])
+        das.update(:disk => {:provisioned_size => d[:disk_size_in_mb].megabytes})
+      rescue OvirtSDK4::NotFoundError => err
+        err_msg = "No disk with the id [#{d[:disk_name]}] is attached to the vm"
+
+        _log.error("#{err_msg} | #{err}")
+        raise ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error, err_msg
+      rescue OvirtSDK4::Error => err
+        err_msg = "Error resizing disk with the id [#{d[:disk_name]}]. #{err.fault&.detail}"
+
+        _log.error("#{err_msg} | #{err}")
+        raise ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error, err_msg
+      end
     end
 
     #

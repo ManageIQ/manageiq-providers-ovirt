@@ -42,6 +42,7 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure
       "numCPUs"           => (task_options[:number_of_cpus].to_i if task_options[:number_of_cpus]),
       "disksRemove"       => task_options[:disk_remove],
       "disksAdd"          => (spec_for_added_disks(task_options[:disk_add]) if task_options[:disk_add]),
+      "disksEdit"         => (spec_for_disks_edit(task_options[:disk_resize]) if task_options[:disk_resize]),
       "networkAdapters"   => spec_for_network_adapters(task_options)
     }
   end
@@ -51,6 +52,18 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure
       :disks   => disks,
       :storage => storage
     }
+  end
+
+  def spec_for_disks_edit(disks)
+    disks.collect do |d|
+      filename = d['disk_name']
+      disk = find_disk_by_filename(d['disk_name'])
+
+      raise MiqException::MiqVmError, "No disk with filename [#{filename}] was found" unless disk
+      raise MiqException::MiqVmError, 'New disk size must be larger than the current one' unless disk_size_valid?(disk.size, d['disk_size_in_mb'])
+
+      {:disk_name => d['disk_name'], :disk_size_in_mb => d['disk_size_in_mb'].to_i}
+    end
   end
 
   def spec_for_network_adapters(options)
@@ -128,6 +141,17 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure
       :mac_address => mac,
       :nic_id      => nic.uid_ems
     }
+  end
+
+  def find_disk_by_filename(filename)
+    disks.find_by(:filename => filename)
+  end
+
+  def disk_size_valid?(current_size, new_size_str)
+    new_size = Integer(new_size_str)
+    new_size.megabytes >= current_size
+  rescue
+    false
   end
 
   def find_lan_by_name(network_name, switch_ids)

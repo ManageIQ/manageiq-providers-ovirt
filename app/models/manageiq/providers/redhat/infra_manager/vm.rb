@@ -39,6 +39,11 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm < ManageIQ::Providers::Infra
 
   supports :reconfigure_network_adapters
 
+  # supports :reconfigure_disksize
+  supports :reconfigure_disksize do
+    unsupported_reason_add(:reconfigure_disksize, 'Cannot resize disks of a VM with snapshots') if snapshots.count > 1
+  end
+
   POWER_STATES = {
     'up'          => 'on',
     'powering_up' => 'on',
