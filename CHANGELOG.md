@@ -4,6 +4,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Ivanchuk-4
+
+### Added
+- Add location for localfs storage [(#471)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/471)
+
+### Fixed
+- Fix VCR recording [(#470)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/470)
+
+## Ivanchuk-3
+
+### Added
+- Remodel to add networks by external providers [(#455)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/455)
+
+### Fixed
+- Memory and CPU reconfigure applied at the same time [(#420)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/420)
+- Fix for NICs that don't have a vnic_profile [(#457)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/457)
+
+## Ivanchuk-2
+
+### Added
+- Add supports_conversion_host to Vm [(#406)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/406)
+- Remodel networking for RHV [(#401)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/401)
+
+### Fixed
+- Preserving Last Boot time [(#403)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/403)
+- Test ruby 2.5.5 [(#424)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/424)
 
 ## Ivanchuk-1
 
