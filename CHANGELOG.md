@@ -4,14 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
-## Sprint 126 - Unreleased as of 2019-12-11
+## Jansa-1 Alpha-1
 
 ### Added
 - Track if a VM requires a restart for changes to take effect [(#443)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/443)
-
-## Sprint 120 - Unreleased as of 2019-09-16
-
-### Added
 - Add conversion host support to VMs now that there is a universal conversion image [(#406)](https://github.com/ManageIQ/manageiq-providers-ovirt/pull/406)
 
 ## Ivanchuk-1 - Released 2019-09-18
