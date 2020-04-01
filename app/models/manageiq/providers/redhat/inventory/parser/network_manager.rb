@@ -18,7 +18,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::NetworkManager < ManageIQ:
   def find_device_object(network_port)
     case network_port.device_owner
     when "oVirt"
-      return persister.guest_devices.lazy_find(network_port.device_id)
+      persister.guest_devices.lazy_find(network_port.device_id)
     end
   end
 end
