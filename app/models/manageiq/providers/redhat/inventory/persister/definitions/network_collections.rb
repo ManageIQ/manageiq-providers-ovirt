@@ -13,4 +13,11 @@ module ManageIQ::Providers::Redhat::Inventory::Persister::Definitions::NetworkCo
       )
     end
   end
+
+  def add_guest_devices
+    add_collection(infra,
+                   :guest_devices,
+                   :strategy       => :local_db_cache_all,
+                   :secondary_refs => {:by_uid_ems => %i[uid_ems]})
+  end
 end
