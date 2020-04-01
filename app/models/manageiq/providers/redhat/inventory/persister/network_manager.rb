@@ -7,7 +7,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::NetworkManager < Manage
     super
     add_inventory_collections(
       network,
-      %i(cloud_tenants),
+      %i(cloud_tenants guest_devices),
       :builder_params => {:ext_management_system => manager.parent_manager}
     )
   end

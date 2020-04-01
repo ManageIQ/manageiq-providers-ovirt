@@ -29,6 +29,7 @@ class ManageIQ::Providers::Redhat::NetworkManager < ManageIQ::Providers::Network
            :authentication_status_ok?,
            :authentications,
            :authentication_for_summary,
+           :guest_devices,
            :to        => :parent_manager,
            :allow_nil => true
 
