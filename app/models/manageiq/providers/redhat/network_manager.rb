@@ -21,6 +21,7 @@ class ManageIQ::Providers::Redhat::NetworkManager < ManageIQ::Providers::Network
            :class_name => "ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Private"
 
   delegate :zone,
+           :guest_devices,
            :authentication_check, # TODO: fix it, auth shouldn't be done via the parent
            :authentication_status,
            :authentication_status_ok?,

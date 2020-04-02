@@ -5,5 +5,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::NetworkManager < Manage
   def initialize_inventory_collections
     super
     add_cloud_tenants
+    add_guest_devices
   end
 end
