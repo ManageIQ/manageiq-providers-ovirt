@@ -14,4 +14,16 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::NetworkManager < ManageIQ:
       tenant.parent = persister.cloud_tenants.lazy_find(t.try(:parent_id))
     end
   end
+
+  def find_device_object(network_port)
+    super || find_ovirt_device_object(network_port)
+  end
+
+  private
+
+  def find_ovirt_device_object(network_port)
+    nil unless network_port.device_owner&.downcase == 'ovirt'
+
+    persister.guest_devices.lazy_find({:uid_ems => network_port.device_id}, {:ref => :by_uid_ems})
+  end
 end
