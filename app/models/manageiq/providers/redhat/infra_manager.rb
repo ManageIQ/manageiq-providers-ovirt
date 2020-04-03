@@ -232,8 +232,8 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
     end
   end
 
-  def supported_catalog_types
-    %w(redhat)
+  def self.catalog_types
+    {"redhat" => N_("Red Hat Virtualization")}
   end
 
   def vm_reconfigure(vm, options = {})
