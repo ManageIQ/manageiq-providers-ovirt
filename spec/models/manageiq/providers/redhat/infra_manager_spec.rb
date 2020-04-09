@@ -252,8 +252,8 @@ describe ManageIQ::Providers::Redhat::InfraManager do
   context 'catalog types' do
     let(:ems) { FactoryBot.create(:ems_redhat) }
 
-    it "#supported_catalog_types" do
-      expect(ems.supported_catalog_types).to eq(%w[redhat])
+    it "#catalog_types" do
+      expect(ems.catalog_types).to include("redhat")
     end
   end
 
