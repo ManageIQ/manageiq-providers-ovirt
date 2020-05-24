@@ -143,12 +143,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
     end
   end
 
-  describe "#support_conversion_host" do
-    it "supports conversion_host" do
-      expect(FactoryBot.create(:vm_redhat).supports?(:conversion_host)).to eq true
-    end
-  end
-
   describe "#supports?(:terminate)" do
     context "when connected to a provider" do
       it "returns true" do
