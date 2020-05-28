@@ -1,10 +1,10 @@
 describe ManageIQ::Providers::Redhat::InfraManager::Vm do
   let(:ip_address) { '192.168.1.31' }
+  let(:ems)  { FactoryBot.create(:ems_redhat) }
+  let(:host) { FactoryBot.create(:host_redhat, :ext_management_system => ems) }
+  let(:vm)   { FactoryBot.create(:vm_redhat, :ext_management_system => ems, :host => host) }
 
   context "#is_available?" do
-    let(:ems)  { FactoryBot.create(:ems_redhat) }
-    let(:host) { FactoryBot.create(:host_redhat, :ext_management_system => ems) }
-    let(:vm)   { FactoryBot.create(:vm_redhat, :ext_management_system => ems, :host => host) }
     let(:power_state_on)        { "up" }
     let(:power_state_suspended) { "down" }
 
@@ -146,6 +146,23 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
   describe "#support_conversion_host" do
     it "supports conversion_host" do
       expect(FactoryBot.create(:vm_redhat).supports_conversion_host?).to eq true
+    end
+  end
+
+  describe "#supports_terminate?" do
+    context "when connected to a provider" do
+      it "returns true" do
+        expect(vm.supports_terminate?).to be_truthy
+      end
+    end
+
+    context "when not connected to a provider" do
+      let(:archived_vm) { FactoryBot.create(:vm_redhat) }
+
+      it "returns false" do
+        expect(archived_vm.supports_terminate?).to be_falsey
+        expect(archived_vm.unsupported_reason(:terminate)).to eq("The VM is not connected to an active Provider")
+      end
     end
   end
 

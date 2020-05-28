@@ -7,6 +7,12 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Operations
   include_concern 'Relocation'
   include_concern 'Snapshot'
 
+  included do
+    supports :terminate do
+      unsupported_reason_add(:terminate, unsupported_reason(:control)) unless supports_control?
+    end
+  end
+
   def raw_destroy
     with_provider_object(&:destroy)
   end
