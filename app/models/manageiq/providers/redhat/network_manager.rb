@@ -10,6 +10,7 @@ class ManageIQ::Providers::Redhat::NetworkManager < ManageIQ::Providers::Network
   require_nested :Refresher
   require_nested :SecurityGroup
 
+  include BelongsToParentManagerMixin
   include ManageIQ::Providers::Openstack::ManagerMixin
   include SupportsFeatureMixin
 
