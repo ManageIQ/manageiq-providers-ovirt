@@ -179,8 +179,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
         raise MiqException::MiqUnreachableError, $ERROR_INFO
       when MiqException::MiqUnreachableError
         raise err
-      when RestClient::Unauthorized
-        raise MiqException::MiqInvalidCredentialsError, "Incorrect user name or password."
       when OvirtSDK4::Error
         rethrow_as_a_miq_error(err)
       else

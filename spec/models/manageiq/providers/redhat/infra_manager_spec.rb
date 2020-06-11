@@ -190,6 +190,17 @@ describe ManageIQ::Providers::Redhat::InfraManager do
 
       described_class.raw_connect(options)
     end
+   
+    it "handle credential validation error" do
+      opts = options.merge({:metrics_server => 'server'}) 
+
+      allow(described_class).to receive(:raw_connect_v4).and_return(v4_connection)
+      allow(v4_connection).to receive(:test).with(hash_including(:raise_exception => true))
+                                             .and_return(true)
+      allow(OvirtMetrics).to receive(:connect).and_raise(ArgumentError)
+
+      expect { described_class.raw_connect(opts) }.to raise_error(MiqException::MiqEVMLoginError)
+    end
   end
 
   context "network manager validations" do
