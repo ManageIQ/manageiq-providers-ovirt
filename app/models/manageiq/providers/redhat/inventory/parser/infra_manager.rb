@@ -444,8 +444,10 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       :annotation           => vm.try(:description),
       :cpu_cores_per_socket => cpu_cores,
       :cpu_sockets          => cpu_socks,
+      :cpu_speed            => vm.cpu.speed,
       :cpu_total_cores      => cpu_cores * cpu_socks,
-      :memory_mb            => vm.memory / 1.megabyte
+      :cpu_type             => vm.cpu.type,
+      :memory_mb            => vm.memory / 1.megabyte,
     )
 
     hardware_disks(persister_hardware, disks)
