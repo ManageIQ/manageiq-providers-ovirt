@@ -193,6 +193,59 @@ describe ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Strategies::V
       end
     end
 
+    describe "edit disk" do
+      let(:connection) { double("OvirtSDK4::Connection") }
+      let(:disk_attachments_service) { double('OvirtSDK4::DiskAttachmentsService') }
+      let(:disk_attachment_service) { double('OvirtSDK4::DiskAttachmentService') }
+
+      before :each do
+        allow(vm_service).to receive(:connection).and_return(connection)
+        allow(vm_service).to receive(:disk_attachments_service).and_return(disk_attachments_service)
+      end
+
+      let(:spec) do
+        {'disksEdit' => [{:disk_name       => '36b02b75-fcbd-42c1-818f-82ec90d4780b',
+                          :disk_size_in_mb => 8192}]}
+      end
+
+      subject(:reconfigure_vm) { ems.vm_reconfigure(vm, :spec => spec) }
+
+      it 'calls the update command with mandatory parameters' do
+        disk_spec = spec['disksEdit'].first
+        expect(disk_attachments_service).to receive(:attachment_service).with(disk_spec[:disk_name]).and_return(disk_attachment_service)
+        expect(disk_attachment_service).to receive(:update).with(hash_including(:disk => {:provisioned_size => disk_spec[:disk_size_in_mb].megabytes}))
+
+        subject
+      end
+
+      context 'errors' do
+        before :each do
+          allow(disk_attachments_service).to receive(:attachment_service).with(kind_of(String)).and_return(disk_attachment_service)
+        end
+
+        it 'disk with specified name not found' do
+          expect(disk_attachment_service).to receive(:update).and_raise(OvirtSDK4::NotFoundError)
+          expect($log).to receive(:error).with(/No disk with the id.*is attached to the vm/)
+
+          expect { subject }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
+                                            "No disk with the id [#{spec['disksEdit'].first[:disk_name]}] is attached to the vm")
+        end
+
+        it 'new disk size smaller than the current one' do
+          fault = OvirtSDK4::Fault.new(:reason => "Operation Failed",
+                                       :detail => "[Cannot edit Virtual Disk. New disk size must be larger than the current disk size.]")
+          error = OvirtSDK4::Error.new fault.detail
+          error.fault = fault
+
+          expect(disk_attachment_service).to receive(:update).and_raise(error)
+          expect($log).to receive(:error).with(/Error resizing disk with the id.*current disk size\.\]/)
+
+          expect { subject }.to raise_error(ManageIQ::Providers::Redhat::InfraManager::OvirtServices::Error,
+                                            "Error resizing disk with the id [#{spec['disksEdit'].first[:disk_name]}]. #{error.fault.detail}")
+        end
+      end
+    end
+
     describe "remove disk" do
       before do
         @connection = double("OvirtSDK4::Connection")
