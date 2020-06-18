@@ -10,6 +10,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
   attr_reader :hosts
   attr_reader :vms
   attr_reader :templates
+  attr_reader :applications
 
   def initialize(manager, _target)
     super
@@ -25,6 +26,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
     @hosts          = []
     @vms            = []
     @templates      = []
+    @applications   = []
   end
 
   def collect_clusters
@@ -152,6 +154,12 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
       disk_attachments.collect do |disk_attachment|
         connection.follow_link(disk_attachment.disk)
       end
+    end
+  end
+
+  def collect_vm_applications(vm)
+    manager.with_provider_connection do |connection|
+      connection.follow_link(vm.applications)
     end
   end
 
