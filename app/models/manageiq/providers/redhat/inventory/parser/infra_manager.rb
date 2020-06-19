@@ -366,6 +366,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       parent_folder = persister.ems_folders.lazy_find("#{datacenter_id}_vm")
       resource_pool = persister.resource_pools.lazy_find("#{vm.cluster.id}_respool") unless template
       host          = persister.hosts.lazy_find(host_ems_ref) if host_ems_ref.present?
+      cpu_affinity  = vm.cpu&.cpu_tune&.vcpu_pins&.map(&:vcpu)&.join(',')
 
       storages, disks = storages(vm)
 
@@ -392,7 +393,8 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :storages         => storages,
         :storage          => storages.first,
         :parent           => parent_folder,
-        :resource_pool    => resource_pool
+        :resource_pool    => resource_pool,
+        :cpu_affinity     => cpu_affinity
       }
       boot_time = vm.try(:start_time)
       attrs_to_assign[:boot_time] = boot_time unless boot_time.nil?
