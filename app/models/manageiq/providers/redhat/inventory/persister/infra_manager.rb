@@ -21,6 +21,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
     add_collection(infra, :networks)
     add_collection(infra, :operating_systems)
     add_collection(infra, :vms)
+    add_collection(infra, :guest_applications)
 
     add_datacenters
     add_miq_templates

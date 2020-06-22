@@ -10,7 +10,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
   attr_reader :hosts
   attr_reader :vms
   attr_reader :templates
-  attr_reader :applications
+  attr_reader :guest_applications
 
   def initialize(manager, _target)
     super
@@ -19,14 +19,14 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
   end
 
   def initialize_inventory_sources
-    @clusters       = []
-    @networks       = []
-    @storagedomains = []
-    @datacenters    = []
-    @hosts          = []
-    @vms            = []
-    @templates      = []
-    @applications   = []
+    @clusters           = []
+    @networks           = []
+    @storagedomains     = []
+    @datacenters        = []
+    @hosts              = []
+    @vms                = []
+    @templates          = []
+    @guest_applications = []
   end
 
   def collect_clusters
@@ -157,7 +157,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
     end
   end
 
-  def collect_vm_applications(vm)
+  def collect_guest_applications(vm)
     manager.with_provider_connection do |connection|
       connection.follow_link(vm.applications)
     end
