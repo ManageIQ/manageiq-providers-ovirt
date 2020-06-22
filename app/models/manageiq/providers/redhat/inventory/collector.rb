@@ -157,7 +157,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
     end
   end
 
-  def collect_guest_applications(vm)
+  def collect_vm_guest_applications(vm)
     manager.with_provider_connection do |connection|
       connection.follow_link(vm.applications)
     end
