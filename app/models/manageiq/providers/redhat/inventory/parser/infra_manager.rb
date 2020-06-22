@@ -377,6 +377,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       cpu_affinity  = vm.cpu&.cpu_tune&.vcpu_pins&.map { |pin| "#{pin.vcpu}##{pin.cpu_set}" }&.join(",")
 
       storages, disks = storages(vm)
+      applications = vm_guest_applications(vm) unless template
 
       collection_persister = if template
                                persister.miq_templates
@@ -402,7 +403,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :storage          => storages.first,
         :parent           => parent_folder,
         :resource_pool    => resource_pool,
-        :cpu_affinity     => cpu_affinity
+        :guest_applications => applications
       }
 
       attrs_to_assign[:restart_needed] = vm.next_run_configuration_exists unless template
@@ -453,6 +454,21 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     hardware_disks(persister_hardware, disks)
     addresses = hardware_networks(persister_hardware, vm) unless template
     vm_hardware_guest_devices(persister_hardware, vm, addresses, host) unless template
+  end
+
+  def vm_guest_applications(vm)
+    applications = []
+
+    collector.collect_vm_guest_applications(vm).to_miq_a.each do |app|
+      applications << {
+        :name        => app.name,
+        :description => app.description,
+        :product_key => app.id,
+        :url         => app.href
+      }
+    end
+
+    applications
   end
 
   def hardware_networks(persister_hardware, vm)
