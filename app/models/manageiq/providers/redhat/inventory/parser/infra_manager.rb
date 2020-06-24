@@ -403,7 +403,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :storage          => storages.first,
         :parent           => parent_folder,
         :resource_pool    => resource_pool,
-        :cpu_affinity     => cpu_affinity
+        :cpu_affinity     => cpu_affinity,
         :guest_applications => applications
       }
 
