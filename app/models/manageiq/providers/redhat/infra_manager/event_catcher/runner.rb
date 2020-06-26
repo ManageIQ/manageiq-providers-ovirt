@@ -21,8 +21,8 @@ class ManageIQ::Providers::Redhat::InfraManager::EventCatcher::Runner < ManageIQ
 
   def monitor_events
     event_monitor_handle.start
+    event_monitor_running
     event_monitor_handle.each_batch do |events|
-      event_monitor_running
       @queue.enq events
       sleep_poll_normal
     end
