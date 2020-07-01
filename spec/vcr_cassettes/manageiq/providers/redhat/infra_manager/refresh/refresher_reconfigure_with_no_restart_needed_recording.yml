@@ -3860,6 +3860,44 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/9514170e-dde4-4c
     content-length: '616'
     correlation-id: 82bcaa46-65b8-443a-818b-c3ef27b4e866
   :message: 
+https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/022ce494-f739-40a3-a29a-d26ce125f696/applications{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:11 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: a0ce92ab-5620-4af1-8a1f-906c4fe3d274
+  :message: 
+https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/17a94da8-3d02-430e-9b83-5e39f92907e8/applications{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:11 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: 9a4e6ad3-280a-4f1d-8577-f41dec81b63e
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:15 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: 5fd783a5-b92a-44a8-a985-555a9abe60a8
+  :message: 
 https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/17a94da8-3d02-430e-9b83-5e39f92907e8{:all_content=>"true"}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
