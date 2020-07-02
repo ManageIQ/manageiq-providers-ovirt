@@ -10522,3 +10522,128 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/21f55c51-a9ed
       content-length: '625'
       correlation-id: 5341252d-327d-4d52-a6cb-7fbab8eee45f
     :message: 
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/848d9f0c-c171-48a2-864c-f454c8eeae37/applications{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:11 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: a0ce92ab-5620-4af1-8a1f-906c4fe3d275
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:15 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: 5fd783a5-b92a-44a8-a985-555a9abe60a8
+  :message: 
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/85d2ac15-7584-4a2c-9579-898f5f2a4124/applications{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:11 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: a0ce92ab-5620-4af1-8a1f-906c4fe3d275
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:15 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: 5fd783a5-b92a-44a8-a985-555a9abe60a9
+  :message: 
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/5de3f25c-f530-4d10-aed0-177f7736f35f/applications{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:11 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: a0ce92ab-5620-4af1-8a1f-906c4fe3d277
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:15 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: 5fd783a5-b92a-44a8-a985-555a9abe60b1
+  :message: 
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/78e0ac3b-6bda-4e80-bfd7-ecb8432d44fd/applications{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:11 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: a0ce92ab-5620-4af1-8a1f-906c4fe3d279
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:15 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: 5fd783a5-b92a-44a8-a985-555a9abe60b3
+  :message: 
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/21f55c51-a9ed-489e-a8b9-1b7cf921f5a6/applications{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:11 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: a0ce92ab-5620-4af1-8a1f-906c4fe3d281
+  :message: 
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:15 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: 5fd783a5-b92a-44a8-a985-555a9abe60b7
+  :message: 
