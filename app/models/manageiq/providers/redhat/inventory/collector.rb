@@ -136,6 +136,12 @@ class ManageIQ::Providers::Redhat::Inventory::Collector < ManageIQ::Providers::I
     end
   end
 
+  def collect_vm_guest_applications(vm)
+    manager.with_provider_connection do |connection|
+      connection.follow_link(vm.applications)
+    end
+  end
+
   def collect_snapshots(vm)
     manager.with_provider_connection(VERSION_HASH) do |connection|
       snapshots = connection.follow_link(vm.snapshots)

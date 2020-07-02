@@ -396,6 +396,9 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :resource_pool    => resource_pool,
         :cpu_affinity     => cpu_affinity
       }
+
+      attrs_to_assign[:tools_status] = get_tools_status(vm) unless template
+
       boot_time = vm.try(:start_time)
       attrs_to_assign[:boot_time] = boot_time unless boot_time.nil?
 
@@ -406,6 +409,11 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       operating_systems(persister_vm, vm)
       custom_attributes(persister_vm, vm)
     end
+  end
+
+  def get_tools_status(vm)
+    apps = collector.collect_vm_guest_applications(vm).to_miq_a
+    apps.any? { |app| app.name.include?('ovirt-guest-agent') } ? 'installed' : 'not installed'
   end
 
   def storages(vm)
