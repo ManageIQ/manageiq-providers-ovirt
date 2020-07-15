@@ -26,6 +26,7 @@
         display_method:
         display_method_options: {}
         required: false
+        system: true
         required_method:
         required_method_options: {}
         default_value: 'migration_group'
