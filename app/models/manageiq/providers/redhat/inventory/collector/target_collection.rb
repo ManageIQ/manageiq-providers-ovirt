@@ -217,7 +217,7 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
       disks = collect_attached_disks(vm)
       disks.each do |disk|
-        disk.storage_domains.to_miq_a.each do |sd|
+        Array.wrap(disk.storage_domains).each do |sd|
           add_simple_target!(:storagedomains, ems_ref_from_sdk(sd))
         end
       end

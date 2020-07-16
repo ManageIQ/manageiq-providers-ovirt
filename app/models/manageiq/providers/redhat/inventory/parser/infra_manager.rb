@@ -205,7 +205,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
   def host_storages(dc, persister_host)
     storages = []
-    collector.collect_dc_domains(dc).to_miq_a.each do |sd|
+    Array.wrap(collector.collect_dc_domains(dc)).each do |sd|
       ems_href = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(sd.href)
       # we need to trim datacenter part of href
       storages << persister.storages.lazy_find(ems_href[0..4] + ems_href[54..-1])
@@ -228,7 +228,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     hdw = host.cpu
 
     stats = collector.collect_host_stats(host)
-    memory_total_attr = stats.to_miq_a.detect { |stat| stat.name == 'memory.total' }
+    memory_total_attr = Array.wrap(stats).detect { |stat| stat.name == 'memory.total' }
     memory_total = memory_total_attr && memory_total_attr.dig(:values, :first, :datum)
     hw_info = host.hardware_information
 
@@ -254,7 +254,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   def host_guest_devices(persister_hardware, host, nics, networks)
     persister_host = persister_hardware.host
 
-    nics.to_miq_a.each do |nic|
+    Array.wrap(nics).each do |nic|
       network = network_from_nic(nic, host, networks)
       ip = nic.ip.presence || nil
 
@@ -421,18 +421,18 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   end
 
   def get_tools_status(vm)
-    apps = collector.collect_vm_guest_applications(vm).to_miq_a
+    apps = Array.wrap(collector.collect_vm_guest_applications(vm))
     apps.any? { |app| app.name.include?('ovirt-guest-agent') } ? 'installed' : 'not installed'
   end
 
   def storages(vm)
     storages = []
     disks = []
-    collector.collect_attached_disks(vm).to_miq_a.each do |disk|
+    Array.wrap(collector.collect_attached_disks(vm)).each do |disk|
       next if disk.kind_of?(Array) && disk.empty?
 
       disks << disk
-      disk.storage_domains.to_miq_a.each do |sd|
+      Array.wrap(disk.storage_domains).each do |sd|
         storages << persister.storages.lazy_find(ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(sd.href))
       end
     end
@@ -465,7 +465,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     addresses = {}
 
     devices = collector.collect_vm_devices(vm)
-    devices.to_miq_a.each do |device|
+    Array.wrap(devices).each do |device|
       nets = device.ips
       next unless nets
 
@@ -488,7 +488,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   def hardware_disks(persister_hardware, disks)
     return if disks.blank?
 
-    disks = disks.to_miq_a.sort_by do |disk|
+    disks = Array.wrap(disks).sort_by do |disk|
       match = disk.try(:name).match(/disk[^\d]*(?<index>\d+)/i)
       [disk.try(:bootable) ? 0 : 1, match ? match[:index].to_i : Float::INFINITY, disk.name]
     end.group_by { |d| d.try(:interface) }
@@ -633,7 +633,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
   def host_to_ip(nics, hostname = nil)
     ipaddress = nil
-    nics.to_miq_a.each do |nic|
+    Array.wrap(nics).each do |nic|
       ip_data = nic.ip
       if !ip_data.nil? && !ip_data.gateway.blank? && !ip_data.address.blank?
         ipaddress = ip_data.address
@@ -674,7 +674,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
   def ipaddresses(addresses, device, nets)
     ipv4addresses = []
     ipv6addresses = []
-    nets.to_miq_a.each do |net|
+    Array.wrap(nets).each do |net|
       (net.version == "v4" ? ipv4addresses : ipv6addresses) << net.address
     end
 
