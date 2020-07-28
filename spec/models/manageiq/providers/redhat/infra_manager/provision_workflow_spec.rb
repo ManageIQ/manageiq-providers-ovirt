@@ -32,7 +32,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
     it "for ISO and PXE provisioning" do
       result = workflow.allowed_storages
       expect(result.length).to eq(2)
-      result.each { |storage| expect(storage).to be_kind_of(MiqHashStruct) }
+      result.each { |storage| expect(storage).to be_kind_of(OpenStruct) }
       result.each { |storage| expect(storage.storage_domain_type).to eq("data") }
     end
 
@@ -43,7 +43,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow do
 
       result = workflow.allowed_storages
       expect(result.length).to eq(1)
-      result.each { |storage| expect(storage).to be_kind_of(MiqHashStruct) }
+      result.each { |storage| expect(storage).to be_kind_of(OpenStruct) }
       result.each { |storage| expect(storage.storage_domain_type).to eq("data") }
     end
   end
