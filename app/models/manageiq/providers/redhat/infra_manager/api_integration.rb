@@ -192,11 +192,19 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     # Verify Credentials
     #
     # args: {
-    #   "endpoints" => {
+    #   "authentications" => {
     #     "default" => {
     #       "username" => String,
     #       "password" => String,
-    #       "server" => String,
+    #     },
+    #     "metrics" => {
+    #       "metrics_username" => String,
+    #       "metrics_password" => String,
+    #     }
+    #   },
+    #   "endpoints" => {
+    #     "default" => {
+    #       "hostname" => String,
     #       "port" => Integer,
     #       "verify_ssl" => [VERIFY_NONE, VERIFY_PEER],
     #       "ca_certs" => String
@@ -205,6 +213,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     #       "metrics_username" => String,
     #       "metrics_password" => String,
     #       "metrics_port" => Integer,
+    #       "metrics_database" => String
     #     }
     #   }
     # }
@@ -212,12 +221,17 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       default_endpoint = args.dig("endpoints", "default")
       metrics_endpoint = args.dig("endpoints", "metrics")
 
-      username, password, server, port, verify_ssl, ca_certs = default_endpoint&.values_at(
-        "username", "password", "server", "port", "verify_ssl", "ca_certs"
+      default_authentication = args.dig("authentications", "default")
+      metrics_authentication = args.dig("authentications", "metrics")
+
+      username, password = default_authentication&.values_at("userid", "password")
+      server, port, verify_ssl, ca_certs = default_endpoint&.values_at(
+        "hostname", "port", "verify_ssl", "ca_certs"
       )
 
-      metrics_username, metrics_password, metrics_port, metrics_database = metrics_endpoint&.values_at(
-        "metrics_username", "metrics_password", "metrics_port", "metrics_database"
+      metrics_username, metrics_password = metrics_authentication&.values_at("userid", "password")
+      metrics_port, metrics_database = metrics_endpoint&.values_at(
+        "metrics_port", "metrics_database"
       )
 
       !!raw_connect(
