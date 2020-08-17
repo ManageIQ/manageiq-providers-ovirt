@@ -70,14 +70,6 @@ describe ManageIQ::Providers::Redhat::InfraManager::EventParser do
           expect(hash_event['cluster']).to be_a(Hash)
           expect(hash_event['cluster']['href']).to eq('/ovirt-engine/api/clusters/504ae500-3476-450e-8243-f6df0f7f7acf')
         end
-
-        it 'convert event_hash to ostruct recursively' do
-          hash_event = described_class.ovirtobj_to_hash(event)
-
-          ostr = described_class.hash_to_ostruct(hash_event)
-          expect(ostr).not_to be_nil
-          expect(ostr.cluster.href).to eq('/ovirt-engine/api/clusters/504ae500-3476-450e-8243-f6df0f7f7acf')
-        end
       end
 
       it "should parse event" do
