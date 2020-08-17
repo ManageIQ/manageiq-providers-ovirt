@@ -31,7 +31,6 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   include HasNetworkManagerMixin
 
   supports :provisioning
-  supports :refresh_new_target
   supports :vm_import do
     # The version of the RHV needs to be at least 4.1.5 due to https://bugzilla.redhat.com/1477375
     unsupported_reason_add(:vm_import, _('Cannot import to a RHV provider of version < 4.1.5')) unless version_at_least?('4.1.5')
