@@ -155,10 +155,10 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                         :name       => "endpoints.default.hostname",
                         :label      => _("Hostname (or IPv4 or IPv6 address)"),
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}]
+                        :validate   => [{:type => "required"}]
                       },
                       {
-                        :component    => "select-field",
+                        :component    => "select",
                         :name         => "endpoints.default.verify_ssl",
                         :label        => _("SSL verification"),
                         :isRequired   => true,
@@ -181,7 +181,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                         :rows       => 10,
                         :isRequired => true,
                         :helperText => _('Paste here the trusted CA certificates, in PEM format.'),
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                         :condition  => {
                           :when => 'endpoints.default.verify_ssl',
                           :is   => OpenSSL::SSL::VERIFY_PEER,
@@ -193,7 +193,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                         :label        => _("API Port"),
                         :type         => "number",
                         :isRequired   => true,
-                        :validate     => [{:type => "required-validator"}],
+                        :validate     => [{:type => "required"}],
                         :initialValue => 443,
                       },
                       {
@@ -201,7 +201,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                         :name       => "authentications.default.userid",
                         :label      => _("Username"),
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}]
+                        :validate   => [{:type => "required"}]
                       },
                       {
                         :component  => "password-field",
@@ -209,7 +209,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                         :label      => _("Password"),
                         :type       => "password",
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}]
+                        :validate   => [{:type => "required"}]
                       },
                     ],
                   },
