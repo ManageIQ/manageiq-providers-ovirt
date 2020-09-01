@@ -2283,3 +2283,16 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/72877001-6012-49
     content-length: '617'
     correlation-id: 6466c4d9-244c-4e77-9dc6-23c784f19e37
   :message: 
+https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de-b258-ae471ea31056/applications{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:11 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: a0ce92ab-5620-4af1-8a1f-906c4fe3d274
+  :message: 
