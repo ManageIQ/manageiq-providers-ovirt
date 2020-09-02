@@ -422,7 +422,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
 
   def get_tools_status(vm)
     apps = collector.collect_vm_guest_applications(vm).to_miq_a
-    apps.any? { |app| app.name.include?('ovirt-guest-agent') } ? 'installed' : 'not installed'
+    apps.any? { |app| app.name.include?('ovirt-guest-agent') || app.name.include?('qemu-guest-agent') } ? 'installed' : 'not installed'
   end
 
   def storages(vm)
