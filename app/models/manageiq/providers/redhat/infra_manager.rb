@@ -133,6 +133,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
       :fields => [
         {
           :component => 'sub-form',
+          :id        => 'endpoints-subform',
           :name      => 'endpoints-subform',
           :title     => _("Endpoints"),
           :fields    => [
@@ -141,17 +142,20 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
             :fields    => [
               {
                 :component => 'tab-item',
+                :id        => 'default-tab',
                 :name      => 'default-tab',
                 :title     => _('Default'),
                 :fields    => [
                   {
                     :component              => 'validate-provider-credentials',
+                    :id                     => 'endpoints.default.valid',
                     :name                   => 'endpoints.default.valid',
                     :skipSubmit             => true,
                     :validationDependencies => %w[type zone_id],
                     :fields                 => [
                       {
                         :component  => "text-field",
+                        :id         => "endpoints.default.hostname",
                         :name       => "endpoints.default.hostname",
                         :label      => _("Hostname (or IPv4 or IPv6 address)"),
                         :isRequired => true,
@@ -159,6 +163,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                       },
                       {
                         :component    => "select",
+                        :id           => "endpoints.default.verify_ssl",
                         :name         => "endpoints.default.verify_ssl",
                         :label        => _("SSL verification"),
                         :isRequired   => true,
@@ -176,6 +181,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                       },
                       {
                         :component  => "textarea-field",
+                        :id         => "endpoints.default.certificate_authority",
                         :name       => "endpoints.default.certificate_authority",
                         :label      => _("Trusted CA Certificates"),
                         :rows       => 10,
@@ -189,6 +195,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                       },
                       {
                         :component    => "text-field",
+                        :id           => "endpoints.default.port",
                         :name         => "endpoints.default.port",
                         :label        => _("API Port"),
                         :type         => "number",
@@ -198,6 +205,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                       },
                       {
                         :component  => "text-field",
+                        :id         => "authentications.default.userid",
                         :name       => "authentications.default.userid",
                         :label      => _("Username"),
                         :isRequired => true,
@@ -205,6 +213,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                       },
                       {
                         :component  => "password-field",
+                        :id         => "authentications.default.password",
                         :name       => "authentications.default.password",
                         :label      => _("Password"),
                         :type       => "password",
@@ -217,22 +226,26 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
               },
               {
                 :component => 'tab-item',
+                :id        => 'metrics-tab',
                 :name      => 'metrics-tab',
                 :title     => _('Metrics'),
                 :fields    => [
                   {
                     :component              => 'validate-provider-credentials',
+                    :id                     => 'endpoints.metrics.valid',
                     :name                   => 'endpoints.metrics.valid',
                     :skipSubmit             => true,
                     :validationDependencies => %w[type zone_id],
                     :fields                 => [
                       {
                         :component => "text-field",
+                        :id        => "endpoints.metrics.hostname",
                         :name      => "endpoints.metrics.hostname",
                         :label     => _("Hostname (or IPv4 or IPv6 address)"),
                       },
                       {
                         :component    => "text-field",
+                        :id           => "endpoints.metrics.port",
                         :name         => "endpoints.metrics.port",
                         :label        => _("API Port"),
                         :type         => "number",
@@ -240,17 +253,20 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                       },
                       {
                         :component => "text-field",
+                        :id        => "authentications.metrics.userid",
                         :name      => "authentications.metrics.userid",
                         :label     => _("Username"),
                       },
                       {
                         :component => "password-field",
+                        :id        => "authentications.metrics.password",
                         :name      => "authentications.metrics.password",
                         :label     => _("Password"),
                         :type      => "password",
                       },
                       {
                         :component    => "text-field",
+                        :id           => "endpoints.metrics.path",
                         :name         => "endpoints.metrics.path",
                         :label        => _("Database name"),
                         :initialValue => 'ovirt_engine_history',
@@ -261,11 +277,13 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
               },
               {
                 :component => 'tab-item',
+                :id        => 'keypair-tab',
                 :name      => 'keypair-tab',
                 :title     => _('RSA key pair'),
                 :fields    => [
                   {
                     :component              => 'validate-provider-credentials',
+                    :id                     => 'endpoints.ssh_keypair.valid',
                     :name                   => 'endpoints.ssh_keypair.valid',
                     :skipSubmit             => true,
                     :validationDependencies => %w[type zone_id],
@@ -273,6 +291,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                       {
                         :component    => 'text-field',
                         :type         => 'hidden',
+                        :id           => 'endpoints.ssh_keypair',
                         :name         => 'endpoints.ssh_keypair',
                         :initialValue => {},
                         :condition    => {
@@ -282,11 +301,13 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                       },
                       {
                         :component => "text-field",
+                        :id        => "authentications.ssh_keypair.userid",
                         :name      => "authentications.ssh_keypair.userid",
                         :label     => _("Username"),
                       },
                       {
                         :component      => "password-field",
+                        :id             => "authentications.ssh_keypair.auth_key",
                         :name           => "authentications.ssh_keypair.auth_key",
                         :componentClass => 'textarea',
                         :rows           => 10,
