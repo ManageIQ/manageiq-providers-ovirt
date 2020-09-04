@@ -2179,3 +2179,16 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/2c4eb887-e642
       content-length: '606'
       correlation-id: db46a6cc-fd6f-4463-96fa-bcd990ebb687
     :message: 
+https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/2c4eb887-e642-4016-af1e-640cdeeb209b/applications{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <applications/>
+  :code: 200
+  :headers:
+    date: Wed, 01 Jul 2020 09:45:11 GMT
+    server: Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.0.2k-fips
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '91'
+    correlation-id: a0ce92ab-5620-4af1-8a1f-906c4fe3d274
+  :message: 
