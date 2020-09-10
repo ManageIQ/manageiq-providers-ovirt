@@ -180,9 +180,9 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                         ]
                       },
                       {
-                        :component  => "textarea-field",
-                        :id         => "endpoints.default.certificate_authority",
+                        :component  => "textarea",
                         :name       => "endpoints.default.certificate_authority",
+                        :id         => "endpoints.default.certificate_authority",
                         :label      => _("Trusted CA Certificates"),
                         :rows       => 10,
                         :isRequired => true,
