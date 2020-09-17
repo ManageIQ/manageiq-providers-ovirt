@@ -1,18 +1,17 @@
-# manageiq-providers-ovirt
+# ManageIQ::Providers::Ovirt
 
-[![Gem Version](https://badge.fury.io/rb/manageiq-providers-ovirt.svg)](http://badge.fury.io/rb/manageiq-providers-ovirt)
 [![Build Status](https://travis-ci.com/ManageIQ/manageiq-providers-ovirt.svg?branch=master)](https://travis-ci.com/ManageIQ/manageiq-providers-ovirt)
-[![Code Climate](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt.svg)](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt)
-[![Test Coverage](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt/badges/coverage.svg)](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt/coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/adb159273f2c5ba5c9b3/maintainability)](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/adb159273f2c5ba5c9b3/test_coverage)](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt/test_coverage)
 [![Security](https://hakiri.io/github/ManageIQ/manageiq-providers-ovirt/master.svg)](https://hakiri.io/github/ManageIQ/manageiq-providers-ovirt/master)
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq-providers-ovirt?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-ManageIQ plugin for the Ovirt provider.
+ManageIQ plugin for the oVirt provider.
 
 ## Development
 
-See the section on pluggable providers in the [ManageIQ Developer Setup](http://manageiq.org/docs/guides/developer_setup)
+See the section on plugins in the [ManageIQ Developer Setup](http://manageiq.org/docs/guides/developer_setup/plugins)
 
 For quick local setup run `bin/setup`, which will clone the core ManageIQ repository under the *spec* directory and setup necessary config files. If you have already cloned it, you can run `bin/update` to bring the core ManageIQ code up to date.
 
