@@ -49,6 +49,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
       network_manager.name = "#{name} Network Manager"
       network_manager.zone_id = zone_id
       network_manager.provider_region = provider_region
+      network_manager.tenant_id = tenant_id
       network_manager.save!
     end
   end
