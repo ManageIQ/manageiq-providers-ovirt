@@ -23,14 +23,6 @@ class ManageIQ::Providers::Redhat::InfraManager::Host < ::Host
     end
   end
 
-  # The minimum supported version is 4.2.4, so we hard code it here.
-  supports :conversion_host do
-    version = ext_management_system.api_version
-    if version.nil? || Gem::Version.new(version) < Gem::Version.new('4.2.4')
-      unsupported_reason_add(:conversion_host, 'RHV API version does not support conversion_host')
-    end
-  end
-
   def validate_enter_maint_mode
     return inactive_provider_message unless has_active_ems?
 
