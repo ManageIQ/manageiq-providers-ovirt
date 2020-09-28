@@ -153,6 +153,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                     :name                   => 'endpoints.default.valid',
                     :skipSubmit             => true,
                     :validationDependencies => %w[type zone_id],
+                    :isRequired             => true,
                     :fields                 => [
                       {
                         :component  => "text-field",
