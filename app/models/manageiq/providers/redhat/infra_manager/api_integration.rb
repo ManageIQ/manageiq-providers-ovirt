@@ -234,13 +234,13 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
       !!raw_connect(
         :username         => username,
-        :password         => MiqPassword.try_decrypt(password),
+        :password         => ManageIQ::Password.try_decrypt(password),
         :server           => server,
         :port             => port,
         :verify_ssl       => verify_ssl ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
         :ca_certs         => ca_certs,
         :metrics_username => metrics_username,
-        :metrics_password => MiqPassword.try_decrypt(metrics_password),
+        :metrics_password => ManageIQ::Password.try_decrypt(metrics_password),
         :metrics_port     => metrics_port,
         :metrics_database => metrics_database
       )
