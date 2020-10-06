@@ -33,10 +33,9 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
                                :ems_cluster           => @cluster)
   end
 
-  it "should remove a host using graph refresh" do
+  it "should disconnect a host using graph refresh" do
     EmsRefresh.refresh(@host)
     @ems.reload
-
-    expect(Host.count).to eq(0)
+    expect(Host.first).to be_archived
   end
 end
