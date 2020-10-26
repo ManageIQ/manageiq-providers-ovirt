@@ -93,6 +93,31 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm < ManageIQ::Providers::Infra
     ext_management_system.ovirt_services.vm_exists_on_provider?(self)
   end
 
+  def params_for_create_snapshot
+    {
+      :fields => [
+        {
+          :component  => 'textarea',
+          :name       => 'description',
+          :id         => 'description',
+          :label      => _('Description'),
+          :isRequired => true,
+          :validate   => [{:type => 'required'}],
+        },
+        {
+          :component  => 'switch',
+          :name       => 'memory',
+          :id         => 'memory',
+          :label      => _('Snapshot VM memory'),
+          :onText     => _('Yes'),
+          :offText    => _('No'),
+          :isDisabled => current_state != 'on',
+          :helperText => _('Snapshotting the memory is only available if the VM is powered on.'),
+        },
+      ],
+    }
+  end
+
   #
   # UI Button Validation Methods
   #
