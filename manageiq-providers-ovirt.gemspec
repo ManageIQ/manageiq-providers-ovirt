@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,lib}/**/*"]
 
-  s.add_runtime_dependency "ovirt-engine-sdk", "~>4.3.0"
+  s.add_runtime_dependency "ovirt-engine-sdk", "~>4.4.0"
 
   s.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
   s.add_development_dependency "simplecov"
