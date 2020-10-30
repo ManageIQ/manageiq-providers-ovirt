@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency "ovirt", "~>0.18.1"
   s.add_runtime_dependency "parallel", "~>1.9" # For ManageIQ::Providers::Ovirt::Legacy::Inventory
-  s.add_runtime_dependency "ovirt-engine-sdk", "~>4.3.0"
+  s.add_runtime_dependency "ovirt-engine-sdk", "~>4.4.0"
 
   s.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
   s.add_development_dependency "simplecov"
