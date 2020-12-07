@@ -28,7 +28,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       if is_external
         datacenter = network.data_center
         ems_ref = ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(datacenter.href)
-        parent_datacenter = persister.datacenters.lazy_find(ems_ref)
+        parent_datacenter = persister.ems_folders.lazy_find(ems_ref)
 
         attrs_to_assign[:parent] = parent_datacenter if id_of_external_network?(network.id)
       end
@@ -126,12 +126,12 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
       )
 
       uid = datacenter.id
-      persister.datacenters.find_or_build(ems_ref).assign_attributes(
-        :name        => datacenter.name,
+      persister.ems_folders.find_or_build(ems_ref).assign_attributes(
+        :name    => datacenter.name,
         :type    => 'ManageIQ::Providers::Redhat::InfraManager::Datacenter',
-        :ems_ref     => ems_ref,
-        :uid_ems     => uid,
-        :parent      => persister.ems_folders.lazy_find("root_dc"),
+        :ems_ref => ems_ref,
+        :uid_ems => uid,
+        :parent  => persister.ems_folders.lazy_find("root_dc")
       )
 
       host_folder_uid = "#{uid}_host"
@@ -140,7 +140,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :type    => 'ManageIQ::Providers::Redhat::InfraManager::Folder',
         :uid_ems => host_folder_uid,
         :hidden  => true,
-        :parent  => persister.datacenters.lazy_find(ems_ref),
+        :parent  => persister.ems_folders.lazy_find(ems_ref)
       )
 
       vm_folder_uid = "#{uid}_vm"
@@ -149,7 +149,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :type    => 'ManageIQ::Providers::Redhat::InfraManager::Folder',
         :uid_ems => vm_folder_uid,
         :hidden  => true,
-        :parent  => persister.datacenters.lazy_find(ems_ref),
+        :parent  => persister.ems_folders.lazy_find(ems_ref)
       )
     end
   end

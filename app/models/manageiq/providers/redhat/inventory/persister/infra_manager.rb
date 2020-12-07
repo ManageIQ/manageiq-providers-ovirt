@@ -22,7 +22,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
     add_collection(infra, :operating_systems)
     add_collection(infra, :vms)
 
-    add_datacenters
     add_miq_templates
     add_resource_pools
     add_snapshots
@@ -67,20 +66,6 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
     end
   end
 
-  def add_datacenters
-    add_collection(infra, :datacenters) do |builder|
-      builder.add_properties(:arel => manager.datacenters)
-
-      if targeted?
-        builder.add_targeted_arel(
-          lambda do |_inventory_collection|
-            manager.datacenters.where(:ems_ref => references(:datacenters))
-          end
-        )
-      end
-    end
-  end
-
   def add_storages
     add_collection(infra, :storages) do |builder|
       if targeted?
@@ -112,7 +97,7 @@ class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ
 
   def add_parent_blue_folders
     add_collection(infra, :parent_blue_folders) do |builder|
-      dependency_collections = %i[clusters ems_folders datacenters hosts resource_pools storages distributed_virtual_switches external_distributed_virtual_switches]
+      dependency_collections = %i[clusters ems_folders hosts resource_pools storages distributed_virtual_switches external_distributed_virtual_switches]
       dependency_attributes = dependency_collections.each_with_object({}) do |collection, hash|
         hash[collection] = ->(persister) { [persister.collections[collection]].compact }
       end

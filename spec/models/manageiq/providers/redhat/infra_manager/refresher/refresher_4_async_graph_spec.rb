@@ -47,6 +47,20 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     expect(Host.where(:uid_ems => "ce40bb38-f10a-43f3-8e15-d0ffad692a19").count).to eq 1
   end
 
+  it "will perform a refresh and preserve an existing datacenter" do
+    dc = FactoryBot.create(
+      :datacenter_redhat,
+      :ext_management_system => @ems,
+      :ems_ref               => "/api/datacenters/944df9ee-3274-43c4-908f-8c35e59e483b",
+      :uid_ems               => "944df9ee-3274-43c4-908f-8c35e59e483b"
+    )
+
+    EmsRefresh.refresh(@ems)
+    @ems.reload
+
+    expect(@ems.datacenters.first).to eq(dc)
+  end
+
   it "will perform a refresh and reconnect a vm" do
     @vm = FactoryBot.create(:vm_redhat,
                              :ext_management_system => nil,
