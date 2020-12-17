@@ -390,7 +390,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
         :uid_ems          => vm.id,
         :connection_state => "connected",
         :vendor           => "redhat",
-        :name             => URI.decode(vm.name),
+        :name             => URI.decode_www_form_component(vm.name),
         :location         => "#{vm.id}.ovf",
         :template         => template,
         :memory_limit     => extract_vm_memory_policy(vm, :max),
@@ -521,7 +521,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::InfraManager < ManageIQ::P
     end
   end
 
-  def vm_hardware_guest_devices(persister_hardware, vm, addresses, host)
+  def vm_hardware_guest_devices(persister_hardware, vm, addresses, _host)
     networks = {}
     addresses.each do |mac, address|
       network = persister.networks.lazy_find_by(

@@ -5,13 +5,17 @@ module ManageIQ::Providers::Redhat::InfraManager::Provision::Configuration
   include_concern 'Network'
 
   def attach_floppy_payload
-    return unless content = customization_template_content
+    content = customization_template_content
+    return unless content
+
     filename = customization_template.default_filename
     with_provider_destination { |d| d.attach_floppy(filename => content) }
   end
 
   def configure_cloud_init
-    return unless content = customization_template_content
+    content = customization_template_content
+    return unless content
+
     with_provider_destination { |d| d.update_cloud_init!(content) }
 
     ems_api_version = source.ext_management_system.api_version
