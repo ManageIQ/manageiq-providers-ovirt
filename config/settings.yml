@@ -60,24 +60,24 @@
 :log:
   :level_rhevm: info
 :workers:
-  :worker_base:
-    :event_catcher:
-      :event_catcher_redhat:
-        :poll: 15.seconds
-      :event_catcher_redhat_network:
-        :poll: 15.seconds
-        :topics:
-          :neutron: "notifications.*"
-        :duration: 10.seconds
-        :capacity: 50
-        :amqp_port: 5672
-        :amqp_heartbeat: 30
-        :amqp_recovery_attempts: 4
-        :ceilometer:
-          :event_types_regex: '\A(firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn)'
-    :queue_worker_base:
-      :ems_metrics_collector_worker:
-        :ems_metrics_collector_worker_redhat: {}
-      :ems_refresh_worker:
-        :ems_refresh_worker_redhat: {}
-        :ems_refresh_worker_redhat_network: {}
+  :ems_metrics_collector_worker_redhat:
+    :inherits_from: ems_metrics_collector_worker
+  :ems_refresh_worker_redhat:
+    :inherits_from: ems_refresh_worker
+  :ems_refresh_worker_redhat_network:
+    :inherits_from: ems_refresh_worker
+  :event_catcher_redhat:
+    :inherits_from: event_catcher
+    :poll: 15.seconds
+  :event_catcher_redhat_network:
+    :amqp_heartbeat: 30
+    :amqp_port: 5672
+    :amqp_recovery_attempts: 4
+    :capacity: 50
+    :ceilometer:
+      :event_types_regex: '\A(firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn)'
+    :duration: 10.seconds
+    :inherits_from: event_catcher
+    :poll: 15.seconds
+    :topics:
+      :neutron: "notifications.*"
