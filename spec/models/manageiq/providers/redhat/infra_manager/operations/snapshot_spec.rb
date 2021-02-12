@@ -31,7 +31,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Operations::Snapshot do
   describe 'supported above api v4' do
     let(:ems) { FactoryBot.create(:ems_redhat_with_authentication, :api_version => '4.3.6') }
     let(:vm)  { FactoryBot.create(:vm_redhat, :ext_management_system => ems) }
-    subject { vm.supports_snapshots? }
+    subject { vm.supports?(:snapshots) }
     context 'when engine supports v4 api' do
       it { is_expected.to be_truthy }
     end

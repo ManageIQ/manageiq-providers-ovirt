@@ -7,7 +7,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm < ManageIQ::Providers::Infra
   supports :migrate do
     if blank? || orphaned? || archived?
       unsupported_reason_add(:migrate, "Migrate operation in not supported.")
-    elsif !ext_management_system.supports_migrate?
+    elsif !ext_management_system.supports?(:migrate)
       unsupported_reason_add(:migrate, 'RHV API version does not support migrate')
     end
   end
@@ -17,7 +17,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm < ManageIQ::Providers::Infra
       unsupported_reason_add(:reconfigure_disks, _('storage is missing'))
     elsif ext_management_system.blank?
       unsupported_reason_add(:reconfigure_disks, _('The virtual machine is not associated with a provider'))
-    elsif !ext_management_system.supports_reconfigure_disks?
+    elsif !ext_management_system.supports?(:reconfigure_disks)
       unsupported_reason_add(:reconfigure_disks, _('The provider does not support reconfigure disks'))
     end
   end
@@ -28,7 +28,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Vm < ManageIQ::Providers::Infra
       unsupported_reason_add(:publish, _('Publish operation in not supported'))
     elsif ext_management_system.blank?
       unsupported_reason_add(:publish, _('The virtual machine is not associated with a provider'))
-    elsif !ext_management_system.supports_publish?
+    elsif !ext_management_system.supports?(:publish)
       unsupported_reason_add(:publish, _('This feature is not supported by the api version of the provider'))
     elsif power_state != "off"
       unsupported_reason_add(:publish, _('The virtual machine must be down'))

@@ -125,13 +125,13 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm::Reconfigure do
         it 'supported with one active snapshot' do
           FactoryBot.create(:snapshot, :vm_or_template => vm, :create_time => 1.minute.ago)
 
-          expect(vm.supports_reconfigure_disksize?).to be true
+          expect(vm.supports?(:reconfigure_disksize)).to be true
         end
 
         it 'unsupported with snapshots other than the active one' do
           FactoryBot.create_list(:snapshot, 2, :vm_or_template => vm, :create_time => 1.minute.ago)
 
-          expect(vm.supports_reconfigure_disksize?).to be false
+          expect(vm.supports?(:reconfigure_disksize)).to be false
         end
       end
 

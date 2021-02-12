@@ -18,7 +18,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Host < ::Host
   end
 
   supports :quick_stats do
-    unless ext_management_system.supports_quick_stats?
+    unless ext_management_system.supports?(:quick_stats)
       unsupported_reason_add(:quick_stats, 'RHV API version does not support quick_stats')
     end
   end
