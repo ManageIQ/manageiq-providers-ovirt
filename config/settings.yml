@@ -45,6 +45,10 @@
           - security_group.update.end
     :connection_manager:
       :purge_interval: 1.hour
+    :cloud_tenant_mapper:
+      :separator: _
+      :location: 0
+      :tenant: 1
 :http_proxy:
   :rhevm:
     :host:
