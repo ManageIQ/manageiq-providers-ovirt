@@ -49,7 +49,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
     end
   end
 
-  context "supports_clone?" do
+  context "supports?(:clone)" do
     let(:vm_redhat) { ManageIQ::Providers::Redhat::InfraManager::Vm.new }
 
     it "returns false" do
@@ -71,12 +71,12 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
     end
   end
 
-  describe "#supports_reconfigure_disks?" do
+  describe "#supports?(:reconfigure_disks)" do
     context "when vm has no storage" do
       let(:vm) { FactoryBot.create(:vm_redhat, :storage => nil, :ext_management_system => nil) }
 
       it "does not support reconfigure disks" do
-        expect(vm.supports_reconfigure_disks?).to be_falsey
+        expect(vm.supports?(:reconfigure_disks)).to be_falsey
       end
     end
 
@@ -86,7 +86,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
 
       context "when vm has no provider" do
         it "does not support reconfigure disks" do
-          expect(vm.supports_reconfigure_disks?).to be_falsey
+          expect(vm.supports?(:reconfigure_disks)).to be_falsey
         end
       end
 
@@ -95,19 +95,19 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
         let(:vm) { FactoryBot.create(:vm_redhat, :storage => storage, :ext_management_system => ems_redhat) }
 
         it "supports reconfigure disks" do
-          expect(vm.supports_reconfigure_disks?).to be_truthy
+          expect(vm.supports?(:reconfigure_disks)).to be_truthy
         end
       end
     end
   end
 
-  describe "#supports_publish?" do
+  describe "#supports?(:publish)" do
     let(:ems) { FactoryBot.create(:ems_redhat_with_authentication) }
     context "when vm has no storage" do
       let(:vm) { FactoryBot.create(:vm_redhat, :storage => nil, :ext_management_system => nil) }
 
       it "does not support publish" do
-        expect(vm.supports_publish?).to be_falsey
+        expect(vm.supports?(:publish)).to be_falsey
       end
     end
 
@@ -116,7 +116,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
       let(:vm) { FactoryBot.create(:vm_redhat, :storage => storage, :ext_management_system => nil) }
 
       it "does not support publish" do
-        expect(vm.supports_publish?).to be_falsey
+        expect(vm.supports?(:publish)).to be_falsey
       end
     end
 
@@ -127,7 +127,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
       it "does not support publish" do
         allow(vm).to receive(:power_state).and_return("on")
 
-        expect(vm.supports_publish?).to be_falsey
+        expect(vm.supports?(:publish)).to be_falsey
       end
     end
 
@@ -138,21 +138,21 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
       it "does support publish" do
         allow(vm).to receive(:power_state).and_return("off")
 
-        expect(vm.supports_publish?).to be_truthy
+        expect(vm.supports?(:publish)).to be_truthy
       end
     end
   end
 
   describe "#support_conversion_host" do
     it "supports conversion_host" do
-      expect(FactoryBot.create(:vm_redhat).supports_conversion_host?).to eq true
+      expect(FactoryBot.create(:vm_redhat).supports?(:conversion_host)).to eq true
     end
   end
 
-  describe "#supports_terminate?" do
+  describe "#supports?(:terminate)" do
     context "when connected to a provider" do
       it "returns true" do
-        expect(vm.supports_terminate?).to be_truthy
+        expect(vm.supports?(:terminate)).to be_truthy
       end
     end
 
@@ -160,7 +160,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Vm do
       let(:archived_vm) { FactoryBot.create(:vm_redhat) }
 
       it "returns false" do
-        expect(archived_vm.supports_terminate?).to be_falsey
+        expect(archived_vm.supports?(:terminate)).to be_falsey
         expect(archived_vm.unsupported_reason(:terminate)).to eq("The VM is not connected to an active Provider")
       end
     end

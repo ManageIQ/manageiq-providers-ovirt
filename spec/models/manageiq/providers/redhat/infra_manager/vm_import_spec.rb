@@ -106,17 +106,17 @@ describe ManageIQ::Providers::Redhat::InfraManager::VmImport do
 
     it 'validates successfully' do
       allow(ems).to receive(:api_version).and_return('4.1.5')
-      expect(ems.supports_vm_import?).to be_truthy
+      expect(ems.supports?(:vm_import)).to be_truthy
     end
 
     it 'fails validation on old api version' do
       allow(ems).to receive(:api_version).and_return('4.1.4')
-      expect(ems.supports_vm_import?).to be_falsey
+      expect(ems.supports?(:vm_import)).to be_falsey
     end
 
     it 'validates before connecting' do
       allow(ems).to receive(:api_version).and_return(nil)
-      expect(ems.supports_vm_import?).to be_falsey
+      expect(ems.supports?(:vm_import)).to be_falsey
     end
   end
 end

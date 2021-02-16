@@ -3,8 +3,8 @@ module ManageIQ::Providers::Redhat::InfraManager::Vm::Operations::Snapshot
 
   included do
     supports :snapshots do
-      if supports_control?
-        unless ext_management_system.supports_snapshots?
+      if supports?(:control)
+        unless ext_management_system.supports?(:snapshots)
           unsupported_reason_add(:snapshots, ext_management_system.unsupported_reason(:snapshots))
         end
       else

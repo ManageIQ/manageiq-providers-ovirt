@@ -102,7 +102,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
       context "all supported regardless the version" do
         it "all defined features supported" do
           described_class::SUPPORTED_FEATURES.each do |f|
-            expect(ems.send("supports_#{f}?")).to be_truthy
+            expect(ems.supports?(f)).to be_truthy
           end
         end
       end
@@ -112,7 +112,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
         let(:api_version) { '' }
         it "all features supported" do
           described_class::SUPPORTED_FEATURES.each do |f|
-            expect(ems.send("supports_#{f}?")).to be_truthy
+            expect(ems.supports?(f)).to be_truthy
           end
         end
       end

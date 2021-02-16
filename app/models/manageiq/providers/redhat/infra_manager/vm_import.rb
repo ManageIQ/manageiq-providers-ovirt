@@ -71,11 +71,8 @@ module ManageIQ::Providers::Redhat::InfraManager::VmImport
 
   def check_import_supported!(source_provider)
     raise _('Cannot import archived VMs') if source_provider.nil?
-
-    raise unsupported_reason(:vm_import) unless supports_vm_import?
-    unless source_provider.type == ManageIQ::Providers::Vmware::InfraManager.name
-      raise _('Source provider must be of type Vmware')
-    end
+    raise unsupported_reason(:vm_import) unless supports?(:vm_import)
+    raise _('Source provider must be of type Vmware') unless source_provider.type == ManageIQ::Providers::Vmware::InfraManager.name
   end
 
   def queue_self_method_call(userid, action, method_name, *args)
