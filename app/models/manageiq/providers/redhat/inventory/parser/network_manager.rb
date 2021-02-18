@@ -60,7 +60,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::NetworkManager < ManageIQ:
   end
 
   def cloud_tenant_mapper(name)
-    name_parts = name.split(::Settings.ems_ovirt.cloud_tenant_mapper.separator)
-    CloudTenant.find_by(:name => name_parts[::Settings.ems_ovirt.cloud_tenant_mapper.account])
+    name_parts = name.split(::Settings.ems.ems_ovirt.cloud_tenant_mapper.separator)
+    CloudTenant.find_by(:name => name_parts[::Settings.ems.ems_ovirt.cloud_tenant_mapper.account])
   end
 end
