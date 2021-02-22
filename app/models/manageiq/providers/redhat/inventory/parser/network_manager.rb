@@ -21,29 +21,41 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::NetworkManager < ManageIQ:
 
   def cloud_networks
     collector.cloud_networks.each do |n|
+      network = persister.cloud_networks.find_or_build(n["id"])
       tenant = cloud_tenant_mapper(n["name"])
-      network.cloud_tenant = tenant || persister.cloud_tenants.lazy_find(n["tenant_id"])
+      tenant ?
+        network.cloud_tenant = tenant :
+        network.cloud_tenant = persister.cloud_tenants.lazy_find(n["tenant_id"])
     end
   end
 
   def cloud_subnets
     collector.cloud_subnets.each do |s|
+      subnet = persister.cloud_subnets.find_or_build(s.id)
       tenant = cloud_tenant_mapper(s.name)
-      subnet.cloud_tenant = tenant || persister.cloud_tenants.lazy_find(s.tenant_id)
+      tenant ?
+        subnet.cloud_tenant = tenant :
+        subnet.cloud_tenant = persister.cloud_tenants.lazy_find(s.tenant_id)
     end
   end
 
   def network_routers
     collector.network_routers.each do |nr|
+      network_router = persister.network_routers.find_or_build(nr.id)
       tenant = cloud_tenant_mapper(nr.name)
-      network_router.cloud_tenant = tenant || persister.cloud_tenants.lazy_find(nr.tenant_id)
+      tenant ?
+        network_router.cloud_tenant = tenant :
+        network_router.cloud_tenant = persister.cloud_tenants.lazy_find(nr.tenant_id)
     end
   end
 
   def security_groups
     collector.security_groups.each do |s|
+      security_group = persister.security_groups.find_or_build(s.id)
       tenant = cloud_tenant_mapper(s.name)
-      security_group.cloud_tenant = tenant || persister.cloud_tenants.lazy_find(s.tenant_id)
+      tenant ?
+        security_group.cloud_tenant = tenant :
+        security_group.cloud_tenant = persister.cloud_tenants.lazy_find(s.tenant_id)
     end
   end
 
