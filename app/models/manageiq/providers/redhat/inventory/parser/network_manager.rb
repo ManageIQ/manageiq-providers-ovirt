@@ -37,7 +37,7 @@ class ManageIQ::Providers::Redhat::Inventory::Parser::NetworkManager < ManageIQ:
 
   def network_routers
     collector.network_routers.each do |nr|
-      subnet = persister.cloud_subnets.find_or_build(s.id)
+      network_router = persister.network_routers.find_or_build(nr.id)
       tenant = cloud_tenant_mapper(nr.name)
       network_router.cloud_tenant = tenant || persister.cloud_tenants.lazy_find(nr.tenant_id)
     end
