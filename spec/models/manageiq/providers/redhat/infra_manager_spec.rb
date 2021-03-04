@@ -167,6 +167,7 @@ describe ManageIQ::Providers::Redhat::InfraManager do
   context ".raw_connect" do
     let(:options) do
       {
+        :server   => 'ovirt.localdomain',
         :username => 'user',
         :password => 'pword'
       }
@@ -190,9 +191,9 @@ describe ManageIQ::Providers::Redhat::InfraManager do
 
       described_class.raw_connect(options)
     end
-   
+
     it "handle credential validation error" do
-      opts = options.merge({:metrics_server => 'server'}) 
+      opts = options.merge({:metrics_server => 'server'})
 
       allow(described_class).to receive(:raw_connect_v4).and_return(v4_connection)
       allow(v4_connection).to receive(:test).with(hash_including(:raise_exception => true))
