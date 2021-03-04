@@ -291,6 +291,8 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       verify_ssl = opts[:verify_ssl] || 1
       ca_certs = opts[:ca_certs]
 
+      return true if server.blank?
+
       # Decrypt the password:
       password = ManageIQ::Password.try_decrypt(password)
 
