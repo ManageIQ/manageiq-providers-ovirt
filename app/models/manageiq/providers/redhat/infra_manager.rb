@@ -168,6 +168,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                         :id           => "endpoints.default.verify_ssl",
                         :name         => "endpoints.default.verify_ssl",
                         :label        => _("SSL verification"),
+                        :dataType     => "integer",
                         :isRequired   => true,
                         :initialValue => OpenSSL::SSL::VERIFY_PEER,
                         :options      => [
