@@ -1,7 +1,7 @@
 class ManageIQ::Providers::Redhat::Inventory::Persister::InfraManager < ManageIQ::Providers::Redhat::Inventory::Persister
   def initialize_inventory_collections
     add_collection(infra, :disks)
-    add_collection(infra, :clusters, :secondary_refs => {:by_uid_ems => %i[uid_ems]})
+    add_collection(infra, :clusters) { |builder| builder.add_properties(:secondary_refs => {:by_uid_ems => %i[uid_ems]}) }
     add_collection(infra, :ems_folders)
     add_collection(infra, :guest_devices)
     add_collection(infra, :hardwares)
