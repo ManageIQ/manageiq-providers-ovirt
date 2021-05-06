@@ -166,7 +166,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     @cloud_network = CloudNetwork.find_by(:name => "net1")
     expect(@cloud_network).to have_attributes(
       :ems_id                    => @ems.network_manager.id,
-      :type                      => "ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Private",
+      :type                      => "ManageIQ::Providers::Redhat::NetworkManager::CloudNetwork::Private",
       :name                      => "net1",
       :ems_ref                   => "66bcf2f0-092a-43fd-bbe2-0f848ac052ba",
       :shared                    => nil,
@@ -199,7 +199,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     @cloud_subnet = @cloud_network.cloud_subnets.first
     expect(@cloud_subnet).to have_attributes(
       :ems_id                         => @ems.network_manager.id,
-      :type                           => "ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet",
+      :type                           => "ManageIQ::Providers::Redhat::NetworkManager::CloudSubnet",
       :name                           => "sub_net1",
       :ems_ref                        => "7e27ec88-f144-4a46-aecc-cf79deb37021",
       :cidr                           => "192.168.178.0/23",
@@ -224,7 +224,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     @router = NetworkRouter.find_by(:name => "net1net2")
     expect(@router).to have_attributes(
       :ems_id                => @ems.network_manager.id,
-      :type                  => "ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter",
+      :type                  => "ManageIQ::Providers::Redhat::NetworkManager::NetworkRouter",
       :name                  => "net1net2",
       :ems_ref               => "238ec54a-d0ec-4fb4-be6e-1763f6a2b8f4",
       :admin_state_up        => "t",
@@ -242,7 +242,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     @port = NetworkPort.find_by(:name => "nic2")
     expect(@port).to have_attributes(
       :ems_id                            => @ems.network_manager.id,
-      :type                              => "ManageIQ::Providers::Openstack::NetworkManager::NetworkPort",
+      :type                              => "ManageIQ::Providers::Redhat::NetworkManager::NetworkPort",
       :name                              => "nic2",
       :ems_ref                           => "e3d43e58-d4fa-4c8a-ba91-db873892ceee",
       :admin_state_up                    => false,
