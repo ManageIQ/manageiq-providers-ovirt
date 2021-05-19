@@ -30,6 +30,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
 
   include HasNetworkManagerMixin
 
+  supports :metrics
   supports :provisioning
   supports :vm_import do
     # The version of the RHV needs to be at least 4.1.5 due to https://bugzilla.redhat.com/1477375
