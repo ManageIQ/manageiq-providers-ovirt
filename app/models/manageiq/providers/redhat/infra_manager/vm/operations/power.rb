@@ -1,6 +1,7 @@
 module ManageIQ::Providers::Redhat::InfraManager::Vm::Operations::Power
-  def validate_pause
-    validate_unsupported("Pause Operation")
+  extend ActiveSupport::Concern
+  included do
+    supports_not :pause, :reason => "Pause Operation is not available for oVirt/RHV VMs"
   end
 
   def raw_start
