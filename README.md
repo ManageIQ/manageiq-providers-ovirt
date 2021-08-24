@@ -1,9 +1,9 @@
 # ManageIQ::Providers::Ovirt
 
-[![Build Status](https://travis-ci.com/ManageIQ/manageiq-providers-ovirt.svg?branch=lasker)](https://travis-ci.com/ManageIQ/manageiq-providers-ovirt)
+[![Build Status](https://travis-ci.com/ManageIQ/manageiq-providers-ovirt.svg?branch=morphy)](https://travis-ci.com/ManageIQ/manageiq-providers-ovirt)
 [![Maintainability](https://api.codeclimate.com/v1/badges/adb159273f2c5ba5c9b3/maintainability)](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/adb159273f2c5ba5c9b3/test_coverage)](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt/test_coverage)
-[![Security](https://hakiri.io/github/ManageIQ/manageiq-providers-ovirt/lasker.svg)](https://hakiri.io/github/ManageIQ/manageiq-providers-ovirt/lasker)
+[![Security](https://hakiri.io/github/ManageIQ/manageiq-providers-ovirt/morphy.svg)](https://hakiri.io/github/ManageIQ/manageiq-providers-ovirt/morphy)
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq-providers-ovirt?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
