@@ -227,7 +227,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
       :type                  => "ManageIQ::Providers::Redhat::NetworkManager::NetworkRouter",
       :name                  => "net1net2",
       :ems_ref               => "238ec54a-d0ec-4fb4-be6e-1763f6a2b8f4",
-      :admin_state_up        => "t",
+      :admin_state_up        => true,
       :status                => "INACTIVE",
       :external_gateway_info => nil,
       :distributed           => nil,
