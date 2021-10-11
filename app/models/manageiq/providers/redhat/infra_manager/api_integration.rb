@@ -8,6 +8,8 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
 
   included do
     process_api_features_support
+
+    supports :port
   end
 
   SUPPORTED_FEATURES = [
@@ -62,10 +64,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     default_endpoint.path = connect_options[:path]
 
     connection
-  end
-
-  def supports_port?
-    true
   end
 
   def supported_auth_types

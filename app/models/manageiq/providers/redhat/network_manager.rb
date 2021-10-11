@@ -14,6 +14,7 @@ class ManageIQ::Providers::Redhat::NetworkManager < ManageIQ::Providers::Network
   include SupportsFeatureMixin
 
   supports :create
+  supports :port
 
   has_many :public_networks,  :foreign_key => :ems_id, :dependent => :destroy,
            :class_name => "ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Public"
@@ -48,10 +49,6 @@ class ManageIQ::Providers::Redhat::NetworkManager < ManageIQ::Providers::Network
       scheduler.run_instance.scheduled
       scheduler.run_instance.end
     )
-  end
-
-  def supports_port?
-    true
   end
 
   def supports_api_version?
