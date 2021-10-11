@@ -9,9 +9,7 @@ class ManageIQ::Providers::Redhat::InfraManager::Template < ManageIQ::Providers:
     end
   end
 
-  def self.supports_kickstart_provisioning?
-    true
-  end
+  supports :kickstart_provisioning
 
   def provider_object(connection = nil)
     ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4.new(:ems => ext_management_system).get_template_proxy(self, connection)
