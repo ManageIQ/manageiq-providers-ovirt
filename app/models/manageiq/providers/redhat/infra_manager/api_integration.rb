@@ -64,10 +64,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     connection
   end
 
-  def supports_port?
-    true
-  end
-
   def supported_auth_types
     %w[default metrics ssh_keypair]
   end
