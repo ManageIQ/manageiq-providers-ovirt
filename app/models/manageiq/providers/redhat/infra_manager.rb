@@ -30,6 +30,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
 
   include HasNetworkManagerMixin
 
+  supports :catalog
   supports :metrics
   supports :provisioning
   supports :vm_import do
