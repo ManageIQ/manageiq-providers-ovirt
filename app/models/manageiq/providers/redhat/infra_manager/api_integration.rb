@@ -224,8 +224,8 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       )
 
       metrics_username, metrics_password = metrics_authentication&.values_at("userid", "password")
-      metrics_port, metrics_database = metrics_endpoint&.values_at(
-        "metrics_port", "metrics_database"
+      metrics_server, metrics_port, metrics_database = metrics_endpoint&.values_at(
+        "hostname", "port", "path"
       )
 
       !!raw_connect(
@@ -237,6 +237,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
         :ca_certs         => ca_certs,
         :metrics_username => metrics_username,
         :metrics_password => ManageIQ::Password.try_decrypt(metrics_password),
+        :metrics_server   => metrics_server,
         :metrics_port     => metrics_port,
         :metrics_database => metrics_database
       )
