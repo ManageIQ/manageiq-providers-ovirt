@@ -233,7 +233,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
         :password         => ManageIQ::Password.try_decrypt(password),
         :server           => server,
         :port             => port,
-        :verify_ssl       => verify_ssl ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
+        :verify_ssl       => verify_ssl,
         :ca_certs         => ca_certs,
         :metrics_username => metrics_username,
         :metrics_password => ManageIQ::Password.try_decrypt(metrics_password),
@@ -321,9 +321,7 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
       begin
         connection = raw_connect_v4(opts)
         connection.test(:raise_exception => true)
-        return true
-      rescue OvirtSDK4::Error => error
-        raise error if /error.*sso/i.match?(error.message)
+        true
       end
     end
 
