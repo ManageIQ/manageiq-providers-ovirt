@@ -150,31 +150,15 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     t
   end
 
-  def references(collection)
-    target.manager_refs_by_association.try(:[], collection).try(:[], :ems_ref).try(:to_a) || []
-  end
-
-  def name_references(collection)
-    target.manager_refs_by_association.try(:[], collection).try(:[], :name).try(:to_a) || []
-  end
-
   def parse_targets!
     target.targets.each do |t|
       case t
       when VmOrTemplate
-        parse_vm_target!(t)
+        add_target!(:vms, t.ems_ref)
       when Host
-        parse_host_target!(t)
+        add_target!(:hosts, t.ems_ref)
       end
     end
-  end
-
-  def parse_vm_target!(target)
-    add_simple_target!(:vms, target.ems_ref)
-  end
-
-  def parse_host_target!(target)
-    add_simple_target!(:hosts, target.ems_ref)
   end
 
   def infer_related_ems_refs!
@@ -195,12 +179,12 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     changed_vms.each do |vm|
       unless vm.ems_cluster.nil?
         # when we target new vm
-        add_simple_target!(:ems_clusters, vm.ems_cluster.ems_ref)
-        add_simple_target!(:datacenters, vm.parent_datacenter.ems_ref)
+        add_target!(:ems_clusters, vm.ems_cluster.ems_ref)
+        add_target!(:datacenters, vm.parent_datacenter.ems_ref)
       end
 
-      vm.storages.collect(&:ems_ref).compact.each { |ems_ref| add_simple_target!(:storagedomains, ems_ref) } unless vm.storages.nil?
-      add_simple_target!(:templates, vm.ems_ref)
+      vm.storages.collect(&:ems_ref).compact.each { |ems_ref| add_target!(:storagedomains, ems_ref) } unless vm.storages.nil?
+      add_target!(:templates, vm.ems_ref)
     end
   end
 
@@ -209,19 +193,19 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     vms_and_templates.compact.each do |vm|
       clusters = collect_clusters
       clusters.each do |c|
-        add_simple_target!(:clusters, ems_ref_from_sdk(c))
+        add_target!(:clusters, ems_ref_from_sdk(c))
         if c.id == vm.cluster&.id
-          add_simple_target!(:datacenters, ems_ref_from_sdk(c.data_center))
+          add_target!(:datacenters, ems_ref_from_sdk(c.data_center))
         end
       end
 
       disks = collect_attached_disks(vm)
       disks.each do |disk|
         Array.wrap(disk.storage_domains).each do |sd|
-          add_simple_target!(:storagedomains, ems_ref_from_sdk(sd))
+          add_target!(:storagedomains, ems_ref_from_sdk(sd))
         end
       end
-      add_simple_target!(:templates, ems_ref_from_sdk(vm))
+      add_target!(:templates, ems_ref_from_sdk(vm))
     end
   end
 
@@ -229,22 +213,22 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
     changed_hosts = manager.hosts.where(:ems_ref => references(:hosts))
 
     changed_hosts.each do |host|
-      add_simple_target!(:clusters, uuid_from_target(host.ems_cluster))
+      add_target!(:clusters, uuid_from_target(host.ems_cluster))
       host.storages.each do |storage|
-        add_simple_target!(:storagedomains, storage.ems_ref)
+        add_target!(:storagedomains, storage.ems_ref)
       end
       host.switches.each do |switch|
-        add_simple_target!(:switches, switch.uid_ems)
+        add_target!(:switches, switch.uid_ems)
       end
     end
   end
 
   def infer_related_host_ems_refs_api!
     hosts.each do |host|
-      add_simple_target!(:clusters, host.cluster.id)
+      add_target!(:clusters, host.cluster.id)
       manager.with_provider_connection do |connection|
         connection.follow_link(host.network_attachments).each do |attachment|
-          add_simple_target!(:switches, attachment.network.id)
+          add_target!(:switches, attachment.network.id)
         end
       end
     end
@@ -262,11 +246,5 @@ class ManageIQ::Providers::Redhat::Inventory::Collector::TargetCollection < Mana
 
   def ems_ref_from_sdk(object)
     ManageIQ::Providers::Redhat::InfraManager.make_ems_ref(object.href)
-  end
-
-  def add_simple_target!(association, ems_ref)
-    return if ems_ref.blank?
-
-    target.add_target(:association => association, :manager_ref => {:ems_ref => ems_ref})
   end
 end
