@@ -1,6 +1,6 @@
 # ManageIQ::Providers::Ovirt
 
-[![Build Status](https://travis-ci.com/ManageIQ/manageiq-providers-ovirt.svg?branch=master)](https://travis-ci.com/github/ManageIQ/manageiq-providers-ovirt)
+[![CI](https://github.com/ManageIQ/manageiq-providers-ovirt/actions/workflows/ci.yaml/badge.svg)](https://github.com/ManageIQ/manageiq-providers-ovirt/actions/workflows/ci.yaml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/adb159273f2c5ba5c9b3/maintainability)](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/adb159273f2c5ba5c9b3/test_coverage)](https://codeclimate.com/github/ManageIQ/manageiq-providers-ovirt/test_coverage)
 
