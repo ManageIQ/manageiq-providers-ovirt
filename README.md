@@ -6,6 +6,8 @@
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq-providers-ovirt?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+[![Build history for master branch](https://buildstats.info/github/chart/ManageIQ/manageiq-providers-ovirt?branch=master&buildCount=50&includeBuildsFromPullRequest=false&showstats=false)](https://github.com/ManageIQ/manageiq-providers-ovirt/actions?query=branch%3Amaster)
+
 ManageIQ plugin for the oVirt provider.
 
 ## Development
