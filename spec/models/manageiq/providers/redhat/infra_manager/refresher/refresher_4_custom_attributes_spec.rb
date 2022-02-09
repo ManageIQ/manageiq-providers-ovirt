@@ -11,7 +11,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     @collector = ManageIQ::Providers::Redhat::Inventory::Collector
   end
 
-  CASSETTE_PATH = "#{described_class.parent.name.underscore}/refresh/refresher_ovn_provider".freeze
+  CASSETTE_PATH = "#{described_class.module_parent.name.underscore}/refresh/refresher_ovn_provider".freeze
 
   it "will fetch custom_attributes for full and targeted refresh" do
     EmsRefresh.refresh(@ems)

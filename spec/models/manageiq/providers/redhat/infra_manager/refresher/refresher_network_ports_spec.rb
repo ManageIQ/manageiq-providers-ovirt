@@ -11,7 +11,7 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
 
   it 'Network port connected to vm guest_device' do
     EmsRefresh.refresh(@ems)
-    VCR.use_cassette("#{described_class.parent.name.underscore}/refresh/refresher_network_ports_ovn_provider") do
+    VCR.use_cassette("#{described_class.module_parent.name.underscore}/refresh/refresher_network_ports_ovn_provider") do
       Fog::OpenStack.instance_variable_set(:@version, nil)
       EmsRefresh.refresh(@ems.network_manager)
     end
