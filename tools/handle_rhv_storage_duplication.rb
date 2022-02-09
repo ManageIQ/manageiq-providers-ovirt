@@ -33,11 +33,11 @@ class HandleStorageDuplication
   end
 
   def belongs_to_non_rhv_povider?(storage)
-    storage.ext_management_system && !storage.ext_management_system.kind_of?(ManageIQ::Providers::Redhat::InfraManager)
+    storage.ext_management_system && !storage.ext_management_system.kind_of?(ManageIQ::Providers::Ovirt::InfraManager)
   end
 
   def old_storage_location(storage)
-    ext_management_systems = storage.ext_management_system ? [storage.ext_management_system] : ManageIQ::Providers::Redhat::InfraManager.all
+    ext_management_systems = storage.ext_management_system ? [storage.ext_management_system] : ManageIQ::Providers::Ovirt::InfraManager.all
     storagedomain = nil
     ext_management_systems.detect do |ems|
       storage_id = storage.ems_ref.split("/").last
