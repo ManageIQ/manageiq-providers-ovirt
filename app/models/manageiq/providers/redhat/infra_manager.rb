@@ -45,6 +45,10 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
     unsupported_reason_add(:admin_ui, _('Admin UI is supported on version >= 4.1.8')) unless version_at_least?('4.1.8')
   end
 
+  supports :create_iso_datastore do
+    unsupported_reason_add(:create_iso_datastore, _("Already has an ISO datastore")) if iso_datastore
+  end
+
   def ensure_managers
     return unless enabled
     ensure_network_manager
