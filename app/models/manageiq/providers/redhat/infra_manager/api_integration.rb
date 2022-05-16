@@ -68,10 +68,6 @@ module ManageIQ::Providers::Redhat::InfraManager::ApiIntegration
     %w[default metrics ssh_keypair]
   end
 
-  def supports_authentication?(authtype)
-    supported_auth_types.include?(authtype.to_s)
-  end
-
   def ovirt_services
     @ovirt_services ||= ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4.new(:ems => self)
   end
