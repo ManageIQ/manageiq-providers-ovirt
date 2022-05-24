@@ -20,7 +20,6 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   require_nested  :Vm
   require_nested  :DistributedVirtualSwitch
   include_concern :ApiIntegration
-  include_concern :VmImport
   include_concern :AdminUI
 
   has_many :cloud_tenants, :foreign_key => :ems_id, :dependent => :destroy
@@ -34,10 +33,6 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   supports :create
   supports :metrics
   supports :provisioning
-  supports :vm_import do
-    # The version of the RHV needs to be at least 4.1.5 due to https://bugzilla.redhat.com/1477375
-    unsupported_reason_add(:vm_import, _('Cannot import to a RHV provider of version < 4.1.5')) unless version_at_least?('4.1.5')
-  end
 
   supports :admin_ui do
     # Link to oVirt Admin UI is supported for Engine version 4.1.8 or better.
