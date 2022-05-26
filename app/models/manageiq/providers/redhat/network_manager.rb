@@ -13,8 +13,6 @@ class ManageIQ::Providers::Redhat::NetworkManager < ManageIQ::Providers::Network
   include ManageIQ::Providers::Openstack::ManagerMixin
   include SupportsFeatureMixin
 
-  supports :create
-
   has_many :public_networks,  :foreign_key => :ems_id, :dependent => :destroy,
            :class_name => "ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Public"
   has_many :private_networks, :foreign_key => :ems_id, :dependent => :destroy,
