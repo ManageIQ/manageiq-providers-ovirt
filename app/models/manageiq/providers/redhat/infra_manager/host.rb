@@ -23,26 +23,14 @@ class ManageIQ::Providers::Redhat::InfraManager::Host < ::Host
     end
   end
 
-  def validate_enter_maint_mode
-    return inactive_provider_message unless has_active_ems?
-
-    result = validate_power_state('on')
-    return result unless result.nil?
-
-    { :available => true, :message => nil }
+  supports :enter_maint_mode do
+    unsupported_reason_add(:enter_maint_mode, _('The Host is not connected to an active provider')) unless has_active_ems?
+    unsupported_reason_add(:enter_maint_mode, _('The Host is not powered on')) unless power_state == 'on'
   end
 
-  def validate_exit_maint_mode
-    return inactive_provider_message unless has_active_ems?
-
-    result = validate_power_state('maintenance')
-    return result unless result.nil?
-
-    { :available => true, :message => nil }
-  end
-
-  def inactive_provider_message
-    { :available => false, :message => _('The Host is not connected to an active provider') }
+  supports :exit_maint_mode do
+    unsupported_reason_add(:enter_maint_mode, _('The Host is not connected to an active provider')) unless has_active_ems?
+    unsupported_reason_add(:enter_maint_mode, _('The Host is not in maintenance mode')) unless power_state == 'maintenance'
   end
 
   def enter_maint_mode
