@@ -2,6 +2,7 @@ require_relative 'ovirt_refresher_spec_common'
 
 describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
   include OvirtRefresherSpecCommon
+  include Spec::Support::EmsRefreshHelper
 
   describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
     before(:each) do
@@ -16,18 +17,16 @@ describe ManageIQ::Providers::Redhat::InfraManager::Refresher do
                        .to receive(:collect_vnic_profiles).and_return([])
     end
 
-    let(:models_for_host_target) { [ExtManagementSystem, EmsFolder, EmsCluster, Storage, HostStorage, Switch, HostSwitch, Lan, CustomAttribute] }
-
     it 'does not change the host when target refresh after full refresh' do
       EmsRefresh.refresh(@ems)
       @ems.reload
 
-      saved_inventory = serialize_inventory(models_for_host_target)
+      saved_inventory = serialize_inventory
 
       host = @ems.hosts.find_by(:ems_ref => "/api/hosts/9be35c00-6523-4c2f-89d2-680a6b6da4c0")
       EmsRefresh.refresh(host)
       host.reload
-      expect(serialize_inventory(models_for_host_target)).to eq(saved_inventory)
+      assert_inventory_not_changed(saved_inventory, serialize_inventory)
       host.update_attribute(:ipmi_address, "127.0.0.1")
       host.update_authentication(:ipmi => {:userid => "a", :password => "a"})
       EmsRefresh.refresh(host)
