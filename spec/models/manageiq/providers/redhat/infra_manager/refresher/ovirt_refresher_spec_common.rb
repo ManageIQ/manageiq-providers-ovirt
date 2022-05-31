@@ -3,17 +3,6 @@ require 'yaml'
 module OvirtRefresherSpecCommon
   extend ActiveSupport::Concern
 
-  def serialize_inventory(models = [])
-    skip_attributes = %w(updated_on last_refresh_date updated_at last_updated finish_time)
-    inventory = {}
-    models.each do |model|
-      inventory[model.name] = model.all.collect do |rec|
-        rec.attributes.except(*skip_attributes)
-      end.sort_by { |rec| rec["id"] }
-    end
-    inventory
-  end
-
   def init_defaults(hostname: "pluto-vdsg.eng.lab.tlv.redhat.com",
                     ipaddress: "10.35.19.13",
                     port: 443,
@@ -32,6 +21,7 @@ module OvirtRefresherSpecCommon
                              :port => port)
     @ems.update_authentication(:default => {:userid => "admin@internal", :password => "pass123"})
     @ems.default_endpoint.verify_ssl = OpenSSL::SSL::VERIFY_NONE
+    @ems.default_endpoint.path       = "/ovirt-engine/api"
 
     @ovirt_service = ManageIQ::Providers::Redhat::InfraManager::OvirtServices::V4
     allow_any_instance_of(@ovirt_service)
