@@ -236,17 +236,32 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                 :title     => _('Metrics'),
                 :fields    => [
                   {
+                    :component => 'select',
+                    :name      => 'metricsEnable',
+                    :label     => _('Enabled'),
+                    :options   => [
+                      {:label => _('Disabled'), :value => 'disabled'},
+                      {:label => _('Enabled'), :value => 'enabled'},
+                    ],
+                  },
+                  {
                     :component              => 'validate-provider-credentials',
                     :id                     => 'endpoints.metrics.valid',
                     :name                   => 'endpoints.metrics.valid',
                     :skipSubmit             => true,
                     :validationDependencies => %w[type zone_id],
+                    :condition  => {
+                      :when => 'metricsEnable',
+                      :is   => 'enabled',
+                    },
                     :fields                 => [
                       {
-                        :component => "text-field",
-                        :id        => "endpoints.metrics.hostname",
-                        :name      => "endpoints.metrics.hostname",
-                        :label     => _("Hostname (or IPv4 or IPv6 address)"),
+                        :component  => "text-field",
+                        :id         => "endpoints.metrics.hostname",
+                        :name       => "endpoints.metrics.hostname",
+                        :isRequired => true,
+                        :validate   => [{:type => "required"}],
+                        :label      => _("Hostname (or IPv4 or IPv6 address)"),
                       },
                       {
                         :component    => "text-field",
@@ -287,28 +302,32 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                 :title     => _('RSA key pair'),
                 :fields    => [
                   {
+                    :component => 'select',
+                    :name      => 'keypairEnable',
+                    :label     => _('Enabled'),
+                    :options   => [
+                      {:label => _('Disabled'), :value => 'disabled'},
+                      {:label => _('Enabled'), :value => 'enabled'},
+                    ],
+                  },
+                  {
                     :component              => 'validate-provider-credentials',
                     :id                     => 'endpoints.ssh_keypair.valid',
                     :name                   => 'endpoints.ssh_keypair.valid',
                     :skipSubmit             => true,
                     :validationDependencies => %w[type zone_id],
+                    :condition  => {
+                      :when => 'keypairEnable',
+                      :is   => 'enabled',
+                    },
                     :fields                 => [
                       {
-                        :component    => 'text-field',
-                        :type         => 'hidden',
-                        :id           => 'endpoints.ssh_keypair',
-                        :name         => 'endpoints.ssh_keypair',
-                        :initialValue => {},
-                        :condition    => {
-                          :when       => 'authentications.ssh_keypair.userid',
-                          :isNotEmpty => true,
-                        },
-                      },
-                      {
-                        :component => "text-field",
-                        :id        => "authentications.ssh_keypair.userid",
-                        :name      => "authentications.ssh_keypair.userid",
-                        :label     => _("Username"),
+                        :component  => "text-field",
+                        :id         => "authentications.ssh_keypair.userid",
+                        :name       => "authentications.ssh_keypair.userid",
+                        :isRequired => true,
+                        :validate   => [{:type => "required"}],
+                        :label      => _("Username"),
                       },
                       {
                         :component      => "password-field",
