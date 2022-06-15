@@ -1,4 +1,6 @@
 class ManageIQ::Providers::Redhat::NetworkManager::EventCatcher < ::MiqEventCatcher
+  include ManageIQ::Providers::Openstack::EventCatcherMixin
+
   require_nested :Runner
 
   def self.settings_name
