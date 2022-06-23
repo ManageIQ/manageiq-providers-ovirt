@@ -237,12 +237,22 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                 :title     => _('Metrics'),
                 :fields    => [
                   {
-                    :component => 'select',
-                    :name      => 'metricsEnable',
-                    :label     => _('Enabled'),
-                    :options   => [
-                      {:label => _('Disabled'), :value => 'disabled'},
-                      {:label => _('Enabled'), :value => 'enabled'},
+                    :component    => 'protocol-selector',
+                    :id           => 'metricsEnable',
+                    :name         => 'metricsEnable',
+                    :skipSubmit   => true,
+                    :initialValue => 'disabled',
+                    :label        => _('Enabled'),
+                    :options      => [
+                      {
+                        :label => _('Disabled'),
+                        :value => 'disabled'
+                      },
+                      {
+                        :label => _('Enabled'),
+                        :value => 'enabled',
+                        :pivot => 'endpoints.metrics.hostname'
+                      },
                     ],
                   },
                   {
@@ -303,12 +313,22 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
                 :title     => _('RSA key pair'),
                 :fields    => [
                   {
-                    :component => 'select',
-                    :name      => 'keypairEnable',
-                    :label     => _('Enabled'),
-                    :options   => [
-                      {:label => _('Disabled'), :value => 'disabled'},
-                      {:label => _('Enabled'), :value => 'enabled'},
+                    :component    => 'protocol-selector',
+                    :id           => 'keypairEnable',
+                    :name         => 'keypairEnable',
+                    :skipSubmit   => true,
+                    :initialValue => 'disabled',
+                    :label        => _('Enabled'),
+                    :options      => [
+                      {
+                        :label => _('Disabled'),
+                        :value => 'disabled'
+                      },
+                      {
+                        :label => _('Enabled'),
+                        :value => 'enabled',
+                        :pivot => 'authentications.ssh_keypair.userid'
+                      },
                     ],
                   },
                   {
