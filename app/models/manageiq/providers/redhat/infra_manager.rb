@@ -133,7 +133,7 @@ class ManageIQ::Providers::Redhat::InfraManager < ManageIQ::Providers::InfraMana
   end
 
   def self.params_for_create
-    @params_for_create ||= {
+    {
       :fields => [
         {
           :component => 'sub-form',
