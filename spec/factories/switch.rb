@@ -1,9 +1,9 @@
 FactoryBot.define do
-  factory :distributed_virtual_switch_redhat, :class => 'ManageIQ::Providers::Redhat::InfraManager::DistributedVirtualSwitch'
+  factory :distributed_virtual_switch_ovirt, :class => 'ManageIQ::Providers::Ovirt::InfraManager::DistributedVirtualSwitch'
 end
 
 FactoryBot.define do
-  factory :external_distributed_virtual_switch_redhat, :class => 'ManageIQ::Providers::Redhat::InfraManager::ExternalDistributedVirtualSwitch'
+  factory :external_distributed_virtual_switch_ovirt, :class => 'ManageIQ::Providers::Ovirt::InfraManager::ExternalDistributedVirtualSwitch'
 end
 
 FactoryBot.define do

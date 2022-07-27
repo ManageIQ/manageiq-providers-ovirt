@@ -1,6 +1,6 @@
 ---
 :ems:
-  :ems_redhat:
+  :ems_ovirt:
     :consoles:
       :html5_enabled: false
     :resolve_ip_addresses: true
@@ -11,7 +11,6 @@
       :read_timeout: 1.hour
       :open_timeout: 1.minute
     :blacklisted_event_names: []
-  :ems_ovirt:
     :event_handling:
       :event_groups:
         :console:
@@ -52,7 +51,7 @@
     :port:
     :user:
 :ems_refresh:
-  :rhevm:
+  :ovirt:
     :pipeline: 40
     :connections: 10
     :allow_targeted_refresh: true
@@ -63,9 +62,9 @@
 :workers:
   :worker_base:
     :event_catcher:
-      :event_catcher_redhat:
+      :event_catcher_ovirt:
         :poll: 15.seconds
-      :event_catcher_redhat_network:
+      :event_catcher_ovirt_network:
         :poll: 15.seconds
         :topics:
           :neutron: "notifications.*"
@@ -78,7 +77,7 @@
           :event_types_regex: '\A(firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn)'
     :queue_worker_base:
       :ems_metrics_collector_worker:
-        :ems_metrics_collector_worker_redhat: {}
+        :ems_metrics_collector_worker_ovirt: {}
       :ems_refresh_worker:
-        :ems_refresh_worker_redhat: {}
-        :ems_refresh_worker_redhat_network: {}
+        :ems_refresh_worker_ovirt: {}
+        :ems_refresh_worker_ovirt_network: {}
