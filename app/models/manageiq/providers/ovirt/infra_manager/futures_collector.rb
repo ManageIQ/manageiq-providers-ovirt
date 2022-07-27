@@ -4,7 +4,7 @@ class ManageIQ::Providers::Ovirt::InfraManager::FuturesCollector
 
   include Vmdb::Logging
 
-  DEFAULT_PARALLEL_PROCESSING_CAPACITY = ::Settings.ems_refresh.rhevm.pipeline * ::Settings.ems_refresh.rhevm.connections
+  DEFAULT_PARALLEL_PROCESSING_CAPACITY = ::Settings.ems_refresh.ovirt.pipeline * ::Settings.ems_refresh.ovirt.connections
 
   def self.process_keyed_requests_queue(keyed_requests_queue, batch_size = nil)
     collector = new(:batch_size => batch_size)

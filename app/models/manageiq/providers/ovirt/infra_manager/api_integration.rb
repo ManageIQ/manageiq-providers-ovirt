@@ -393,8 +393,8 @@ module ManageIQ::Providers::Ovirt::InfraManager::ApiIntegration
         :insecure        => options[:verify_ssl] == OpenSSL::SSL::VERIFY_NONE,
         :ca_certs        => ca_certs,
         :log             => $rhevm_log,
-        :connections     => options[:connections] || ::Settings.ems_refresh.rhevm.connections,
-        :pipeline        => options[:pipeline] || ::Settings.ems_refresh.rhevm.pipeline
+        :connections     => options[:connections] || ::Settings.ems_refresh.ovirt.connections,
+        :pipeline        => options[:pipeline] || ::Settings.ems_refresh.ovirt.pipeline
       )
     end
 
