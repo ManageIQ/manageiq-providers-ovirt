@@ -524,7 +524,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
   def vm_hardware_guest_devices(persister_hardware, vm, addresses, host)
     networks = {}
     addresses.each do |mac, address|
-      network = persister.networks.lazy_find_by(
+      network = persister.networks.lazy_find(
         :hardware    => persister_hardware,
         :ipaddress   => address[:ipaddress],
         :ipv6address => address[:ipv6address]
