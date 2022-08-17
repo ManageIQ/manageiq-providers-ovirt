@@ -4,7 +4,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Vm do
   let(:host) { FactoryBot.create(:host_ovirt, :ext_management_system => ems) }
   let(:vm)   { FactoryBot.create(:vm_ovirt, :ext_management_system => ems, :host => host) }
 
-  context "#is_available?" do
+  context "#supports?" do
     let(:power_state_on)        { "up" }
     let(:power_state_suspended) { "down" }
 
