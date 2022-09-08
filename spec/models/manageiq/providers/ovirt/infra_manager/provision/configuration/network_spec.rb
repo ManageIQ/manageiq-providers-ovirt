@@ -111,7 +111,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Provision::Configuration::Net
           @task.options[:networks] = [{:network => vnic_profile_id}]
 
           expect(rhevm_vm).to receive(:nics).and_return([rhevm_nic1])
-          expect(nic1_service).to receive(:update).with(:name => "nic1", :vnic_profile => {:id => vnic_profile_id})
+          expect(nic1_service).to receive(:update).with({:name => "nic1", :vnic_profile => {:id => vnic_profile_id}})
 
           @task.configure_network_adapters
         end
@@ -120,7 +120,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Provision::Configuration::Net
           @task.options[:networks] = [{:network => get_profile_description(vnic_profile_name, network.name)}]
 
           expect(rhevm_vm).to receive(:nics).and_return([rhevm_nic1])
-          expect(nic1_service).to receive(:update).with(:name => "nic1", :vnic_profile => {:id => vnic_profile_id})
+          expect(nic1_service).to receive(:update).with({:name => "nic1", :vnic_profile => {:id => vnic_profile_id}})
 
           @task.configure_network_adapters
         end
@@ -129,7 +129,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Provision::Configuration::Net
           @task.options[:networks] = [{:network => '<Empty>'}]
 
           expect(rhevm_vm).to receive(:nics).and_return([rhevm_nic1])
-          expect(nic1_service).to receive(:update).with(:name => "nic1", :vnic_profile => {:id => nil})
+          expect(nic1_service).to receive(:update).with({:name => "nic1", :vnic_profile => {:id => nil}})
 
           @task.configure_network_adapters
         end
@@ -138,11 +138,11 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Provision::Configuration::Net
           @task.options[:networks] = [{:network => vnic_profile_id, :mac_address => mac_address}]
 
           expect(rhevm_vm).to receive(:nics).and_return([rhevm_nic1])
-          expect(nic1_service).to receive(:update).with(
+          expect(nic1_service).to receive(:update).with({
             :name         => "nic1",
             :vnic_profile => {:id => vnic_profile_id},
             :mac          => ovirtSDK4_mac
-          )
+          })
 
           @task.configure_network_adapters
         end
@@ -153,11 +153,11 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Provision::Configuration::Net
 
         expect(rhevm_vm).to receive(:nics).and_return([])
         expect(nics_service).to receive(:add)
-        expect(OvirtSDK4::Nic).to receive(:new).with(
+        expect(OvirtSDK4::Nic).to receive(:new).with({
           :name         => 'nic1',
           :vnic_profile => {:id => "vnic_profile_id"},
           :mac          => ovirtSDK4_mac
-        )
+        })
 
         @task.configure_network_adapters
       end

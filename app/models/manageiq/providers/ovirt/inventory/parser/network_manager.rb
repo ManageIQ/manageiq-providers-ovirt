@@ -24,6 +24,6 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::NetworkManager < ManageIQ::
   def find_ovirt_device_object(network_port)
     nil unless network_port.device_owner&.downcase == 'ovirt'
 
-    persister.guest_devices.lazy_find({:uid_ems => network_port.device_id}, {:ref => :by_uid_ems})
+    persister.guest_devices.lazy_find({:uid_ems => network_port.device_id}, :ref => :by_uid_ems)
   end
 end

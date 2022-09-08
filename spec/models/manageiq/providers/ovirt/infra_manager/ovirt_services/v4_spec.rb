@@ -277,8 +277,9 @@ describe ManageIQ::Providers::Ovirt::InfraManager::OvirtServices::V4 do
         edit_spec = spec['networkAdapters'][:edit].first
         expect(nics_service).to receive(:nic_service).twice.with(edit_spec[:nic_id]).and_return(nic_service)
         expect(nic_service).to receive(:deactivate)
-        expect(nic_service).to receive(:update).with(:name         => edit_spec[:name],
-                                                     :vnic_profile => {:id => edit_spec[:vnic_profile_id]})
+        expect(nic_service).to receive(:update).with({ :name         => edit_spec[:name],
+                                                       :vnic_profile => {:id => edit_spec[:vnic_profile_id]}
+                                                     })
         expect(nic_service).to receive(:activate)
 
         subject
