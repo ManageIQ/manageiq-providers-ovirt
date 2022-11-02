@@ -390,7 +390,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
         :uid_ems          => vm.id,
         :connection_state => "connected",
         :vendor           => "ovirt",
-        :name             => URI.decode(vm.name),
+        :name             => URI::DEFAULT_PARSER.unescape(vm.name),
         :location         => "#{vm.id}.ovf",
         :template         => template,
         :memory_limit     => extract_vm_memory_policy(vm, :max),

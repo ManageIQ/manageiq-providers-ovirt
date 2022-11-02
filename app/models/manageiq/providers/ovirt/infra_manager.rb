@@ -15,6 +15,7 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
   require_nested  :ProvisionViaIso
   require_nested  :ProvisionViaPxe
   require_nested  :ProvisionWorkflow
+  require_nested  :Snapshot
   require_nested  :Storage
   require_nested  :Template
   require_nested  :Vm

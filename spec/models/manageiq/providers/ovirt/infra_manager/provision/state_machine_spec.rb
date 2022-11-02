@@ -19,7 +19,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Provision::StateMachine do
       allow(ems).to receive(:with_disk_attachments_service).with(v).and_return(disk_attachments_service)
       allow(ems).to receive(:with_provider_connection).and_return(false)
       allow(ems).to receive(:storages).and_return(storages)
-      allow(storages).to receive(:find_by).with(:name => storage_name).and_return(storage)
+      allow(storages).to receive(:find_by).with({:name => storage_name}).and_return(storage)
       allow(ems).to receive(:hosts).and_return(hosts)
     end
   end
@@ -87,7 +87,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Provision::StateMachine do
     def test_autostart_destination_with_use_cloud_init
       task.phase_context[:boot_with_cloud_init] = true
 
-      expect(rhevm_vm).to receive(:start).with(:use_cloud_init => an_instance_of(CustomAttribute))
+      expect(rhevm_vm).to receive(:start).with({:use_cloud_init => an_instance_of(CustomAttribute)})
 
       call_method
     end
@@ -95,7 +95,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Provision::StateMachine do
     def test_autostart_destination_without_use_cloud_init
       task.phase_context.delete(:boot_with_cloud_init)
 
-      expect(rhevm_vm).not_to receive(:start).with(:use_cloud_init => an_instance_of(CustomAttribute))
+      expect(rhevm_vm).not_to receive(:start).with({:use_cloud_init => an_instance_of(CustomAttribute)})
 
       call_method
     end
@@ -103,7 +103,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Provision::StateMachine do
     def test_autostart_destination_with_sysprep
       task.phase_context[:boot_with_sysprep] = true
 
-      expect(rhevm_vm).to receive(:start).with(:use_sysprep => an_instance_of(CustomAttribute))
+      expect(rhevm_vm).to receive(:start).with({:use_sysprep => an_instance_of(CustomAttribute)})
 
       call_method
     end
@@ -111,7 +111,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Provision::StateMachine do
     def test_autostart_destination_without_sysyprep
       task.phase_context.delete(:boot_with_sysprep)
 
-      expect(rhevm_vm).not_to receive(:start).with(:use_sysprep => an_instance_of(CustomAttribute))
+      expect(rhevm_vm).not_to receive(:start).with({:use_sysprep => an_instance_of(CustomAttribute)})
 
       call_method
     end

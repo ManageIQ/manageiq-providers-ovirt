@@ -480,6 +480,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
 
       snapshot = v.snapshots.detect { |s| s.uid == "fc082077-576c-4f06-a9cc-be2c3bd8f2d9" }
       expect(snapshot).to have_attributes(
+        :type        => "ManageIQ::Providers::Ovirt::InfraManager::Snapshot",
         :uid         => "fc082077-576c-4f06-a9cc-be2c3bd8f2d9",
         :parent_uid  => "395ead74-54f9-4f16-88bb-21a7a1e4924e",
         :uid_ems     => "fc082077-576c-4f06-a9cc-be2c3bd8f2d9",
