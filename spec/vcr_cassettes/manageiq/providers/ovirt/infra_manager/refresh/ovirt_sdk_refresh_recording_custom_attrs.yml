@@ -7724,3 +7724,1398 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/e23898b2-0540-456c
     content-length: '3057'
     correlation-id: 37873fd5-9e54-4804-bb81-c271d753795d
   :message: 
+https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters{:search=>"status=up"}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <data_centers>
+        <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/setmaster" rel="setmaster"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/cleanfinishedtasks" rel="cleanfinishedtasks"/>
+            </actions>
+            <name>Default</name>
+            <description>The default Data Center</description>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/clusters" rel="clusters"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/networks" rel="networks"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/quotas" rel="quotas"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/qoss" rel="qoss"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/iscsibonds" rel="iscsibonds"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains" rel="storagedomains"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/permissions" rel="permissions"/>
+            <local>false</local>
+            <quota_mode>enabled</quota_mode>
+            <status>up</status>
+            <storage_format>v5</storage_format>
+            <supported_versions>
+                <version>
+                    <major>4</major>
+                    <minor>6</minor>
+                </version>
+            </supported_versions>
+            <version>
+                <major>4</major>
+                <minor>6</minor>
+            </version>
+            <mac_pool href="/ovirt-engine/api/macpools/58ca604b-017d-0374-0220-00000000014e" id="58ca604b-017d-0374-0220-00000000014e"/>
+        </data_center>
+    </data_centers>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:49:56 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '498'
+    correlation-id: 1acb9c94-3448-4c1a-8801-a27f9bdb31b2
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <data_centers>
+        <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/setmaster" rel="setmaster"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/cleanfinishedtasks" rel="cleanfinishedtasks"/>
+            </actions>
+            <name>Default</name>
+            <description>The default Data Center</description>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/clusters" rel="clusters"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/networks" rel="networks"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/quotas" rel="quotas"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/qoss" rel="qoss"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/iscsibonds" rel="iscsibonds"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains" rel="storagedomains"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/permissions" rel="permissions"/>
+            <local>false</local>
+            <quota_mode>enabled</quota_mode>
+            <status>up</status>
+            <storage_format>v5</storage_format>
+            <supported_versions>
+                <version>
+                    <major>4</major>
+                    <minor>6</minor>
+                </version>
+            </supported_versions>
+            <version>
+                <major>4</major>
+                <minor>6</minor>
+            </version>
+            <mac_pool href="/ovirt-engine/api/macpools/58ca604b-017d-0374-0220-00000000014e" id="58ca604b-017d-0374-0220-00000000014e"/>
+        </data_center>
+    </data_centers>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:50:04 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '498'
+    correlation-id: 472db986-2a46-46a6-8c82-389d6a35b667
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <data_centers>
+        <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/setmaster" rel="setmaster"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/cleanfinishedtasks" rel="cleanfinishedtasks"/>
+            </actions>
+            <name>Default</name>
+            <description>The default Data Center</description>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/clusters" rel="clusters"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/networks" rel="networks"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/quotas" rel="quotas"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/qoss" rel="qoss"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/iscsibonds" rel="iscsibonds"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains" rel="storagedomains"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/permissions" rel="permissions"/>
+            <local>false</local>
+            <quota_mode>enabled</quota_mode>
+            <status>up</status>
+            <storage_format>v5</storage_format>
+            <supported_versions>
+                <version>
+                    <major>4</major>
+                    <minor>6</minor>
+                </version>
+            </supported_versions>
+            <version>
+                <major>4</major>
+                <minor>6</minor>
+            </version>
+            <mac_pool href="/ovirt-engine/api/macpools/58ca604b-017d-0374-0220-00000000014e" id="58ca604b-017d-0374-0220-00000000014e"/>
+        </data_center>
+    </data_centers>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:50:12 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '498'
+    correlation-id: 1d09d965-f12a-4fe9-8985-b7e4bb1773b7
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <data_centers>
+        <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/setmaster" rel="setmaster"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/cleanfinishedtasks" rel="cleanfinishedtasks"/>
+            </actions>
+            <name>Default</name>
+            <description>The default Data Center</description>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/clusters" rel="clusters"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/networks" rel="networks"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/quotas" rel="quotas"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/qoss" rel="qoss"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/iscsibonds" rel="iscsibonds"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains" rel="storagedomains"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/permissions" rel="permissions"/>
+            <local>false</local>
+            <quota_mode>enabled</quota_mode>
+            <status>up</status>
+            <storage_format>v5</storage_format>
+            <supported_versions>
+                <version>
+                    <major>4</major>
+                    <minor>6</minor>
+                </version>
+            </supported_versions>
+            <version>
+                <major>4</major>
+                <minor>6</minor>
+            </version>
+            <mac_pool href="/ovirt-engine/api/macpools/58ca604b-017d-0374-0220-00000000014e" id="58ca604b-017d-0374-0220-00000000014e"/>
+        </data_center>
+    </data_centers>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:56:29 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '498'
+    correlation-id: 9b3558a7-8472-4f76-8f61-deb5e7cfdf83
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <data_centers>
+        <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/setmaster" rel="setmaster"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/cleanfinishedtasks" rel="cleanfinishedtasks"/>
+            </actions>
+            <name>Default</name>
+            <description>The default Data Center</description>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/clusters" rel="clusters"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/networks" rel="networks"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/quotas" rel="quotas"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/qoss" rel="qoss"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/iscsibonds" rel="iscsibonds"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains" rel="storagedomains"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/permissions" rel="permissions"/>
+            <local>false</local>
+            <quota_mode>enabled</quota_mode>
+            <status>up</status>
+            <storage_format>v5</storage_format>
+            <supported_versions>
+                <version>
+                    <major>4</major>
+                    <minor>6</minor>
+                </version>
+            </supported_versions>
+            <version>
+                <major>4</major>
+                <minor>6</minor>
+            </version>
+            <mac_pool href="/ovirt-engine/api/macpools/58ca604b-017d-0374-0220-00000000014e" id="58ca604b-017d-0374-0220-00000000014e"/>
+        </data_center>
+    </data_centers>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:56:41 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '498'
+    correlation-id: f7b81954-593a-447f-92ce-1c8bc3b71211
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <data_centers>
+        <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/setmaster" rel="setmaster"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/cleanfinishedtasks" rel="cleanfinishedtasks"/>
+            </actions>
+            <name>Default</name>
+            <description>The default Data Center</description>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/clusters" rel="clusters"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/networks" rel="networks"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/quotas" rel="quotas"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/qoss" rel="qoss"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/iscsibonds" rel="iscsibonds"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains" rel="storagedomains"/>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/permissions" rel="permissions"/>
+            <local>false</local>
+            <quota_mode>enabled</quota_mode>
+            <status>up</status>
+            <storage_format>v5</storage_format>
+            <supported_versions>
+                <version>
+                    <major>4</major>
+                    <minor>6</minor>
+                </version>
+            </supported_versions>
+            <version>
+                <major>4</major>
+                <minor>6</minor>
+            </version>
+            <mac_pool href="/ovirt-engine/api/macpools/58ca604b-017d-0374-0220-00000000014e" id="58ca604b-017d-0374-0220-00000000014e"/>
+        </data_center>
+    </data_centers>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:56:54 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '498'
+    correlation-id: d8f58738-1a97-40de-abe9-cc46845edfe1
+  :message:
+https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <storage_domains>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b" id="ce478559-cbab-42e3-80fb-d0457904666b">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/deactivate" rel="deactivate"/>
+            </actions>
+            <name>domain0</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/disks" rel="disks"/>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>1010391056384</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>true</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/domain0</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v5</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>data</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/deactivate" rel="deactivate"/>
+            </actions>
+            <name>iso-domain</name>
+            <description></description>
+            <comment></comment>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>0</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>false</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/iso</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v1</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>iso</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+    </storage_domains>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:49:54 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '739'
+    correlation-id: 43a41cb0-7666-4438-b20f-f4e6d6c279d8
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <storage_domains>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b" id="ce478559-cbab-42e3-80fb-d0457904666b">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/deactivate" rel="deactivate"/>
+            </actions>
+            <name>domain0</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/disks" rel="disks"/>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>1010391056384</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>true</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/domain0</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v5</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>data</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/deactivate" rel="deactivate"/>
+            </actions>
+            <name>iso-domain</name>
+            <description></description>
+            <comment></comment>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>0</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>false</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/iso</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v1</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>iso</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+    </storage_domains>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:49:56 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '739'
+    correlation-id: b2dac53a-621c-4a82-8bf0-1234a86cb9a4
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <storage_domains>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b" id="ce478559-cbab-42e3-80fb-d0457904666b">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/deactivate" rel="deactivate"/>
+            </actions>
+            <name>domain0</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/disks" rel="disks"/>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>1010391056384</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>true</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/domain0</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v5</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>data</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/deactivate" rel="deactivate"/>
+            </actions>
+            <name>iso-domain</name>
+            <description></description>
+            <comment></comment>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>0</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>false</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/iso</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v1</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>iso</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+    </storage_domains>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:50:01 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '739'
+    correlation-id: 686b7334-cad0-4f6c-b6ef-f247e6785597
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <storage_domains>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b" id="ce478559-cbab-42e3-80fb-d0457904666b">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/deactivate" rel="deactivate"/>
+            </actions>
+            <name>domain0</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/disks" rel="disks"/>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>1010391056384</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>true</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/domain0</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v5</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>data</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/deactivate" rel="deactivate"/>
+            </actions>
+            <name>iso-domain</name>
+            <description></description>
+            <comment></comment>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>0</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>false</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/iso</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v1</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>iso</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+    </storage_domains>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:50:04 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '739'
+    correlation-id: 7d12f82d-5458-4b06-97ac-36ef531acedd
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <storage_domains>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b" id="ce478559-cbab-42e3-80fb-d0457904666b">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/deactivate" rel="deactivate"/>
+            </actions>
+            <name>domain0</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/disks" rel="disks"/>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>1010391056384</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>true</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/domain0</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v5</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>data</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/deactivate" rel="deactivate"/>
+            </actions>
+            <name>iso-domain</name>
+            <description></description>
+            <comment></comment>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>0</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>false</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/iso</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v1</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>iso</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+    </storage_domains>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:50:10 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '739'
+    correlation-id: ad9db70b-ce4d-48ac-9b9b-facd4502e1e5
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <storage_domains>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b" id="ce478559-cbab-42e3-80fb-d0457904666b">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/deactivate" rel="deactivate"/>
+            </actions>
+            <name>domain0</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/disks" rel="disks"/>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>1010391056384</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>true</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/domain0</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v5</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>data</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/deactivate" rel="deactivate"/>
+            </actions>
+            <name>iso-domain</name>
+            <description></description>
+            <comment></comment>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>0</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>false</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/iso</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v1</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>iso</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+    </storage_domains>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:50:13 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '739'
+    correlation-id: 82e3edcd-092a-4b2d-b603-6cf0562ea784
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <storage_domains>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b" id="ce478559-cbab-42e3-80fb-d0457904666b">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/deactivate" rel="deactivate"/>
+            </actions>
+            <name>domain0</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/disks" rel="disks"/>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>1010391056384</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>true</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/domain0</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v5</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>data</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/deactivate" rel="deactivate"/>
+            </actions>
+            <name>iso-domain</name>
+            <description></description>
+            <comment></comment>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>0</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>false</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/iso</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v1</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>iso</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+    </storage_domains>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:56:26 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '739'
+    correlation-id: 377915ba-1a90-4e5f-b640-fc89dcc83943
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <storage_domains>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b" id="ce478559-cbab-42e3-80fb-d0457904666b">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/deactivate" rel="deactivate"/>
+            </actions>
+            <name>domain0</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/disks" rel="disks"/>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>1010391056384</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>true</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/domain0</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v5</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>data</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/deactivate" rel="deactivate"/>
+            </actions>
+            <name>iso-domain</name>
+            <description></description>
+            <comment></comment>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>0</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>false</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/iso</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v1</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>iso</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+    </storage_domains>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:56:29 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '739'
+    correlation-id: '09a15c97-487f-4895-a288-94a087cfb98a'
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <storage_domains>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b" id="ce478559-cbab-42e3-80fb-d0457904666b">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/deactivate" rel="deactivate"/>
+            </actions>
+            <name>domain0</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/disks" rel="disks"/>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>1010391056384</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>true</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/domain0</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v5</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>data</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/deactivate" rel="deactivate"/>
+            </actions>
+            <name>iso-domain</name>
+            <description></description>
+            <comment></comment>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>0</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>false</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/iso</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v1</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>iso</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+    </storage_domains>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:56:38 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '739'
+    correlation-id: fb9c874f-b682-4b2a-972b-d53811e00774
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <storage_domains>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b" id="ce478559-cbab-42e3-80fb-d0457904666b">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/deactivate" rel="deactivate"/>
+            </actions>
+            <name>domain0</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/disks" rel="disks"/>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>1010391056384</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>true</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/domain0</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v5</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>data</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/deactivate" rel="deactivate"/>
+            </actions>
+            <name>iso-domain</name>
+            <description></description>
+            <comment></comment>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>0</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>false</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/iso</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v1</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>iso</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+    </storage_domains>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:56:41 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '739'
+    correlation-id: 361ed318-592b-4a67-b7c5-3dccc5d1f38d
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <storage_domains>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b" id="ce478559-cbab-42e3-80fb-d0457904666b">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/deactivate" rel="deactivate"/>
+            </actions>
+            <name>domain0</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/disks" rel="disks"/>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>1010391056384</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>true</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/domain0</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v5</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>data</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/deactivate" rel="deactivate"/>
+            </actions>
+            <name>iso-domain</name>
+            <description></description>
+            <comment></comment>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>0</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>false</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/iso</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v1</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>iso</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+    </storage_domains>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:56:51 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '739'
+    correlation-id: a1f7ee85-2f98-41e6-9fa7-0c62602c9085
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <storage_domains>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b" id="ce478559-cbab-42e3-80fb-d0457904666b">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/deactivate" rel="deactivate"/>
+            </actions>
+            <name>domain0</name>
+            <description></description>
+            <comment></comment>
+            <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/ce478559-cbab-42e3-80fb-d0457904666b/disks" rel="disks"/>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>1010391056384</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>true</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/domain0</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v5</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>data</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+        <storage_domain href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427">
+            <actions>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/activate" rel="activate"/>
+                <link href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains/298209d2-9413-4f6b-86ac-987401792427/deactivate" rel="deactivate"/>
+            </actions>
+            <name>iso-domain</name>
+            <description></description>
+            <comment></comment>
+            <available>758061727744</available>
+            <backup>false</backup>
+            <block_size>512</block_size>
+            <committed>0</committed>
+            <critical_space_action_blocker>5</critical_space_action_blocker>
+            <discard_after_delete>false</discard_after_delete>
+            <external_status>ok</external_status>
+            <master>false</master>
+            <status>active</status>
+            <storage>
+                <address>agrare-rhv-nfs.fyre.ibm.com</address>
+                <nfs_version>auto</nfs_version>
+                <path>/exports/rhv/iso</path>
+                <type>nfs</type>
+            </storage>
+            <storage_format>v1</storage_format>
+            <supports_discard>false</supports_discard>
+            <supports_discard_zeroes_data>false</supports_discard_zeroes_data>
+            <type>iso</type>
+            <used>313532612608</used>
+            <warning_low_space_indicator>10</warning_low_space_indicator>
+            <wipe_after_delete>false</wipe_after_delete>
+            <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            <data_centers>
+                <data_center href="/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52" id="d8fbd54e-d237-11ec-941a-6cae8b4e2d52"/>
+            </data_centers>
+        </storage_domain>
+    </storage_domains>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:56:54 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '739'
+    correlation-id: 61a8ebe6-6811-4bf7-9484-3d04a799d570
+  :message:
+https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427/files{}GET:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <files>
+        <file href="/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427/files/ubuntu-22.04.1-live-server-amd64.iso" id="ubuntu-22.04.1-live-server-amd64.iso">
+            <name>ubuntu-22.04.1-live-server-amd64.iso</name>
+            <storage_domain href="/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427"/>
+        </file>
+    </files>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:49:56 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '229'
+    correlation-id: d30ccf3d-b88e-412f-a509-94dbd876f301
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <files>
+        <file href="/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427/files/ubuntu-22.04.1-live-server-amd64.iso" id="ubuntu-22.04.1-live-server-amd64.iso">
+            <name>ubuntu-22.04.1-live-server-amd64.iso</name>
+            <storage_domain href="/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427"/>
+        </file>
+    </files>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:50:04 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '229'
+    correlation-id: 43a2935f-dbd1-439e-b170-dc718072ccae
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <files>
+        <file href="/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427/files/ubuntu-22.04.1-live-server-amd64.iso" id="ubuntu-22.04.1-live-server-amd64.iso">
+            <name>ubuntu-22.04.1-live-server-amd64.iso</name>
+            <storage_domain href="/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427"/>
+        </file>
+    </files>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:50:13 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '229'
+    correlation-id: 392dcfe7-aa04-4ea5-be49-1c582e5514fe
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <files>
+        <file href="/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427/files/ubuntu-22.04.1-live-server-amd64.iso" id="ubuntu-22.04.1-live-server-amd64.iso">
+            <name>ubuntu-22.04.1-live-server-amd64.iso</name>
+            <storage_domain href="/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427"/>
+        </file>
+    </files>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:56:29 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '229'
+    correlation-id: b1eb6379-1b35-4405-9d98-58c484d95233
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <files>
+        <file href="/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427/files/ubuntu-22.04.1-live-server-amd64.iso" id="ubuntu-22.04.1-live-server-amd64.iso">
+            <name>ubuntu-22.04.1-live-server-amd64.iso</name>
+            <storage_domain href="/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427"/>
+        </file>
+    </files>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:56:41 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '229'
+    correlation-id: b6cd0eff-5341-40bf-83c1-e85c82364b5a
+  :message:
+- :body: |
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <files>
+        <file href="/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427/files/ubuntu-22.04.1-live-server-amd64.iso" id="ubuntu-22.04.1-live-server-amd64.iso">
+            <name>ubuntu-22.04.1-live-server-amd64.iso</name>
+            <storage_domain href="/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427" id="298209d2-9413-4f6b-86ac-987401792427"/>
+        </file>
+    </files>
+  :code: 200
+  :headers:
+    date: Mon, 12 Dec 2022 15:56:55 GMT
+    server: Apache/2.4.37 (Red Hat Enterprise Linux) OpenSSL/1.1.1k mod_wsgi/4.6.4
+      Python/3.6
+    content-encoding: gzip
+    content-type: application/xml;charset=UTF-8
+    content-length: '229'
+    correlation-id: 63678895-7321-4f2e-83ea-1e0484571004
+  :message:

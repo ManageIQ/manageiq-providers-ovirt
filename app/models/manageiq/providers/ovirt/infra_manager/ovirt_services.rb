@@ -352,7 +352,8 @@ module ManageIQ::Providers::Ovirt::InfraManager::OvirtServices
 
         sd_service = ems_service.system_service.storage_domains_service.storage_domain_service(iso_sd.id)
         iso_images = sd_service.files_service.list
-        iso_images.collect(&:name)
+
+        iso_images
       end
     rescue OvirtSDK4::Error => err
       name = ext_management_system.try(:name)

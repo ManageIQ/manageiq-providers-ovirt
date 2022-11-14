@@ -17,6 +17,7 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
   require_nested  :ProvisionWorkflow
   require_nested  :Snapshot
   require_nested  :Storage
+  require_nested  :IsoDatastore
   require_nested  :Template
   require_nested  :Vm
   require_nested  :DistributedVirtualSwitch
@@ -27,6 +28,8 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
   has_many :vm_and_template_ems_custom_fields, :through => :vms_and_templates, :source => :ems_custom_attributes
   has_many :external_distributed_virtual_switches, :dependent => :destroy, :foreign_key => :ems_id, :inverse_of => :ext_management_system
   has_many :external_distributed_virtual_lans, -> { distinct }, :through => :external_distributed_virtual_switches, :source => :lans
+  has_many :iso_datastores, :dependent => :destroy, :foreign_key => :ems_id, :inverse_of => :ext_management_system
+  has_many :iso_images, :through => :storages
 
   include HasNetworkManagerMixin
 
@@ -42,7 +45,7 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
   end
 
   supports :create_iso_datastore do
-    unsupported_reason_add(:create_iso_datastore, _("Already has an ISO datastore")) if iso_datastore
+    unsupported_reason_add(:create_iso_datastore, _("Already has an ISO datastore")) unless iso_datastores.empty?
   end
 
   def ensure_managers

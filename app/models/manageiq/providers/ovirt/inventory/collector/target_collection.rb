@@ -150,6 +150,10 @@ class ManageIQ::Providers::Ovirt::Inventory::Collector::TargetCollection < Manag
     t
   end
 
+  def advertised_images
+    []
+  end
+
   def parse_targets!
     target.targets.each do |t|
       case t
