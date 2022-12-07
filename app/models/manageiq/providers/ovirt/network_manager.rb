@@ -13,6 +13,9 @@ class ManageIQ::Providers::Ovirt::NetworkManager < ManageIQ::Providers::NetworkM
   include ManageIQ::Providers::Openstack::ManagerMixin
   include SupportsFeatureMixin
 
+  supports :create_network_router
+  supports :cloud_subnet_create
+
   has_many :public_networks,  :foreign_key => :ems_id, :dependent => :destroy,
            :class_name => "ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Public"
   has_many :private_networks, :foreign_key => :ems_id, :dependent => :destroy,
