@@ -40,7 +40,8 @@ describe ManageIQ::Providers::Ovirt::InfraManager::OvirtServices::V4 do
       context "there are iso domains attached to the data-center" do
         context "there are active iso domains" do
           it 'returns iso images from an active domain' do
-            expect(advertised_images).to match_array(%w[iso_1 iso_2])
+            res = advertised_images.map { |img| img.name  }
+            expect(res).to match_array(%w[iso_1 iso_2])
           end
         end
 

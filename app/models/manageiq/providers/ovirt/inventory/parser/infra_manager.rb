@@ -11,6 +11,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
     vms
     networks
     vnic_profiles
+    advertised_images
 
     $rhevm_log.info("#{log_header}...Complete")
   end
@@ -85,7 +86,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
       storage_type = storagedomain.dig(:storage, :type).upcase
       ems_ref = ManageIQ::Providers::Ovirt::InfraManager.make_ems_ref(storagedomain.try(:href))
       location = case storage_type
-                 when 'LOCALFS'
+                 when 'LOCALFS', 'ISO'
                    ems_ref
                  when 'NFS', 'GLUSTERFS'
                    "#{storagedomain.dig(:storage, :address)}:#{storagedomain.dig(:storage, :path)}"
@@ -98,17 +99,32 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
       total       = free + used
       committed   = storagedomain.try(:committed).to_i
 
+      storage_domain_type = storagedomain.dig(:type, :downcase)
+      type = storage_domain_type == 'iso' ? "IsoDatastore" : "Storage"
+
       persister.storages.find_or_build(ems_ref).assign_attributes(
         :ems_ref             => ems_ref,
         :name                => storagedomain.try(:name),
         :store_type          => storage_type,
-        :storage_domain_type => storagedomain.dig(:type, :downcase),
+        :storage_domain_type => storage_domain_type,
         :total_space         => total,
         :free_space          => free,
         :uncommitted         => total - committed,
         :multiplehostaccess  => true,
         :location            => location,
-        :master              => storagedomain.try(:master)
+        :master              => storagedomain.try(:master),
+        :type                => "ManageIQ::Providers::Ovirt::InfraManager::#{type}"
+      )
+    end
+  end
+
+  def advertised_images
+    collector.advertised_images.each do |image|
+      parent_ems_ref = ManageIQ::Providers::Ovirt::InfraManager.make_ems_ref(image.dig(:storage_domain, :href))
+
+      persister.iso_images.build(
+        :name    => image.name,
+        :storage => persister.storages.lazy_find(parent_ems_ref)
       )
     end
   end

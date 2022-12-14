@@ -42,6 +42,10 @@ class ManageIQ::Providers::Ovirt::Inventory::Collector::InfraManager < ManageIQ:
     collected_inventory[:template]
   end
 
+  def advertised_images
+    manager.ovirt_services.advertised_images
+  end
+
   def collect_networks
     collected_inventory[:network]
   end

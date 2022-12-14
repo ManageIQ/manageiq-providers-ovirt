@@ -21,6 +21,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Persister::InfraManager < ManageIQ:
     add_collection(infra, :networks)
     add_collection(infra, :operating_systems)
     add_collection(infra, :vms)
+    add_collection(infra, :iso_images)
 
     add_miq_templates
     add_resource_pools
