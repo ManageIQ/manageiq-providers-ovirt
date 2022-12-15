@@ -1,4 +1,8 @@
 class ManageIQ::Providers::Ovirt::Inventory::Persister::InfraManager < ManageIQ::Providers::Ovirt::Inventory::Persister
+  def vendor
+    "ovirt"
+  end
+
   def initialize_inventory_collections
     add_collection(infra, :disks)
     add_collection(infra, :clusters, :secondary_refs => {:by_uid_ems => %i[uid_ems]})
@@ -6,7 +10,9 @@ class ManageIQ::Providers::Ovirt::Inventory::Persister::InfraManager < ManageIQ:
     add_collection(infra, :guest_devices)
     add_collection(infra, :hardwares)
     add_collection(infra, :vm_and_template_ems_custom_fields)
-    add_collection(infra, :hosts)
+    add_collection(infra, :hosts) do |builder|
+      builder.add_default_values(:vmm_vendor => vendor)
+    end
     add_collection(infra, :host_guest_devices)
     add_collection(infra, :host_hardwares)
     add_collection(infra, :host_networks)
@@ -20,7 +26,9 @@ class ManageIQ::Providers::Ovirt::Inventory::Persister::InfraManager < ManageIQ:
     end
     add_collection(infra, :networks)
     add_collection(infra, :operating_systems)
-    add_collection(infra, :vms)
+    add_collection(infra, :vms) do |builder|
+      builder.add_default_values(:vendor => vendor)
+    end
     add_collection(infra, :iso_images)
 
     add_miq_templates
@@ -80,6 +88,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Persister::InfraManager < ManageIQ:
 
   def add_miq_templates
     add_collection(infra, :miq_templates) do |builder|
+      builder.add_default_values(:vendor => vendor)
       builder.add_properties(:manager_uuids => references(:vms)) if targeted?
     end
   end
