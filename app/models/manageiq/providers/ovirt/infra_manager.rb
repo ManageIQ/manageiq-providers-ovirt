@@ -33,6 +33,12 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
 
   include HasNetworkManagerMixin
 
+  has_one :network_manager,
+          :foreign_key => :parent_ems_id,
+          :class_name  => "ManageIQ::Providers::Ovirt::NetworkManager",
+          :autosave    => true,
+          :dependent   => :destroy
+
   supports :catalog
   supports :create
   supports :metrics
@@ -77,9 +83,7 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
           ems_was_removed = ems.nil? || !ems.enabled
         end
 
-        unless ems_was_removed
-          build_network_manager(:type => 'ManageIQ::Providers::Ovirt::NetworkManager')
-        end
+        build_network_manager unless ems_was_removed
       end
 
       if network_manager
