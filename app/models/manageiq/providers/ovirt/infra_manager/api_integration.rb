@@ -383,7 +383,7 @@ module ManageIQ::Providers::Ovirt::InfraManager::ApiIntegration
         :path   => '/ovirt-engine/api'
       )
 
-      self.class.module_parent::ConnectionManager.instance.get(
+      module_parent::ConnectionManager.instance.get(
         options[:id],
         :url             => url.to_s,
         :username        => options[:username],
@@ -393,8 +393,8 @@ module ManageIQ::Providers::Ovirt::InfraManager::ApiIntegration
         :insecure        => options[:verify_ssl] == OpenSSL::SSL::VERIFY_NONE,
         :ca_certs        => ca_certs,
         :log             => $rhevm_log,
-        :connections     => options[:connections] || self.class.ems_refresh_settings.connections,
-        :pipeline        => options[:pipeline] || self.class.ems_refresh_settings.pipeline
+        :connections     => options[:connections] || ems_refresh_settings.connections,
+        :pipeline        => options[:pipeline] || ems_refresh_settings.pipeline
       )
     end
 
@@ -421,7 +421,7 @@ module ManageIQ::Providers::Ovirt::InfraManager::ApiIntegration
     # @api private
     #
     def resolve_ip_addresses?
-      self.class.ems_settings.resolve_ip_addresses
+      ems_settings.resolve_ip_addresses
     end
 
     #

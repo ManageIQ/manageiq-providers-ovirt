@@ -291,7 +291,7 @@ class ManageIQ::Providers::Ovirt::InfraManager::ProvisionWorkflow < MiqProvision
   end
 
   def dialog_field_visibility_service
-    @dialog_field_visibility_service ||= ManageIQ::Providers::Ovirt::DialogFieldVisibilityService.new
+    @dialog_field_visibility_service ||= self.class.provider_model.module_parent::DialogFieldVisibilityService.new
     @dialog_field_visibility_service
   end
 end
