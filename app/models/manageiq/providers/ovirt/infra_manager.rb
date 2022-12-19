@@ -37,6 +37,7 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
           :foreign_key => :parent_ems_id,
           :class_name  => "ManageIQ::Providers::Ovirt::NetworkManager",
           :autosave    => true,
+          :inverse_of  => :parent_manager,
           :dependent   => :destroy
 
   supports :catalog
@@ -114,6 +115,14 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
 
   def self.description
     @description ||= "oVirt".freeze
+  end
+
+  def self.vm_vendor
+    "ovirt".freeze
+  end
+
+  def self.host_vendor
+    "ovirt".freeze
   end
 
   def self.default_blacklisted_event_names
