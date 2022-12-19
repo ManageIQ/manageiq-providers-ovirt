@@ -1,7 +1,7 @@
 module ManageIQ::Providers::Ovirt
   class InfraManager::Refresher < ManageIQ::Providers::BaseManager::Refresher
     def collect_inventory_for_targets(ems, targets)
-      inventory = inventory_from_ovirt(ems)
+      inventory = inventory_from_api(ems)
       raise "Invalid RHEV server ip address." if inventory.api.nil?
 
       # TODO: before iterating over targets it would be good to check whether ExtMgmntSystem is part of it
@@ -11,7 +11,7 @@ module ManageIQ::Providers::Ovirt
         _log.info "Filtering inventory for #{target.class} [#{target.name}] id: [#{target.id}]..."
 
         ems_api_version = inventory.service.version_string.match(/([\d][\.\d]+)/)
-        data = ManageIQ::Providers::Ovirt::Inventory.build(ems, target)
+        data = ems.class.module_parent::Inventory.build(ems, target)
 
         # TODO: remove when graph refresh supports ems updates
         ems.api_version = ems_api_version
@@ -65,9 +65,9 @@ module ManageIQ::Providers::Ovirt
       [::VmOrTemplate, ::Host]
     end
 
-    def inventory_from_ovirt(ems)
+    def inventory_from_api(ems)
       @ems = ems
-      ManageIQ::Providers::Ovirt::InfraManager::Inventory.new(:ems => ems)
+      ems.class::Inventory.new(:ems => ems)
     end
 
     private
