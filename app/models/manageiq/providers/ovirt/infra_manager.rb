@@ -148,6 +148,14 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
     self::EventCatcher
   end
 
+  def self.ems_settings
+    ::Settings.ems.ems_ovirt
+  end
+
+  def self.ems_refresh_settings
+    ::Settings.ems_refresh.ovirt
+  end
+
   def self.params_for_create
     {
       :fields => [
