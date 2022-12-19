@@ -3,8 +3,6 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
     log_header = "MIQ(#{self.class.name}.#{__method__}) Collecting data for EMS name: [#{collector.manager.name}] id: [#{collector.manager.id}]"
     $rhevm_log.info("#{log_header}...")
 
-    @manager = persister.manager
-
     clusters
     datacenters
     storagedomains
@@ -136,7 +134,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
 
       persister.ems_folders.find_or_build('root_dc').assign_attributes(
         :name    => 'Datacenters',
-        :type    => "#{manager.class}::Folder",
+        :type    => "#{persister.manager.class}::Folder",
         :uid_ems => 'root_dc',
         :hidden  => true,
         :parent  => nil,
@@ -145,7 +143,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
       uid = datacenter.id
       persister.ems_folders.find_or_build(ems_ref).assign_attributes(
         :name    => datacenter.name,
-        :type    => "#{manager.class}::Datacenter",
+        :type    => "#{persister.manager.class}::Datacenter",
         :ems_ref => ems_ref,
         :uid_ems => uid,
         :parent  => persister.ems_folders.lazy_find("root_dc")
@@ -154,7 +152,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
       host_folder_uid = "#{uid}_host"
       persister.ems_folders.find_or_build(host_folder_uid).assign_attributes(
         :name    => 'host',
-        :type    => "#{manager.class}::Folder",
+        :type    => "#{persister.manager.class}::Folder",
         :uid_ems => host_folder_uid,
         :hidden  => true,
         :parent  => persister.ems_folders.lazy_find(ems_ref)
@@ -163,7 +161,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
       vm_folder_uid = "#{uid}_vm"
       persister.ems_folders.find_or_build(vm_folder_uid).assign_attributes(
         :name    => 'vm',
-        :type    => "#{manager.class}::Folder",
+        :type    => "#{persister.manager.class}::Folder",
         :uid_ems => vm_folder_uid,
         :hidden  => true,
         :parent  => persister.ems_folders.lazy_find(ems_ref)
@@ -400,7 +398,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
                              end
 
       attrs_to_assign = {
-        :type             => template ? "#{manager.class}::Template" : "#{manager.class}::Vm",
+        :type             => template ? "#{persister.manager.class}::Template" : "#{persister.manager.class}::Vm",
         :ems_ref          => ems_ref,
         :uid_ems          => vm.id,
         :connection_state => "connected",
@@ -630,7 +628,6 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
   end
 
   private
-  attr_reader :manager
 
   require 'ostruct'
 
