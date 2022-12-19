@@ -144,8 +144,8 @@ class ManageIQ::Providers::Ovirt::InfraManager::ProvisionWorkflow < MiqProvision
     }
   end
 
-  def dialog_name_from_automate(message = 'get_dialog_name')
-    super(message, {'platform' => 'ovirt'})
+  def dialog_name_from_automate(message = 'get_dialog_name', options = {})
+    super(message, options.reverse_merge('platform' => 'ovirt'))
   end
 
   def update_field_visibility
@@ -256,8 +256,8 @@ class ManageIQ::Providers::Ovirt::InfraManager::ProvisionWorkflow < MiqProvision
   def filter_allowed_hosts(all_hosts)
     ems = source_ems
     return all_hosts unless ems
-    ManageIQ::Providers::Ovirt::InfraManager::OvirtServices::V4.new(:ems => ems)
-                                                                .filter_allowed_hosts(self, all_hosts)
+
+    ems.class::OvirtServices::V4.new(:ems => ems).filter_allowed_hosts(self, all_hosts)
   end
 
   def set_or_default_hardware_field_values(vm)
@@ -272,7 +272,7 @@ class ManageIQ::Providers::Ovirt::InfraManager::ProvisionWorkflow < MiqProvision
     return nil if ems.blank?
 
     unless ems.version_at_least?("4.1")
-      return _("Memory Limit is supported for oVirt 4.1 and above. Current provider version is %{version}.") % {:version => ems.api_version}
+      return _("Memory Limit is supported for %{provider} 4.1 and above. Current provider version is %{version}.") % {:provider => ems.class.description, :version => ems.api_version}
     end
 
     allocated = get_value(values[:vm_memory]).to_i
