@@ -32,7 +32,7 @@ class ManageIQ::Providers::Ovirt::InfraManager::EventCatcher::Runner < ManageIQ:
 
   def queue_event(event)
     _log.info "#{log_prefix} Caught event [#{event.name}]"
-    parser = ManageIQ::Providers::Ovirt::InfraManager::EventParser
+    parser = @ems.class::EventParser
     event_hash = parser.event_to_hash(event, @cfg[:ems_id])
     EmsEvent.add_queue('add', @cfg[:ems_id], event_hash)
   end

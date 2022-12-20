@@ -1,5 +1,4 @@
 class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Providers::Ovirt::Inventory::Parser
-  # TODO: review the changes here and find common parts with ManageIQ::Providers::Ovirt::InfraManager::Refresh::Parse::*
   def parse
     log_header = "MIQ(#{self.class.name}.#{__method__}) Collecting data for EMS name: [#{collector.manager.name}] id: [#{collector.manager.id}]"
     $rhevm_log.info("#{log_header}...")
@@ -113,7 +112,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
         :multiplehostaccess  => true,
         :location            => location,
         :master              => storagedomain.try(:master),
-        :type                => "ManageIQ::Providers::Ovirt::InfraManager::#{type}"
+        :type                => "#{persister.manager.class}::#{type}"
       )
     end
   end
@@ -135,7 +134,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
 
       persister.ems_folders.find_or_build('root_dc').assign_attributes(
         :name    => 'Datacenters',
-        :type    => 'ManageIQ::Providers::Ovirt::InfraManager::Folder',
+        :type    => "#{persister.manager.class}::Folder",
         :uid_ems => 'root_dc',
         :hidden  => true,
         :parent  => nil,
@@ -144,7 +143,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
       uid = datacenter.id
       persister.ems_folders.find_or_build(ems_ref).assign_attributes(
         :name    => datacenter.name,
-        :type    => 'ManageIQ::Providers::Ovirt::InfraManager::Datacenter',
+        :type    => "#{persister.manager.class}::Datacenter",
         :ems_ref => ems_ref,
         :uid_ems => uid,
         :parent  => persister.ems_folders.lazy_find("root_dc")
@@ -153,7 +152,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
       host_folder_uid = "#{uid}_host"
       persister.ems_folders.find_or_build(host_folder_uid).assign_attributes(
         :name    => 'host',
-        :type    => 'ManageIQ::Providers::Ovirt::InfraManager::Folder',
+        :type    => "#{persister.manager.class}::Folder",
         :uid_ems => host_folder_uid,
         :hidden  => true,
         :parent  => persister.ems_folders.lazy_find(ems_ref)
@@ -162,7 +161,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
       vm_folder_uid = "#{uid}_vm"
       persister.ems_folders.find_or_build(vm_folder_uid).assign_attributes(
         :name    => 'vm',
-        :type    => 'ManageIQ::Providers::Ovirt::InfraManager::Folder',
+        :type    => "#{persister.manager.class}::Folder",
         :uid_ems => vm_folder_uid,
         :hidden  => true,
         :parent  => persister.ems_folders.lazy_find(ems_ref)
@@ -195,13 +194,11 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
       cluster = collector.collect_cluster_for_host(host)
       dc = collector.collect_datacenter_for_cluster(cluster)
       persister_host = persister.hosts.find_or_build(ems_ref).assign_attributes(
-        :type             => 'ManageIQ::Providers::Ovirt::InfraManager::Host',
         :ems_ref          => ems_ref,
         :name             => host.name || hostname,
         :hostname         => hostname,
         :ipaddress        => ipaddress,
         :uid_ems          => host_id,
-        :vmm_vendor       => 'ovirt',
         :vmm_product      => host.type,
         :vmm_version      => extract_host_version(host_os_version),
         :vmm_buildnumber  => (host_os_version.build if host_os_version),
@@ -401,11 +398,10 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
                              end
 
       attrs_to_assign = {
-        :type             => template ? "ManageIQ::Providers::Ovirt::InfraManager::Template" : "ManageIQ::Providers::Ovirt::InfraManager::Vm",
+        :type             => template ? "#{persister.manager.class}::Template" : "#{persister.manager.class}::Vm",
         :ems_ref          => ems_ref,
         :uid_ems          => vm.id,
         :connection_state => "connected",
-        :vendor           => "ovirt",
         :name             => URI::DEFAULT_PARSER.unescape(vm.name),
         :location         => "#{vm.id}.ovf",
         :template         => template,

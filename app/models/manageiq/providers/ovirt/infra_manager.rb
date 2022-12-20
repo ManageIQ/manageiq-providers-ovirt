@@ -33,6 +33,13 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
 
   include HasNetworkManagerMixin
 
+  has_one :network_manager,
+          :foreign_key => :parent_ems_id,
+          :class_name  => "ManageIQ::Providers::Ovirt::NetworkManager",
+          :autosave    => true,
+          :inverse_of  => :parent_manager,
+          :dependent   => :destroy
+
   supports :catalog
   supports :create
   supports :metrics
@@ -77,9 +84,7 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
           ems_was_removed = ems.nil? || !ems.enabled
         end
 
-        unless ems_was_removed
-          build_network_manager(:type => 'ManageIQ::Providers::Ovirt::NetworkManager')
-        end
+        build_network_manager unless ems_was_removed
       end
 
       if network_manager
@@ -112,6 +117,14 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
     @description ||= "oVirt".freeze
   end
 
+  def self.vm_vendor
+    "ovirt".freeze
+  end
+
+  def self.host_vendor
+    "ovirt".freeze
+  end
+
   def self.default_blacklisted_event_names
     %w(
       UNASSIGNED
@@ -133,6 +146,14 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
 
   def self.event_monitor_class
     self::EventCatcher
+  end
+
+  def self.ems_settings
+    ::Settings.ems.ems_ovirt
+  end
+
+  def self.ems_refresh_settings
+    ::Settings.ems_refresh.ovirt
   end
 
   def self.params_for_create
