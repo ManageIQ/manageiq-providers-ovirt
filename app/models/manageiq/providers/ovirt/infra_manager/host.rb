@@ -17,6 +17,7 @@ class ManageIQ::Providers::Ovirt::InfraManager::Host < ::Host
     true
   end
 
+  supports :capture
   supports :quick_stats do
     unless ext_management_system.supports?(:quick_stats)
       unsupported_reason_add(:quick_stats, 'oVirt API version does not support quick_stats')
