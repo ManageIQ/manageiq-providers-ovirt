@@ -4,6 +4,7 @@ class ManageIQ::Providers::Ovirt::InfraManager::Vm < ManageIQ::Providers::InfraM
   include_concern 'Reconfigure'
   include_concern 'ManageIQ::Providers::Ovirt::InfraManager::VmOrTemplateShared'
 
+  supports :capture
   supports :migrate do
     if blank? || orphaned? || archived?
       unsupported_reason_add(:migrate, "Migrate operation in not supported.")
