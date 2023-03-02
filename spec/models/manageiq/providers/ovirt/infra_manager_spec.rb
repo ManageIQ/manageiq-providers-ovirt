@@ -42,7 +42,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager do
     end
   end
 
-  describe "verify_credentials" do
+  describe "#verify_credentials" do
     let(:ems) { FactoryBot.create(:ems_ovirt) }
 
     context "metrics" do
@@ -160,6 +160,61 @@ describe ManageIQ::Providers::Ovirt::InfraManager do
         expect(ems.version_at_least?("10.1")).to be_falsey
 
         expect(ems.version_at_least?("0")).to be_falsey
+      end
+    end
+  end
+
+  context ".verify_credentials" do
+    let(:default_authentication) { {"userid" => "user", "password" => "pword"} }
+    let(:default_endpoint)       { {"hostname" => "ovirt.localdomain", "port" => 443} }
+    let(:metrics_authentication) { nil }
+    let(:metrics_endpoint)       { nil }
+
+    let(:params) do
+      {
+        "endpoints"       => {
+          "default" => default_endpoint,
+          "metrics" => metrics_endpoint
+        },
+        "authentications" => {
+          "default" => default_authentication,
+          "metrics" => metrics_authentication
+        }
+      }
+    end
+
+    it "calls check_connect_api" do
+      expect(described_class).to receive(:check_connect_api).with(hash_including(:username => "user", :password => "pword", :server => "ovirt.localdomain", :port => 443)).and_return(true)
+      described_class.verify_credentials(params)
+    end
+
+    context "with verify_ssl VERIFY_PEER" do
+      let(:default_endpoint) { {"hostname" => "ovirt.localdomain", "port" => 443, "verify_ssl" => OpenSSL::SSL::VERIFY_PEER} }
+
+      it "calls check_connect_api with verify_ssl" do
+        expect(described_class).to receive(:check_connect_api).with(hash_including(:verify_ssl => OpenSSL::SSL::VERIFY_PEER)).and_return(true)
+        described_class.verify_credentials(params)
+      end
+    end
+
+    context "with trusted CA certificates" do
+      let(:default_endpoint) { {"hostname" => "ovirt.localdomain", "port" => 443, "verify_ssl" => OpenSSL::SSL::VERIFY_PEER, "certificate_authority" => ca} }
+      let(:ca) { "----- BEGIN CERTIFICATE -----\n----- END CERTIFICATE -----\n" }
+
+      it "calls check_connect_api with verify_ssl" do
+        expect(described_class).to receive(:check_connect_api).with(hash_including(:verify_ssl => OpenSSL::SSL::VERIFY_PEER, :ca_certs => ca)).and_return(true)
+        described_class.verify_credentials(params)
+      end
+    end
+
+    context "with a metrics endpoint" do
+      let(:metrics_authentication) { {"userid" => "psql", "password" => "postgres"} }
+      let(:metrics_endpoint)       { {"hostname" => "ovirt.localdomain", "port" => 5432, "path" => "ovirt_engine_history"} }
+
+      it "calls check_connect_api and check_connect_metrics" do
+        expect(described_class).to receive(:check_connect_api).with(hash_including(:username => "user", :password => "pword", :server => "ovirt.localdomain", :port => 443)).and_return(true)
+        expect(described_class).to receive(:check_connect_metrics).with(hash_including(:metrics_username => "psql", :metrics_password => "postgres", :metrics_server => "ovirt.localdomain", :metrics_port => 5432)).and_return(true)
+        described_class.verify_credentials(params)
       end
     end
   end
