@@ -215,8 +215,8 @@ module ManageIQ::Providers::Ovirt::InfraManager::ApiIntegration
       metrics_authentication = args.dig("authentications", "metrics")
 
       username, password = default_authentication&.values_at("userid", "password")
-      server, port, verify_ssl, ca_certs = default_endpoint&.values_at(
-        "hostname", "port", "verify_ssl", "ca_certs"
+      server, port, verify_ssl, certificate_authority = default_endpoint&.values_at(
+        "hostname", "port", "verify_ssl", "certificate_authority"
       )
 
       metrics_username, metrics_password = metrics_authentication&.values_at("userid", "password")
@@ -230,7 +230,7 @@ module ManageIQ::Providers::Ovirt::InfraManager::ApiIntegration
         :server           => server,
         :port             => port,
         :verify_ssl       => verify_ssl,
-        :ca_certs         => ca_certs,
+        :ca_certs         => certificate_authority,
         :metrics_username => metrics_username,
         :metrics_password => ManageIQ::Password.try_decrypt(metrics_password),
         :metrics_server   => metrics_server,
