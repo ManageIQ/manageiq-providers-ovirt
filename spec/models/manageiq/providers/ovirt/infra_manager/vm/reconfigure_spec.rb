@@ -373,6 +373,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Vm::Reconfigure do
   describe 'available_vlans' do
     let(:dc1) { FactoryBot.create(:datacenter_ovirt, :name => 'dc1', :ems_ref => 'dc1-ems-ref', :ems_ref_type => 'Datacenter') }
     let(:cluster) { FactoryBot.create(:ems_cluster, :uid_ems => "uid_ems", :name => 'cluster') }
+    let(:rp) { FactoryBot.create(:resource_pool, :ext_management_system => ems) }
     let(:host1) { FactoryBot.create(:host_ovirt, :ext_management_system => ems, :ems_cluster => cluster) }
     let(:host2) { FactoryBot.create(:host_ovirt, :ext_management_system => ems, :ems_cluster => cluster) }
     let(:dist_switch) { FactoryBot.create(:distributed_virtual_switch_ovirt, :ems_id => ems.id, :name => "network") }
@@ -400,6 +401,26 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Vm::Reconfigure do
         expect(vlans).to match_array([lan_mgmt.name, lan_A.name])
       end
 
+      context 'with a powered off vm' do
+        let(:vm) { FactoryBot.create(:vm_ovirt, :ext_management_system => ems, :storage => storage, :raw_power_state => 'down') }
+
+        context 'with a parent_cluster' do
+          before do
+            dc1.add_child(cluster)
+            cluster.add_child(rp)
+            rp.add_child(vm)
+          end
+
+          it 'returns lans from all hosts in the cluster' do
+            expect(vm.available_vlans).to match_array(["lanA", "lanB", "ovirtmgmt"])
+          end
+        end
+
+        it 'returns no lans' do
+          expect(vm.available_vlans).to be_empty
+        end
+      end
+
       context 'with external lans' do
         let!(:ext_dist_switch) do
           FactoryBot.create(:external_distributed_virtual_switch_ovirt,
@@ -419,6 +440,26 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Vm::Reconfigure do
 
           expect(vlans.count).to eq(3)
           expect(vlans).to match_array([lan_mgmt.name, lan_A.name, "#{ext_lan.name}/#{ext_dist_switch.name}"])
+        end
+
+        context 'with a powered off vm' do
+          let(:vm) { FactoryBot.create(:vm_ovirt, :ext_management_system => ems, :storage => storage, :raw_power_state => 'down') }
+
+          context 'with a parent_cluster' do
+            before do
+              dc1.add_child(cluster)
+              cluster.add_child(rp)
+              rp.add_child(vm)
+            end
+
+            it 'returns all cluster lans plus external lans' do
+              expect(vm.available_vlans).to match_array(["lanA", "lanB", "ovirtmgmt", "ext_lan/ext_network"])
+            end
+          end
+
+          it 'returns only external lans' do
+            expect(vm.available_vlans).to match_array(["ext_lan/ext_network"])
+          end
         end
 
         context 'more datacenters with same external networks' do
