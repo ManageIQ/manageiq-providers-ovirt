@@ -24,7 +24,13 @@ module ManageIQ::Providers::Ovirt::InfraManager::Vm::Reconfigure
   end
 
   def available_vlans
-    vlans = host.lans.pluck(:name)
+    vlans = if host
+              host.lans.pluck(:name)
+            elsif parent_cluster
+              parent_cluster.lans.pluck(:name)
+            else
+              []
+            end
 
     vlans.sort.concat(available_external_vlans)
   end
