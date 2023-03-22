@@ -120,7 +120,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
     expect(SystemService.count).to eq(0)
 
     expect(Relationship.count).to eq(20)
-    expect(MiqQueue.count).to eq(8)
+    expect(MiqQueue.count).to eq(7)
 
     expect(CloudNetwork.count).to eq(3)
     expect(CloudSubnet.count).to eq(3)

@@ -1,8 +1,6 @@
 class ManageIQ::Providers::Ovirt::NetworkManager < ManageIQ::Providers::NetworkManager
   require_nested :CloudNetwork
   require_nested :CloudSubnet
-  require_nested :EventCatcher
-  require_nested :EventParser
   require_nested :FloatingIp
   require_nested :NetworkPort
   require_nested :NetworkRouter
@@ -53,10 +51,6 @@ class ManageIQ::Providers::Ovirt::NetworkManager < ManageIQ::Providers::NetworkM
 
   def supported_auth_types
     %w(default amqp)
-  end
-
-  def self.event_monitor_class
-    ManageIQ::Providers::Ovirt::NetworkManager::EventCatcher
   end
 
   def create_cloud_network(options)

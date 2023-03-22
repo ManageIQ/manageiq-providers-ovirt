@@ -64,17 +64,6 @@
     :event_catcher:
       :event_catcher_ovirt:
         :poll: 15.seconds
-      :event_catcher_ovirt_network:
-        :poll: 15.seconds
-        :topics:
-          :neutron: "notifications.*"
-        :duration: 10.seconds
-        :capacity: 50
-        :amqp_port: 5672
-        :amqp_heartbeat: 30
-        :amqp_recovery_attempts: 4
-        :ceilometer:
-          :event_types_regex: '\A(firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn)'
     :queue_worker_base:
       :ems_metrics_collector_worker:
         :ems_metrics_collector_worker_ovirt: {}
