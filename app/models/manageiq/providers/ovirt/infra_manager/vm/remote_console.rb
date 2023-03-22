@@ -62,7 +62,8 @@ class ManageIQ::Providers::Ovirt::InfraManager::Vm
       {
         :connection => conn,
         :type       => 'application/x-virt-viewer',
-        :name       => 'console.vv'
+        :name       => 'console.vv',
+        :proto      => 'native'
       }
     end
 
