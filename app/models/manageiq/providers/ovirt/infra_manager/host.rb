@@ -87,11 +87,32 @@ class ManageIQ::Providers::Ovirt::InfraManager::Host < ::Host
                 :title     => _('Web Service'),
                 :fields    => [
                   {
+                    :component    => 'protocol-selector',
+                    :id           => 'wsEnabled',
+                    :name         => 'wsEnabled',
+                    :skipSubmit   => true,
+                    :initialValue => 'disabled',
+                    :label        => _('Enabled'),
+                    :options      => [
+                      {
+                        :label => _('Disabled'),
+                        :value => 'disabled'
+                      },
+                      {
+                        :label => _('Enabled'),
+                        :value => 'enabled',
+                      },
+                    ],
+                  },
+                  {
                     :component  => 'validate-host-credentials',
                     :id         => 'endpoints.ws.valid',
                     :name       => 'endpoints.ws.valid',
                     :skipSubmit => true,
-                    :isRequired => true,
+                    :condition  => {
+                      :when => 'wsEnabled',
+                      :is   => 'enabled',
+                    },
                     :fields     => [
                       {
                         :component  => "text-field",
