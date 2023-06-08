@@ -1,5 +1,5 @@
 ---
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/clusters{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/clusters{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <clusters>
@@ -556,7 +556,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/clusters{}GET:
     content-length: '1629'
     correlation-id: 537fcf56-3d0f-409f-ae7e-aa08ccd43eb9
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/storagedomains{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/storagedomains{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <storage_domains>
@@ -1043,7 +1043,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/storagedomains{}G
     content-length: '2670'
     correlation-id: 9bdb6877-ce7b-4088-846b-14cabc4d25c2
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/hosts{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <hosts>
@@ -1327,7 +1327,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts{}GET:
     content-length: '2335'
     correlation-id: 0406325f-3a2f-485f-9b4a-810a58e12982
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <vms>
@@ -1656,7 +1656,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms{}GET:
     content-length: '3708'
     correlation-id: d8b83238-94a0-408e-80f6-80c6fdd29fff
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/templates{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/templates{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <templates>
@@ -1956,7 +1956,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/templates{}GET:
     content-length: '1614'
     correlation-id: cf134f00-8806-456a-b483-f3b5ca9bc6e8
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/networks{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/networks{}GET:
 - &1
   :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -2014,7 +2014,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/networks{}GET:
     correlation-id: 396bfdd7-9da0-40cf-9588-9de225f41f0e
   :message: 
 - *1
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/datacenters{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <data_centers>
@@ -2078,7 +2078,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters{}GET:
     content-length: '525'
     correlation-id: 75b5846b-95bf-4b29-beb3-2654e6ae784f
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/disks{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/disks{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <disks>
@@ -3017,7 +3017,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/disks{}GET:
     content-length: '2708'
     correlation-id: 110cfabe-5ff7-4974-a3dc-4e55941da6eb
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vnicprofiles{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vnicprofiles{}GET:
 - &2
   :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -3053,7 +3053,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vnicprofiles{}GET
     correlation-id: 5ae900f8-60cc-49bb-b0d2-78a27111ca6e
   :message: 
 - *2
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/ce40bb38-f10a-43f3-8e15-d0ffad692a19/nics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/hosts/ce40bb38-f10a-43f3-8e15-d0ffad692a19/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <host_nics>
@@ -3099,7 +3099,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/ce40bb38-f1
     content-length: '591'
     correlation-id: cddcb53b-f915-41a8-b8bc-abe3c6c333f8
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/ce40bb38-f10a-43f3-8e15-d0ffad692a19/statistics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/hosts/ce40bb38-f10a-43f3-8e15-d0ffad692a19/statistics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <statistics>
@@ -3345,7 +3345,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/ce40bb38-f1
     content-length: '1240'
     correlation-id: bea855bc-68a8-4c51-9fb2-3eb4c7dcc012
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/9be35c00-6523-4c2f-89d2-680a6b6da4c0/nics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/hosts/9be35c00-6523-4c2f-89d2-680a6b6da4c0/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <host_nics>
@@ -3391,7 +3391,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/9be35c00-65
     content-length: '589'
     correlation-id: c7ce6509-bcab-4256-8df1-5d6261909b8b
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/9be35c00-6523-4c2f-89d2-680a6b6da4c0/statistics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/hosts/9be35c00-6523-4c2f-89d2-680a6b6da4c0/statistics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <statistics>
@@ -3637,7 +3637,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/9be35c00-65
     content-length: '1225'
     correlation-id: 1bf0518e-0c6e-40c2-b5e9-e00c4a12ee44
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/8070fa6d-5b82-412c-9d41-a00017205c73/nics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/8070fa6d-5b82-412c-9d41-a00017205c73/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <nics>
@@ -3669,7 +3669,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/8070fa6d-5b82
     content-length: '432'
     correlation-id: d28b5c85-d9b6-4ef0-bcdc-2c496be28991
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/8070fa6d-5b82-412c-9d41-a00017205c73/reporteddevices{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/8070fa6d-5b82-412c-9d41-a00017205c73/reporteddevices{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <reported_devices/>
@@ -3682,7 +3682,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/8070fa6d-5b82
     content-length: '96'
     correlation-id: a1680904-e7f2-4b8d-8820-b3e93f9e29f1
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/8070fa6d-5b82-412c-9d41-a00017205c73/snapshots{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/8070fa6d-5b82-412c-9d41-a00017205c73/snapshots{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <snapshots>
@@ -3706,7 +3706,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/8070fa6d-5b82
     content-length: '331'
     correlation-id: c8dda2a4-c14d-4094-9fff-bb2183e03146
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/8070fa6d-5b82-412c-9d41-a00017205c73/diskattachments{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/8070fa6d-5b82-412c-9d41-a00017205c73/diskattachments{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <disk_attachments>
@@ -3730,7 +3730,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/8070fa6d-5b82
     content-length: '320'
     correlation-id: 6fc76225-b8f4-4ab3-8431-3a732957c334
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e/nics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <nics>
@@ -3841,7 +3841,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8
     content-length: '626'
     correlation-id: 7c470d85-106b-44cd-ac0b-3d2fc5e18e6e
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e/reporteddevices{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e/reporteddevices{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <reported_devices>
@@ -3914,7 +3914,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8
     content-length: '374'
     correlation-id: 35de0999-2b55-4771-b8c1-b3b02147574f
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e/snapshots{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e/snapshots{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <snapshots>
@@ -4227,7 +4227,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8
     content-length: '1822'
     correlation-id: a501adc8-f019-499a-9e72-7dea8786839f
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e/diskattachments{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e/diskattachments{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <disk_attachments>
@@ -4300,7 +4300,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8
     content-length: '339'
     correlation-id: d53e9987-609c-4213-8fed-fa8dc68dd96a
   :message: 
-? https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/templates/00000000-0000-0000-0000-000000000000/diskattachments{}GET
+? https://ovirt.example.com:443/ovirt-engine/api/templates/00000000-0000-0000-0000-000000000000/diskattachments{}GET
 : - :body: |
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
       <disk_attachments/>
@@ -4313,7 +4313,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8
       content-length: '96'
       correlation-id: 4dc9ac1b-0f92-439f-8731-8e212ccf6d78
     :message: 
-? https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/templates/bcdd6891-68c9-4629-8c72-668c2353ab11/diskattachments{}GET
+? https://ovirt.example.com:443/ovirt-engine/api/templates/bcdd6891-68c9-4629-8c72-668c2353ab11/diskattachments{}GET
 : - :body: |
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
       <disk_attachments>
@@ -4338,7 +4338,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8
       content-length: '334'
       correlation-id: 3198aeeb-4013-419a-af18-1e6d0b501e98
     :message: 
-? https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/templates/5037cc2a-0268-4412-a591-ee7da56efe53/diskattachments{}GET
+? https://ovirt.example.com:443/ovirt-engine/api/templates/5037cc2a-0268-4412-a591-ee7da56efe53/diskattachments{}GET
 : - :body: |
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
       <disk_attachments>
@@ -4363,7 +4363,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8
       content-length: '332'
       correlation-id: c4207684-b53d-43dd-b473-6f7e49b45cfd
     :message: 
-? https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters/2812e1c2-fb19-4bf9-ac42-74c069a5e507/storagedomains{}GET
+? https://ovirt.example.com:443/ovirt-engine/api/datacenters/2812e1c2-fb19-4bf9-ac42-74c069a5e507/storagedomains{}GET
 : - :body: |
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
       <storage_domains>
@@ -4581,7 +4581,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8
       content-length: '1505'
       correlation-id: bad0e511-009e-4954-ae70-aec97ca4efcb
     :message: 
-? https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters/944df9ee-3274-43c4-908f-8c35e59e483b/storagedomains{}GET
+? https://ovirt.example.com:443/ovirt-engine/api/datacenters/944df9ee-3274-43c4-908f-8c35e59e483b/storagedomains{}GET
 : - :body: |
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
       <storage_domains>
@@ -4766,7 +4766,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8
       content-length: '1341'
       correlation-id: ec838744-6738-4fbe-9aa5-a81718c4f189
     :message: 
-? https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e/snapshots/395ead74-54f9-4f16-88bb-21a7a1e4924e/disks{}GET
+? https://ovirt.example.com:443/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e/snapshots/395ead74-54f9-4f16-88bb-21a7a1e4924e/disks{}GET
 : - :body: |
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
       <disks>
@@ -4837,7 +4837,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8
       content-length: '523'
       correlation-id: cd2c76a4-40f6-4796-a6d7-e44265f4e6dc
     :message: 
-? https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/ce40bb38-f10a-43f3-8e15-d0ffad692a19/networkattachments{}GET
+? https://ovirt.example.com:443/ovirt-engine/api/hosts/ce40bb38-f10a-43f3-8e15-d0ffad692a19/networkattachments{}GET
 : - :body: |
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
       <network_attachments>
@@ -4918,7 +4918,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8
       content-length: '625'
       correlation-id: e667e2b5-5e45-46f8-8b64-bfc649b20aee
     :message: 
-? https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/hosts/9be35c00-6523-4c2f-89d2-680a6b6da4c0/networkattachments{}GET
+? https://ovirt.example.com:443/ovirt-engine/api/hosts/9be35c00-6523-4c2f-89d2-680a6b6da4c0/networkattachments{}GET
 : - :body: |
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
       <network_attachments>
@@ -4999,7 +4999,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8
       content-length: '623'
       correlation-id: dae9b6bd-d9ca-4715-bf67-82119dbaf349
     :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <vm href="/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e" id="a1293e54-dae8-496f-baa4-27719592113e">
@@ -5195,7 +5195,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8
     content-length: '3236'
     correlation-id: '0378e098-b98f-431b-9cd6-d84474a3e01b'
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/clusters/1c273044-e6ca-492f-9ac2-47381b626808{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/clusters/1c273044-e6ca-492f-9ac2-47381b626808{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <cluster href="/ovirt-engine/api/clusters/1c273044-e6ca-492f-9ac2-47381b626808" id="1c273044-e6ca-492f-9ac2-47381b626808">
@@ -5296,7 +5296,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/clusters/1c273044
     content-length: '1236'
     correlation-id: ae8ceb9d-ee02-4d79-80ea-01bdecf7c0be
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/clusters/5a55d518-00c7-00ef-015b-000000000055{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/clusters/5a55d518-00c7-00ef-015b-000000000055{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <cluster href="/ovirt-engine/api/clusters/5a55d518-00c7-00ef-015b-000000000055" id="5a55d518-00c7-00ef-015b-000000000055">
@@ -5396,7 +5396,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/clusters/5a55d518
     content-length: '1181'
     correlation-id: b4c92ed5-fb7f-413e-8d83-62eeb71ef9ae
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/clusters/b875154c-5b87-4068-aa3f-f32c4d672193{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/clusters/b875154c-5b87-4068-aa3f-f32c4d672193{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <cluster href="/ovirt-engine/api/clusters/b875154c-5b87-4068-aa3f-f32c4d672193" id="b875154c-5b87-4068-aa3f-f32c4d672193">
@@ -5496,7 +5496,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/clusters/b875154c
     content-length: '1186'
     correlation-id: a4268d89-c31d-4e48-b070-b8d1dd6f0d29
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters/944df9ee-3274-43c4-908f-8c35e59e483b{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/datacenters/944df9ee-3274-43c4-908f-8c35e59e483b{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <data_center href="/ovirt-engine/api/datacenters/944df9ee-3274-43c4-908f-8c35e59e483b" id="944df9ee-3274-43c4-908f-8c35e59e483b">
@@ -5533,7 +5533,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters/944df
     content-length: '418'
     correlation-id: b5890a08-ff0b-42ac-a953-876381f360ad
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/storagedomains/723b4112-1502-4b01-83a7-2ba87d1bbb35{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/storagedomains/723b4112-1502-4b01-83a7-2ba87d1bbb35{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <storage_domain href="/ovirt-engine/api/storagedomains/723b4112-1502-4b01-83a7-2ba87d1bbb35" id="723b4112-1502-4b01-83a7-2ba87d1bbb35">
@@ -5586,7 +5586,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/storagedomains/72
     content-length: '728'
     correlation-id: 5411242b-eda8-4a9c-b910-28db91a2392a
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/8070fa6d-5b82-412c-9d41-a00017205c73/applications{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/8070fa6d-5b82-412c-9d41-a00017205c73/applications{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <applications/>
@@ -5599,7 +5599,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/8070fa6d-5b82
     content-length: '91'
     correlation-id: a0ce92ab-5620-4af1-8a1f-906c4fe3d275
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e/applications{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/a1293e54-dae8-496f-baa4-27719592113e/applications{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <applications/>
@@ -5624,7 +5624,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/vms/a1293e54-dae8
     content-length: '91'
     correlation-id: 5fd783a5-b92a-44a8-a985-555a9abe60a8
   :message: 
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters{:search=>"status=up"}GET:
+https://ovirt.example.com:443/ovirt-engine/api/datacenters{:search=>"status=up"}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <data_centers>
@@ -5713,7 +5713,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters{:sear
     content-length: '498'
     correlation-id: 0733c314-26e7-41c3-b7f5-8e46213cc321
   :message:
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427/files{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427/files{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <files>
@@ -5750,7 +5750,7 @@ https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/storagedomains/29
     content-length: '229'
     correlation-id: 76ce04f5-8c83-4b78-9f8c-e22ccb2921a2
   :message:
-https://pluto-vdsg.eng.lab.tlv.redhat.com:443/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <storage_domains>

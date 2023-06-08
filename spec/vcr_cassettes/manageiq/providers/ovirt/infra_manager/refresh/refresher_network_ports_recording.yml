@@ -1,5 +1,5 @@
 ---
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/clusters{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/clusters{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <clusters>
@@ -455,7 +455,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/clusters{}GET:
     content-length: '1892'
     correlation-id: 849c5e55-c127-466f-8ed9-c171a6a5dc23
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/storagedomains{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/storagedomains{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <storage_domains>
@@ -635,7 +635,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/storagedomains{}GET:
     content-length: '1065'
     correlation-id: 537dd399-6a0e-43cd-924f-14efd9b7ac7b
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/hosts{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <hosts>
@@ -917,7 +917,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts{}GET:
     content-length: '2311'
     correlation-id: 33e6fa24-9970-4691-a7a4-9fe25a4c86d4
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <vms>
@@ -1821,7 +1821,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms{}GET:
     content-length: '5460'
     correlation-id: 2b56de0a-a77d-44d6-89e6-214ef18084cf
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/templates{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/templates{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <templates>
@@ -2128,7 +2128,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/templates{}GET:
     content-length: '1826'
     correlation-id: 73d04c25-f813-4b6f-8ccd-459755434e74
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/networks{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/networks{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <networks>
@@ -2244,7 +2244,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/networks{}GET:
     content-length: '819'
     correlation-id: 97a579b9-e80d-4fb2-8d2e-f267dc6bb8b1
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/datacenters{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <data_centers>
@@ -2308,7 +2308,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters{}GET:
     content-length: '540'
     correlation-id: 5b98c246-746d-4854-a646-42fc41e5ae42
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/disks{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/disks{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <disks>
@@ -2949,7 +2949,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/disks{}GET:
     content-length: '3207'
     correlation-id: c3967fe3-b251-43d9-a9cb-0f093a61eb2a
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vnicprofiles{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vnicprofiles{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <vnic_profiles>
@@ -3021,7 +3021,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vnicprofiles{}GET:
     content-length: '657'
     correlation-id: fdc32d0a-5138-4eb6-bb8e-e8ac5f7d8b7f
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/dc0e9719-0189-49b1-81dc-b3db078a8ed0/nics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/hosts/dc0e9719-0189-49b1-81dc-b3db078a8ed0/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <host_nics>
@@ -3066,7 +3066,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/dc0e9719-0189-49
     content-length: '571'
     correlation-id: 3d83fcf6-435d-4485-8130-88837bf7c78d
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/dc0e9719-0189-49b1-81dc-b3db078a8ed0/statistics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/hosts/dc0e9719-0189-49b1-81dc-b3db078a8ed0/statistics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <statistics>
@@ -3312,7 +3312,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/dc0e9719-0189-49
     content-length: '1205'
     correlation-id: 0a29ae9b-8354-4bde-a311-a85942c72f26
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/72877001-6012-4921-bdd2-3ff17043083e/nics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/hosts/72877001-6012-4921-bdd2-3ff17043083e/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <host_nics>
@@ -3357,7 +3357,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/72877001-6012-49
     content-length: '573'
     correlation-id: 5dab0d77-cdc6-43b4-bfb8-80e83c4e5e4f
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/72877001-6012-4921-bdd2-3ff17043083e/statistics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/hosts/72877001-6012-4921-bdd2-3ff17043083e/statistics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <statistics>
@@ -3603,7 +3603,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/72877001-6012-49
     content-length: '1229'
     correlation-id: 45ed4d52-b2f2-48d8-887a-ad35f093c9f7
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de-b258-ae471ea31056/nics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de-b258-ae471ea31056/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <nics>
@@ -3635,7 +3635,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de
     content-length: '430'
     correlation-id: eb3c348a-1dcb-4325-848d-7beb47af8c9c
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de-b258-ae471ea31056/reporteddevices{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de-b258-ae471ea31056/reporteddevices{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <reported_devices/>
@@ -3648,7 +3648,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de
     content-length: '96'
     correlation-id: 9679cade-a495-4de8-8217-79e69ac891a3
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de-b258-ae471ea31056/snapshots{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de-b258-ae471ea31056/snapshots{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <snapshots>
@@ -3782,7 +3782,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de
     content-length: '1618'
     correlation-id: 7d1e5bd5-31b1-425c-8ffd-070f61938486
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de-b258-ae471ea31056/diskattachments{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de-b258-ae471ea31056/diskattachments{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <disk_attachments>
@@ -3826,7 +3826,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de
     content-length: '409'
     correlation-id: bad1e901-6181-4a93-9e3c-0a96cdcee3ef
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6-b413-b33d5d394312/nics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6-b413-b33d5d394312/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <nics>
@@ -3858,7 +3858,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6
     content-length: '431'
     correlation-id: e1afee1b-d71c-4a64-a083-9c7faac136ee
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6-b413-b33d5d394312/reporteddevices{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6-b413-b33d5d394312/reporteddevices{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <reported_devices/>
@@ -3871,7 +3871,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6
     content-length: '96'
     correlation-id: d9b2b94d-e92f-4b43-9705-7af0badc5996
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6-b413-b33d5d394312/snapshots{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6-b413-b33d5d394312/snapshots{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <snapshots>
@@ -3895,7 +3895,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6
     content-length: '332'
     correlation-id: f1425fe7-8226-4a26-a707-b4df3739e3a7
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6-b413-b33d5d394312/diskattachments{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6-b413-b33d5d394312/diskattachments{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <disk_attachments>
@@ -3919,7 +3919,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6
     content-length: '322'
     correlation-id: d3aba390-a7e3-4ef8-9207-7ce9d702fd3a
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3-bda6-1ee289a6adf0/nics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3-bda6-1ee289a6adf0/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <nics>
@@ -4055,7 +4055,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3
     content-length: '994'
     correlation-id: b33beb97-edfe-4c50-8d7a-c36bcc0d5671
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3-bda6-1ee289a6adf0/reporteddevices{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3-bda6-1ee289a6adf0/reporteddevices{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <reported_devices>
@@ -4115,7 +4115,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3
     content-length: '423'
     correlation-id: c4657032-6f34-4ea6-bb88-d8ce27cdf205
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3-bda6-1ee289a6adf0/snapshots{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3-bda6-1ee289a6adf0/snapshots{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <snapshots>
@@ -4139,7 +4139,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3
     content-length: '333'
     correlation-id: 2d421130-61d9-43da-9e32-dac4d31e0140
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3-bda6-1ee289a6adf0/diskattachments{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3-bda6-1ee289a6adf0/diskattachments{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <disk_attachments>
@@ -4164,7 +4164,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3
     content-length: '340'
     correlation-id: fc20b933-cb3d-49a0-ac4a-eab6f998cb57
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/4309cad3-636d-4207-bbb6-58d071b45a48/nics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/4309cad3-636d-4207-bbb6-58d071b45a48/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <nics>
@@ -4216,7 +4216,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/4309cad3-636d-4207
     content-length: '616'
     correlation-id: dfb7cf02-058f-41d0-8e53-c78c754a235e
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/4309cad3-636d-4207-bbb6-58d071b45a48/reporteddevices{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/4309cad3-636d-4207-bbb6-58d071b45a48/reporteddevices{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <reported_devices>
@@ -4249,7 +4249,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/4309cad3-636d-4207
     content-length: '366'
     correlation-id: 83320f35-5246-42e4-a112-ea05492d9a6f
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/4309cad3-636d-4207-bbb6-58d071b45a48/snapshots{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/4309cad3-636d-4207-bbb6-58d071b45a48/snapshots{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <snapshots>
@@ -4273,7 +4273,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/4309cad3-636d-4207
     content-length: '332'
     correlation-id: 34a3c260-fad4-417b-ab76-3fecda16eb97
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/4309cad3-636d-4207-bbb6-58d071b45a48/diskattachments{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/4309cad3-636d-4207-bbb6-58d071b45a48/diskattachments{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <disk_attachments>
@@ -4298,7 +4298,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/4309cad3-636d-4207
     content-length: '342'
     correlation-id: 1c0b5eba-f022-4135-9998-9f0633fa9c20
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370-8240-df9e732bc3e1/nics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370-8240-df9e732bc3e1/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <nics>
@@ -4330,7 +4330,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370
     content-length: '431'
     correlation-id: 2d5a0ba6-8aae-4eae-b897-b34d6b6f480e
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370-8240-df9e732bc3e1/reporteddevices{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370-8240-df9e732bc3e1/reporteddevices{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <reported_devices/>
@@ -4343,7 +4343,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370
     content-length: '96'
     correlation-id: b9525dcd-5fc8-4a9c-9935-0154e813256e
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370-8240-df9e732bc3e1/snapshots{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370-8240-df9e732bc3e1/snapshots{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <snapshots>
@@ -4595,7 +4595,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370
     content-length: '1757'
     correlation-id: a8204482-9986-401c-91ad-d2acdbf676a6
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370-8240-df9e732bc3e1/diskattachments{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370-8240-df9e732bc3e1/diskattachments{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <disk_attachments>
@@ -4619,7 +4619,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370
     content-length: '321'
     correlation-id: b4509000-aa2a-4f9c-a639-840b5906f9c1
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/e23898b2-0540-456c-a1ce-0df108c4df9a/nics{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/e23898b2-0540-456c-a1ce-0df108c4df9a/nics{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <nics>
@@ -4687,7 +4687,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/e23898b2-0540-456c
     content-length: '633'
     correlation-id: 0216ecf4-d0bc-4954-852e-854b85dfc540
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/e23898b2-0540-456c-a1ce-0df108c4df9a/reporteddevices{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/e23898b2-0540-456c-a1ce-0df108c4df9a/reporteddevices{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <reported_devices/>
@@ -4700,7 +4700,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/e23898b2-0540-456c
     content-length: '96'
     correlation-id: 68299f2e-57ce-4414-84c2-cae9f5a57178
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/e23898b2-0540-456c-a1ce-0df108c4df9a/snapshots{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/e23898b2-0540-456c-a1ce-0df108c4df9a/snapshots{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <snapshots>
@@ -4724,7 +4724,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/e23898b2-0540-456c
     content-length: '331'
     correlation-id: 0b553bcb-e4ee-472a-b898-cf706e02f891
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/e23898b2-0540-456c-a1ce-0df108c4df9a/diskattachments{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/e23898b2-0540-456c-a1ce-0df108c4df9a/diskattachments{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <disk_attachments>
@@ -4748,7 +4748,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/e23898b2-0540-456c
     content-length: '320'
     correlation-id: 8e59b149-9144-44dc-937e-4f22b8824de5
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/templates/00000000-0000-0000-0000-000000000000/diskattachments{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/templates/00000000-0000-0000-0000-000000000000/diskattachments{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <disk_attachments/>
@@ -4761,7 +4761,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/templates/00000000-000
     content-length: '96'
     correlation-id: 5c828e94-f885-4299-9dae-a80d6fa7b602
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/templates/8e418698-62e0-4260-a111-11109aa80c59/diskattachments{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/templates/8e418698-62e0-4260-a111-11109aa80c59/diskattachments{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <disk_attachments>
@@ -4786,7 +4786,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/templates/8e418698-62e
     content-length: '335'
     correlation-id: a7c58045-41fc-43c0-bff2-aa06a473908f
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/templates/24e5c60d-8dad-4456-ab29-730d3aa8111d/diskattachments{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/templates/24e5c60d-8dad-4456-ab29-730d3aa8111d/diskattachments{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <disk_attachments>
@@ -4812,7 +4812,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/templates/24e5c60d-8da
     content-length: '355'
     correlation-id: 5d8e432e-cb3a-4006-86d8-69ea3099446e
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters/5ca0335c-be48-4cf4-acd3-283763cb7e04/storagedomains{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/datacenters/5ca0335c-be48-4cf4-acd3-283763cb7e04/storagedomains{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <storage_domains>
@@ -4969,7 +4969,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters/5ca0335c-b
     content-length: '882'
     correlation-id: 53aa310a-ae5b-4dfc-9449-823132049aa9
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters/2c4d1610-6b88-4330-a745-26e1f2b4ad97/storagedomains{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/datacenters/2c4d1610-6b88-4330-a745-26e1f2b4ad97/storagedomains{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <storage_domains/>
@@ -4982,7 +4982,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters/2c4d1610-6
     content-length: '95'
     correlation-id: 7454ede7-2272-498e-acd6-c82ad9e09182
   :message: 
-? https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de-b258-ae471ea31056/snapshots/2dc97444-22fa-47c9-972f-a947f6fa7b5d/disks{}GET
+? https://ovirt.example.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de-b258-ae471ea31056/snapshots/2dc97444-22fa-47c9-972f-a947f6fa7b5d/disks{}GET
 : - :body: |
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
       <disks>
@@ -5062,7 +5062,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters/2c4d1610-6
       content-length: '628'
       correlation-id: e75dccaf-e5ba-45ab-981c-2c8fd00f668a
     :message: 
-? https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370-8240-df9e732bc3e1/snapshots/0a66f7f7-d99d-4e99-99ec-5410b8ed28cd/disks{}GET
+? https://ovirt.example.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370-8240-df9e732bc3e1/snapshots/0a66f7f7-d99d-4e99-99ec-5410b8ed28cd/disks{}GET
 : - :body: |
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
       <disks>
@@ -5098,7 +5098,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters/2c4d1610-6
       content-length: '472'
       correlation-id: 21542c47-16a6-4446-9ad3-50b78b5df18f
     :message: 
-? https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370-8240-df9e732bc3e1/snapshots/102a8aa9-2d13-4dcc-ba31-295eca9b0805/disks{}GET
+? https://ovirt.example.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370-8240-df9e732bc3e1/snapshots/102a8aa9-2d13-4dcc-ba31-295eca9b0805/disks{}GET
 : - :body: |
       <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
       <disks>
@@ -5134,7 +5134,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters/2c4d1610-6
       content-length: '471'
       correlation-id: 391a3445-2bad-4b7a-9bbd-f9593af9e36d
     :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/dc0e9719-0189-49b1-81dc-b3db078a8ed0/networkattachments{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/hosts/dc0e9719-0189-49b1-81dc-b3db078a8ed0/networkattachments{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <network_attachments>
@@ -5215,7 +5215,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/dc0e9719-0189-49
     content-length: '618'
     correlation-id: d9a9df96-255a-4178-bb59-51457931bef2
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/72877001-6012-4921-bdd2-3ff17043083e/networkattachments{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/hosts/72877001-6012-4921-bdd2-3ff17043083e/networkattachments{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <network_attachments>
@@ -5296,7 +5296,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/hosts/72877001-6012-49
     content-length: '617'
     correlation-id: 24780c52-8720-440d-b62e-8a4df3e83b8c
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de-b258-ae471ea31056/applications{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de-b258-ae471ea31056/applications{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <applications/>
@@ -5309,7 +5309,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/ca7e8d64-0fc7-45de
     content-length: '91'
     correlation-id: a0ce92ab-5620-4af1-8a1f-906c4fe3d275
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6-b413-b33d5d394312/applications{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6-b413-b33d5d394312/applications{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <applications/>
@@ -5322,7 +5322,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/91d6db68-edd9-42c6
     content-length: '91'
     correlation-id: a0ce92ab-5620-4af1-8a1f-906c4fe3d277
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3-bda6-1ee289a6adf0/applications{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3-bda6-1ee289a6adf0/applications{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <applications/>
@@ -5335,7 +5335,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/882b9a7c-f3f0-49a3
     content-length: '91'
     correlation-id: a0ce92ab-5620-4af1-8a1f-906c4fe3d279
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/4309cad3-636d-4207-bbb6-58d071b45a48/applications{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/4309cad3-636d-4207-bbb6-58d071b45a48/applications{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <applications/>
@@ -5348,7 +5348,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/4309cad3-636d-4207
     content-length: '91'
     correlation-id: a0ce92ab-5620-4af1-8a1f-906c4fe3d281
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370-8240-df9e732bc3e1/applications{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370-8240-df9e732bc3e1/applications{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <applications/>
@@ -5361,7 +5361,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/a99773ed-28a3-4370
     content-length: '91'
     correlation-id: a0ce92ab-5620-4af1-8a1f-906c4fe3d283
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/e23898b2-0540-456c-a1ce-0df108c4df9a/applications{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/vms/e23898b2-0540-456c-a1ce-0df108c4df9a/applications{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <applications/>
@@ -5386,7 +5386,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/vms/e23898b2-0540-456c
     content-length: '91'
     correlation-id: 5fd783a5-b92a-44a8-a985-555a9abe60a8
   :message: 
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters{:search=>"status=up"}GET:
+https://ovirt.example.com:443/ovirt-engine/api/datacenters{:search=>"status=up"}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <data_centers>
@@ -5431,7 +5431,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters{:search=>"
     content-length: '498'
     correlation-id: a24b0636-c3a9-47d9-8135-2c6723ffde9f
   :message:
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/datacenters/d8fbd54e-d237-11ec-941a-6cae8b4e2d52/storagedomains{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <storage_domains>
@@ -5602,7 +5602,7 @@ https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/datacenters/d8fbd54e-d
     content-length: '739'
     correlation-id: dce551ba-b644-4a18-89f7-f2cf33344832
   :message:
-https://engine-43.lab.inz.redhat.com:443/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427/files{}GET:
+https://ovirt.example.com:443/ovirt-engine/api/storagedomains/298209d2-9413-4f6b-86ac-987401792427/files{}GET:
 - :body: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <files>
