@@ -3,9 +3,11 @@ module Spec::Support::OvirtSDK
   class ConnectionVCR < OvirtSDK4::Connection
     attr_accessor :all_req_hash
     attr_reader :path_to_recording, :is_recording
-    DEFAULT_REC_PATH = 'spec/vcr_cassettes/manageiq/providers/ovirt/infra_manager/refresh/ovirt_sdk_refresh_recording.yml'.freeze
-    def initialize(opts = {}, path_to_recording = DEFAULT_REC_PATH, is_recording = false)
+
+    def initialize(opts = {}, path_to_recording = nil, is_recording = false)
       @all_req_hash = {}
+      raise ArgumentError if path_to_recording.nil?
+
       @path_to_recording = path_to_recording
       if opts[:loaded_yml]
         @all_req_hash = opts[:loaded_yml]
