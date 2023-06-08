@@ -6,7 +6,8 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
   let(:ip_address) { '192.168.1.107' }
 
   before(:each) do
-    init_defaults(:hostname => 'pluto-vdsg.eng.lab.tlv.redhat.com', :ipaddress => '10.35.19.13', :port => 443)
+    secrets = Rails.application.secrets.ovirt
+    init_defaults(:hostname => secrets[:hostname], :ipaddress => secrets[:ipaddress])
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/ovirt/infra_manager/refresh/refresher_target_host.yml')
 
     @ems.default_endpoint.path = "/ovirt-engine/api"

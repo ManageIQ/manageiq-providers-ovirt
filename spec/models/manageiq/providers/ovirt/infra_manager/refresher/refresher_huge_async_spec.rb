@@ -10,8 +10,9 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
   let(:orig_yml_path) { 'spec/vcr_cassettes/manageiq/providers/ovirt/infra_manager/refresh/ovirt_sdk_refresh_recording_for_mod.yml'.freeze }
 
   before(:each) do
-    init_defaults
-    init_connection_vcr
+    secrets = Rails.application.secrets.ovirt
+    init_defaults(:hostname => secrets[:hostname], :ipaddress => secrets[:ipaddress])
+    init_connection_vcr('spec/vcr_cassettes/manageiq/providers/ovirt/infra_manager/refresh/ovirt_sdk_refresh_recording.yml')
   end
 
   it "will perform a full refresh on v4.1" do

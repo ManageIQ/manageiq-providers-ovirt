@@ -6,7 +6,8 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
   let(:counted_models) { [CustomAttribute, EmsFolder, EmsCluster, Datacenter].freeze }
 
   before(:each) do
-    init_defaults
+    secrets = Rails.application.secrets.ovirt
+    init_defaults(:hostname => secrets[:hostname], :ipaddress => secrets[:ipaddress])
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/ovirt/infra_manager/refresh/ovirt_sdk_refresh_graph_target_template.yml')
   end
 

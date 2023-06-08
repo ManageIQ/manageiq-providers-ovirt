@@ -5,13 +5,14 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
   include OvirtRefresherSpecCommon
 
   before(:each) do
-    init_defaults(:hostname => 'engine-43.lab.inz.redhat.com', :port => 443)
+    secrets = Rails.application.secrets.ovirt
+    init_defaults(:hostname => secrets[:hostname], :ipaddress => secrets[:ipaddress])
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/ovirt/infra_manager/refresh/refresher_multi_datacenter_network_recording.yml')
   end
 
   it 'external networks belong to dc' do
     EmsRefresh.refresh(@ems)
-    VCR.use_cassette("#{described_class.module_parent.name.underscore}/refresh/refresher_multi_external_network_ovn_provider") do
+    VCR.use_cassette("#{described_class.module_parent.name.underscore}/refresh/refresher_ovn_provider") do
       Fog::OpenStack.instance_variable_set(:@version, nil)
       EmsRefresh.refresh(@ems.network_manager)
     end

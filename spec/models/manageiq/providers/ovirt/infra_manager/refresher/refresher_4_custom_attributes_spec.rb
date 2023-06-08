@@ -5,7 +5,8 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
   include OvirtRefresherSpecCommon
 
   before(:each) do
-    init_defaults(:hostname => 'engine-43.lab.inz.redhat.com', :port => 443)
+    secrets = Rails.application.secrets.ovirt
+    init_defaults(:hostname => secrets[:hostname], :ipaddress => secrets[:ipaddress])
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/ovirt/infra_manager/refresh/ovirt_sdk_refresh_recording_custom_attrs.yml')
 
     @collector = ManageIQ::Providers::Ovirt::Inventory::Collector

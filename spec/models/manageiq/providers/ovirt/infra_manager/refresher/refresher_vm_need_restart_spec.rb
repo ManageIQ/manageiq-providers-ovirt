@@ -4,7 +4,8 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
   include OvirtRefresherSpecCommon
 
   before(:each) do
-    init_defaults(:hostname => 'engine-43.lab.inz.redhat.com', :ipaddress => '192.168.178.44', :port => 443)
+    secrets = Rails.application.secrets.ovirt
+    init_defaults(:hostname => secrets[:hostname], :ipaddress => secrets[:ipaddress])
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/ovirt/infra_manager/refresh/refresher_reconfigure_with_restart_needed_recording.yml')
   end
 
