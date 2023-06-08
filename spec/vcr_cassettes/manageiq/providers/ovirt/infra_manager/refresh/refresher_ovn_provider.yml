@@ -335,6 +335,41 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
+      string: '{"subnets": [{"ip_version": 4, "allocation_pools": [{"start": "192.168.178.2",
+        "stop": "192.168.179.255"}], "gateway_ip": "192.168.178.1", "name": "sub_net1",
+        "enable_dhcp": true, "network_id": "153eca4f-a202-4322-b0f5-a70ee2f57f51",
+        "tenant_id": "00000000000000000000000000000001", "cidr": "192.168.178.0/23",
+        "dns_nameservers": ["192.168.178.1"], "id": "7e27ec88-f144-4a46-aecc-cf79deb37021"}]}'
+    http_version:
+  recorded_at: Wed, 07 Jun 2023 19:24:22 GMT
+- request:
+    method: get
+    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/subnets?limit=1000&marker=7e27ec88-f144-4a46-aecc-cf79deb37021
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/2.2.4
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - Akm4hQww5LwH5dE40BwjWi_AExpfTU6L--QDXWHrKoEOJsTWxsNEjRJurDJd-mDGI445VjHosfoB8rtGSXciyw
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - BaseHTTP/0.6 Python/3.6.8
+      Date:
+      - Wed, 07 Jun 2023 19:24:22 GMT
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
       string: '{"subnets": []}'
     http_version:
   recorded_at: Wed, 07 Jun 2023 19:24:22 GMT
@@ -372,6 +407,42 @@ http_interactions:
 - request:
     method: get
     uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/ports?limit=1000
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/2.2.4
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - Akm4hQww5LwH5dE40BwjWi_AExpfTU6L--QDXWHrKoEOJsTWxsNEjRJurDJd-mDGI445VjHosfoB8rtGSXciyw
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - BaseHTTP/0.6 Python/3.6.8
+      Date:
+      - Wed, 07 Jun 2023 19:24:22 GMT
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ports": [{"device_owner": "oVirt", "port_security_enabled": true,
+        "fixed_ips": [{"subnet_id": "7e27ec88-f144-4a46-aecc-cf79deb37021", "ip_address":
+        "192.168.178.2"}], "id": "e3d43e58-d4fa-4c8a-ba91-db873892ceee", "security_groups":
+        ["Default"], "device_id": "40c3c841-74be-461f-ac6c-25df73c1b40b", "name":
+        "nic2", "admin_state_up": false, "network_id": "153eca4f-a202-4322-b0f5-a70ee2f57f51",
+        "tenant_id": "00000000000000000000000000000001", "mac_address": "56:6f:59:c0:00:00"}]}'
+    http_version:
+  recorded_at: Wed, 07 Jun 2023 19:24:22 GMT
+- request:
+    method: get
+    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/ports?limit=1000&marker=e3d43e58-d4fa-4c8a-ba91-db873892ceee
     body:
       encoding: US-ASCII
       string: ''

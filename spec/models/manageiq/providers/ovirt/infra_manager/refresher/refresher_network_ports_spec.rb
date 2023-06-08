@@ -17,10 +17,10 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
     end
     @ems.reload
 
-    expect(NetworkPort.count).to eq(4)
+    expect(NetworkPort.count).to eq(1)
 
-    guest_device_uuid = '6afaa917-1f0b-4967-8ecf-f45cfbd5d0ba'
-    rhel_vm = Vm.where(:name => 'rhel_seven').first
+    guest_device_uuid = '40c3c841-74be-461f-ac6c-25df73c1b40b'
+    rhel_vm = Vm.where(:name => 'vm_on').first
     nic = rhel_vm.nics.where(:uid_ems => guest_device_uuid).first
     connected_port = NetworkPort.where(:device_ref => guest_device_uuid).first
 
