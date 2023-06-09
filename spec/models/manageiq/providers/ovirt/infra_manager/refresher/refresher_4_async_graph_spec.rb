@@ -122,10 +122,10 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
     expect(Relationship.count).to eq(20)
     expect(MiqQueue.count).to eq(7)
 
-    expect(CloudNetwork.count).to eq(3)
-    expect(CloudSubnet.count).to eq(3)
+    expect(CloudNetwork.count).to eq(1)
+    expect(CloudSubnet.count).to eq(1)
     expect(NetworkRouter.count).to eq(1)
-    expect(NetworkPort.count).to eq(3)
+    expect(NetworkPort.count).to eq(1)
   end
 
   def assert_ems
@@ -163,12 +163,12 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
   end
 
   def assert_specific_cloud_network
-    @cloud_network = CloudNetwork.find_by(:name => "net1")
+    @cloud_network = CloudNetwork.find_by(:name => "test")
     expect(@cloud_network).to have_attributes(
       :ems_id                    => @ems.network_manager.id,
       :type                      => "ManageIQ::Providers::Ovirt::NetworkManager::CloudNetwork::Private",
-      :name                      => "net1",
-      :ems_ref                   => "66bcf2f0-092a-43fd-bbe2-0f848ac052ba",
+      :name                      => "test",
+      :ems_ref                   => "153eca4f-a202-4322-b0f5-a70ee2f57f51",
       :shared                    => nil,
       :status                    => "active",
       :enabled                   => nil,
@@ -221,14 +221,14 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
   end
 
   def assert_specific_network_router
-    @router = NetworkRouter.find_by(:name => "net1net2")
+    @router = NetworkRouter.find_by(:name => "ag-test")
     expect(@router).to have_attributes(
       :ems_id                => @ems.network_manager.id,
       :type                  => "ManageIQ::Providers::Ovirt::NetworkManager::NetworkRouter",
-      :name                  => "net1net2",
-      :ems_ref               => "238ec54a-d0ec-4fb4-be6e-1763f6a2b8f4",
+      :name                  => "ag-test",
+      :ems_ref               => "a0651c4f-6d9c-491d-9d58-8fbd32d5ae0a",
       :admin_state_up        => true,
-      :status                => "INACTIVE",
+      :status                => "ACTIVE",
       :external_gateway_info => nil,
       :distributed           => nil,
       :routes                => [],
@@ -249,8 +249,8 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
       :status                            => nil,
       :mac_address                       => "56:6f:59:c0:00:00",
       :device_owner                      => "oVirt",
-      :device_ref                        => "1ab583f4-6636-4b7c-8293-d6c3bae17391",
-      :device                            => nil,
+      :device_ref                        => "40c3c841-74be-461f-ac6c-25df73c1b40b",
+      :device                            => GuestDevice.find_by(:uid_ems => "40c3c841-74be-461f-ac6c-25df73c1b40b", :address => "00:1a:4a:16:01:05"),
       :cloud_tenant_id                   => @cloud_tenant.id,
       :binding_host_id                   => nil,
       :binding_virtual_interface_type    => nil,
