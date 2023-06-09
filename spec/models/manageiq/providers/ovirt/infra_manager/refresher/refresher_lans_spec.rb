@@ -5,7 +5,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
   include OvirtRefresherSpecCommon
 
   before(:each) do
-    init_defaults(:hostname => 'pluto-vdsg.eng.lab.tlv.redhat.com', :ipaddress => '10.35.19.13', :port => 443)
+    init_defaults
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/ovirt/infra_manager/refresh/ovirt_lans_refresh_recording.yml')
   end
 

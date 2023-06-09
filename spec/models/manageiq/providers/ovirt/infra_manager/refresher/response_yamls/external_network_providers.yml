@@ -6,11 +6,11 @@ internal:
   description:
   id: 5ca0335c-be48-4cf4-acd3-283763cb7e04
   name: ovirt-provider-ovn
-  authentication_url: https://engine-43.lab.inz.redhat.com:35357/v2.0/
+  authentication_url: https://ovirt.example.com:35357/v2.0/
   password:
   properties:
   requires_authentication: true
-  url: https://engine-43.lab.inz.redhat.com:9696
+  url: https://ovirt.example.com:9696
   username: admin@internal
   tenant_name:
   agent_configuration:

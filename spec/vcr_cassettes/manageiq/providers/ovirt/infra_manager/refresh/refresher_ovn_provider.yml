@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tokens
+    uri: https://ovirt.example.com:35357/v2.0/tokens
     body:
       encoding: UTF-8
       string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password"},"tenantName":"admin"}}'
@@ -29,22 +29,22 @@ http_interactions:
       string: '{"access": {"token": {"id": "lvi0mpFnsSumOE7q4c2Y6Jr_KHWd3_MmTQV-5ouRPuvkXvOJ_t3seoQoF7ItjaN4D-F3X-gbTehQ1raqOxqZKw",
         "expires": "2023-06-11T23:24:21Z"}, "user": {"username": "admin", "roles_links":
         [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}, "serviceCatalog":
-        [{"endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/",
-        "internalURL": "https://engine-43.lab.inz.redhat.com:9696/", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/",
+        [{"endpoints": [{"adminURL": "https://ovirt.example.com:9696/",
+        "internalURL": "https://ovirt.example.com:9696/", "publicURL": "https://ovirt.example.com:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001"}], "endpoints_links":
-        [], "type": "network", "name": "neutron"}, {"endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:35357/",
-        "region": "RegionOne", "internalURL": "https://engine-43.lab.inz.redhat.com:35357/",
-        "id": "00000000000000000000000000000002", "publicURL": "https://engine-43.lab.inz.redhat.com:35357/"}],
+        [], "type": "network", "name": "neutron"}, {"endpoints": [{"adminURL": "https://ovirt.example.com:35357/",
+        "region": "RegionOne", "internalURL": "https://ovirt.example.com:35357/",
+        "id": "00000000000000000000000000000002", "publicURL": "https://ovirt.example.com:35357/"}],
         "endpoints_links": [], "type": "identity", "name": "keystone"}, {"endpoints":
-        [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "internalURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
-        "id": "00000000000000000000000000000002", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/"}],
+        [{"adminURL": "https://ovirt.example.com:9696/v2.1/", "region":
+        "RegionOne", "internalURL": "https://ovirt.example.com:9696/v2.1/",
+        "id": "00000000000000000000000000000002", "publicURL": "https://ovirt.example.com:9696/v2.1/"}],
         "endpoints_links": [], "type": "compute", "name": "nova"}]}}'
     http_version:
   recorded_at: Wed, 07 Jun 2023 19:24:21 GMT
 - request:
     method: get
-    uri: https://engine-43.lab.inz.redhat.com:9696/
+    uri: https://ovirt.example.com:9696/
     body:
       encoding: US-ASCII
       string: ''
@@ -71,12 +71,12 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"versions": [{"status": "CURRENT", "id": "v2.0", "links": [{"href":
-        "https://engine-43.lab.inz.redhat.com:9696/v2.0/", "rel": "self"}]}]}'
+        "https://ovirt.example.com:9696/v2.0/", "rel": "self"}]}]}'
     http_version:
   recorded_at: Wed, 07 Jun 2023 19:24:21 GMT
 - request:
     method: post
-    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tokens
+    uri: https://ovirt.example.com:35357/v2.0/tokens
     body:
       encoding: UTF-8
       string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password"},"tenantName":"admin"}}'
@@ -103,22 +103,22 @@ http_interactions:
       string: '{"access": {"token": {"id": "05kG3MeoK0hVvPTnIZlaIZ1xCcO9XtuADtAYfWJIFCeRk32V0JI7iGYww5_Dm1q019v6a5_GWftfjHCHFVctXA",
         "expires": "2023-06-11T23:24:21Z"}, "user": {"username": "admin", "roles_links":
         [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}, "serviceCatalog":
-        [{"endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/",
-        "internalURL": "https://engine-43.lab.inz.redhat.com:9696/", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/",
+        [{"endpoints": [{"adminURL": "https://ovirt.example.com:9696/",
+        "internalURL": "https://ovirt.example.com:9696/", "publicURL": "https://ovirt.example.com:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001"}], "endpoints_links":
-        [], "type": "network", "name": "neutron"}, {"endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:35357/",
-        "region": "RegionOne", "internalURL": "https://engine-43.lab.inz.redhat.com:35357/",
-        "id": "00000000000000000000000000000002", "publicURL": "https://engine-43.lab.inz.redhat.com:35357/"}],
+        [], "type": "network", "name": "neutron"}, {"endpoints": [{"adminURL": "https://ovirt.example.com:35357/",
+        "region": "RegionOne", "internalURL": "https://ovirt.example.com:35357/",
+        "id": "00000000000000000000000000000002", "publicURL": "https://ovirt.example.com:35357/"}],
         "endpoints_links": [], "type": "identity", "name": "keystone"}, {"endpoints":
-        [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "internalURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
-        "id": "00000000000000000000000000000002", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/"}],
+        [{"adminURL": "https://ovirt.example.com:9696/v2.1/", "region":
+        "RegionOne", "internalURL": "https://ovirt.example.com:9696/v2.1/",
+        "id": "00000000000000000000000000000002", "publicURL": "https://ovirt.example.com:9696/v2.1/"}],
         "endpoints_links": [], "type": "compute", "name": "nova"}]}}'
     http_version:
   recorded_at: Wed, 07 Jun 2023 19:24:21 GMT
 - request:
     method: get
-    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/networks
+    uri: https://ovirt.example.com:9696/v2.0/networks
     body:
       encoding: US-ASCII
       string: ''
@@ -151,7 +151,7 @@ http_interactions:
   recorded_at: Wed, 07 Jun 2023 19:24:21 GMT
 - request:
     method: post
-    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tokens
+    uri: https://ovirt.example.com:35357/v2.0/tokens
     body:
       encoding: UTF-8
       string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password"},"tenantName":"admin"}}'
@@ -178,22 +178,22 @@ http_interactions:
       string: '{"access": {"token": {"id": "Y2as6aopbzYzkc8w2rgw6dBwFTh-2f_25eCrA-fM5oUzIja18WeSUwmGs9ilVlPz3RskUYT1cKt5xbJF6n5U1Q",
         "expires": "2023-06-11T23:24:21Z"}, "user": {"username": "admin", "roles_links":
         [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}, "serviceCatalog":
-        [{"endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/",
-        "internalURL": "https://engine-43.lab.inz.redhat.com:9696/", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/",
+        [{"endpoints": [{"adminURL": "https://ovirt.example.com:9696/",
+        "internalURL": "https://ovirt.example.com:9696/", "publicURL": "https://ovirt.example.com:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001"}], "endpoints_links":
-        [], "type": "network", "name": "neutron"}, {"endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:35357/",
-        "region": "RegionOne", "internalURL": "https://engine-43.lab.inz.redhat.com:35357/",
-        "id": "00000000000000000000000000000002", "publicURL": "https://engine-43.lab.inz.redhat.com:35357/"}],
+        [], "type": "network", "name": "neutron"}, {"endpoints": [{"adminURL": "https://ovirt.example.com:35357/",
+        "region": "RegionOne", "internalURL": "https://ovirt.example.com:35357/",
+        "id": "00000000000000000000000000000002", "publicURL": "https://ovirt.example.com:35357/"}],
         "endpoints_links": [], "type": "identity", "name": "keystone"}, {"endpoints":
-        [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "internalURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
-        "id": "00000000000000000000000000000002", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/"}],
+        [{"adminURL": "https://ovirt.example.com:9696/v2.1/", "region":
+        "RegionOne", "internalURL": "https://ovirt.example.com:9696/v2.1/",
+        "id": "00000000000000000000000000000002", "publicURL": "https://ovirt.example.com:9696/v2.1/"}],
         "endpoints_links": [], "type": "compute", "name": "nova"}]}}'
     http_version:
   recorded_at: Wed, 07 Jun 2023 19:24:21 GMT
 - request:
     method: post
-    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tokens
+    uri: https://ovirt.example.com:35357/v2.0/tokens
     body:
       encoding: UTF-8
       string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password"}}}'
@@ -220,22 +220,22 @@ http_interactions:
       string: '{"access": {"token": {"id": "wZQ_mLjuPDBeLZlG-b-eysKCuU8QL7hX9LkgAv4m15W7IoJ9NA8s1-XhgGaC9a2eZdCF-5bNnNXLRdNCnjBPDA",
         "expires": "2023-06-11T23:24:21Z"}, "user": {"username": "admin", "roles_links":
         [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}, "serviceCatalog":
-        [{"endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/",
-        "internalURL": "https://engine-43.lab.inz.redhat.com:9696/", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/",
+        [{"endpoints": [{"adminURL": "https://ovirt.example.com:9696/",
+        "internalURL": "https://ovirt.example.com:9696/", "publicURL": "https://ovirt.example.com:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001"}], "endpoints_links":
-        [], "type": "network", "name": "neutron"}, {"endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:35357/",
-        "region": "RegionOne", "internalURL": "https://engine-43.lab.inz.redhat.com:35357/",
-        "id": "00000000000000000000000000000002", "publicURL": "https://engine-43.lab.inz.redhat.com:35357/"}],
+        [], "type": "network", "name": "neutron"}, {"endpoints": [{"adminURL": "https://ovirt.example.com:35357/",
+        "region": "RegionOne", "internalURL": "https://ovirt.example.com:35357/",
+        "id": "00000000000000000000000000000002", "publicURL": "https://ovirt.example.com:35357/"}],
         "endpoints_links": [], "type": "identity", "name": "keystone"}, {"endpoints":
-        [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "internalURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
-        "id": "00000000000000000000000000000002", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/"}],
+        [{"adminURL": "https://ovirt.example.com:9696/v2.1/", "region":
+        "RegionOne", "internalURL": "https://ovirt.example.com:9696/v2.1/",
+        "id": "00000000000000000000000000000002", "publicURL": "https://ovirt.example.com:9696/v2.1/"}],
         "endpoints_links": [], "type": "compute", "name": "nova"}]}}'
     http_version:
   recorded_at: Wed, 07 Jun 2023 19:24:21 GMT
 - request:
     method: get
-    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tenants
+    uri: https://ovirt.example.com:35357/v2.0/tenants
     body:
       encoding: US-ASCII
       string: ''
@@ -267,7 +267,7 @@ http_interactions:
   recorded_at: Wed, 07 Jun 2023 19:24:22 GMT
 - request:
     method: post
-    uri: https://engine-43.lab.inz.redhat.com:35357/v2.0/tokens
+    uri: https://ovirt.example.com:35357/v2.0/tokens
     body:
       encoding: UTF-8
       string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password"},"tenantName":"tenant"}}'
@@ -294,22 +294,22 @@ http_interactions:
       string: '{"access": {"token": {"id": "Akm4hQww5LwH5dE40BwjWi_AExpfTU6L--QDXWHrKoEOJsTWxsNEjRJurDJd-mDGI445VjHosfoB8rtGSXciyw",
         "expires": "2023-06-11T23:24:22Z"}, "user": {"username": "admin", "roles_links":
         [], "id": "", "roles": [{"name": "admin"}], "name": "admin"}, "serviceCatalog":
-        [{"endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/",
-        "internalURL": "https://engine-43.lab.inz.redhat.com:9696/", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/",
+        [{"endpoints": [{"adminURL": "https://ovirt.example.com:9696/",
+        "internalURL": "https://ovirt.example.com:9696/", "publicURL": "https://ovirt.example.com:9696/",
         "region": "RegionOne", "id": "00000000000000000000000000000001"}], "endpoints_links":
-        [], "type": "network", "name": "neutron"}, {"endpoints": [{"adminURL": "https://engine-43.lab.inz.redhat.com:35357/",
-        "region": "RegionOne", "internalURL": "https://engine-43.lab.inz.redhat.com:35357/",
-        "id": "00000000000000000000000000000002", "publicURL": "https://engine-43.lab.inz.redhat.com:35357/"}],
+        [], "type": "network", "name": "neutron"}, {"endpoints": [{"adminURL": "https://ovirt.example.com:35357/",
+        "region": "RegionOne", "internalURL": "https://ovirt.example.com:35357/",
+        "id": "00000000000000000000000000000002", "publicURL": "https://ovirt.example.com:35357/"}],
         "endpoints_links": [], "type": "identity", "name": "keystone"}, {"endpoints":
-        [{"adminURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/", "region":
-        "RegionOne", "internalURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/",
-        "id": "00000000000000000000000000000002", "publicURL": "https://engine-43.lab.inz.redhat.com:9696/v2.1/"}],
+        [{"adminURL": "https://ovirt.example.com:9696/v2.1/", "region":
+        "RegionOne", "internalURL": "https://ovirt.example.com:9696/v2.1/",
+        "id": "00000000000000000000000000000002", "publicURL": "https://ovirt.example.com:9696/v2.1/"}],
         "endpoints_links": [], "type": "compute", "name": "nova"}]}}'
     http_version:
   recorded_at: Wed, 07 Jun 2023 19:24:22 GMT
 - request:
     method: get
-    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/subnets?limit=1000
+    uri: https://ovirt.example.com:9696/v2.0/subnets?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -344,7 +344,7 @@ http_interactions:
   recorded_at: Wed, 07 Jun 2023 19:24:22 GMT
 - request:
     method: get
-    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/subnets?limit=1000&marker=7e27ec88-f144-4a46-aecc-cf79deb37021
+    uri: https://ovirt.example.com:9696/v2.0/subnets?limit=1000&marker=7e27ec88-f144-4a46-aecc-cf79deb37021
     body:
       encoding: US-ASCII
       string: ''
@@ -375,7 +375,7 @@ http_interactions:
   recorded_at: Wed, 07 Jun 2023 19:24:22 GMT
 - request:
     method: get
-    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/floatingips?limit=1000
+    uri: https://ovirt.example.com:9696/v2.0/floatingips?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -406,7 +406,7 @@ http_interactions:
   recorded_at: Wed, 07 Jun 2023 19:24:22 GMT
 - request:
     method: get
-    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/ports?limit=1000
+    uri: https://ovirt.example.com:9696/v2.0/ports?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -442,7 +442,7 @@ http_interactions:
   recorded_at: Wed, 07 Jun 2023 19:24:22 GMT
 - request:
     method: get
-    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/ports?limit=1000&marker=e3d43e58-d4fa-4c8a-ba91-db873892ceee
+    uri: https://ovirt.example.com:9696/v2.0/ports?limit=1000&marker=e3d43e58-d4fa-4c8a-ba91-db873892ceee
     body:
       encoding: US-ASCII
       string: ''
@@ -473,7 +473,7 @@ http_interactions:
   recorded_at: Wed, 07 Jun 2023 19:24:22 GMT
 - request:
     method: get
-    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/routers?limit=1000
+    uri: https://ovirt.example.com:9696/v2.0/routers?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -506,7 +506,7 @@ http_interactions:
   recorded_at: Wed, 07 Jun 2023 19:24:22 GMT
 - request:
     method: get
-    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/routers?limit=1000&marker=a0651c4f-6d9c-491d-9d58-8fbd32d5ae0a
+    uri: https://ovirt.example.com:9696/v2.0/routers?limit=1000&marker=a0651c4f-6d9c-491d-9d58-8fbd32d5ae0a
     body:
       encoding: US-ASCII
       string: ''
@@ -537,7 +537,7 @@ http_interactions:
   recorded_at: Wed, 07 Jun 2023 19:24:22 GMT
 - request:
     method: get
-    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/security-groups?limit=1000
+    uri: https://ovirt.example.com:9696/v2.0/security-groups?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -568,7 +568,7 @@ http_interactions:
   recorded_at: Wed, 07 Jun 2023 19:24:22 GMT
 - request:
     method: get
-    uri: https://engine-43.lab.inz.redhat.com:9696/v2.0/security-group-rules?limit=1000
+    uri: https://ovirt.example.com:9696/v2.0/security-group-rules?limit=1000
     body:
       encoding: US-ASCII
       string: ''
