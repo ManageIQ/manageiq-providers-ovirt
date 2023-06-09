@@ -6,7 +6,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
 
   describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
     before(:each) do
-      init_defaults(:hostname => "pluto-vdsg.eng.lab.tlv.redhat.com", :ipaddress => "10.35.19.13", :port => 443)
+      init_defaults
       init_connection_vcr('spec/vcr_cassettes/manageiq/providers/ovirt/infra_manager/refresh/ovirt_sdk_refresh_graph_target_host.yml')
 
       @ovirt_service_inventory = ManageIQ::Providers::Ovirt::InfraManager::Inventory
