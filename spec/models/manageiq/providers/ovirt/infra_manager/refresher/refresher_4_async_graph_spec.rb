@@ -5,7 +5,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
   include OvirtRefresherSpecCommon
 
   before(:each) do
-    init_defaults(:hostname => 'pluto-vdsg.eng.lab.tlv.redhat.com', :port => 443)
+    init_defaults
     init_connection_vcr('spec/vcr_cassettes/manageiq/providers/ovirt/infra_manager/refresh/ovirt_sdk_refresh_recording.yml')
   end
 
@@ -150,7 +150,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Refresher do
     @network_manager = ExtManagementSystem.find_by(:type => 'ManageIQ::Providers::Ovirt::NetworkManager')
     expect(@network_manager).to have_attributes(
       :name              => @ems.name + " Network Manager",
-      :hostname          => "engine-43.lab.inz.redhat.com",
+      :hostname          => @ems.hostname,
       :port              => 35_357,
       :api_version       => "v2",
       :security_protocol => "ssl",
