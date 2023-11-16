@@ -20,7 +20,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::EventParser do
     require 'yaml'
     def load_response_mock_for(filename)
       prefix = described_class.name.underscore
-      YAML.load_file(File.join('spec', 'models', prefix, 'response_yamls', filename + '.yml'))
+      YAML.unsafe_load(File.read(File.join('spec', 'models', prefix, 'response_yamls', filename + '.yml')))
     end
 
     before(:each) do
