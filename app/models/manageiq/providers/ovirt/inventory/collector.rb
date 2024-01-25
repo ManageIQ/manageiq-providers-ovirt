@@ -1,8 +1,5 @@
 class ManageIQ::Providers::Ovirt::Inventory::Collector < ManageIQ::Providers::Inventory::Collector
   # TODO: review the changes here and find common parts with ManageIQ::Providers::Ovirt::InfraManager::Inventory::Strategies::V4
-  require_nested :InfraManager
-  require_nested :TargetCollection
-
   attr_reader :clusters
   attr_reader :networks
   attr_reader :storagedomains

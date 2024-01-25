@@ -1,26 +1,4 @@
 class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManager
-  require_nested  :Cluster
-  require_nested  :Datacenter
-  require_nested  :EventCatcher
-  require_nested  :EventParser
-  require_nested  :EventTargetParser
-  require_nested  :Folder
-  require_nested  :RefreshWorker
-  require_nested  :Refresher
-  require_nested  :ResourcePool
-  require_nested  :MetricsCapture
-  require_nested  :MetricsCollectorWorker
-  require_nested  :Host
-  require_nested  :Provision
-  require_nested  :ProvisionViaIso
-  require_nested  :ProvisionViaPxe
-  require_nested  :ProvisionWorkflow
-  require_nested  :Snapshot
-  require_nested  :Storage
-  require_nested  :IsoDatastore
-  require_nested  :Template
-  require_nested  :Vm
-  require_nested  :DistributedVirtualSwitch
   include_concern :ApiIntegration
   include_concern :AdminUI
 
