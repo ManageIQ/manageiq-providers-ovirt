@@ -1,5 +1,5 @@
 class ManageIQ::Providers::Ovirt::InfraManager::Template < ManageIQ::Providers::InfraManager::Template
-  include_concern 'ManageIQ::Providers::Ovirt::InfraManager::VmOrTemplateShared'
+  include ManageIQ::Providers::Ovirt::InfraManager::VmOrTemplateShared
 
   supports :provisioning do
     if ext_management_system

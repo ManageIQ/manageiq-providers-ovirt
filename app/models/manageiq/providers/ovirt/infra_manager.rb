@@ -1,6 +1,6 @@
 class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManager
-  include_concern :ApiIntegration
-  include_concern :AdminUI
+  include ApiIntegration
+  include AdminUI
 
   has_many :cloud_tenants, :foreign_key => :ems_id, :dependent => :destroy
   has_many :vm_and_template_ems_custom_fields, :through => :vms_and_templates, :source => :ems_custom_attributes

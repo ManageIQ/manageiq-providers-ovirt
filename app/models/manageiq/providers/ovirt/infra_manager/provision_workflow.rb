@@ -1,8 +1,7 @@
 class ManageIQ::Providers::Ovirt::InfraManager::ProvisionWorkflow < MiqProvisionInfraWorkflow
   include CloudInitTemplateMixin
   include SysprepTemplateMixin
-
-  include_concern "DialogFieldValidation"
+  include DialogFieldValidation
 
   SYSPREP_TIMEZONES = {
     '001' => '(UTC-12:00) Dateline Standard Time',
