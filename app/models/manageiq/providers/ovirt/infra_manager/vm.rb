@@ -1,8 +1,8 @@
 class ManageIQ::Providers::Ovirt::InfraManager::Vm < ManageIQ::Providers::InfraManager::Vm
-  include_concern 'Operations'
-  include_concern 'RemoteConsole'
-  include_concern 'Reconfigure'
-  include_concern 'ManageIQ::Providers::Ovirt::InfraManager::VmOrTemplateShared'
+  include Operations
+  include RemoteConsole
+  include Reconfigure
+  include ManageIQ::Providers::Ovirt::InfraManager::VmOrTemplateShared
 
   supports :capture
   supports :migrate do

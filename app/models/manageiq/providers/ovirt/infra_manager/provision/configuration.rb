@@ -1,8 +1,8 @@
 module ManageIQ::Providers::Ovirt::InfraManager::Provision::Configuration
   extend ActiveSupport::Concern
 
-  include_concern 'Container'
-  include_concern 'Network'
+  include Container
+  include Network
 
   def attach_floppy_payload
     return unless content = customization_template_content

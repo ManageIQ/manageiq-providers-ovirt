@@ -1,9 +1,9 @@
 class ManageIQ::Providers::Ovirt::InfraManager::Provision < MiqProvision
-  include_concern 'Cloning'
-  include_concern 'Configuration'
-  include_concern 'Placement'
-  include_concern 'StateMachine'
-  include_concern 'Disk'
+  include Cloning
+  include Configuration
+  include Placement
+  include StateMachine
+  include Disk
 
   def destination_type
     "Vm"

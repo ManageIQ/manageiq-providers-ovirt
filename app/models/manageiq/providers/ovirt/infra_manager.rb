@@ -1,28 +1,6 @@
 class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManager
-  require_nested  :Cluster
-  require_nested  :Datacenter
-  require_nested  :EventCatcher
-  require_nested  :EventParser
-  require_nested  :EventTargetParser
-  require_nested  :Folder
-  require_nested  :RefreshWorker
-  require_nested  :Refresher
-  require_nested  :ResourcePool
-  require_nested  :MetricsCapture
-  require_nested  :MetricsCollectorWorker
-  require_nested  :Host
-  require_nested  :Provision
-  require_nested  :ProvisionViaIso
-  require_nested  :ProvisionViaPxe
-  require_nested  :ProvisionWorkflow
-  require_nested  :Snapshot
-  require_nested  :Storage
-  require_nested  :IsoDatastore
-  require_nested  :Template
-  require_nested  :Vm
-  require_nested  :DistributedVirtualSwitch
-  include_concern :ApiIntegration
-  include_concern :AdminUI
+  include ApiIntegration
+  include AdminUI
 
   has_many :cloud_tenants, :foreign_key => :ems_id, :dependent => :destroy
   has_many :vm_and_template_ems_custom_fields, :through => :vms_and_templates, :source => :ems_custom_attributes
