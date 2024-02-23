@@ -26,11 +26,11 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
   supports :admin_ui do
     # Link to oVirt Admin UI is supported for Engine version 4.1.8 or better.
     # See https://bugzilla.redhat.com/1512989 for details.
-    unsupported_reason_add(:admin_ui, _('Admin UI is supported on version >= 4.1.8')) unless version_at_least?('4.1.8')
+    _('Admin UI is supported on version >= 4.1.8') unless version_at_least?('4.1.8')
   end
 
   supports :create_iso_datastore do
-    unsupported_reason_add(:create_iso_datastore, _("Already has an ISO datastore")) unless iso_datastores.empty?
+    _("Already has an ISO datastore") unless iso_datastores.empty?
   end
 
   def ensure_managers
