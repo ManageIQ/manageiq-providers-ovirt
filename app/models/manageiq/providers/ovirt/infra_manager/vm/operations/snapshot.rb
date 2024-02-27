@@ -3,19 +3,11 @@ module ManageIQ::Providers::Ovirt::InfraManager::Vm::Operations::Snapshot
 
   included do
     supports :snapshots do
-      if supports?(:control)
-        unless ext_management_system.supports?(:snapshots)
-          unsupported_reason_add(:snapshots, ext_management_system.unsupported_reason(:snapshots))
-        end
-      else
-        unsupported_reason_add(:snapshots, unsupported_reason(:control))
-      end
+      unsupported_reason(:control) || ext_management_system.unsupported_reason(:snapshots)
     end
 
     supports :revert_to_snapshot do
-      unless allowed_to_revert?
-        unsupported_reason_add(:revert_to_snapshot, revert_unsupported_message)
-      end
+      revert_unsupported_message unless allowed_to_revert?
     end
 
     supports_not :remove_all_snapshots, :reason => N_("Removing all snapshots is currently not supported")
