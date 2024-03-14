@@ -519,7 +519,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
           :controller_type => interface,
           :present         => true,
           :filename        => device.id,
-          :location        => index.to_s,
+          :location        => "0:#{index}",
           :size            => device.provisioned_size.to_i,
           :size_on_disk    => device.actual_size.to_i,
           :disk_type       => device.sparse == true ? 'thin' : 'thick',
