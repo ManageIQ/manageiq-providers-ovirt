@@ -82,6 +82,8 @@ module ManageIQ::Providers::Ovirt::InfraManager::EventParser
   end
 
   def self.ovirtobj_to_hash(obj)
+    require 'ovirtsdk4'
+
     obj.instance_variables.each_with_object({}) do |k, h|
       val = obj.instance_variable_get(k)
 

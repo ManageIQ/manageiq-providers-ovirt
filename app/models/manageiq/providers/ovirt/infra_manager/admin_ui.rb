@@ -2,7 +2,6 @@ module ManageIQ::Providers::Ovirt::InfraManager::AdminUI
   extend ActiveSupport::Concern
 
   require 'openssl'
-  require 'ovirtsdk4'
   require 'uri'
   require 'json'
 
@@ -25,6 +24,8 @@ module ManageIQ::Providers::Ovirt::InfraManager::AdminUI
   end
 
   def generate_admin_ui_url
+    require 'ovirtsdk4'
+
     $rhevm_log.info("Generating oVirt Admin UI URL for EMS with identifier '#{id}'.")
 
     # Get the credentials of the provider:
