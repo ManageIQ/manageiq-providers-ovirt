@@ -1,7 +1,5 @@
 require 'openssl'
-require 'ovirt_metrics'
 require 'resolv'
-require 'ovirtsdk4'
 
 module ManageIQ::Providers::Ovirt::InfraManager::ApiIntegration
   extend ActiveSupport::Concern
@@ -96,6 +94,8 @@ module ManageIQ::Providers::Ovirt::InfraManager::ApiIntegration
   end
 
   def verify_credentials_for_rhevm_metrics(options = {})
+    require 'ovirt_metrics'
+
     OvirtMetrics.connect(rhevm_metrics_connect_options(options))
     OvirtMetrics.connected?
   rescue StandardError => error
@@ -165,6 +165,8 @@ module ManageIQ::Providers::Ovirt::InfraManager::ApiIntegration
     end
 
     def handle_credentials_verification_error(err)
+      require 'ovirtsdk4'
+
       case err
       when SocketError, Errno::EHOSTUNREACH, Errno::ENETUNREACH
         _log.warn($ERROR_INFO)
@@ -351,6 +353,8 @@ module ManageIQ::Providers::Ovirt::InfraManager::ApiIntegration
         :database => database
       }
       begin
+        require 'ovirt_metrics'
+
         OvirtMetrics.connect(opts)
         OvirtMetrics.connected?
       rescue StandardError => error
@@ -399,6 +403,7 @@ module ManageIQ::Providers::Ovirt::InfraManager::ApiIntegration
     end
 
     def default_history_database_name
+      require 'ovirt_metrics'
       OvirtMetrics::DEFAULT_HISTORY_DATABASE_NAME
     end
 

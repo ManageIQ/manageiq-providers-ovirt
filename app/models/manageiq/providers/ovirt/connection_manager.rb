@@ -1,5 +1,3 @@
-require 'ovirtsdk4'
-
 #
 # This class is a responsible for managing a set of `OvirtSDK4::Connection` objects. Each connection is
 # identified by the `id` attribute of the corresponding EMS, or by `nil` if there is no such EMS created yet.
@@ -28,6 +26,8 @@ class ManageIQ::Providers::Ovirt::ConnectionManager
   # @api private
   #
   def initialize
+    require 'ovirtsdk4'
+
     # This hash stores the connections that have already been created. The keys of the hash will be the
     # identifiers of the EMSs, and the values will be instances of the `Entry` class.
     @registry = {}

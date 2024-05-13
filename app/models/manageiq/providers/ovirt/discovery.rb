@@ -1,5 +1,4 @@
 require 'manageiq/network_discovery/port'
-require 'ovirtsdk4'
 
 module ManageIQ
   module Providers
@@ -18,6 +17,8 @@ module ManageIQ
           private
 
           def ovirt_exists?(host, logger = nil)
+            require 'ovirtsdk4'
+
             opts = {
               :host => host,
               :log  => logger
