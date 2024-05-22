@@ -31,6 +31,7 @@ class ManageIQ::Providers::Ovirt::InfraManager::MetricsCapture < ManageIQ::Provi
   #
 
   def perf_collect_metrics(interval_name, start_time = nil, end_time = nil)
+    require 'ovirt_metrics'
     target_description = "[#{target.class.name}], [#{target.id}], [#{target.name}]"
     unless target.ext_management_system.has_authentication_type?(:metrics)
       _log.warn("No C&U credentials defined for: #{target_description} returning empty stats")
