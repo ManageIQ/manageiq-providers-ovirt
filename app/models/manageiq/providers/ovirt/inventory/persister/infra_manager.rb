@@ -71,7 +71,17 @@ class ManageIQ::Providers::Ovirt::Inventory::Persister::InfraManager < ManageIQ:
   end
 
   def add_storages
+    iso_datastores_reconnect_block = lambda do |inventory_collection, inventory_objects_index, attributes_index|
+      # You can only have a single ISO datastore per Ovirt datacenter
+      iso_datastore = inventory_collection.parent.iso_datastores.first
+      return if iso_datastore.nil?
+
+      _, data = inventory_objects_index.detect { |_ref, data| data[:store_type] == "ISO" }
+      data.id = iso_datastore.id
+    end
+
     add_collection(infra, :storages) do |builder|
+      builder.add_properties(:custom_reconnect_block => iso_datastores_reconnect_block)
       if targeted?
         builder.add_targeted_arel(
           lambda do |_inventory_collection|
