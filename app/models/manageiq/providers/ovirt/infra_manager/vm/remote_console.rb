@@ -1,9 +1,14 @@
 class ManageIQ::Providers::Ovirt::InfraManager::Vm
   module RemoteConsole
-    def console_supported?(type)
-      return true if type.upcase == 'NATIVE'
+    extend ActiveSupport::Concern
 
-      %w[SPICE VNC].include?(type.upcase) && html5_console_enabled?
+    included do
+      supports :native_console
+      # NOTE: this says that these are supported IF html_console is enabled
+      supports(:html5_console) { _("Html5 console is disabled by default, check settings to enable it") unless html5_console_enabled? }
+      supports(:console)       { unsupported_reason(:html5_console) }
+      supports(:spice_console) { unsupported_reason(:html5_console) }
+      supports(:vnc_console)   { unsupported_reason(:html5_console) }
     end
 
     def validate_remote_console_acquire_ticket(protocol, options = {})
