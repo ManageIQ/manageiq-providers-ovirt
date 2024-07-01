@@ -12,13 +12,19 @@ class ManageIQ::Providers::Ovirt::InfraManager::Host < ::Host
   end
 
   supports :enter_maint_mode do
-    return _('The Host is not connected to an active provider') unless has_active_ems?
-    return _('The Host is not powered on') unless power_state == 'on'
+    if !has_active_ems?
+      _('The Host is not connected to an active provider')
+    elsif power_state != 'on'
+      _('The Host is not powered on')
+    end
   end
 
   supports :exit_maint_mode do
-    _('The Host is not connected to an active provider') unless has_active_ems?
-    _('The Host is not in maintenance mode') unless power_state == 'maintenance'
+    if !has_active_ems?
+      _('The Host is not connected to an active provider')
+    elsif power_state != 'maintenance'
+      _('The Host is not in maintenance mode')
+    end
   end
 
   def enter_maint_mode
