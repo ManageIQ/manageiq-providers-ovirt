@@ -57,6 +57,41 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Vm do
     end
   end
 
+  describe "supports?(:smartstate_analysis)" do
+    let(:vm) { FactoryBot.create(:vm_ovirt, :ext_management_system => ems, :host => host, :storage => storage) }
+
+    context "without a storage" do
+      let(:storage) { nil }
+
+      it "returns false" do
+        expect(vm.supports?(:smartstate_analysis)).to be_falsey
+        expect(vm.unsupported_reason(:smartstate_analysis)).to eq("Vm is not located on a storage")
+      end
+    end
+
+    context "with a storage" do
+      let(:storage) { FactoryBot.create(:storage_ovirt, :store_type => store_type) }
+
+      context "with a supported store_type" do
+        let(:store_type) { "NFS" }
+
+        it "returns false" do
+          expect(vm.supports?(:smartstate_analysis)).to be_truthy
+          expect(vm.unsupported_reason(:smartstate_analysis)).to be_nil
+        end
+      end
+
+      context "with an unsupported store_type" do
+        let(:store_type) { "BAD-STORE-TYPE" }
+
+        it "returns false" do
+          expect(vm.supports?(:smartstate_analysis)).to be_falsey
+          expect(vm.unsupported_reason(:smartstate_analysis)).to eq("Smartstate Analysis unsupported for storage type BAD-STORE-TYPE")
+        end
+      end
+    end
+  end
+
   context "#calculate_power_state" do
     it "returns suspended when suspended" do
       expect(described_class.calculate_power_state('suspended')).to eq('suspended')
