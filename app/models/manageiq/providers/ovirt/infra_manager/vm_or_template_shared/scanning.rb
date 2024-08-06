@@ -8,7 +8,7 @@ module ManageIQ::Providers::Ovirt::InfraManager::VmOrTemplateShared::Scanning
       elsif !storage.storage_type_supported_for_ssa?
         "Smartstate Analysis unsupported for storage type %{store_type}" % {:store_type => storage.store_type}
       else
-        unuspported_reason(:action)
+        unsupported_reason(:action)
       end
     end
   end
