@@ -51,11 +51,12 @@ module ManageIQ::Providers::Ovirt::InfraManager::VmOrTemplateShared::Scanning
     sync_stashed_metadata(ost)
   end
 
-  RHEVM_NO_PROXIES_ERROR_MSG = N_('VMs must be scanned from an EVM server whose host is attached to the same
-  storage as the VM unless overridden via SmartProxy affinity.
-  Please verify that:
-  1) Direct LUNs are attached to ManageIQ appliance
-  2) Management Relationship is set for the ManageIQ appliance')
+  RHEVM_NO_PROXIES_ERROR_MSG = N_(
+    "VMs must be scanned from an appliances whose host is attached to the same " \
+    "storage as the VM unless overridden via SmartProxy affinity. Please verify " \
+    "that direct LUNs are attached to the appliance and that the management " \
+    "relationship is set for the appliance."
+  )
 
   def proxies4job(_job = nil)
     _log.debug "Enter (RHEVM)"
