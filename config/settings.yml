@@ -55,8 +55,9 @@
     :pipeline: 40
     :connections: 10
     :allow_targeted_refresh: true
-  :redhat_network:
+  :ovirt_network:
     :is_admin: false
+    :refresh_interval: 0
 :log:
   :level_rhevm: info
 :workers:
