@@ -20,6 +20,10 @@ class ManageIQ::Providers::Ovirt::NetworkManager < ManageIQ::Providers::NetworkM
            :to        => :parent_manager,
            :allow_nil => true
 
+  class << self
+    delegate :refresh_ems, :to => ManageIQ::Providers::Ovirt::InfraManager
+  end
+
   def self.hostname_required?
     false
   end
