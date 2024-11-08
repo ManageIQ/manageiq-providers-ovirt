@@ -402,7 +402,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
         :ems_ref          => ems_ref,
         :uid_ems          => vm.id,
         :connection_state => "connected",
-        :name             => URI::DEFAULT_PARSER.unescape(vm.name),
+        :name             => URI::RFC2396_PARSER.unescape(vm.name),
         :location         => "#{vm.id}.ovf",
         :template         => template,
         :memory_limit     => extract_vm_memory_policy(vm, :max),
