@@ -103,17 +103,6 @@ class ManageIQ::Providers::Ovirt::InfraManager < ManageIQ::Providers::InfraManag
     "ovirt".freeze
   end
 
-  def self.default_blacklisted_event_names
-    %w(
-      UNASSIGNED
-      USER_REMOVE_VG
-      USER_REMOVE_VG_FAILED
-      USER_VDC_LOGIN
-      USER_VDC_LOGOUT
-      USER_VDC_LOGIN_FAILED
-    )
-  end
-
   def self.without_iso_datastores
     includes(:iso_datastore).where(:iso_datastores => {:id => nil})
   end
