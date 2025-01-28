@@ -10,7 +10,13 @@
     :service:
       :read_timeout: 1.hour
       :open_timeout: 1.minute
-    :blacklisted_event_names: []
+    :blacklisted_event_names:
+    - UNASSIGNED
+    - USER_REMOVE_VG
+    - USER_REMOVE_VG_FAILED
+    - USER_VDC_LOGIN
+    - USER_VDC_LOGIN_FAILED
+    - USER_VDC_LOGOUT
     :event_handling:
       :event_groups:
         :console:
@@ -44,6 +50,11 @@
           - security_group.update.end
     :connection_manager:
       :purge_interval: 1.hour
+  :ems_ovirt_network:
+    :blacklisted_event_names:
+    - scheduler.run_instance.end
+    - scheduler.run_instance.scheduled
+    - scheduler.run_instance.start
 :http_proxy:
   :rhevm:
     :host:
