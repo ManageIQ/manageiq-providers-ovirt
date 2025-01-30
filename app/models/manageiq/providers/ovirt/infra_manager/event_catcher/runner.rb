@@ -38,6 +38,6 @@ class ManageIQ::Providers::Ovirt::InfraManager::EventCatcher::Runner < ManageIQ:
   end
 
   def filtered?(event)
-    filtered_events.include?(event.name)
+    @ems.filtered_event_names.include?(event.name)
   end
 end
