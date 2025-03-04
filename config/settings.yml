@@ -50,11 +50,6 @@
           - security_group.update.end
     :connection_manager:
       :purge_interval: 1.hour
-  :ems_ovirt_network:
-    :blacklisted_event_names:
-    - scheduler.run_instance.end
-    - scheduler.run_instance.scheduled
-    - scheduler.run_instance.start
 :http_proxy:
   :rhevm:
     :host:
