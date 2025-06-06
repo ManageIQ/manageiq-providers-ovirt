@@ -42,13 +42,14 @@ module ManageIQ::Providers::Ovirt::InfraManager::Vm::Reconfigure
   end
 
   def build_config_spec(task_options)
+    task_options.deep_stringify_keys!
     {
-      "numCoresPerSocket" => (task_options[:cores_per_socket].to_i if task_options[:cores_per_socket]),
-      "memoryMB"          => (task_options[:vm_memory].to_i if task_options[:vm_memory]),
-      "numCPUs"           => (task_options[:number_of_cpus].to_i if task_options[:number_of_cpus]),
-      "disksRemove"       => task_options[:disk_remove],
-      "disksAdd"          => (spec_for_added_disks(task_options[:disk_add]) if task_options[:disk_add]),
-      "disksEdit"         => (spec_for_disks_edit(task_options[:disk_resize]) if task_options[:disk_resize]),
+      "numCoresPerSocket" => (task_options['cores_per_socket'].to_i if task_options['cores_per_socket']),
+      "memoryMB"          => (task_options['vm_memory'].to_i if task_options['vm_memory']),
+      "numCPUs"           => (task_options['number_of_cpus'].to_i if task_options['number_of_cpus']),
+      "disksRemove"       => task_options['disk_remove'],
+      "disksAdd"          => (spec_for_added_disks(task_options['disk_add']) if task_options['disk_add']),
+      "disksEdit"         => (spec_for_disks_edit(task_options['disk_resize']) if task_options['disk_resize']),
       "networkAdapters"   => spec_for_network_adapters(task_options)
     }
   end
@@ -62,14 +63,13 @@ module ManageIQ::Providers::Ovirt::InfraManager::Vm::Reconfigure
 
   def spec_for_disks_edit(disks)
     disks.collect do |d|
-      filename = d['disk_name'] || d[:disk_name]
-      disksize = d['disk_size_in_mb'] || d[:disk_size_in_mb]
-      disk = find_disk_by_filename(filename)
+      filename = d['disk_name']
+      disk = find_disk_by_filename(d['disk_name'])
 
       raise MiqException::MiqVmError, "No disk with filename [#{filename}] was found" unless disk
-      raise MiqException::MiqVmError, 'New disk size must be larger than the current one' unless disk_size_valid?(disk.size, disksize)
+      raise MiqException::MiqVmError, 'New disk size must be larger than the current one' unless disk_size_valid?(disk.size, d['disk_size_in_mb'])
 
-      {:disk_name => filename, :disk_size_in_mb => disksize.to_i}
+      {:disk_name => d['disk_name'], :disk_size_in_mb => d['disk_size_in_mb'].to_i}
     end
   end
 
