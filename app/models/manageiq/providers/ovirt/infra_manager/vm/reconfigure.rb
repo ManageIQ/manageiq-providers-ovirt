@@ -62,13 +62,14 @@ module ManageIQ::Providers::Ovirt::InfraManager::Vm::Reconfigure
 
   def spec_for_disks_edit(disks)
     disks.collect do |d|
-      filename = d['disk_name']
-      disk = find_disk_by_filename(d['disk_name'])
+      filename = d['disk_name'] || d[:disk_name]
+      disksize = d['disk_size_in_mb'] || d[:disk_size_in_mb]
+      disk = find_disk_by_filename(filename)
 
       raise MiqException::MiqVmError, "No disk with filename [#{filename}] was found" unless disk
-      raise MiqException::MiqVmError, 'New disk size must be larger than the current one' unless disk_size_valid?(disk.size, d['disk_size_in_mb'])
+      raise MiqException::MiqVmError, 'New disk size must be larger than the current one' unless disk_size_valid?(disk.size, disksize)
 
-      {:disk_name => d['disk_name'], :disk_size_in_mb => d['disk_size_in_mb'].to_i}
+      {:disk_name => filename, :disk_size_in_mb => disksize.to_i}
     end
   end
 
