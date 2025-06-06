@@ -44,9 +44,9 @@ module ManageIQ::Providers::Ovirt::InfraManager::Vm::Reconfigure
   def build_config_spec(task_options)
     task_options.deep_stringify_keys!
     {
-      "numCoresPerSocket" => (task_options['cores_per_socket'].to_i if task_options['cores_per_socket']),
-      "memoryMB"          => (task_options['vm_memory'].to_i if task_options['vm_memory']),
-      "numCPUs"           => (task_options['number_of_cpus'].to_i if task_options['number_of_cpus']),
+      "numCoresPerSocket" => task_options['cores_per_socket']&.to_i,
+      "memoryMB"          => task_options['vm_memory']&.to_i,
+      "numCPUs"           => task_options['number_of_cpus']&.to_i,
       "disksRemove"       => task_options['disk_remove'],
       "disksAdd"          => (spec_for_added_disks(task_options['disk_add']) if task_options['disk_add']),
       "disksEdit"         => (spec_for_disks_edit(task_options['disk_resize']) if task_options['disk_resize']),
@@ -75,9 +75,9 @@ module ManageIQ::Providers::Ovirt::InfraManager::Vm::Reconfigure
 
   def spec_for_network_adapters(options)
     {
-      :edit   => (network_adapters_edit(options[:network_adapter_edit]) if options[:network_adapter_edit]),
-      :add    => (network_adapters_add(options[:network_adapter_add]) if options[:network_adapter_add]),
-      :remove => (network_adapters_remove(options[:network_adapter_remove]) if options[:network_adapter_remove])
+      :edit   => (network_adapters_edit(options['network_adapter_edit']) if options['network_adapter_edit']),
+      :add    => (network_adapters_add(options['network_adapter_add']) if options['network_adapter_add']),
+      :remove => (network_adapters_remove(options['network_adapter_remove']) if options['network_adapter_remove'])
     }.compact
   end
 
@@ -88,9 +88,7 @@ module ManageIQ::Providers::Ovirt::InfraManager::Vm::Reconfigure
     adapters.collect do |adapt|
       new_nic_name = suggest_nic_name(nic_names)
       nic_names << new_nic_name
-      network_adapter_add_spec(adapt['network'],
-                               new_nic_name,
-                               switch_ids)
+      network_adapter_add_spec(adapt['network'], new_nic_name, switch_ids)
     end
   end
 
@@ -98,17 +96,13 @@ module ManageIQ::Providers::Ovirt::InfraManager::Vm::Reconfigure
     switch_ids = HostSwitch.where(:host => host).pluck(:switch_id)
 
     adapters.collect do |adapt|
-      network_adapter_edit_spec(adapt['network'],
-                                adapt['name'],
-                                switch_ids)
+      network_adapter_edit_spec(adapt['network'], adapt['name'], switch_ids)
     end
   end
 
   def network_adapters_remove(adapters)
     adapters.collect do |adapt|
-      network_adapter_remove_spec(adapt['network']['vlan'],
-                                  adapt['network']['name'],
-                                  adapt['network']['mac'])
+      network_adapter_remove_spec(adapt['network']['vlan'], adapt['network']['name'], adapt['network']['mac'])
     end
   end
 
