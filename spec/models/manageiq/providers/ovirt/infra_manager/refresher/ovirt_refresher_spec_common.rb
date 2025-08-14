@@ -3,8 +3,8 @@ require 'yaml'
 module OvirtRefresherSpecCommon
   extend ActiveSupport::Concern
 
-  def init_defaults(hostname: Rails.application.secrets.ovirt[:hostname],
-                    ipaddress: Rails.application.secrets.ovirt[:ipaddress],
+  def init_defaults(hostname: VcrSecrets.ovirt.hostname,
+                    ipaddress: VcrSecrets.ovirt.ipaddress,
                     port: 443,
                     external_network_provider_mock: 'external_network_providers')
     _guid, _server, @zone = EvmSpecHelper.create_guid_miq_server_zone
@@ -12,8 +12,8 @@ module OvirtRefresherSpecCommon
     init_inventory_wrapper_class
   end
 
-  def create_ems(hostname: Rails.application.secrets.ovirt[:hostname],
-                 ipaddress: Rails.application.secrets.ovirt[:ipaddress],
+  def create_ems(hostname: VcrSecrets.ovirt.hostname,
+                 ipaddress: VcrSecrets.ovirt.ipaddress,
                  port: 443,
                  zone: @zone,
                  external_network_provider_mock: 'external_network_providers')
