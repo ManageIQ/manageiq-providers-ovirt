@@ -40,23 +40,6 @@ class ManageIQ::Providers::Ovirt::NetworkManager < ManageIQ::Providers::NetworkM
     CloudNetwork.raw_create_cloud_network(self, options)
   end
 
-  def create_cloud_network_queue(userid, options = {})
-    task_opts = {
-      :action => "creating Cloud Network for user #{userid}",
-      :userid => userid
-    }
-    queue_opts = {
-      :class_name  => self.class.name,
-      :method_name => 'create_cloud_network',
-      :instance_id => id,
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => my_zone,
-      :args        => [options]
-    }
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
-  end
-
   def create_cloud_subnet(options)
     CloudSubnet.raw_create_cloud_subnet(self, options)
   end
@@ -65,63 +48,12 @@ class ManageIQ::Providers::Ovirt::NetworkManager < ManageIQ::Providers::NetworkM
     NetworkRouter.raw_create_network_router(self, options)
   end
 
-  def create_network_router_queue(userid, options = {})
-    task_opts = {
-      :action => "creating Network Router for user #{userid}",
-      :userid => userid
-    }
-    queue_opts = {
-      :class_name  => self.class.name,
-      :method_name => 'create_network_router',
-      :instance_id => id,
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => my_zone,
-      :args        => [options]
-    }
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
-  end
-
   def create_floating_ip(options)
     FloatingIp.raw_create_floating_ip(self, options)
   end
 
-  def create_floating_ip_queue(userid, options = {})
-    task_opts = {
-      :action => "creating Floating IP for user #{userid}",
-      :userid => userid
-    }
-    queue_opts = {
-      :class_name  => self.class.name,
-      :method_name => 'create_floating_ip',
-      :instance_id => id,
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => my_zone,
-      :args        => [options]
-    }
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
-  end
-
   def create_security_group(options)
     SecurityGroup.raw_create_security_group(self, options)
-  end
-
-  def create_security_group_queue(userid, options = {})
-    task_opts = {
-      :action => "creating Security Group for user #{userid}",
-      :userid => userid
-    }
-    queue_opts = {
-      :class_name  => self.class.name,
-      :method_name => 'create_security_group',
-      :instance_id => id,
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => my_zone,
-      :args        => [options]
-    }
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
   end
 
   def tenants
