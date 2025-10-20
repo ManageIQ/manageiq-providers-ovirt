@@ -82,7 +82,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
 
   def storagedomains
     collector.storagedomains.each do |storagedomain|
-      storage_type = storagedomain.dig(:storage, :type).upcase
+      storage_type = storagedomain.dig(:storage, :type)&.upcase
       ems_ref = ManageIQ::Providers::Ovirt::InfraManager.make_ems_ref(storagedomain.try(:href))
       location = case storage_type
                  when 'LOCALFS', 'ISO'
