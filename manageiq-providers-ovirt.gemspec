@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "ovirt-engine-sdk", "~>4.6.1"
-  spec.add_dependency "ovirt_metrics", "~>3.2"
+  spec.add_dependency "ovirt_metrics", "~>3.3"
 
   spec.add_development_dependency "manageiq-style"
   spec.add_development_dependency "simplecov", ">= 0.21.2"
