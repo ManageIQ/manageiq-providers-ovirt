@@ -3,6 +3,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
     log_header = "MIQ(#{self.class.name}.#{__method__}) Collecting data for EMS name: [#{collector.manager.name}] id: [#{collector.manager.id}]"
     $rhevm_log.info("#{log_header}...")
 
+    ext_management_system
     clusters
     datacenters
     storagedomains
@@ -13,6 +14,10 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
     advertised_images
 
     $rhevm_log.info("#{log_header}...Complete")
+  end
+
+  def ext_management_system
+    persister.ext_management_system.build(:guid => persister.manager.guid)
   end
 
   def networks
@@ -137,7 +142,7 @@ class ManageIQ::Providers::Ovirt::Inventory::Parser::InfraManager < ManageIQ::Pr
         :type    => "#{persister.manager.class}::Folder",
         :uid_ems => 'root_dc',
         :hidden  => true,
-        :parent  => nil,
+        :parent  => persister.ext_management_system.lazy_find(persister.manager.guid),
       )
 
       uid = datacenter.id

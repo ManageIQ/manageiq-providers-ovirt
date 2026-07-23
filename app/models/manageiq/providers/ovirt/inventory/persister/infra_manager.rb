@@ -1,5 +1,6 @@
 class ManageIQ::Providers::Ovirt::Inventory::Persister::InfraManager < ManageIQ::Providers::Ovirt::Inventory::Persister
   def initialize_inventory_collections
+    add_collection(infra, :ext_management_system)
     add_collection(infra, :disks)
     add_collection(infra, :clusters, :secondary_refs => {:by_uid_ems => %i[uid_ems]})
     add_collection(infra, :ems_folders)
@@ -52,7 +53,6 @@ class ManageIQ::Providers::Ovirt::Inventory::Persister::InfraManager < ManageIQ:
 
     add_parent_blue_folders
 
-    add_collection(infra, :root_folder_relationship)
     add_collection(infra, :vm_resource_pools)
     add_collection(infra, :vm_parent_blue_folders)
   end
