@@ -13,34 +13,38 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Vm::RemoteConsole do
     expect(queue_messages.first.args).to be_empty
   end
 
-  context '#console_supported?' do
+  context '#supports?(:console)' do
     it 'html5 disabled in settings' do
-      ::Settings.ems.ems_ovirt.consoles.html5_enabled = false
+      stub_html5_enable(false)
 
-      expect(vm.console_supported?('spice')).to be false
-      expect(vm.console_supported?('vnc')).to be false
-      expect(vm.console_supported?('native')).to be true
+      expect(vm.supports?(:spice_console)).to be false
+      expect(vm.supports?(:vnc_console)).to be false
+      expect(vm.supports?(:html5_console)).to be false
+      expect(vm.supports?(:console)).to be false
+      expect(vm.supports?(:native_console)).to be true
     end
 
     it 'html5 enabled in settings' do
-      ::Settings.ems.ems_ovirt.consoles.html5_enabled = true
+      stub_html5_enable(true)
 
-      expect(vm.console_supported?('spice')).to be true
-      expect(vm.console_supported?('vnc')).to be true
-      expect(vm.console_supported?('native')).to be true
+      expect(vm.supports?(:spice_console)).to be true
+      expect(vm.supports?(:vnc_console)).to be true
+      expect(vm.supports?(:native_console)).to be true
+      expect(vm.supports?(:html5_console)).to be true
+      expect(vm.supports?(:console)).to be true
     end
   end
 
   context '#validate_remote_console_acquire_ticket' do
     it 'no errors for html5 console enabled' do
-      ::Settings.ems.ems_ovirt.consoles.html5_enabled = true
+      stub_html5_enable(true)
 
       expect { vm.validate_remote_console_acquire_ticket('html5') }.not_to raise_error
     end
 
     context 'errors' do
       it 'html5 disabled by default in settings' do
-        ::Settings.ems.ems_ovirt.consoles.html5_enabled = false
+        stub_html5_enable(false)
 
         expect { vm.validate_remote_console_acquire_ticket('html5') }
           .to raise_error(MiqException::RemoteConsoleNotSupportedError,
@@ -48,7 +52,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Vm::RemoteConsole do
       end
 
       it 'vm with no ems' do
-        ::Settings.ems.ems_ovirt.consoles.html5_enabled = true
+        stub_html5_enable(true)
         vm.update_attribute(:ext_management_system, nil)
 
         expect { vm.validate_remote_console_acquire_ticket('html5') }
@@ -56,7 +60,7 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Vm::RemoteConsole do
       end
 
       it 'vm not running' do
-        ::Settings.ems.ems_ovirt.consoles.html5_enabled = true
+        stub_html5_enable(true)
         vm.update_attribute(:raw_power_state, 'poweredOff')
 
         expect { vm.validate_remote_console_acquire_ticket('html5') }
@@ -142,5 +146,12 @@ describe ManageIQ::Providers::Ovirt::InfraManager::Vm::RemoteConsole do
         )
       end
     end
+  end
+
+  private
+
+  # @param value [Boolean] whether html5 is enabled
+  def stub_html5_enable(value)
+    stub_settings_merge(:ems => {:ems_ovirt => {:consoles => {:html5_enabled => value}}})
   end
 end
