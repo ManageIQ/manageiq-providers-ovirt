@@ -18,7 +18,7 @@ jobs:
     # ovirt-engine-sdk has a bug with the libxml2 versio on ubuntu 26.04.
     # Temporarily pin the runner to ubuntu-24.04
     # https://github.com/oVirt/ovirt-engine-sdk-ruby/pull/32
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         ruby-version:
